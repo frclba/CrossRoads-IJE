@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/princerescue.dir/src/LTexture.cpp.o"
+  "CMakeFiles/princerescue.dir/src/Sprite.cpp.o"
   "CMakeFiles/princerescue.dir/src/button.cpp.o"
   "CMakeFiles/princerescue.dir/src/main.cpp.o"
   "CMakeFiles/princerescue.dir/src/menu_scene.cpp.o"
