@@ -1,62 +1,26 @@
-cmake_minimum_required(VERSION 3.0.2)
-project(princerescue LANGUAGES CXX)
+cmake_minimum_required (VERSION 2.6)
+project (tutorial)
+
+file(GLOB_RECURSE SRC
+    "src/*.cpp"
+    "libs/*.c"
+    )
+
+file(GLOB_RECURSE HEADERS
+    "include/*.h"
+    #"libs/*.h"
+    )
 
 
+add_executable(my_exec ${SRC} ${HEADERS})
 
-# Set directory folders
-set (PROJECT_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
-set (PROJECT_SRC_DIR     "${PROJECT_SOURCE_DIR}/src")
-set (PROJECT_ASSETS_DIR  "${PROJECT_SOURCE_DIR}/assets")
+target_compile_options(my_exec PUBLIC -std=c++1y -lSDL2 -lSDL2_image -lSDL2_ttf)
 
-# Gets the list of files inside the src directory
-file(GLOB_RECURSE SOURCES "${PROJECT_SRC_DIR}/*.cpp"
-                          "${PROJECT_SRC_DIR}/*.c")
+INCLUDE(FindPkgConfig)
 
-# Include Headers
-include_directories("${PROJECT_INCLUDE_DIR}")
+PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
+PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 
+INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
+TARGET_LINK_LIBRARIES(my_exec ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} )
 
-
-#### Compilation ####
-
-# Compilation Flags
-set(COMPILE_FLAGS "")
-
-if (${CMAKE_CXX_COMPILER_ID} STREQUAL Clang)
-    set(COMPILE_FLAGS "${COMPILE_FLAGS} -std=c++11 -W -Wall -pedantic -std=c++11 -Wshadow -O2 -g")
-elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL GNU)
-    set(COMPILE_FLAGS "${COMPILE_FLAGS} -std=c++11 -W -Wall -pedantic -std=c++11 -Wshadow -O2 -g")
-elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
-    set(COMPILE_FLAGS "${COMPILE_FLAGS} /Wall")
-endif()
-
-# Cmake compilation flags redefinition
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COMPILE_FLAGS}")
-
-
-
-#### Dependencies ####
-
-# Add engine
-set (PROJECT_ENGINE_DIR "${PROJECT_SOURCE_DIR}/engine")
-add_subdirectory(${PROJECT_ENGINE_DIR})
-include_directories(${ENGINE_INCLUDE_DIR})
-
-
-
-#### Executable ####
-
-add_executable(princerescue ${SOURCES})
-
-target_link_libraries(princerescue
-                      engine
-                      SDL2 SDL2_image SDL2_ttf SDL2_mixer)
-
-
-
-#### Custom Commands ####
-
-# Copy assets folder to build
-add_custom_command(TARGET princerescue POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-${PROJECT_ASSETS_DIR} ${CMAKE_BINARY_DIR}/assets)
