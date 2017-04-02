@@ -1,2 +1,2 @@
-/usr/bin/ar qc libengine.a  CMakeFiles/engine.dir/src/game.cpp.o CMakeFiles/engine.dir/src/scene.cpp.o
+/usr/bin/ar qc libengine.a  CMakeFiles/engine.dir/src/LTexture.cpp.o CMakeFiles/engine.dir/src/Sprite.cpp.o CMakeFiles/engine.dir/src/game.cpp.o CMakeFiles/engine.dir/src/gameobject.cpp.o CMakeFiles/engine.dir/src/scene.cpp.o
 /usr/bin/ranlib libengine.a

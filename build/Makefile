@@ -136,60 +136,6 @@ engine/fast:
 	$(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/build
 .PHONY : engine/fast
 
-src/LTexture.o: src/LTexture.cpp.o
-
-.PHONY : src/LTexture.o
-
-# target to build an object file
-src/LTexture.cpp.o:
-	$(MAKE) -f CMakeFiles/princerescue.dir/build.make CMakeFiles/princerescue.dir/src/LTexture.cpp.o
-.PHONY : src/LTexture.cpp.o
-
-src/LTexture.i: src/LTexture.cpp.i
-
-.PHONY : src/LTexture.i
-
-# target to preprocess a source file
-src/LTexture.cpp.i:
-	$(MAKE) -f CMakeFiles/princerescue.dir/build.make CMakeFiles/princerescue.dir/src/LTexture.cpp.i
-.PHONY : src/LTexture.cpp.i
-
-src/LTexture.s: src/LTexture.cpp.s
-
-.PHONY : src/LTexture.s
-
-# target to generate assembly for a file
-src/LTexture.cpp.s:
-	$(MAKE) -f CMakeFiles/princerescue.dir/build.make CMakeFiles/princerescue.dir/src/LTexture.cpp.s
-.PHONY : src/LTexture.cpp.s
-
-src/Sprite.o: src/Sprite.cpp.o
-
-.PHONY : src/Sprite.o
-
-# target to build an object file
-src/Sprite.cpp.o:
-	$(MAKE) -f CMakeFiles/princerescue.dir/build.make CMakeFiles/princerescue.dir/src/Sprite.cpp.o
-.PHONY : src/Sprite.cpp.o
-
-src/Sprite.i: src/Sprite.cpp.i
-
-.PHONY : src/Sprite.i
-
-# target to preprocess a source file
-src/Sprite.cpp.i:
-	$(MAKE) -f CMakeFiles/princerescue.dir/build.make CMakeFiles/princerescue.dir/src/Sprite.cpp.i
-.PHONY : src/Sprite.cpp.i
-
-src/Sprite.s: src/Sprite.cpp.s
-
-.PHONY : src/Sprite.s
-
-# target to generate assembly for a file
-src/Sprite.cpp.s:
-	$(MAKE) -f CMakeFiles/princerescue.dir/build.make CMakeFiles/princerescue.dir/src/Sprite.cpp.s
-.PHONY : src/Sprite.cpp.s
-
 src/button.o: src/button.cpp.o
 
 .PHONY : src/button.o
@@ -281,12 +227,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... princerescue"
 	@echo "... engine"
-	@echo "... src/LTexture.o"
-	@echo "... src/LTexture.i"
-	@echo "... src/LTexture.s"
-	@echo "... src/Sprite.o"
-	@echo "... src/Sprite.i"
-	@echo "... src/Sprite.s"
 	@echo "... src/button.o"
 	@echo "... src/button.i"
 	@echo "... src/button.s"

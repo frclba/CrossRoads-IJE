@@ -6,6 +6,26 @@
 
 #IncludeRegexTransform: 
 
+../engine/include/LTexture.h
+iostream
+-
+SDL2/SDL.h
+-
+SDL2/SDL_image.h
+-
+
+../engine/include/Sprite.h
+iostream
+-
+vector
+-
+SDL2/SDL.h
+-
+SDL2/SDL_image.h
+-
+LTexture.h
+../engine/include/LTexture.h
+
 ../engine/include/game.hpp
 string
 -
@@ -20,6 +40,14 @@ utility
 scene.hpp
 ../engine/include/scene.hpp
 
+../engine/include/gameobject.hpp
+SDL2/SDL.h
+-
+SDL2/SDL_image.h
+-
+utility
+-
+
 ../engine/include/scene.hpp
 string
 -
@@ -28,45 +56,25 @@ SDL2/SDL.h
 SDL2/SDL_image.h
 -
 
+../include/button.hpp
+gameobject.hpp
+../include/gameobject.hpp
+Sprite.h
+../include/Sprite.h
+
 ../include/menu_scene.hpp
 scene.hpp
 ../include/scene.hpp
-
-/home/caio/Documentos/ije-fga-UnB/include/LTexture.h
-iostream
--
-SDL2/SDL.h
--
-SDL2/SDL_image.h
--
-
-/home/caio/Documentos/ije-fga-UnB/include/Sprite.h
-iostream
--
-vector
--
-SDL2/SDL.h
--
-SDL2/SDL_image.h
--
-LTexture.h
-/home/caio/Documentos/ije-fga-UnB/include/LTexture.h
-
-/home/caio/Documentos/ije-fga-UnB/src/LTexture.cpp
-iostream
--
-../include/LTexture.h
-/home/caio/Documentos/ije-fga-UnB/include/LTexture.h
-
-/home/caio/Documentos/ije-fga-UnB/src/Sprite.cpp
-iostream
--
-vector
--
+button.hpp
+../include/button.hpp
+Sprite.h
 ../include/Sprite.h
-/home/caio/Documentos/ije-fga-UnB/include/Sprite.h
 
 /home/caio/Documentos/ije-fga-UnB/src/button.cpp
+button.hpp
+/home/caio/Documentos/ije-fga-UnB/src/button.hpp
+game.hpp
+/home/caio/Documentos/ije-fga-UnB/src/game.hpp
 
 /home/caio/Documentos/ije-fga-UnB/src/main.cpp
 game.hpp
@@ -77,4 +85,6 @@ menu_scene.hpp
 /home/caio/Documentos/ije-fga-UnB/src/menu_scene.cpp
 menu_scene.hpp
 /home/caio/Documentos/ije-fga-UnB/src/menu_scene.hpp
+button.hpp
+/home/caio/Documentos/ije-fga-UnB/src/button.hpp
 

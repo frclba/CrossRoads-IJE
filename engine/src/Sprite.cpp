@@ -1,5 +1,5 @@
 #include<iostream>
-#include<vector> 
+#include<vector>
 #include "../include/Sprite.h"
 
 using namespace std;
@@ -31,7 +31,7 @@ bool Sprite::loadMedia(int widthDiv,int heightDiv,string localIMG, SDL_Renderer*
                 rect->y = h;
                 rect->w = widthDiv;
                 rect->h = heightDiv;
-               
+
                 spritesClips.push_back(rect);
             }
         }
@@ -43,8 +43,7 @@ bool Sprite::loadMedia(int widthDiv,int heightDiv,string localIMG, SDL_Renderer*
 }
 
 void Sprite::showImage(int x, int y, SDL_Renderer *render,int numIMG){
-    SDL_Delay(100);    
+    // SDL_Delay(100);    
     texture->render(x,y,render,spritesClips[numIMG]);
 
 }
-

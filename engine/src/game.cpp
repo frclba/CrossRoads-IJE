@@ -70,17 +70,22 @@ void Game::run(){
     if(startSDL() && createWindow()){
         printf("Iniciando o jogo\n");
 
+        //Verifica se o jogo está sendo executado
         bool open_game = true;
+        int frame = 0;
+        //Cada cena tem um método init que inicializa a cena. No caso, estamos inicializando a cena atual.
         current_scene->init(main_canvas);
 
         while(open_game){
             SDL_Event evt;
+
             while(SDL_PollEvent(&evt) != 0){
                 if(evt.type == SDL_QUIT)
                     open_game = false;
             }
             //Limpa o Canvas visualizado pelo  usuário
             SDL_RenderClear(main_canvas);
+            //Desenha no buffer secundário.
             current_scene->draw(main_canvas);
             //Exibe o Canvas secundário para o usuário
             SDL_RenderPresent(main_canvas);

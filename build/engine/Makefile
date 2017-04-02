@@ -125,6 +125,60 @@ engine/fast:
 	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/build
 .PHONY : engine/fast
 
+src/LTexture.o: src/LTexture.cpp.o
+
+.PHONY : src/LTexture.o
+
+# target to build an object file
+src/LTexture.cpp.o:
+	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/LTexture.cpp.o
+.PHONY : src/LTexture.cpp.o
+
+src/LTexture.i: src/LTexture.cpp.i
+
+.PHONY : src/LTexture.i
+
+# target to preprocess a source file
+src/LTexture.cpp.i:
+	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/LTexture.cpp.i
+.PHONY : src/LTexture.cpp.i
+
+src/LTexture.s: src/LTexture.cpp.s
+
+.PHONY : src/LTexture.s
+
+# target to generate assembly for a file
+src/LTexture.cpp.s:
+	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/LTexture.cpp.s
+.PHONY : src/LTexture.cpp.s
+
+src/Sprite.o: src/Sprite.cpp.o
+
+.PHONY : src/Sprite.o
+
+# target to build an object file
+src/Sprite.cpp.o:
+	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/Sprite.cpp.o
+.PHONY : src/Sprite.cpp.o
+
+src/Sprite.i: src/Sprite.cpp.i
+
+.PHONY : src/Sprite.i
+
+# target to preprocess a source file
+src/Sprite.cpp.i:
+	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/Sprite.cpp.i
+.PHONY : src/Sprite.cpp.i
+
+src/Sprite.s: src/Sprite.cpp.s
+
+.PHONY : src/Sprite.s
+
+# target to generate assembly for a file
+src/Sprite.cpp.s:
+	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/Sprite.cpp.s
+.PHONY : src/Sprite.cpp.s
+
 src/game.o: src/game.cpp.o
 
 .PHONY : src/game.o
@@ -151,6 +205,33 @@ src/game.s: src/game.cpp.s
 src/game.cpp.s:
 	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/game.cpp.s
 .PHONY : src/game.cpp.s
+
+src/gameobject.o: src/gameobject.cpp.o
+
+.PHONY : src/gameobject.o
+
+# target to build an object file
+src/gameobject.cpp.o:
+	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gameobject.cpp.o
+.PHONY : src/gameobject.cpp.o
+
+src/gameobject.i: src/gameobject.cpp.i
+
+.PHONY : src/gameobject.i
+
+# target to preprocess a source file
+src/gameobject.cpp.i:
+	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gameobject.cpp.i
+.PHONY : src/gameobject.cpp.i
+
+src/gameobject.s: src/gameobject.cpp.s
+
+.PHONY : src/gameobject.s
+
+# target to generate assembly for a file
+src/gameobject.cpp.s:
+	cd /home/caio/Documentos/ije-fga-UnB/build && $(MAKE) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gameobject.cpp.s
+.PHONY : src/gameobject.cpp.s
 
 src/scene.o: src/scene.cpp.o
 
@@ -188,9 +269,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... engine"
+	@echo "... src/LTexture.o"
+	@echo "... src/LTexture.i"
+	@echo "... src/LTexture.s"
+	@echo "... src/Sprite.o"
+	@echo "... src/Sprite.i"
+	@echo "... src/Sprite.s"
 	@echo "... src/game.o"
 	@echo "... src/game.i"
 	@echo "... src/game.s"
+	@echo "... src/gameobject.o"
+	@echo "... src/gameobject.i"
+	@echo "... src/gameobject.s"
 	@echo "... src/scene.o"
 	@echo "... src/scene.i"
 	@echo "... src/scene.s"

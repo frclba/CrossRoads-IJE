@@ -57,57 +57,9 @@ include CMakeFiles/princerescue.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/princerescue.dir/flags.make
 
-CMakeFiles/princerescue.dir/src/LTexture.cpp.o: CMakeFiles/princerescue.dir/flags.make
-CMakeFiles/princerescue.dir/src/LTexture.cpp.o: ../src/LTexture.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/princerescue.dir/src/LTexture.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/princerescue.dir/src/LTexture.cpp.o -c /home/caio/Documentos/ije-fga-UnB/src/LTexture.cpp
-
-CMakeFiles/princerescue.dir/src/LTexture.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/princerescue.dir/src/LTexture.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/caio/Documentos/ije-fga-UnB/src/LTexture.cpp > CMakeFiles/princerescue.dir/src/LTexture.cpp.i
-
-CMakeFiles/princerescue.dir/src/LTexture.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/princerescue.dir/src/LTexture.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/caio/Documentos/ije-fga-UnB/src/LTexture.cpp -o CMakeFiles/princerescue.dir/src/LTexture.cpp.s
-
-CMakeFiles/princerescue.dir/src/LTexture.cpp.o.requires:
-
-.PHONY : CMakeFiles/princerescue.dir/src/LTexture.cpp.o.requires
-
-CMakeFiles/princerescue.dir/src/LTexture.cpp.o.provides: CMakeFiles/princerescue.dir/src/LTexture.cpp.o.requires
-	$(MAKE) -f CMakeFiles/princerescue.dir/build.make CMakeFiles/princerescue.dir/src/LTexture.cpp.o.provides.build
-.PHONY : CMakeFiles/princerescue.dir/src/LTexture.cpp.o.provides
-
-CMakeFiles/princerescue.dir/src/LTexture.cpp.o.provides.build: CMakeFiles/princerescue.dir/src/LTexture.cpp.o
-
-
-CMakeFiles/princerescue.dir/src/Sprite.cpp.o: CMakeFiles/princerescue.dir/flags.make
-CMakeFiles/princerescue.dir/src/Sprite.cpp.o: ../src/Sprite.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/princerescue.dir/src/Sprite.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/princerescue.dir/src/Sprite.cpp.o -c /home/caio/Documentos/ije-fga-UnB/src/Sprite.cpp
-
-CMakeFiles/princerescue.dir/src/Sprite.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/princerescue.dir/src/Sprite.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/caio/Documentos/ije-fga-UnB/src/Sprite.cpp > CMakeFiles/princerescue.dir/src/Sprite.cpp.i
-
-CMakeFiles/princerescue.dir/src/Sprite.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/princerescue.dir/src/Sprite.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/caio/Documentos/ije-fga-UnB/src/Sprite.cpp -o CMakeFiles/princerescue.dir/src/Sprite.cpp.s
-
-CMakeFiles/princerescue.dir/src/Sprite.cpp.o.requires:
-
-.PHONY : CMakeFiles/princerescue.dir/src/Sprite.cpp.o.requires
-
-CMakeFiles/princerescue.dir/src/Sprite.cpp.o.provides: CMakeFiles/princerescue.dir/src/Sprite.cpp.o.requires
-	$(MAKE) -f CMakeFiles/princerescue.dir/build.make CMakeFiles/princerescue.dir/src/Sprite.cpp.o.provides.build
-.PHONY : CMakeFiles/princerescue.dir/src/Sprite.cpp.o.provides
-
-CMakeFiles/princerescue.dir/src/Sprite.cpp.o.provides.build: CMakeFiles/princerescue.dir/src/Sprite.cpp.o
-
-
 CMakeFiles/princerescue.dir/src/button.cpp.o: CMakeFiles/princerescue.dir/flags.make
 CMakeFiles/princerescue.dir/src/button.cpp.o: ../src/button.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/princerescue.dir/src/button.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/princerescue.dir/src/button.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/princerescue.dir/src/button.cpp.o -c /home/caio/Documentos/ije-fga-UnB/src/button.cpp
 
 CMakeFiles/princerescue.dir/src/button.cpp.i: cmake_force
@@ -131,7 +83,7 @@ CMakeFiles/princerescue.dir/src/button.cpp.o.provides.build: CMakeFiles/princere
 
 CMakeFiles/princerescue.dir/src/main.cpp.o: CMakeFiles/princerescue.dir/flags.make
 CMakeFiles/princerescue.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/princerescue.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/princerescue.dir/src/main.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/princerescue.dir/src/main.cpp.o -c /home/caio/Documentos/ije-fga-UnB/src/main.cpp
 
 CMakeFiles/princerescue.dir/src/main.cpp.i: cmake_force
@@ -155,7 +107,7 @@ CMakeFiles/princerescue.dir/src/main.cpp.o.provides.build: CMakeFiles/princeresc
 
 CMakeFiles/princerescue.dir/src/menu_scene.cpp.o: CMakeFiles/princerescue.dir/flags.make
 CMakeFiles/princerescue.dir/src/menu_scene.cpp.o: ../src/menu_scene.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/princerescue.dir/src/menu_scene.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/princerescue.dir/src/menu_scene.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/princerescue.dir/src/menu_scene.cpp.o -c /home/caio/Documentos/ije-fga-UnB/src/menu_scene.cpp
 
 CMakeFiles/princerescue.dir/src/menu_scene.cpp.i: cmake_force
@@ -179,8 +131,6 @@ CMakeFiles/princerescue.dir/src/menu_scene.cpp.o.provides.build: CMakeFiles/prin
 
 # Object files for target princerescue
 princerescue_OBJECTS = \
-"CMakeFiles/princerescue.dir/src/LTexture.cpp.o" \
-"CMakeFiles/princerescue.dir/src/Sprite.cpp.o" \
 "CMakeFiles/princerescue.dir/src/button.cpp.o" \
 "CMakeFiles/princerescue.dir/src/main.cpp.o" \
 "CMakeFiles/princerescue.dir/src/menu_scene.cpp.o"
@@ -188,15 +138,13 @@ princerescue_OBJECTS = \
 # External object files for target princerescue
 princerescue_EXTERNAL_OBJECTS =
 
-princerescue: CMakeFiles/princerescue.dir/src/LTexture.cpp.o
-princerescue: CMakeFiles/princerescue.dir/src/Sprite.cpp.o
 princerescue: CMakeFiles/princerescue.dir/src/button.cpp.o
 princerescue: CMakeFiles/princerescue.dir/src/main.cpp.o
 princerescue: CMakeFiles/princerescue.dir/src/menu_scene.cpp.o
 princerescue: CMakeFiles/princerescue.dir/build.make
 princerescue: engine/libengine.a
 princerescue: CMakeFiles/princerescue.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable princerescue"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable princerescue"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/princerescue.dir/link.txt --verbose=$(VERBOSE)
 	/usr/local/bin/cmake -E copy_directory /home/caio/Documentos/ije-fga-UnB/assets /home/caio/Documentos/ije-fga-UnB/build/assets
 
@@ -205,8 +153,6 @@ CMakeFiles/princerescue.dir/build: princerescue
 
 .PHONY : CMakeFiles/princerescue.dir/build
 
-CMakeFiles/princerescue.dir/requires: CMakeFiles/princerescue.dir/src/LTexture.cpp.o.requires
-CMakeFiles/princerescue.dir/requires: CMakeFiles/princerescue.dir/src/Sprite.cpp.o.requires
 CMakeFiles/princerescue.dir/requires: CMakeFiles/princerescue.dir/src/button.cpp.o.requires
 CMakeFiles/princerescue.dir/requires: CMakeFiles/princerescue.dir/src/main.cpp.o.requires
 CMakeFiles/princerescue.dir/requires: CMakeFiles/princerescue.dir/src/menu_scene.cpp.o.requires

@@ -4,8 +4,6 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/caio/Documentos/ije-fga-UnB/src/LTexture.cpp" "/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles/princerescue.dir/src/LTexture.cpp.o"
-  "/home/caio/Documentos/ije-fga-UnB/src/Sprite.cpp" "/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles/princerescue.dir/src/Sprite.cpp.o"
   "/home/caio/Documentos/ije-fga-UnB/src/button.cpp" "/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles/princerescue.dir/src/button.cpp.o"
   "/home/caio/Documentos/ije-fga-UnB/src/main.cpp" "/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles/princerescue.dir/src/main.cpp.o"
   "/home/caio/Documentos/ije-fga-UnB/src/menu_scene.cpp" "/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles/princerescue.dir/src/menu_scene.cpp.o"
