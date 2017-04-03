@@ -69,7 +69,7 @@ bool MenuScene::draw(SDL_Renderer * main_canvas,Timer *timer){
    else{
         player->button_sprite->showImage(300,300,main_canvas,0);
    }    
-    SDL_Delay(100);
+//    SDL_Delay(100);
     fire->showImage(700,470, main_canvas,timer->getTicks()%6);
 
     return true;

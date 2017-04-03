@@ -18,6 +18,10 @@ bool Game::startSDL(){
         printf("Erro ao inicializar imagens !\n");
         return false;
     }
+    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ){
+        printf("Erro ao inicializar mixer");
+        return false;
+    }
 
     timer = new Timer();
 
@@ -65,6 +69,7 @@ void Game::destroyWindow(){
 }
 
 void Game::offSDL(){
+    Mix_Quit();
     IMG_Quit();
     SDL_Quit();
 }
@@ -96,7 +101,7 @@ void Game::run(){
             int frameTicks = timer->getTicks();
             if( frameTicks < FRAME )
             {
-                SDL_Delay( FRAME - frameTicks );
+//                SDL_Delay( FRAME - frameTicks );
             }
 
         }
