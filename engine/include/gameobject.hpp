@@ -1,8 +1,8 @@
 #ifndef __GAMEOBJECT_H__
 #define __GAMEOBJECT_H__
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include "sdl2core.hpp"
+
 // #include <boost/any.hpp>
 // #include <boost/if.hpp>
 // #include <unordered_map>

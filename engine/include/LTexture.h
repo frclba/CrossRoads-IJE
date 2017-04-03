@@ -2,8 +2,7 @@
 #define LTEXTURE_H
 
 #include<iostream>
-#include<SDL2/SDL.h>
-#include<SDL2/SDL_image.h>
+#include "sdl2core.hpp"
 
 class LTexture
 {

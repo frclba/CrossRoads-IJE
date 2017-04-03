@@ -2,8 +2,8 @@
 #define __SCENE_H__
 
 #include <string>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include "sdl2core.hpp"
+
 #include "Timer.hpp"
 //Tornar toda abstrata
 
