@@ -5,6 +5,7 @@
 #include "button.hpp"
 #include "Sprite.h"
 #include "Timer.hpp"
+#include "Sound.hpp"
 
 class MenuScene : public engine::Scene {
     public:
@@ -22,5 +23,6 @@ class MenuScene : public engine::Scene {
         int mouseY;
         Button *player;
         Sprite *fire;
+        Sound *music;
 };
 #endif

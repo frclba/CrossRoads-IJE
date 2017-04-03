@@ -5,10 +5,14 @@ bool MenuScene::init(SDL_Renderer * main_canvas){
     //Vai disparar a mensagem pré-definida
     SDL_Surface *image = NULL;
 
+    //testing
     player = new Button();
     player->button_sprite->loadMedia(201,215/3, "assets/sprites/button.png", main_canvas);
     fire =  new Sprite();
     fire->loadMedia(174/3,144/2,"assets/sprites/fire.png",main_canvas);
+    music = new Sound;
+    music->loadAudio("assets/music/gm.wav");
+    music->playMusic();
 
     printf("Carregando textura\n");
     image = IMG_Load("assets/sprites/menu.png");
@@ -56,7 +60,7 @@ bool MenuScene::draw(SDL_Renderer * main_canvas,Timer *timer){
     SDL_Rect renderQuad = {0,0, surface_width, surface_height};
     SDL_RenderCopy(main_canvas, scene_texture, NULL, &renderQuad);
 
-    SDL_GetMouseState(&mouseX,&mouseY);
+    SDL_GetMouseState(&mouseX,&mouseY);  
 
    if(mouseX > 300 && mouseX<(300+201) && mouseY > 300 && mouseY <(300+215/3)){
         player->button_sprite->showImage(300,300,main_canvas,1);

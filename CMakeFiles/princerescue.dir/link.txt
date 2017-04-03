@@ -1,0 +1,1 @@
+/usr/bin/c++     -std=c++11 -W -Wall -pedantic -std=c++11 -Wshadow -O2 -g   CMakeFiles/princerescue.dir/src/main.cpp.o CMakeFiles/princerescue.dir/src/button.cpp.o CMakeFiles/princerescue.dir/src/menu_scene.cpp.o  -o princerescue -rdynamic engine/libengine.a -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer 

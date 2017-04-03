@@ -1,6 +1,6 @@
 #include"../include/Timer.hpp"
 
-
+using namespace engine;
 
 Timer::Timer(){
 
