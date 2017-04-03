@@ -1,6 +1,0 @@
-/home/ulysses/Documentos/jogos/ije-fga-UnB/CMakeFiles/edit_cache.dir
-/home/ulysses/Documentos/jogos/ije-fga-UnB/CMakeFiles/rebuild_cache.dir
-/home/ulysses/Documentos/jogos/ije-fga-UnB/CMakeFiles/princerescue.dir
-/home/ulysses/Documentos/jogos/ije-fga-UnB/engine/CMakeFiles/edit_cache.dir
-/home/ulysses/Documentos/jogos/ije-fga-UnB/engine/CMakeFiles/rebuild_cache.dir
-/home/ulysses/Documentos/jogos/ije-fga-UnB/engine/CMakeFiles/engine.dir
