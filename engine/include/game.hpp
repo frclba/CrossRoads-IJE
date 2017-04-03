@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <utility>
 
+#include "Timer.hpp"
 #include "scene.hpp"
 
 namespace engine{
@@ -40,6 +41,8 @@ class Game{
             //Muda a cena que está acontecendo
             bool change_scene(const std::string &id);
             SDL_Renderer* main_canvas;
+
+            Timer *timer;
 
         private:
             std::string main_name;

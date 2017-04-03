@@ -1,5 +1,6 @@
 #include "game.hpp"
 
+#define FRAME 60
 using namespace engine;
 
 bool Game::startSDL(){
@@ -17,6 +18,8 @@ bool Game::startSDL(){
         printf("Erro ao inicializar imagens !\n");
         return false;
     }
+
+    timer = new Timer();
 
     return true;
 
@@ -72,7 +75,7 @@ void Game::run(){
 
         //Verifica se o jogo está sendo executado
         bool open_game = true;
-        int frame = 0;
+        timer->start();
         //Cada cena tem um método init que inicializa a cena. No caso, estamos inicializando a cena atual.
         current_scene->init(main_canvas);
 
@@ -86,9 +89,16 @@ void Game::run(){
             //Limpa o Canvas visualizado pelo  usuário
             SDL_RenderClear(main_canvas);
             //Desenha no buffer secundário.
-            current_scene->draw(main_canvas);
+            current_scene->draw(main_canvas,timer);
             //Exibe o Canvas secundário para o usuário
             SDL_RenderPresent(main_canvas);
+
+            int frameTicks = timer->getTicks();
+            if( frameTicks < FRAME )
+            {
+                SDL_Delay( FRAME - frameTicks );
+            }
+
         }
 
         printf("Desligando tudo\n");

@@ -4,7 +4,7 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
+#include "Timer.hpp"
 //Tornar toda abstrata
 
 namespace engine{
@@ -23,7 +23,7 @@ class Scene{
             virtual bool init(SDL_Renderer *main_canvas);
             virtual bool off();
 
-            virtual bool draw(SDL_Renderer *main_canvas);
+            virtual bool draw(SDL_Renderer *main_canvas,Timer* timer);
 
             inline std::string name() const { return scene_name; }
 
