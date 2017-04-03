@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/my_exec.dir/src/LTexture.cpp.o CMakeFiles/my_exec.dir/src/Sprite.cpp.o CMakeFiles/my_exec.dir/src/button.cpp.o CMakeFiles/my_exec.dir/src/main.cpp.o CMakeFiles/my_exec.dir/src/menu_scene.cpp.o  -o my_exec -lSDL2 -lSDL2_image -lSDL2 -lSDL2_image 
