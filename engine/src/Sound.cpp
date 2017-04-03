@@ -11,7 +11,7 @@ Sound::~Sound(){
 
 }
 bool Sound::loadAudio(std::string music){
-    gMusic = Mix_LoadMUS("assets/music/gm.wav");
+    gMusic = Mix_LoadMUS("/assets/music/gm.wav");
 
     if(gMusic==NULL){
         std::cout << "ERRO to find " + music << std::endl;
@@ -20,6 +20,7 @@ bool Sound::loadAudio(std::string music){
 
 void Sound::playMusic(){
     Mix_PlayMusic(gMusic,-1);
+    Mix_ResumeMusic();
 }
 
 

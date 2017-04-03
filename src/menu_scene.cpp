@@ -10,6 +10,7 @@ bool MenuScene::init(SDL_Renderer * main_canvas){
     player->button_sprite->loadMedia(201,215/3, "assets/sprites/button.png", main_canvas);
     fire =  new Sprite();
     fire->loadMedia(174/3,144/2,"assets/sprites/fire.png",main_canvas);
+
     music = new Sound;
     music->loadAudio("assets/music/gm.wav");
     music->playMusic();
