@@ -2,10 +2,10 @@
 #define __GAME_H__
 
 #include <string>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <unordered_map>
 #include <utility>
+
+#include "sdl2core.hpp"
 
 #include "Timer.hpp"
 #include "scene.hpp"

@@ -1,9 +1,9 @@
 #ifndef TIMER_H_
 #define TIMER_H_
+
 #include<iostream>
-#include<SDL2/SDL.h>
-#include<SDL2/SDL_image.h>
-#include<SDL2/SDL_ttf.h>
+
+#include "sdl2core.hpp"
 
 namespace engine{
 
@@ -42,4 +42,3 @@ namespace engine{
 
 }
 #endif
-

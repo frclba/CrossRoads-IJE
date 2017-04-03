@@ -1,6 +1,0 @@
-/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles/rebuild_cache.dir
-/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles/edit_cache.dir
-/home/caio/Documentos/ije-fga-UnB/build/CMakeFiles/princerescue.dir
-/home/caio/Documentos/ije-fga-UnB/build/engine/CMakeFiles/edit_cache.dir
-/home/caio/Documentos/ije-fga-UnB/build/engine/CMakeFiles/rebuild_cache.dir
-/home/caio/Documentos/ije-fga-UnB/build/engine/CMakeFiles/engine.dir
