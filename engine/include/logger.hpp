@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <string>
-#include <ctime>
 #include <iostream>
 
 /*
@@ -15,6 +14,7 @@ Set to 0 to remove only the DEBUG (logger.d()) messages from the log output
 
 */
 
+//TODO -> write function to write time onto logfile.txt
 class Log {
 public:
     Log();
@@ -22,14 +22,15 @@ public:
     Log(std::string);
     void openFile();
     void closeFile();
-    void d(std::string msg);
-    void w(std::string msg);
-    void e(std::string msg);
+
+    void debug(std::string message);
+    void warning(std::string message);
+    void error(std::string message);
+    void info(std::string message);
 
 private:
     std::ofstream logFile;
     std::string fileName;
-    time_t logger_time;
-    std::string print_time();
+
 };
-#endif // LOGGER_H_
+#endif
