@@ -6,54 +6,57 @@
 #include <utility>
 
 #include "sdl2core.hpp"
+#include "logger.hpp"
 
 #include "Timer.hpp"
 #include "scene.hpp"
 
 namespace engine{
 
-class Game{
-        public:
-            Game(std::string name, std::pair<int,int>window_size)
-            :main_name(name), main_window_size(window_size),
-            main_window(NULL), main_canvas(NULL),
-            main_background_color({0xff, 0xff, 0xff, 0xff}),
-            current_scene(NULL){};
+  class Game{
+  public:
+    Game(std::string name, std::pair<int,int>window_size)
+    :main_name(name), main_window_size(window_size),
+    main_window(NULL), main_canvas(NULL),
+    main_background_color({0xff, 0xff, 0xff, 0xff}),
+    current_scene(NULL){};
 
-            //Game loop
-            void run();
+    //Game loop
+    void run();
 
-            //Inicializa SDL
-            bool startSDL();
+    //Inicializa SDL
+    bool startSDL();
 
-            //Cria janela
-            bool createWindow();
+    //Cria janela
+    bool createWindow();
 
-            //Destroi janela
-            void destroyWindow();
+    //Destroi janela
+    void destroyWindow();
 
-            //Desliga SDL
-            void offSDL();
+    //Desliga SDL
+    void offSDL();
 
-            //Adiciona nova cena na lista de cenas
-            bool add_scene(Scene &scene);
+    //Adiciona nova cena na lista de cenas
+    bool add_scene(Scene &scene);
 
-            //Muda a cena que está acontecendo
-            bool change_scene(const std::string &id);
-            SDL_Renderer* main_canvas;
+    //Muda a cena que está acontecendo
+    bool change_scene(const std::string &id);
+    SDL_Renderer* main_canvas;
 
-            Timer *timer;
+    Timer *timer;
 
-        private:
-            std::string main_name;
-            std::pair<int,int> main_window_size;
-            SDL_Window* main_window;
-            // SDL_Renderer* main_canvas;
-            SDL_Color main_background_color;
-            std::unordered_map <std::string, Scene *> scenes_list;
-            Scene *current_scene;
-    };
+  private:
+    std::string main_name;
+    std::pair<int,int> main_window_size;
+    SDL_Window* main_window;
+    // SDL_Renderer* main_canvas;
+    SDL_Color main_background_color;
+    std::unordered_map <std::string, Scene *> scenes_list;
+    Scene *current_scene;
 
+  protected:
+    Log log;
+  };
 }
 
 #endif
