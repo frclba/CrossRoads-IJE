@@ -12,7 +12,7 @@ bool Game::startSDL(){
         return false;
     }
 
-    printf("Iniciando imagem");
+    printf("Iniciando Imagem\n");
     int img_flags = IMG_INIT_PNG; //Caso forem ser usados outros tipos de imagem, inserir as flags aqui
     if(!(IMG_Init(img_flags) & img_flags)){
         printf("Erro ao inicializar imagens !\n");
@@ -29,8 +29,8 @@ bool Game::startSDL(){
 
 }
 
-bool Game::createWindow() : Logger("createWindow"){
-    log.d("Criando janela");
+bool Game::createWindow(){
+    log.info("Criando janela");
 
     main_window = SDL_CreateWindow( main_name.c_str(),
                                     SDL_WINDOWPOS_CENTERED,
@@ -114,7 +114,7 @@ bool Game::createWindow() : Logger("createWindow"){
     bool Game::add_scene(Scene &scene){
         //Isso faz o id ser o name.
         auto id = scene.name();
-        printf("Adicionando cena");
+        printf("Adicionando cena\n");
 
         //A scene desejada sempre tem que ser a ultima. Se não for, vai ser adicionada novamente.
         if( scenes_list.find(id) != scenes_list.end() ){

@@ -16,7 +16,7 @@ Log::~Log() {
 // Open the log file with <date>_fileName.log or <date>.log
 void Log::openFile() {
 
-    fileName = "log.txt"
+    fileName = "log.txt";
     std::cout << "Loading log file: " << fileName << std::endl;
 
     logFile.open(fileName);
@@ -51,15 +51,21 @@ void Log::debug(std::string msg) {
 }
 
 // Warning message
-void Log::w(std::string msg) {
+void Log::warning(std::string msg) {
     logFile << "[WARN] ";
     logFile << msg << std::endl;
     logFile.flush();
 }
 
 // Error message
-void Log::e(std::string msg) {
+void Log::error(std::string msg) {
     logFile << "[ERROR] ";
+    logFile << msg << std::endl;
+    logFile.flush();
+}
+
+void Log::info(std::string msg) {
+    logFile << "[INFO]";
     logFile << msg << std::endl;
     logFile.flush();
 }

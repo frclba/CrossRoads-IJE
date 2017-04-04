@@ -14,13 +14,12 @@ Set to 0 to remove only the DEBUG (logger.d()) messages from the log output
 
 */
 
-//TODO -> write function to write time into logfile.txt
-
+//TODO -> write function to write time onto logfile.txt
 class Log {
 public:
     Log();
     ~Log();
-    Log(std::string fileName);
+    Log(std::string);
     void openFile();
     void closeFile();
 
