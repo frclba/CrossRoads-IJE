@@ -6,21 +6,21 @@ namespace engine{
 
     class Sound{
 
-        public:
-            //constructor
-            Sound();
-            //destructor
-            ~Sound();
-            //
-            bool loadAudio(std::string);
+    public:
+        //constructor
+        Sound();
+        //destructor
+        ~Sound();
+        //
+        bool loadAudio(std::string);
 
-            void playMusic();
+        void playMusic();
 
 
 
-        private:
-            //The music that will be played
-            Mix_Music *gMusic;
+    private:
+        //The music that will be played
+        Mix_Music *gMusic;
 
     };
 

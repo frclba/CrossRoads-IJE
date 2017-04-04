@@ -40,7 +40,7 @@ void Log::closeFile() {
         std::string border = "==============================================================\n";
         std::string logMessage = "End Logging\n";
         logFile << border << logMessage << border;
-	    logFile.flush();
+        logFile.flush();
         logFile.close();
     }
 }
@@ -67,10 +67,10 @@ std::string Log::print_time() {
 // Debug message
 void Log::d(std::string msg) {
     //if (DEBUG) {
-    	logFile << print_time();
-        logFile << "[DEBUG] ";
-        logFile << msg << std::endl;
-        logFile.flush();
+    logFile << print_time();
+    logFile << "[DEBUG] ";
+    logFile << msg << std::endl;
+    logFile.flush();
     //}
 }
 

@@ -4,7 +4,7 @@ using namespace engine;
 
 //constructor
 Sound::Sound(){
-    gMusic = NULL;    
+    gMusic = NULL;
 }
 //destructor
 Sound::~Sound(){
@@ -25,5 +25,3 @@ void Sound::playMusic(){
     Mix_PlayMusic(gMusic,-1);
     Mix_ResumeMusic();
 }
-
-

@@ -8,35 +8,35 @@
 namespace engine{
 
     class Timer{
-        public:
+    public:
 
-            Timer();
+        Timer();
 
-            ~Timer();
+        ~Timer();
 
-            //The various clock actions
-            void start();
-            void stop();
-            void pause();
-            void unpause();
+        //The various clock actions
+        void start();
+        void stop();
+        void pause();
+        void unpause();
 
-            //Gets the timer's time
-            Uint32 getTicks();
+        //Gets the timer's time
+        Uint32 getTicks();
 
-            //Checks the status of the timer
-            bool isStarted();
-            bool isPaused();
+        //Checks the status of the timer
+        bool isStarted();
+        bool isPaused();
 
-        private:
-            //The clock time when the timer started
-            Uint32 mStartTicks;
+    private:
+        //The clock time when the timer started
+        Uint32 mStartTicks;
 
-            //The ticks stored when the timer was paused
-            Uint32 mPausedTicks;
+        //The ticks stored when the timer was paused
+        Uint32 mPausedTicks;
 
-            //The timer status
-            bool mPaused;
-            bool mStarted;
+        //The timer status
+        bool mPaused;
+        bool mStarted;
 
     };
 

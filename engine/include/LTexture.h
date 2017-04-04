@@ -6,23 +6,23 @@
 
 class LTexture
 {
-    public:
-         LTexture();
-        ~LTexture();
+public:
+    LTexture();
+    ~LTexture();
 
-        bool loadFromFile( std::string path,SDL_Renderer *gRenderer );
+    bool loadFromFile( std::string path,SDL_Renderer *gRenderer );
 
-        void free();
+    void free();
 
-        void render( int , int , SDL_Renderer* , SDL_Rect* clip = NULL);
+    void render( int , int , SDL_Renderer* , SDL_Rect* clip = NULL);
 
-        int getWidth();
-        int getHeight();
+    int getWidth();
+    int getHeight();
 
-    private:
-        SDL_Texture* mTexture;
-        int mWidth;
-        int mHeight;
+private:
+    SDL_Texture* mTexture;
+    int mWidth;
+    int mHeight;
 };
 
 #endif

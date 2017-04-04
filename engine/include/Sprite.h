@@ -10,21 +10,21 @@
 
 class Sprite{
 
-    public:
-        Sprite();
+public:
+    Sprite();
 
-        ~Sprite();
+    ~Sprite();
 
-        bool loadMedia(int widthDiv,int heightDiv,std::string localIMG, SDL_Renderer* render);
+    bool loadMedia(int widthDiv,int heightDiv,std::string localIMG, SDL_Renderer* render);
 
-        void showImage(int x, int y, SDL_Renderer* render ,int numIMG);
+    void showImage(int x, int y, SDL_Renderer* render ,int numIMG);
 
-        LTexture *texture;
-        std::vector <SDL_Rect*> spritesClips;
+    LTexture *texture;
+    std::vector <SDL_Rect*> spritesClips;
 
-    private:
-        int widthDiv;
-        int heightDiv;
+private:
+    int widthDiv;
+    int heightDiv;
 
 
 };

@@ -102,6 +102,3 @@ bool Timer::isPaused(){
     return mPaused && mStarted;
 
 }
-
-
-

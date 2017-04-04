@@ -6,7 +6,7 @@ using namespace std;
 
 Sprite::Sprite(){
     texture = NULL;
-       texture = new LTexture();
+    texture = new LTexture();
 }
 Sprite::~Sprite(){
     delete texture;
@@ -14,8 +14,8 @@ Sprite::~Sprite(){
 
 bool Sprite::loadMedia(int widthDiv,int heightDiv,string localIMG, SDL_Renderer* render){
     bool success = true;
-     this->widthDiv = widthDiv;
-     this->heightDiv = heightDiv;
+    this->widthDiv = widthDiv;
+    this->heightDiv = heightDiv;
 
     success = (texture->loadFromFile(localIMG, render));
     if(!success){
@@ -43,7 +43,7 @@ bool Sprite::loadMedia(int widthDiv,int heightDiv,string localIMG, SDL_Renderer*
 }
 
 void Sprite::showImage(int x, int y, SDL_Renderer *render,int numIMG){
-    // SDL_Delay(100);    
+    // SDL_Delay(100);
     texture->render(x,y,render,spritesClips[numIMG]);
 
 }
