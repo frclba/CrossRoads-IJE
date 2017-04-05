@@ -5,21 +5,21 @@ using namespace engine;
 
 bool Game::startSDL(){
 
-    printf("Iniciando video e audio\n");
+    log.info("Iniciando video e audio\n");
 
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0){
-        printf("Error ao inicializar video ou audio\n");
+        log.error("Error ao inicializar video ou audio\n");
         return false;
     }
 
-    printf("Iniciando Imagem\n");
+    log.info("Iniciando Imagem\n");
     int img_flags = IMG_INIT_PNG; //Caso forem ser usados outros tipos de imagem, inserir as flags aqui
     if(!(IMG_Init(img_flags) & img_flags)){
-        printf("Erro ao inicializar imagens !\n");
+        log.error("Erro ao inicializar imagens !\n");
         return false;
     }
     if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ){
-        printf("Erro ao inicializar mixer");
+        log.error("Erro ao inicializar mixer");
         return false;
     }
 
@@ -39,14 +39,14 @@ bool Game::createWindow(){
                                     main_window_size.second,
                                     SDL_WINDOW_SHOWN );
     if( main_window == NULL ){
-        printf("Falha ao criar janela\n");
+        log.error("Falha ao criar janela\n");
         return false;
     }
 
     main_canvas = SDL_CreateRenderer( main_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
 
     if ( main_canvas == NULL ){
-        printf("Falha ao criar renderizador\n");
+        log.error("Falha ao criar renderizador\n");
         return false;
     }
 
@@ -74,7 +74,7 @@ bool Game::createWindow(){
 
     void Game::run(){
         if( startSDL() && createWindow() ){
-            printf("Iniciando o jogo\n");
+            log.info("Iniciando o jogo\n");
 
             //Verifica se o jogo está sendo executado
             bool open_game = true;
@@ -104,7 +104,7 @@ bool Game::createWindow(){
 
             }
 
-            printf("Desligando tudo\n");
+            log.info("Desligando tudo\n");
         }
 
         destroyWindow();
@@ -114,11 +114,11 @@ bool Game::createWindow(){
     bool Game::add_scene(Scene &scene){
         //Isso faz o id ser o name.
         auto id = scene.name();
-        printf("Adicionando cena\n");
+        log.info("Adicionando cena\n");
 
         //A scene desejada sempre tem que ser a ultima. Se não for, vai ser adicionada novamente.
         if( scenes_list.find(id) != scenes_list.end() ){
-            printf("Essa cena já está carregada !\n");
+            log.warning("Essa cena já está carregada !\n");
             return false;
         }
 

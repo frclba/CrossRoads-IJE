@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include "sdl2core.hpp"
+#include "logger.hpp"
 
 class LTexture
 {

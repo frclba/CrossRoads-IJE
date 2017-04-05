@@ -15,6 +15,8 @@ Set to 0 to remove only the DEBUG (logger.d()) messages from the log output
 */
 
 //TODO -> write function to write time onto logfile.txt
+//TODO -> SELECT BETWEEN logger.h or logger.hpp
+
 class Log {
 public:
     Log();
