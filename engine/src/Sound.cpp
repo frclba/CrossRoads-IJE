@@ -4,16 +4,17 @@ using namespace engine;
 
 //constructor
 Sound::Sound(){
-    gMusic = NULL;
+    gSound = NULL;
 }
 //destructor
 Sound::~Sound(){
 
 }
-bool Sound::loadAudio(std::string music){
-    gMusic = Mix_LoadMUS(music.c_str());
 
-    if(gMusic==NULL){
+bool Sound::loadSound(std::string music){
+    gSound = Mix_LoadWAV(music.c_str());
+
+    if(gSound==NULL){
         std::cout << "ERRO to find " + music << std::endl;
         return false;
     }
@@ -21,7 +22,7 @@ bool Sound::loadAudio(std::string music){
     return true;
 }
 
-void Sound::playMusic(){
-    Mix_PlayMusic(gMusic,-1);
-    Mix_ResumeMusic();
+void Sound::playSound(){
+    Mix_PlayChannel(-1, gSound, 0);
+    // Mix_ResumeMusic();
 }

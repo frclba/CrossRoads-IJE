@@ -4,23 +4,23 @@
 
 namespace engine{
 
-    class Sound{
+    class Music{
 
     public:
         //constructor
-        Sound();
+        Music();
         //destructor
-        ~Sound();
+        ~Music();
         //
-        bool loadSound(std::string);
+        bool loadAudio(std::string);
 
-        void playSound();
+        void playMusic();
 
 
 
     private:
         //The music that will be played
-        Mix_Chunk *gSound;
+        Mix_Music *gMusic;
 
     };
 

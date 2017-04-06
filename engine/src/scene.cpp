@@ -10,6 +10,6 @@ bool Scene::off(){
     return true;
 }
 
-bool Scene::draw(SDL_Renderer *,Timer* timer){
+bool Scene::draw(SDL_Renderer *,Timer *){
     return true;
 }

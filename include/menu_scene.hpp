@@ -1,11 +1,15 @@
 #ifndef __MENU_SCENE__
 #define __MENU_SCENE__
 
+// using namespace engine;
+
 #include "scene.hpp"
 #include "button.hpp"
 #include "Sprite.h"
 #include "Timer.hpp"
+#include "Music.hpp"
 #include "Sound.hpp"
+// #include "logger.hpp"
 
 class MenuScene : public engine::Scene {
     public:
@@ -23,6 +27,7 @@ class MenuScene : public engine::Scene {
         int mouseY;
         Button *player;
         Sprite *fire;
-        Sound *music;
+        Music *music;
+        Sound *button_grab;
 };
 #endif

@@ -1,7 +1,8 @@
-#include<iostream>
-#include<vector>
-#include "../include/Sprite.h"
+#include <iostream>
+#include <vector>
+#include "Sprite.h"
 
+using namespace engine;
 using namespace std;
 
 Sprite::Sprite(){
@@ -14,8 +15,8 @@ Sprite::~Sprite(){
 
 bool Sprite::loadMedia(int widthDiv,int heightDiv,string localIMG, SDL_Renderer* render){
     bool success = true;
-    this->widthDiv = widthDiv;
-    this->heightDiv = heightDiv;
+    m_widthDiv = widthDiv;
+    m_heightDiv = heightDiv;
 
     success = (texture->loadFromFile(localIMG, render));
     if(!success){

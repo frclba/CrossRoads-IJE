@@ -46,12 +46,16 @@ namespace engine{
         Timer *timer;
 
     private:
+        SDL_Window *main_window;
+
         std::string main_name;
         std::pair<int,int> main_window_size;
-        SDL_Window* main_window;
         // SDL_Renderer* main_canvas;
+
         SDL_Color main_background_color;
+
         std::unordered_map <std::string, Scene *> scenes_list;
+
         Scene *current_scene;
 
     protected:
