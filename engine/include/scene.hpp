@@ -28,7 +28,6 @@ namespace engine{
             SDL_Texture *scene_texture;
             int surface_width;
             int surface_height;
-            Log log;
     };
 
 }

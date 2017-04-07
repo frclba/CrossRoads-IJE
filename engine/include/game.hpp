@@ -57,9 +57,6 @@ namespace engine{
         std::unordered_map <std::string, Scene *> scenes_list;
 
         Scene *current_scene;
-
-    protected:
-        Log log;
     };
 }
 
