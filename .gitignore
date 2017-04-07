@@ -1,7 +1,4 @@
-
-# Created by https://www.gitignore.io/api/vim,macos,c++,cmake
-
-build
+# Created by https://www.gitignore.io/api/vim,c++,linux,cmake
 
 ### C++ ###
 # Prerequisites
@@ -48,33 +45,20 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 
-### macOS ###
-*.DS_Store
-.AppleDouble
-.LSOverride
+### Linux ###
+*~
 
-# Icon must end with two \r
-Icon
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
 
+# KDE directory preferences
+.directory
 
-# Thumbnails
-._*
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
 
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
 
 ### Vim ###
 # swap
@@ -86,11 +70,7 @@ Temporary Items
 Session.vim
 # temporary
 .netrwhist
-*~
 # auto-generated tag files
 tags
 
-### Vagrant ###
-.vagrant/
-
-# End of https://www.gitignore.io/api/vim,macos,c++,cmake
+# End of https://www.gitignore.io/api/vim,c++,linux,cmake
