@@ -15,11 +15,10 @@ namespace engine{
 
     class Game{
     public:
-        Game(std::string name, std::pair<int,int>window_size)
-        :main_name(name), main_window_size(window_size),
-        main_window(NULL), main_canvas(NULL),
-        main_background_color({0xff, 0xff, 0xff, 0xff}),
-        current_scene(NULL){};
+
+        static Game instance;
+
+        void set_properties(std::string name, std::pair<int,int> window_size);
 
         //Game loop
         void run();
@@ -46,7 +45,13 @@ namespace engine{
         Timer *timer;
 
     private:
-        SDL_Window *main_window;
+        Game()
+            : main_name(main_name), main_window_size(main_window_size),
+            main_window(NULL), main_canvas(NULL),
+            main_background_color({0xff, 0xff, 0xff, 0xff}),
+            current_scene(NULL){};
+
+        SDL_Window * main_window;
 
         std::string main_name;
         std::pair<int,int> main_window_size;

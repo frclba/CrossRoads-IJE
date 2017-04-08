@@ -5,14 +5,9 @@
 #include <string>
 #include <iostream>
 
-/*
-Set to 1 for any DEBUG messages to be sent to the output
-Set to 0 to remove only the DEBUG (logger.d()) messages from the log output
-***Make sure to set this in your main file to get a DEBUG messages.
+//Set 1 for debug messages
 
-#define DEBUG 1
-
-*/
+//Define DEBUG 1
 
 //TODO -> write function to write time into logfile.txt
 
@@ -21,6 +16,7 @@ public:
     Log();
     ~Log();
     Log(std::string fileName);
+
     void openFile();
     void closeFile();
 
@@ -32,6 +28,6 @@ public:
 private:
     std::ofstream logFile;
     std::string fileName;
-
 };
+
 #endif

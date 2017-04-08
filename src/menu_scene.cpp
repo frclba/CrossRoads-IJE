@@ -23,14 +23,14 @@ bool MenuScene::init(SDL_Renderer * main_canvas){
     image = IMG_Load("assets/sprites/menu.png");
 
     if(image == NULL){
-        log.error("Falha ao carregar imagem!\n");
+        //log.error("Falha ao carregar imagem!\n");
         return false;
     }
 
     scene_texture = SDL_CreateTextureFromSurface(main_canvas, image);
 
     if (scene_texture == NULL){
-        log.error("Falha ao criar textura\n");
+        //log.error("Falha ao criar textura\n");
     }
 
     surface_width = 800;
@@ -43,7 +43,7 @@ bool MenuScene::init(SDL_Renderer * main_canvas){
 }
 
 bool MenuScene::off(){
-    log.info("Destruindo texturas\n");
+    //log.info("Destruindo texturas\n");
     SDL_DestroyTexture(scene_texture);
     scene_texture = NULL;
 

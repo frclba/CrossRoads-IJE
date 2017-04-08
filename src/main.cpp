@@ -8,10 +8,11 @@ int main(int, char **){
     std::pair<int, int> window_size(800, 600);
 
     MenuScene menu_scene;
-    Log log;
-    Game game("Teste", window_size);
-    game.add_scene(menu_scene);
-    game.run();
+    
+    Game::instance.set_properties("Game", window_size);
+
+    Game::instance.add_scene(menu_scene);
+    Game::instance.run();
 
     return 0;
 }
