@@ -13,12 +13,7 @@
 
 class Log {
 public:
-    Log();
-    ~Log();
-    Log(std::string fileName);
-
-    void openFile();
-    void closeFile();
+    static Log instance;
 
     void debug(std::string message);
     void warning(std::string message);
@@ -26,8 +21,14 @@ public:
     void info(std::string message);
 
 private:
+    Log();
+    ~Log();
+
     std::ofstream logFile;
     std::string fileName;
+
+    void openFile();
+    void closeFile();
 };
 
 #endif

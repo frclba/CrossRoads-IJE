@@ -15,7 +15,7 @@ namespace engine{
 
     class Game{
     public:
-
+        //Creating a single and unique game instance.
         static Game instance;
 
         void set_properties(std::string name, std::pair<int,int> window_size);

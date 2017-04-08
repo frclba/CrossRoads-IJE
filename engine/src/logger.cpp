@@ -1,11 +1,9 @@
 #include "logger.hpp"
 
 
-Log::Log() {
-    openFile();
-}
+Log Log::instance;
 
-Log::Log(std::string file): fileName(file) {
+Log::Log() {
     openFile();
 }
 

@@ -19,6 +19,9 @@
 *.dylib
 *.dll
 
+game
+log.txt
+
 # Fortran module files
 *.mod
 *.smod
