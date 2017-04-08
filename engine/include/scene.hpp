@@ -5,7 +5,6 @@
 #include "sdl2core.hpp"
 
 #include "Timer.hpp"
-#include "logger.hpp"
 
 namespace engine{
 

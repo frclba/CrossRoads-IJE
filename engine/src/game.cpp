@@ -1,5 +1,4 @@
 #include "game.hpp"
-#include "logger.hpp"
 
 #define FRAME 60
 using namespace engine;
@@ -13,18 +12,18 @@ void Game::set_properties(std::string name, std::pair<int, int> window_size){
 
 bool Game::startSDL(){
 
-    Log::instance.info("Iniciando video e audio\n");
+    Log::instance.info("Iniciando video e audio");
 
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0){
-        Log::instance.error("Error ao inicializar video ou audio\n");
+        Log::instance.error("Error ao inicializar video ou audio");
         return false;
     }
 
-    Log::instance.info("Iniciando Imagem\n");
+    Log::instance.info("Iniciando Imagem");
 
     int img_flags = IMG_INIT_PNG; //Caso forem ser usados outros tipos de imagem, inserir as flags aqui
     if(!(IMG_Init(img_flags) & img_flags)){
-        Log::instance.error("Erro ao inicializar imagens !\n");
+        Log::instance.error("Erro ao inicializar imagens !");
         return false;
     }
     if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ){
@@ -48,14 +47,14 @@ bool Game::createWindow(){
                                     main_window_size.second,    //Height
                                     SDL_WINDOW_SHOWN );         //Window flags
     if( main_window == NULL ){
-        Log::instance.error("Falha ao criar janela\n");
+        Log::instance.error("Falha ao criar janela");
         return false;
     }
 
     main_canvas = SDL_CreateRenderer( main_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
 
     if ( main_canvas == NULL ){
-        Log::instance.error("Falha ao criar renderizador\n");
+        Log::instance.error("Falha ao criar renderizador");
         return false;
     }
 
@@ -83,7 +82,7 @@ bool Game::createWindow(){
 
     void Game::run(){
         if( startSDL() && createWindow() ){
-            Log::instance.info("Iniciando o jogo\n");
+            Log::instance.info("Iniciando o jogo");
 
             //Verifica se o jogo está sendo executado
             bool open_game = true;
@@ -113,7 +112,7 @@ bool Game::createWindow(){
 
             }
 
-            Log::instance.info("Desligando tudo\n");
+            Log::instance.info("Desligando tudo");
         }
 
         destroyWindow();
@@ -123,11 +122,11 @@ bool Game::createWindow(){
     bool Game::add_scene(Scene &scene){
         //Isso faz o id ser o name.
         auto id = scene.name();
-        Log::instance.info("Adicionando cena. Nome da cena: " + id + "\n");
+        Log::instance.info("Adicionando cena. Nome da cena: " + id);
 
         //A scene desejada sempre tem que ser a ultima. Se não for, vai ser adicionada novamente.
         if( scenes_list.find(id) != scenes_list.end() ){
-            Log::instance.warning("Essa cena já está carregada !\n");
+            Log::instance.warning("Essa cena já está carregada !");
             return false;
         }
 
@@ -135,7 +134,6 @@ bool Game::createWindow(){
 
         if( current_scene == NULL )
         change_scene(id);
-
 
         return true;
     }

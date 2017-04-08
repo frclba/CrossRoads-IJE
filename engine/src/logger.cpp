@@ -1,6 +1,5 @@
 #include "logger.hpp"
 
-
 Log Log::instance;
 
 Log::Log() {
@@ -41,11 +40,11 @@ void Log::closeFile() {
 
 // Debug message
 void Log::debug(std::string msg) {
-    //if (DEBUG) {
+    if (DEBUG) {
     logFile << "[DEBUG] ";
     logFile << msg << std::endl;
     logFile.flush();
-    //}
+    }
 }
 
 // Warning message

@@ -6,7 +6,6 @@
 #include <utility>
 
 #include "sdl2core.hpp"
-#include "logger.hpp"
 
 #include "Timer.hpp"
 #include "scene.hpp"

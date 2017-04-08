@@ -15,7 +15,7 @@ bool Sound::loadSound(std::string music){
     gSound = Mix_LoadWAV(music.c_str());
 
     if(gSound==NULL){
-        std::cout << "ERRO to find " + music << std::endl;
+        Log::instance.error("Failed to load sound: " + music);
         return false;
     }
 

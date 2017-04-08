@@ -20,7 +20,7 @@ bool Sprite::loadMedia(int widthDiv,int heightDiv,string localIMG, SDL_Renderer*
 
     success = (texture->loadFromFile(localIMG, render));
     if(!success){
-        cout << "ERRO to open " + localIMG << endl;
+        Log::instance.error("Failed to load media: " + localIMG);
     }
     else{
         //ler matriz de imagems em um arquivo
@@ -37,9 +37,7 @@ bool Sprite::loadMedia(int widthDiv,int heightDiv,string localIMG, SDL_Renderer*
             }
         }
     }
-
-
-
+    
     return success;
 }
 

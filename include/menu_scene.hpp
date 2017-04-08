@@ -9,7 +9,6 @@
 #include "Timer.hpp"
 #include "Music.hpp"
 #include "Sound.hpp"
-// #include "logger.hpp"
 
 class MenuScene : public engine::Scene {
     public:

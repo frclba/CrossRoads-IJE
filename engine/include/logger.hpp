@@ -5,9 +5,9 @@
 #include <string>
 #include <iostream>
 
-//Set 1 for debug messages
+//Set 1 for debug messages, 0 to no show
 
-//Define DEBUG 1
+#define DEBUG 1
 
 //TODO -> write function to write time into logfile.txt
 

@@ -18,14 +18,14 @@ bool LTexture::loadFromFile(std::string path,SDL_Renderer* gRenderer){
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 
     if(loadedSurface == NULL){
-        cout << "ERRO to find " + path << endl;
+        Log::instance.error("ERRO to find " + path);
         return false;
     }
     else{
         SDL_SetColorKey(loadedSurface,SDL_TRUE,SDL_MapRGB(loadedSurface->format,0,0xFF,0xFF));
         newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
         if( newTexture == NULL ){
-            printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+            Log::instance.error("Unable to create texture from: " + path + ". SDL Error: " + SDL_GetError());
         }
         else{
             mWidth = loadedSurface->w;
