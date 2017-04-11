@@ -88,7 +88,7 @@ bool Game::createWindow(){
             bool open_game = true;
             timer->start();
             //Cada cena tem um método init que inicializa a cena. No caso, estamos inicializando a cena atual.
-            current_scene->init(main_canvas);
+            current_scene->init();
 
             while(open_game){
                 SDL_Event evt;
@@ -100,7 +100,7 @@ bool Game::createWindow(){
                 //Limpa o Canvas visualizado pelo  usuário
                 SDL_RenderClear(main_canvas);
                 //Desenha no buffer secundário.
-                current_scene->draw(main_canvas,timer);
+                current_scene->draw();
                 //Exibe o Canvas secundário para o usuário
                 SDL_RenderPresent(main_canvas);
 

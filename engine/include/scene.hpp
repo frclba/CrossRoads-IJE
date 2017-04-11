@@ -2,31 +2,45 @@
 #define __SCENE_H__
 
 #include <string>
-#include "sdl2core.hpp"
+#include <unordered_map>
+#include <gameobject.hpp>
 
-#include "Timer.hpp"
+#include "sdl2core.hpp"
 
 namespace engine{
 
     class Scene{
         public:
-            Scene(std::string name = "INVALID_SCENE")
-            :scene_name(name), scene_texture(NULL),
-            surface_width(0), surface_height(0) {}
+            enum class State{
+                created,
+                loaded,
+                playing,
+                invalid
+            };
+
+            //Sobrecarga do construtor para caso de criação de cenas sem parâmetros
+            Scene() : Scene("", State::invalid){}
+
+            Scene(std::string name, State _state = State::created)
+            :scene_name(name), scene_state(_state){}
 
             virtual ~Scene(){}
 
-            virtual bool init(SDL_Renderer *);
-            virtual bool off();
-            virtual bool draw(SDL_Renderer *,Timer *);
+            bool add_game_object(GameObject &obj);
+            GameObject &get_game_object(const std::string &id);
+            bool remove_game_object(const std::string &id);
+
+            virtual bool init();
+            virtual bool shutdown();
+            virtual bool draw();
 
             inline std::string name() const { return scene_name; }
 
-        protected:
+        private:
             std::string scene_name;
-            SDL_Texture *scene_texture;
-            int surface_width;
-            int surface_height;
+            std::unordered_map <std::string, GameObject *> scene_objects;
+
+            State scene_state;
     };
 
 }
