@@ -48,5 +48,5 @@ void Sprite::showImage(int x, int y, SDL_Renderer *render,int numIMG){
 }
 
 void Sprite::resize(int resizeValue){
-    texture->resize(resizeValue);
+        texture->resizeRect(resizeValue);
 }
