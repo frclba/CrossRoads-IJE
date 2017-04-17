@@ -22,9 +22,9 @@ namespace engine{
             LTexture *texture;
             std::vector <SDL_Rect*> spritesClips;
 
+            void resize(int resizeValue);
+
         private:
-            // int widthDiv;
-            // int heightDiv;
             float m_widthDiv;
             float m_heightDiv;
 

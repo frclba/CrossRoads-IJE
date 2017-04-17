@@ -18,11 +18,13 @@ public:
 
     int getWidth();
     int getHeight();
+    void resize(int resizeValue);
 
 private:
     SDL_Texture* mTexture;
     int mWidth;
     int mHeight;
+    int resizeValue;
 };
 
 #endif

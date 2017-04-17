@@ -46,3 +46,7 @@ void Sprite::showImage(int x, int y, SDL_Renderer *render,int numIMG){
     texture->render(x,y,render,spritesClips[numIMG]);
 
 }
+
+void Sprite::resize(int resizeValue){
+    texture->resize(resizeValue);
+}
