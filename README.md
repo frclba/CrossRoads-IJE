@@ -16,6 +16,9 @@ Gryth, um grande guerreiro conhecido por todos, vive sua vida em busca de grande
 
 C++, SDL, CMake, git
 
+##### Linux Debian Based installation
+> sudo apt-get install cmake libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-mixer-2.0-0 libsdl2-ttf-2.0-0 
+
 ### Execução Do jogo
 
 Baixar o Jogo
