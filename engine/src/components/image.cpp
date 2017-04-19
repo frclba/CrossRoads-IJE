@@ -14,7 +14,7 @@ bool ImageComponent::init(){
     SDL_Surface *image = IMG_Load(main_path.c_str());
 
     if(image == NULL){
-        /Log::instance.error("Could not load image from path: " + main_path);
+        Log::instance.error("Could not load image from path: " + main_path);
     }
 
     main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas, image);

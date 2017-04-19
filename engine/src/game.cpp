@@ -94,8 +94,19 @@ bool Game::createWindow(){
                 SDL_Event evt;
 
                 while( SDL_PollEvent(&evt) != 0 ){
-                    if( evt.type == SDL_QUIT )
-                    open_game = false;
+                    if( evt.type == SDL_QUIT ){
+                        open_game = false;
+                    }
+
+                    if( evt.type == SDL_KEYDOWN ){
+                        switch (evt.key.keysym.sym) {
+                            case SDLK_SPACE:
+                                Log::instance.debug("teste teclado");
+                                //Keyboard::isKeyDown(keycode::KEY_SPACE);
+                                break;
+
+                        }
+                    }
                 }
                 //Limpa o Canvas visualizado pelo  usuário
                 SDL_RenderClear(main_canvas);
