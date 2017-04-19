@@ -14,7 +14,9 @@ Log::~Log() {
 void Log::openFile() {
 
     fileName = "log.txt";
-    std::cout << "Loading log file: " << fileName << std::endl;
+    std::cout << "__________________________________________________\n" <<
+        "\n[ Starting GAME ]\n" <<
+        "--> Arquivo de Log: " << fileName << std::endl << std::endl;
 
     logFile.open(fileName);
 
@@ -28,7 +30,10 @@ void Log::openFile() {
 // Close the currently open log file
 void Log::closeFile() {
     if(logFile.is_open()) {
-        std::cout << "Closing log file: " << fileName << std::endl;
+        std::cout << "[ Encerrando GAME ]\n" <<
+        "<-- Para eventuais mensagens de sistema,\nconferir arquivo: " << fileName << std::endl <<
+        "__________________________________________________\n" << std::endl;
+
         std::string border = "==============================================================\n";
         std::string logMessage = "End Logging\n";
 
