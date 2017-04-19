@@ -6,6 +6,7 @@ using namespace engine;
 Music::Music(){
     gMusic = NULL;
 }
+
 //destructor
 Music::~Music(){
 

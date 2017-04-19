@@ -10,9 +10,11 @@ namespace engine{
         Sound();
         //destructor
         ~Sound();
-        //
+
+        //Load audio file on memory
         bool loadSound(std::string);
 
+        //Play audio on call
         void playSound();
 
 

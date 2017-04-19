@@ -17,6 +17,7 @@ namespace engine{
         //Creating a single and unique game instance.
         static Game instance;
 
+        //Define some class variables like name and window_size
         void set_properties(std::string name, std::pair<int,int> window_size);
 
         //Game loop
@@ -54,7 +55,7 @@ namespace engine{
 
         std::string main_name;
         std::pair<int,int> main_window_size;
-        
+
         SDL_Color main_background_color;
 
         std::unordered_map <std::string, Scene *> scenes_list;

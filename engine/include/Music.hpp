@@ -9,7 +9,10 @@ namespace engine{
         Music();
         ~Music();
 
+        //Load music audio on memory, if success return true
         bool loadAudio(std::string);
+
+        //Start music on call
         void playMusic();
 
     private:

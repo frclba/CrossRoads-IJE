@@ -1,6 +1,5 @@
 #include "components/image.hpp"
 #include "game.hpp"
-#include "logger.hpp"
 
 using namespace engine;
 
@@ -15,13 +14,13 @@ bool ImageComponent::init(){
     SDL_Surface *image = IMG_Load(main_path.c_str());
 
     if(image == NULL){
-        // SDL_IMG_ERROR("Could not load image from path !" << main_path);
+        /Log::instance.error("Could not load image from path: " + main_path);
     }
 
     main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas, image);
 
     if(main_texture == NULL){
-        // SDL_ERROR("Could not create texture from image");
+        Log::instance.error("Could not create texture from image");
         return false;
     }
 

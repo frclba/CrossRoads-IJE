@@ -22,6 +22,7 @@ int main(int, char **){
     background.add_component(backgroundImage);
     menu.add_game_object(background);
 
+    
     //Game lopp
     Game::instance.run();
 

@@ -14,7 +14,7 @@ public:
     //Destrutor
     ~LTexture();
 
-    //Carrega imagem 
+    //Carrega imagem
     //param:
     //  path = caminho onde a imagem se localiza.
     //  gRenderer = SDL_Renderer usado.

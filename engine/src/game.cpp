@@ -112,9 +112,8 @@ bool Game::createWindow(){
 
             }
 
-            Log::instance.info("Desligando tudo");
         }
-
+        Log::instance.info("Desligando tudo");
         destroyWindow();
         offSDL();
     }

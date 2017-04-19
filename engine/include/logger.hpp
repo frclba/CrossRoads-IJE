@@ -15,6 +15,7 @@ class Log {
 public:
     static Log instance;
 
+    /* Functions to print on file according to type of message */
     void debug(std::string message);
     void warning(std::string message);
     void error(std::string message);
@@ -27,6 +28,7 @@ private:
     std::ofstream logFile;
     std::string fileName;
 
+    //Open and close stream file to be written
     void openFile();
     void closeFile();
 };

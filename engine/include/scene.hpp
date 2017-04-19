@@ -26,12 +26,22 @@ namespace engine{
 
             virtual ~Scene(){}
 
+            //Add and check if it already exists. If success, return true
             bool add_game_object(GameObject &obj);
+
+            //Search for a specific GameObject by ID
             GameObject &get_game_object(const std::string &id);
+
+            //Erase GameObject, find it by ID and remove.
             bool remove_game_object(const std::string &id);
 
+            //Initialization of scene
             virtual bool init();
+
+            //Shutdown of scene
             virtual bool shutdown();
+
+            //Check on map and initialize each game object. Return true if success
             virtual bool draw();
 
             inline std::string name() const { return scene_name; }
