@@ -1,18 +1,16 @@
-# {{ Nome do Jogo }}
+# CrossRoads
 
-# {{ Imagem do jogo }}
+![Menu](/assets/sprites/capa.png)
 
 
 ### Description
-Our game is a 2D hack'n slash plataforma, where The Player controls a hero, in his quest of adventure.
+O jogo é um 2D hack'n slash plataforma, onde o jogador controla um heroi em sua longa aventura.
 
 ### Visão Geral
 Obejtivo é controlar o personagem por diversas fases, enfrentando seus inimigos em busca do Cálice Mágico. Quando surgem desafios, é necessaria a ajuda, então, controlamos o segundo personagem, que possui diferentes habilidades
 
-### {{ Call To Adventure }}
-The hero is named Gryth, a insightful poet, and son of a famous blacksmith. In the middle of the spring, Gryth receives a call of adventure from Hiron, the wise. In the great church of pygon resides a chalice, stolen 100 years ago, with the great power of giving control of fire to one wich posesses it. The information was accquired because Pygon plans to torch down the great Purple forest, the pilar of humanity. With the help of Zyron, a misterious thief, and closest friend, they departure, searching for adventure.
-
-The struggle of Gryth is to balance his body and mind, and control his power to defeat the path. After many tials, its up to decide the resolution of humanity, if it will trive or not.
+### História
+Gryth, um grande guerreiro conhecido por todos, vive sua vida em busca de grandes aventuras.. No meio do inverno, ele recebe uma chamada de aventura de Hiron, o grande padre, para uma missão. Nas profundezas da igreja de Pygon, proibida para as pessoas, reside um cálice cujos poderes são gigantescos, mas perigosos. A luta de Gryth é equilibrar seu corpo e mente, e controlar seu poder para derrotar os inimigos no caminho.
 
 ### Dependências
 
