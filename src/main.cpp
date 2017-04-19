@@ -1,17 +1,28 @@
 #include "game.hpp"
-#include "menu_scene.hpp"
+#include "gameobject.hpp"
+#include "scene.hpp"
+#include "components/image.hpp"
+#include "sdl2core.hpp"
 
 using namespace engine;
 
 int main(int, char **){
 
+    //Configurando nome e tamanho
     std::pair<int, int> window_size(800, 600);
+    Game::instance.set_properties("Nome do Jogo",window_size);
 
-    MenuScene menu_scene;
+    //Criando cena do menu
+    Scene menu("Main Menu");
+    Game::instance.add_scene(menu);
 
-    Game::instance.set_properties("Game", window_size);
+    GameObject background("background");
+    ImageComponent backgroundImage(background, "assets/sprites/menu.png");
 
-    Game::instance.add_scene(menu_scene);
+    background.add_component(backgroundImage);
+    menu.add_game_object(background);
+
+    //Game lopp
     Game::instance.run();
 
     return 0;
