@@ -21,7 +21,7 @@ public:
     bool loadFromFile( std::string path,SDL_Renderer *gRenderer );
 
     //Libera memoria da imagem
-    void freeTexture();
+    void free();
 
     //Mostra imagem na tela.
     //param:
@@ -38,7 +38,7 @@ public:
     int getHeight();
 
     //Metodo ultilizado pra mudar tamanho dos rects que vem no parametro da sprites
-    void resizeRect(int toResize);
+    void resizeRect(int resizeValue);
 
 private:
     SDL_Texture* mTexture;

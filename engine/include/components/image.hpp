@@ -21,12 +21,14 @@ namespace engine{
 
             void draw();
 
-        private:
+        protected:
             //Caminho da imagem
             std::string main_path;
 
             //Olhar nesse ponto para utilizar nossa pŕopria classe.
             SDL_Texture *main_texture;
+
+            SDL_Rect* imagePart = NULL;
     };
 }
 

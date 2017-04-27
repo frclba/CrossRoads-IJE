@@ -9,8 +9,8 @@ Music::Music(){
 
 //destructor
 Music::~Music(){
-}
 
+}
 bool Music::loadAudio(std::string music){
     gMusic = Mix_LoadMUS(music.c_str());
 
@@ -18,6 +18,7 @@ bool Music::loadAudio(std::string music){
         Log::instance.error("Failed to load audio: " + music);
         return false;
     }
+
     return true;
 }
 

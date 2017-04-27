@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 
-//Set 1 for debug messages, 0 to not show
+//Set 1 for debug messages, 0 to no show
 
 #define DEBUG 1
 

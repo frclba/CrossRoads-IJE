@@ -42,6 +42,8 @@ namespace engine{
 
             //Add the component on the end of a list of its type.
             bool add_component(Component &component);
+
+            void setState(State state);
             
             inline std::string name() const {return main_name;}
             inline State state() const {return main_state;}

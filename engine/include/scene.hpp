@@ -27,13 +27,13 @@ namespace engine{
             virtual ~Scene(){}
 
             //Add and check if it already exists. If success, return true
-            bool add_game_object(GameObject &obj);
+           virtual bool add_game_object(GameObject &obj);
 
             //Search for a specific GameObject by ID
             GameObject &get_game_object(const std::string &id);
 
             //Erase GameObject, find it by ID and remove.
-            bool remove_game_object(const std::string &id);
+           virtual bool remove_game_object(const std::string &id);
 
             //Initialization of scene
             virtual bool init();
@@ -44,9 +44,14 @@ namespace engine{
             //Check on map and initialize each game object. Return true if success
             virtual bool draw();
 
+           
+            virtual void declaration();
+            //gamelogic
+            virtual void game_logic();
+
             inline std::string name() const { return scene_name; }
 
-        private:
+        protected:
             std::string scene_name;
             std::unordered_map <std::string, GameObject *> scene_objects;
 

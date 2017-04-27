@@ -15,6 +15,7 @@ bool Scene::add_game_object(GameObject &obj){
         Log::instance.warning("Game object já existe!");
         return false;
     }
+
     scene_objects[id] = &obj;
     return true;
 }
@@ -44,6 +45,8 @@ bool Scene::remove_game_object(const std::string &id){
 
 bool Scene::init(){
     Log::instance.info("Inicializando cena");
+
+    //Iterando o mapa e inicilizando cada um dos game objects.
     for(auto id_obj: scene_objects){
         auto obj = id_obj.second;
         if(obj->state() == GameObject::State::enabled && obj->init() == false)
@@ -56,19 +59,28 @@ bool Scene::init(){
 bool Scene::shutdown(){
     Log::instance.info("Destruindo cena");
 
+    //Iterando o mapa e inicilizando cada um dos game objects.
     for(auto id_obj: scene_objects){
         auto obj = id_obj.second;
         if(obj->state() == GameObject::State::enabled && obj->shutdown() == false)
             return false;
     }
+
     return true;
 }
 
 bool Scene::draw(){
+
+    //Iterando o mapa e inicilizando cada um dos game objects.
     for(auto id_obj: scene_objects){
         auto obj = id_obj.second;
-        if(obj->state() == GameObject::State::enabled && obj->draw() == false)
+       if(obj->state() == GameObject::State::enabled && obj->draw() == false)
             return false;
     }
+
     return true;
 }
+
+
+void Scene::declaration(){}
+void Scene::game_logic(){}

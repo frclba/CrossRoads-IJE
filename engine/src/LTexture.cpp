@@ -10,11 +10,11 @@ LTexture::LTexture(){
 }
 
 LTexture::~LTexture(){
-    freeTexture();
+    free();
 }
 
-bool LTexture::loadFromFile(std::string path, SDL_Renderer* gRenderer){
-    freeTexture();
+bool LTexture::loadFromFile(std::string path,SDL_Renderer* gRenderer){
+    free();
     SDL_Texture* newTexture = NULL;
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 
@@ -23,7 +23,7 @@ bool LTexture::loadFromFile(std::string path, SDL_Renderer* gRenderer){
         return false;
     }
     else{
-        SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF) );
+        SDL_SetColorKey(loadedSurface,SDL_TRUE,SDL_MapRGB(loadedSurface->format,0,0xFF,0xFF));
         newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
         if( newTexture == NULL ){
             Log::instance.error("Unable to create texture from: " + path + ". SDL Error: " + SDL_GetError());
@@ -33,13 +33,15 @@ bool LTexture::loadFromFile(std::string path, SDL_Renderer* gRenderer){
             mHeight = loadedSurface->h;
         }
         SDL_FreeSurface( loadedSurface );
-    }
-    mTexture = newTexture;
 
+    }
+
+    mTexture = newTexture;
     return mTexture != NULL;
+
 }
 
-void LTexture::freeTexture(){
+void LTexture::free(){
     if( mTexture != NULL )
     {
         SDL_DestroyTexture( mTexture );
@@ -48,21 +50,18 @@ void LTexture::freeTexture(){
         mHeight = 0;
     }
 }
-
-void  LTexture::render( int x, int y, SDL_Renderer* gRenderer, SDL_Rect* clip){
+void  LTexture::render( int x, int y,SDL_Renderer* gRenderer,SDL_Rect* clip){
     SDL_Rect renderQuad = { x, y, mWidth, mHeight };
-
     if (clip != NULL) {
         renderQuad.w = clip->w * resizeValue;
         renderQuad.h = clip->h * resizeValue;
     }
     cout << resizeValue;
-    Log::instance.debug("Resize render value = " + resizeValue);
     SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
 }
 
-void LTexture::resizeRect(int toResize){
-    this->resizeValue = toResize;
+void LTexture::resizeRect(int resizeValue){
+    this->resizeValue = resizeValue;
 }
 
 int LTexture::getWidth(){

@@ -46,16 +46,15 @@ namespace engine{
 
     private:
         Game()
-            : main_canvas(NULL), main_name(""), main_window_size({0,0}),
-            main_window(NULL),
+            : main_name(main_name), main_window_size(main_window_size),
+            main_window(NULL), main_canvas(NULL),
             main_background_color({0xff, 0xff, 0xff, 0xff}),
             current_scene(NULL){};
 
-        std::string main_name;
-
-        std::pair<int,int> main_window_size;
-
         SDL_Window * main_window;
+
+        std::string main_name;
+        std::pair<int,int> main_window_size;
 
         SDL_Color main_background_color;
 

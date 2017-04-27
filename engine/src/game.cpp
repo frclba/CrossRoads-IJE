@@ -12,12 +12,14 @@ void Game::set_properties(std::string name, std::pair<int, int> window_size){
 
 bool Game::startSDL(){
 
-    Log::instance.info("Starting SDL");
+    Log::instance.info("Iniciando video e audio");
 
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0){
         Log::instance.error("Error ao inicializar video ou audio");
         return false;
     }
+
+    Log::instance.info("Iniciando Imagem");
 
     int img_flags = IMG_INIT_PNG; //Caso forem ser usados outros tipos de imagem, inserir as flags aqui
     if(!(IMG_Init(img_flags) & img_flags)){
@@ -36,7 +38,7 @@ bool Game::startSDL(){
 }
 
 bool Game::createWindow(){
-    Log::instance.info("Criando GameWindow");
+    Log::instance.info("Criando janela");
 
     main_window = SDL_CreateWindow( main_name.c_str(),          //Titulo
                                     SDL_WINDOWPOS_CENTERED,     //Posicao em X
@@ -82,8 +84,10 @@ bool Game::createWindow(){
         if( startSDL() && createWindow() ){
             Log::instance.info("Iniciando o jogo");
 
+            //Verifica se o jogo está sendo executado
             bool open_game = true;
             timer->start();
+            //Cada cena tem um método init que inicializa a cena. No caso, estamos inicializando a cena atual.
             current_scene->init();
 
             while(open_game){
@@ -104,6 +108,7 @@ bool Game::createWindow(){
                         }
                     }
                 }
+                current_scene->game_logic();
                 //Limpa o Canvas visualizado pelo  usuário
                 SDL_RenderClear(main_canvas);
                 //Desenha no buffer secundário.
@@ -114,9 +119,11 @@ bool Game::createWindow(){
                 int frameTicks = timer->getTicks();
                 if( frameTicks < FRAME )
                 {
-                    //SDL_Delay( FRAME - frameTicks );
+                    //                SDL_Delay( FRAME - frameTicks );
                 }
+
             }
+
         }
         Log::instance.info("Desligando tudo");
         destroyWindow();

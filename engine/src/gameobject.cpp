@@ -34,7 +34,6 @@ bool GameObject::shutdown(){
 }
 
 bool GameObject::draw(){
-  //TODO --> VALIDAR RETURN
     //Procurando no mapa os componentes do tipo ImageComponent
     for(auto component: main_components[std::type_index(typeid(ImageComponent))]){
         /*Caso o componente encontrado esteja com estado habilitado, converte ele para um componente de imagem
@@ -42,7 +41,6 @@ bool GameObject::draw(){
         if(component->state() == Component::State::enabled)
             (dynamic_cast<ImageComponent *>(component))->draw();
     }
-    return true;
     //
     // for(auto component: main_components[std::type_index(typeid(TextComponent))]){
     //     /*Caso o componente encontrado esteja com estado habilitado, converte ele para um componente de texto
@@ -50,12 +48,17 @@ bool GameObject::draw(){
     //     if(component->state() == Component::State::enabled)
     //         (dynamic_cast<TextComponent *>(component))->draw();
     // }
+    //
+    return true;
 }
 
 bool GameObject::add_component(Component &component){
-  //TODO ->> VALIDAR RETURN
     Log::instance.info("Adding components to game object");
     //Adiciona o componente no fim da lista referente ao tipo do mesmo.
     main_components[std::type_index(typeid(component))].push_back(&component);
-    return true;
+
+}
+
+void GameObject::setState(State state){
+    main_state = state;
 }
