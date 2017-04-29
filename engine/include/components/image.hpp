@@ -19,7 +19,7 @@ namespace engine{
             bool init();
             bool shutdown();
 
-            void draw();
+            virtual void draw();
 
         protected:
             //Caminho da imagem
