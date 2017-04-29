@@ -49,18 +49,15 @@ bool Animation::init(){
     }
 
     main_animation[BEGIN] = 0;
-    main_animation[END] = imageVector.size();
+    main_animation[END] = imageVector.size()-1;
     
     
     return true;
 }
 
 void Animation::setAnimation(std::string animationName,int begin,int end){
-    int animationsFrame[2];
-    animationsFrame[0] = begin;
-    animationsFrame[1] =  end;
-
-    memcpy(animationMap[animationName],animationsFrame,sizeof(int)*2);
+    (animationMap[animationName])[BEGIN] = begin;
+    (animationMap[animationName])[END] = end;
 }
 
 bool Animation::useAnimation(std::string animationName){
@@ -85,16 +82,14 @@ void Animation::draw(){
     renderQuad->w = imageVector[main_frame]->w;
     renderQuad->h = imageVector[main_frame]->h;
 
-
     if(Game::instance.timer->getTicks() - timestep >= delay){
         main_frame++;
         timestep = Game::instance.timer->getTicks();
     }
 
-    if(main_frame == main_animation[END]){
+    if(main_frame > main_animation[END]){
             main_frame = main_animation[BEGIN];
     }
 
-    
     SDL_RenderCopy(Game::instance.main_canvas, main_texture, imageVector[main_frame] , renderQuad);
 }

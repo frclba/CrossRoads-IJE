@@ -9,6 +9,7 @@
 
 #include "Timer.hpp"
 #include "scene.hpp"
+#include "mouse.hpp"
 
 namespace engine{
 
@@ -42,7 +43,9 @@ namespace engine{
         bool change_scene(const std::string &id);
 
         SDL_Renderer* main_canvas;
+
         Timer *timer;
+        Mouse *mouse;
 
     private:
         Game()

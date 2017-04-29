@@ -32,7 +32,7 @@ bool Game::startSDL(){
     }
 
     timer = new Timer();
-
+    mouse = new Mouse();
     return true;
 
 }
@@ -92,7 +92,9 @@ bool Game::createWindow(){
 
             while(open_game){
                 SDL_Event evt;
-
+                
+                //get mouse position
+                mouse->set_position();
                 while( SDL_PollEvent(&evt) != 0 ){
                     if( evt.type == SDL_QUIT ){
                         open_game = false;

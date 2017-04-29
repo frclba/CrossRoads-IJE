@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <gameobject.hpp>
-
+#include <mouse.hpp>
 #include "sdl2core.hpp"
 
 namespace engine{

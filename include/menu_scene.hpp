@@ -1,4 +1,5 @@
 #include<scene.hpp>
+#include "components/animation.hpp" 
 
 using namespace engine;
 class MenuScene : public Scene{

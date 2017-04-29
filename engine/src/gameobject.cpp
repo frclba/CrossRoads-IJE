@@ -48,7 +48,7 @@ bool GameObject::draw(){
         /*Caso o componente encontrado esteja com estado habilitado, converte ele para um componente de imagem
           e o desenha na tela*/
         if(component->state() == Component::State::enabled)
-            (dynamic_cast<ImageComponent *>(component))->draw();
+            (dynamic_cast<Animation *>(component))->draw();
     }
 
     //
@@ -66,6 +66,19 @@ bool GameObject::add_component(Component &component){
     Log::instance.info("Adding components to game object");
     //Adiciona o componente no fim da lista referente ao tipo do mesmo.
     main_components[std::type_index(typeid(component))].push_back(&component);
+
+}
+
+Component *GameObject::get_component(std::string name){
+   for(auto id_componentList: main_components){
+        //Iterando a lista de componentes do tipo encontrado.
+        for(auto component:id_componentList.second){
+            if(component->id == name){
+                return component;    
+            }
+        }
+    }
+
 
 }
 

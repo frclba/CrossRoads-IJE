@@ -45,6 +45,8 @@ namespace engine{
 
             void setState(State state);
             
+            Component* get_component(std::string name);
+            
             inline std::string name() const {return main_name;}
             inline State state() const {return main_state;}
             inline void set_size(int width, int height) {main_width = width; main_height = height;}

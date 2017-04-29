@@ -19,27 +19,34 @@ int main(int, char **){
     Game::instance.add_scene(menu);
 
     GameObject background("background");
-    ImageComponent backgroundImage(background, "assets/sprites/menu.png");
+    ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
 
-    GameObject im("im");
-    Animation fImage(im, "assets/sprites/personagem.png",900/5,495/2,10);
+    GameObject menuFire("menuFire");
+    Animation animationFire(menuFire,"imageFire", "assets/sprites/menuFire.png",348/6,76,6);
+    
+    GameObject bNew("bNew");
+    Animation image_bNew(bNew,"imageBNew", "assets/sprites/bNew.png",448/2,100,2);
+    image_bNew.setAnimation("normal",0,0);
+    image_bNew.setAnimation("mouseON",1,1);
 
-    GameObject asd("asd");
-    Animation fasd(asd, "assets/sprites/personagem.png",900/5,495/2,10);
+    GameObject bLoad("bLoad");
+    Animation image_bLoad(bLoad," imageBLoad","assets/sprites/bLoad.png",448/2,100,2);
+    image_bLoad.setAnimation("normal",0,0);
+    image_bLoad.setAnimation("mouseON",1,1);
 
 
 
-    fImage.setDelay(100);
+
+    animationFire.setDelay(100);
 
     background.add_component(backgroundImage);
-    im.add_component(fImage);
-    asd.add_component(fasd);
+    menuFire.add_component(animationFire);
+    bNew.add_component(image_bNew);
+    bLoad.add_component(image_bLoad);
 
-    asd.main_positionX = 50;
-    asd.main_positionY = 50;
-
-    menu.add_game_object(im);
-    menu.add_game_object(asd);
+    menu.add_game_object(menuFire);
+    menu.add_game_object(bNew);
+    menu.add_game_object(bLoad);
     menu.add_game_object(background);
     //Game lopp
     Game::instance.run();

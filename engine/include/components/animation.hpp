@@ -16,8 +16,8 @@ namespace engine{
     class Animation : public ImageComponent {
         public:
 
-            Animation(GameObject &main_game_object, std::string path,unsigned int widthDiv,unsigned int heightDiv,int num_image):
-                ImageComponent(main_game_object, path) ,m_widthDiv(widthDiv),m_heightDiv(heightDiv),m_num_image(num_image),
+            Animation(GameObject &main_game_object,std::string id ,std::string path,unsigned int widthDiv,unsigned int heightDiv,int num_image):
+                ImageComponent(main_game_object, id,path) ,m_widthDiv(widthDiv),m_heightDiv(heightDiv),m_num_image(num_image),
                 main_frame(0),delay(0), timestep(0){}
 
             ~Animation();
