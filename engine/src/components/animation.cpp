@@ -29,7 +29,7 @@ bool Animation::init(){
     }
 
     //Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho desejado
-    main_game_object->set_size(image->w, image->h);
+    main_game_object->set_size(m_widthDiv, m_heightDiv);
 
     SDL_FreeSurface(image);
 

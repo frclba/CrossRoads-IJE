@@ -11,10 +11,12 @@ void Mouse::set_position(){
 
 bool Mouse::is_over(engine::GameObject *gameObject){
 
-    if(mouseX > gameObject->main_positionX &&
+    if(
+            mouseX > gameObject->main_positionX &&
             mouseY > gameObject->main_positionY &&
             mouseX < (gameObject->main_width + gameObject->main_positionX) &&
-            mouseY < (gameObject->main_height + gameObject->main_positionY))
+            mouseY < (gameObject->main_height + gameObject->main_positionY)
+    )
     {
         return true;
     }
