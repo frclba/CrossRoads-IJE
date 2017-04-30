@@ -21,11 +21,13 @@ int main(int, char **){
     GameObject background("background");
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
 
+
     GameObject menuFire("menuFire");
     Animation animationFire(menuFire,"imageFire", "assets/sprites/menuFire.png",348/6,76,6);
     
     GameObject bNew("bNew");
     Animation image_bNew(bNew,"imageBNew", "assets/sprites/bNew.png",448/2,100,2);
+    //cadastrando dois tipos de animação, ado butao normal que pega a imagem de 0 a 0 e a mouseON que pega a imagem de 1 a 1
     image_bNew.setAnimation("normal",0,0);
     image_bNew.setAnimation("mouseON",1,1);
 
@@ -36,14 +38,16 @@ int main(int, char **){
 
 
 
-
+    //coloca o tempo que a nimacao do fogo percorre.
     animationFire.setDelay(100);
 
+    //Adiciona components aos gameobjects
     background.add_component(backgroundImage);
     menuFire.add_component(animationFire);
     bNew.add_component(image_bNew);
     bLoad.add_component(image_bLoad);
 
+    //adiciona game objects ao menu
     menu.add_game_object(menuFire);
     menu.add_game_object(bNew);
     menu.add_game_object(bLoad);
