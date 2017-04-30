@@ -44,7 +44,8 @@ namespace engine{
             bool add_component(Component &component);
 
             void setState(State state);
-            
+
+            //funcao que busca um component a partir do seu id.
             Component* get_component(std::string name);
             
             inline std::string name() const {return main_name;}
