@@ -41,13 +41,13 @@ namespace engine{
             virtual bool draw();
 
             //Add the component on the end of a list of its type.
-            bool add_component(Component &component);
+            void add_component(Component &component);
 
             void setState(State state);
 
             //funcao que busca um component a partir do seu id.
             Component* get_component(std::string name);
-            
+
             inline std::string name() const {return main_name;}
             inline State state() const {return main_state;}
             inline void set_size(int width, int height) {main_width = width; main_height = height;}

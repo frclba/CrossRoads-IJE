@@ -14,10 +14,10 @@ namespace engine{
     };
 
     //Sobrecarga do construtor para  componentes criados sem parâmetros serem invalidados.
-    Component(): main_game_object(NULL), main_state(State::invalid){}
+    Component(): _main_game_object(NULL), main_state(State::invalid){}
 
     Component(GameObject &gameObject, std::string name)
-    : component_id(name), main_game_object(&gameObject), main_state(State::enabled){}
+    : component_id(name), _main_game_object(&gameObject), main_state(State::enabled){}
 
     virtual ~Component() {};
     virtual bool init(){ return true; }
@@ -29,10 +29,10 @@ namespace engine{
 
   protected:
     //O componente guarda uma referência do game object ao qual pertence.
-    GameObject* main_game_object;
+    GameObject* _main_game_object;
 
     //TODO - ERROR Shadow declaration
-    
+
     State main_state;
 
   };

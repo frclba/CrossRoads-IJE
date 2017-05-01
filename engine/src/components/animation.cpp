@@ -7,7 +7,7 @@ Animation::~Animation(){
 }
 
 bool Animation::init(){
-    
+
     Log::instance.info("Iniciando componente de animacao");
 
     if(main_path == ""){
@@ -29,7 +29,7 @@ bool Animation::init(){
     }
 
     //Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho desejado
-    main_game_object->set_size(m_widthDiv, m_heightDiv);
+    _main_game_object->set_size(m_widthDiv, m_heightDiv);
 
     SDL_FreeSurface(image);
 
@@ -50,8 +50,8 @@ bool Animation::init(){
 
     main_animation[BEGIN] = 0;
     main_animation[END] = imageVector.size()-1;
-    
-    
+
+
     return true;
 }
 
@@ -63,26 +63,25 @@ void Animation::setAnimation(std::string animationName,int begin,int end){
 bool Animation::useAnimation(std::string animationName){
 
     main_animation[BEGIN] = (animationMap[animationName])[BEGIN];
-    main_animation[END] = (animationMap[animationName])[END]; 
+    main_animation[END] = (animationMap[animationName])[END];
     main_frame = main_animation[BEGIN];
 
     return true;
 }
 
-void Animation::setDelay(int delay){
-    this->delay = delay;
+void Animation::setDelay(int toSetDelay){
+    this->delay = toSetDelay;
 }
 
 void Animation::draw(){
 
-
     SDL_Rect *renderQuad = new SDL_Rect();
-    renderQuad->x = main_game_object->main_positionX;
-    renderQuad->y = main_game_object->main_positionY;
+    renderQuad->x = _main_game_object->main_positionX;
+    renderQuad->y = _main_game_object->main_positionY;
     renderQuad->w = imageVector[main_frame]->w;
     renderQuad->h = imageVector[main_frame]->h;
 
-    if(Game::instance.timer->getTicks() - timestep >= delay){
+    if((int)(Game::instance.timer->getTicks() - timestep) >= delay){
         main_frame++;
         timestep = Game::instance.timer->getTicks();
     }

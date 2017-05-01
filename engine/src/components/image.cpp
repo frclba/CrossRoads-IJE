@@ -25,7 +25,7 @@ bool ImageComponent::init(){
     }
 
     //Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho desejado
-    main_game_object->set_size(image->w, image->h);
+    _main_game_object->set_size(image->w, image->h);
 
     SDL_FreeSurface(image);
     return true;
@@ -42,10 +42,10 @@ bool ImageComponent::shutdown(){
 
 void ImageComponent::draw(){
     SDL_Rect *renderQuad = new SDL_Rect();
-    renderQuad->x = main_game_object->main_positionX;
-    renderQuad->y = main_game_object->main_positionY;
-    renderQuad->w = main_game_object->main_width;
-    renderQuad->h = main_game_object->main_height;
+    renderQuad->x = _main_game_object->main_positionX;
+    renderQuad->y = _main_game_object->main_positionY;
+    renderQuad->w = _main_game_object->main_width;
+    renderQuad->h = _main_game_object->main_height;
 
     if(imagePart!=NULL){
         renderQuad->w = imagePart->w;

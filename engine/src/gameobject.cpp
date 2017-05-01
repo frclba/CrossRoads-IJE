@@ -62,24 +62,22 @@ bool GameObject::draw(){
     return true;
 }
 
-bool GameObject::add_component(Component &component){
+void GameObject::add_component(Component &component){
     Log::instance.info("Adding components to game object");
     //Adiciona o componente no fim da lista referente ao tipo do mesmo.
     main_components[std::type_index(typeid(component))].push_back(&component);
 
 }
 
-Component *GameObject::get_component(std::string name){
-   for(auto id_componentList: main_components){
-        //Iterando a lista de componentes do tipo encontrado.
-        for(auto component:id_componentList.second){
-            if(component->component_id == name){
-                return component;
-            }
-        }
+Component* GameObject::get_component(std::string name){
+  for(auto id_componentList: main_components){
+    //Iterando a lista de componentes do tipo encontrado.
+    for(auto component:id_componentList.second){
+      if(component->component_id == name){
+        return component;
+      }
     }
-
-
+  }
 }
 
 void GameObject::setState(State state){
