@@ -11,7 +11,7 @@
 namespace engine{
     class ImageComponent : public Component {
         public:
-            ImageComponent(GameObject &main_game_object,std::string id, std::string path)
+            ImageComponent(GameObject &main_game_object, std::string id, std::string path)
             : Component(main_game_object, id), main_path(path){}
 
             ~ImageComponent(){};

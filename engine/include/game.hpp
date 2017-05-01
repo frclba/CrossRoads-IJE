@@ -49,21 +49,17 @@ namespace engine{
 
     private:
         Game()
-            : main_name(main_name), main_window_size(main_window_size),
-            main_window(NULL), main_canvas(NULL),
+            : main_canvas(NULL), main_name(NULL),
+            main_window_size({0,0}), main_window(NULL),
             main_background_color({0xff, 0xff, 0xff, 0xff}),
             current_scene(NULL){};
 
-        SDL_Window * main_window;
-
         std::string main_name;
         std::pair<int,int> main_window_size;
-
+        SDL_Window * main_window;
         SDL_Color main_background_color;
-
-        std::unordered_map <std::string, Scene *> scenes_list;
-
         Scene *current_scene;
+        std::unordered_map <std::string, Scene *> scenes_list;
     };
 }
 

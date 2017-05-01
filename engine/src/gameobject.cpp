@@ -73,8 +73,8 @@ Component *GameObject::get_component(std::string name){
    for(auto id_componentList: main_components){
         //Iterando a lista de componentes do tipo encontrado.
         for(auto component:id_componentList.second){
-            if(component->id == name){
-                return component;    
+            if(component->component_id == name){
+                return component;
             }
         }
     }
