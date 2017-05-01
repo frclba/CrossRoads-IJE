@@ -49,7 +49,7 @@ namespace engine{
 
     private:
         Game()
-            : main_canvas(NULL), main_name(NULL),
+            : main_canvas(NULL), main_name(""),
             main_window_size({0,0}), main_window(NULL),
             main_background_color({0xff, 0xff, 0xff, 0xff}),
             current_scene(NULL){};

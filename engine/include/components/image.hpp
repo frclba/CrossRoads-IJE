@@ -13,7 +13,8 @@ namespace engine{
         public:
             ImageComponent(GameObject &main_game_object, std::string id, std::string path)
             : Component(main_game_object, id), main_path(path){}
-
+              //TODO - fix main_game_object shadow error
+              
             ~ImageComponent(){};
 
             bool init();
