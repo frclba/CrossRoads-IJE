@@ -32,7 +32,7 @@ int main(int, char **){
     image_bNew.setAnimation("mouseON",1,1);
 
     GameObject bLoad("bLoad");
-    Animation image_bLoad(bLoad," imageBLoad","assets/sprites/bLoad.png",448/2,100,2);
+    Animation image_bLoad(bLoad,"imageBLoad","assets/sprites/bLoad.png",448/2,100,2);
     image_bLoad.setAnimation("normal",0,0);
     image_bLoad.setAnimation("mouseON",1,1);
 
