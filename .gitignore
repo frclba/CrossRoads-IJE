@@ -1,5 +1,9 @@
 # Created by https://www.gitignore.io/api/vim,c++,linux,cmake
 
+#Game
+build/
+log.txt
+
 ### C++ ###
 # Prerequisites
 *.d
@@ -19,8 +23,7 @@
 *.dylib
 *.dll
 
-game
-log.txt
+
 
 # Fortran module files
 *.mod
