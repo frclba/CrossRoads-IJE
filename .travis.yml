@@ -17,7 +17,7 @@ addons:
       - libsdl2-image-dev
       - libsdl2-mixer-dev
       - libsdl2-ttf-dev
-
+      - make
 script:
   # Link gcc-6 and g++-6 to their standard commands
   - sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
