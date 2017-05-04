@@ -75,6 +75,7 @@ bool Game::createWindow(){
     }
 
     void Game::offSDL(){
+      //TODO - Use the others destructors
         Mix_Quit();
         IMG_Quit();
         SDL_Quit();
@@ -92,25 +93,18 @@ bool Game::createWindow(){
 
             while(open_game){
                 SDL_Event evt;
-                
+
                 //get mouse position
                 mouse->set_position();
+
                 while( SDL_PollEvent(&evt) != 0 ){
                     if( evt.type == SDL_QUIT ){
                         open_game = false;
                     }
-
-                    if( evt.type == SDL_KEYDOWN ){
-                        switch (evt.key.keysym.sym) {
-                            case SDLK_SPACE:
-                                Log::instance.debug("teste teclado");
-                                //Keyboard::isKeyDown(keycode::KEY_SPACE);
-                                break;
-
-                        }
                     }
                 }
                 current_scene->game_logic();
+
                 //Limpa o Canvas visualizado pelo  usuário
                 SDL_RenderClear(main_canvas);
                 //Desenha no buffer secundário.
@@ -121,11 +115,9 @@ bool Game::createWindow(){
                 int frameTicks = timer->getTicks();
                 if( frameTicks < FRAME )
                 {
-                    //                SDL_Delay( FRAME - frameTicks );
+                    //SDL_Delay( FRAME - frameTicks );
                 }
-
             }
-
         }
         Log::instance.info("Desligando tudo");
         destroyWindow();
@@ -135,11 +127,11 @@ bool Game::createWindow(){
     bool Game::add_scene(Scene &scene){
         //Isso faz o id ser o name.
         auto id = scene.name();
-        Log::instance.info("Adicionando cena. Nome da cena: " + id);
+        Log::instance.info("Adding Scene: '" + id + "' to Scenes List.");
 
         //A scene desejada sempre tem que ser a ultima. Se não for, vai ser adicionada novamente.
         if( scenes_list.find(id) != scenes_list.end() ){
-            Log::instance.warning("Essa cena já está carregada !");
+            Log::instance.warning("The scene '"+ id +"' is already loaded!");
             return false;
         }
 
