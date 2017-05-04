@@ -1,4 +1,4 @@
-#include"../include/Timer.hpp"
+#include"Timer.hpp"
 
 using namespace engine;
 
@@ -6,6 +6,7 @@ Timer::Timer(){
 
     mStartTicks = 0;
     mPausedTicks = 0;
+    timeStep = 0;
 
     mPaused = false;
     mStarted = false;
@@ -101,4 +102,12 @@ bool Timer::isPaused(){
     //Timer is running and paused
     return mPaused && mStarted;
 
+}
+
+void Timer::set_TimeStep() {
+    timeStep = getTicks();
+}
+
+Uint32 Timer::get_elapseTime(){
+    return (getTicks() - timeStep) ;
 }
