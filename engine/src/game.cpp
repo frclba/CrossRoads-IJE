@@ -13,14 +13,12 @@ void Game::set_properties(std::string name, std::pair<int, int> window_size){
 bool Game::startSDL(){
 
     Log::instance.info("Iniciando video e audio");
-
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0){
         Log::instance.error("Error ao inicializar video ou audio");
         return false;
     }
 
     Log::instance.info("Iniciando Imagem");
-
     int img_flags = IMG_INIT_PNG; //Caso forem ser usados outros tipos de imagem, inserir as flags aqui
     if(!(IMG_Init(img_flags) & img_flags)){
         Log::instance.error("Erro ao inicializar imagens !");
@@ -82,14 +80,16 @@ bool Game::createWindow(){
     }
 
     void Game::run(){
+
         if( startSDL() && createWindow() ){
             Log::instance.info("Iniciando o jogo");
-
             //Verifica se o jogo está sendo executado
             bool open_game = true;
             timer->start();
+
             //Cada cena tem um método init que inicializa a cena. No caso, estamos inicializando a cena atual.
             current_scene->init();
+            Log::instance.debug("Initializing Current Scene '" + current_scene->scene_name +"'");
 
             while(open_game){
                 SDL_Event evt;
@@ -101,24 +101,21 @@ bool Game::createWindow(){
                     if( evt.type == SDL_QUIT ){
                         open_game = false;
                     }
-                    }
+                    // Events::handleEvents(evt);
                 }
                 current_scene->game_logic();
 
                 //Limpa o Canvas visualizado pelo  usuário
                 SDL_RenderClear(main_canvas);
+
                 //Desenha no buffer secundário.
                 current_scene->draw();
+
                 //Exibe o Canvas secundário para o usuário
                 SDL_RenderPresent(main_canvas);
-
-                int frameTicks = timer->getTicks();
-                if( frameTicks < FRAME )
-                {
-                    //SDL_Delay( FRAME - frameTicks );
-                }
             }
         }
+
         Log::instance.info("Desligando tudo");
         destroyWindow();
         offSDL();

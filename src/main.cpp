@@ -15,6 +15,8 @@ int main(int, char **){
     std::pair<int, int> window_size(800, 600);
     Game::instance.set_properties("Nome do Jogo",window_size);
 
+    Log::instance.jumpLine("Starting configurations && Instantiations\n");
+
     //================================================= MENU =======================================
     MenuScene menu("Main Menu");
     // Game::instance.add_scene(menu);
@@ -53,11 +55,8 @@ int main(int, char **){
     menu.add_game_object(background);
 
     // =================================== STAGE 1 =======================================
-
     //Criando cena da fase
     Stage1Scene stage1("Fase 1");
-    Game::instance.add_scene(stage1);
-
 
     GameObject player("player");
 
@@ -69,6 +68,10 @@ int main(int, char **){
     stage1.add_game_object(player);
 
     //==================================== GAME LOOP ============================================
+    Game::instance.add_scene(menu);
+    Game::instance.add_scene(stage1);
+
+    Log::instance.jumpLine("Ending Instantiations. Running Game\n");
 
     Game::instance.run();
 
