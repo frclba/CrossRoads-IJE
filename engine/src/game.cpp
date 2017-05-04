@@ -1,6 +1,6 @@
 #include "game.hpp"
 
-#define FRAME 60
+#define FRAME 60.0
 using namespace engine;
 
 Game Game::instance;
@@ -83,6 +83,7 @@ bool Game::createWindow(){
     void Game::run(){
         if( startSDL() && createWindow() ){
             Log::instance.info("Iniciando o jogo");
+            unsigned int frame_time = 1000.0/ FRAME;
 
             //Verifica se o jogo está sendo executado
             bool open_game = true;
@@ -118,11 +119,11 @@ bool Game::createWindow(){
                 //Exibe o Canvas secundário para o usuário
                 SDL_RenderPresent(main_canvas);
 
-                int frameTicks = timer->getTicks();
-                if( frameTicks < FRAME )
+                if( frame_time > timer->get_elapseTime() )
                 {
-                    //                SDL_Delay( FRAME - frameTicks );
+                    SDL_Delay( timer->get_elapseTime() );
                 }
+                timer->set_TimeStep();
 
             }
 
