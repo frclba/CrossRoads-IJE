@@ -42,6 +42,8 @@ namespace engine{
         //Muda a cena que está acontecendo
         bool change_scene(const std::string &id);
 
+        void init_scenes();
+        
         SDL_Renderer* main_canvas;
 
         Timer *timer;

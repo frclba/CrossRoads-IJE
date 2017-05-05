@@ -26,10 +26,12 @@ void MenuScene::game_logic(){
 
     //Faz efeito de passar o mause em cima 
     if(Game::instance.mouse->is_over(bNew)){
+        if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+            Game::instance.change_scene("Fase 1");
+        }
         bnewAnimation->useAnimation("normal");
     }
     else{
-
         bnewAnimation->useAnimation("mouseON");
     }
     if(Game::instance.mouse->is_over(bLoad)){

@@ -17,7 +17,7 @@ int main(int, char **){
 
     //================================================= MENU =======================================
     MenuScene menu("Main Menu");
-    // Game::instance.add_scene(menu);
+    Game::instance.add_scene(menu);
 
     GameObject background("background");
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");

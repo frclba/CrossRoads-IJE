@@ -90,7 +90,8 @@ bool Game::createWindow(){
             bool open_game = true;
             timer->start();
             //Cada cena tem um método init que inicializa a cena. No caso, estamos inicializando a cena atual.
-            current_scene->init();
+           // current_scene->init();
+            init_scenes();
 
             while(open_game){
                 SDL_Event evt;
@@ -135,6 +136,15 @@ bool Game::createWindow(){
         Log::instance.info("Desligando tudo");
         destroyWindow();
         offSDL();
+    }
+
+    void Game::init_scenes(){
+     for(auto id_obj: scenes_list){
+        auto obj = id_obj.second;
+        obj->init();
+     }
+
+   
     }
 
     bool Game::add_scene(Scene &scene){
