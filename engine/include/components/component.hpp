@@ -30,7 +30,11 @@ namespace engine{
   protected:
     //O componente guarda uma referência do game object ao qual pertence.
     GameObject* _main_game_object;
+
+    //TODO - ERROR Shadow declaration
+
     State main_state;
+
   };
 }
 

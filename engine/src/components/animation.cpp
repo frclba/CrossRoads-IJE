@@ -64,7 +64,9 @@ bool Animation::useAnimation(std::string animationName){
 
     main_animation[BEGIN] = (animationMap[animationName])[BEGIN];
     main_animation[END] = (animationMap[animationName])[END];
-    main_frame = main_animation[BEGIN];
+    if(main_frame<main_animation[BEGIN] || main_frame>main_animation[END]){
+        main_frame = main_animation[BEGIN];
+    }
 
     return true;
 }
@@ -90,5 +92,6 @@ void Animation::draw(){
             main_frame = main_animation[BEGIN];
     }
 
+   // std::cout<<main_frame<<std::endl;
     SDL_RenderCopy(Game::instance.main_canvas, main_texture, imageVector[main_frame] , renderQuad);
 }

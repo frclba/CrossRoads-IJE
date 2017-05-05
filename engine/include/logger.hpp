@@ -10,7 +10,7 @@
 #define DEBUG 1
 
 //TODO -> write function to write time into logfile.txt
-//TODO -> Apply log on Iniciando componente de imagem, Iniciando componente de animacao, Init game object
+
 class Log {
 public:
     static Log instance;
@@ -20,7 +20,6 @@ public:
     void warning(std::string message);
     void error(std::string message);
     void info(std::string message);
-    void jumpLine(std::string message);
 
 private:
     Log();

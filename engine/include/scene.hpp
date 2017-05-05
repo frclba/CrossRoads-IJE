@@ -44,15 +44,15 @@ namespace engine{
             //Check on map and initialize each game object. Return true if success
             virtual bool draw();
 
-
+           
             virtual void declaration();
             //gamelogic
             virtual void game_logic();
 
             inline std::string name() const { return scene_name; }
-            std::string scene_name;
 
         protected:
+            std::string scene_name;
             std::unordered_map <std::string, GameObject *> scene_objects;
 
             State scene_state;

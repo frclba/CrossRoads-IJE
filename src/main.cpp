@@ -15,11 +15,9 @@ int main(int, char **){
     std::pair<int, int> window_size(800, 600);
     Game::instance.set_properties("Nome do Jogo",window_size);
 
-    Log::instance.jumpLine("Starting configurations && Instantiations\n");
-
     //================================================= MENU =======================================
     MenuScene menu("Main Menu");
-    // Game::instance.add_scene(menu);
+    Game::instance.add_scene(menu);
 
     GameObject background("background");
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
@@ -55,23 +53,23 @@ int main(int, char **){
     menu.add_game_object(background);
 
     // =================================== STAGE 1 =======================================
+
     //Criando cena da fase
     Stage1Scene stage1("Fase 1");
+    Game::instance.add_scene(stage1);
+
 
     GameObject player("player");
 
-    //Animation player_idle(player, "playerIdle", "assets/sprites/personagem.png",900/5,495/2, 10);
-
-    //player_idle.setDelay(100);
-
-    //player.add_component(player_idle);
+    Animation player_idle(player, "playerIdle", "assets/sprites/tes.png",524/13,53, 13);
+    player_idle.setDelay(100);
+    player_idle.setAnimation("stay",0,2);
+    player_idle.setAnimation("walk",3,11);
+    player_idle.setAnimation("attack",12,12);
+    player.add_component(player_idle);
     stage1.add_game_object(player);
 
     //==================================== GAME LOOP ============================================
-    Game::instance.add_scene(menu);
-    Game::instance.add_scene(stage1);
-
-    Log::instance.jumpLine("Ending Instantiations. Running Game\n");
 
     Game::instance.run();
 

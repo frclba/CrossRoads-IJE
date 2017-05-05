@@ -8,7 +8,7 @@ GameObject INVALID_GAME_OBJECT;
 
 bool Scene::add_game_object(GameObject &obj){
     auto id = obj.name();
-    Log::instance.info("Adding GameObject '"+ id +"' to scene '" + scene_name +"'.");
+    Log::instance.info("Adicionando game object a cena");
 
     //Iterando mapa para ver se aquele game object já existe nela
     if (scene_objects.find(id) != scene_objects.end()){
@@ -23,7 +23,7 @@ bool Scene::add_game_object(GameObject &obj){
 GameObject &Scene::get_game_object(const std::string &id){
 
     if(scene_objects.find(id) == scene_objects.end()){
-        Log::instance.warning("Não foi possível encontrar o GameObject '" + id +"'.");
+        Log::instance.warning("Não foi possível encontrar o game object");
         return INVALID_GAME_OBJECT;
     }
 
@@ -32,10 +32,10 @@ GameObject &Scene::get_game_object(const std::string &id){
 
 bool Scene::remove_game_object(const std::string &id){
 
-    Log::instance.info("Removendo GameObject '" + id +"' da Scene.");
+    Log::instance.info("Removendo game object da cena");
 
     if(scene_objects.find(id) == scene_objects.end()){
-        Log::instance.warning("Não foi possível encontrar o GameObject '" + id +"'.");
+        Log::instance.warning("Não foi possível encontrar o game object");
         return false;
     }
 
@@ -44,7 +44,7 @@ bool Scene::remove_game_object(const std::string &id){
 }
 
 bool Scene::init(){
-    Log::instance.info("Inicializando cena '" + scene_name +"'.");
+    Log::instance.info("Inicializando cena");
 
     //Iterando o mapa e inicilizando cada um dos game objects.
     for(auto id_obj: scene_objects){
@@ -57,7 +57,7 @@ bool Scene::init(){
 }
 
 bool Scene::shutdown(){
-    Log::instance.info("Destruindo cena '" + scene_name +"'.");
+    Log::instance.info("Destruindo cena");
 
     //Iterando o mapa e inicilizando cada um dos game objects.
     for(auto id_obj: scene_objects){

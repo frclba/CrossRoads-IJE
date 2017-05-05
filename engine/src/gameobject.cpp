@@ -63,7 +63,7 @@ bool GameObject::draw(){
 }
 
 void GameObject::add_component(Component &component){
-    Log::instance.info("Adding component: '" + component.component_id + "' to game object: '" + main_name + "'.");
+    Log::instance.info("Adding components to game object");
     //Adiciona o componente no fim da lista referente ao tipo do mesmo.
     main_components[std::type_index(typeid(component))].push_back(&component);
 

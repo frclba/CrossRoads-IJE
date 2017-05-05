@@ -71,8 +71,3 @@ void Log::info(std::string msg) {
     logFile << msg << std::endl;
     logFile.flush();
 }
-void Log::jumpLine(std::string msg){
-  logFile << "\n[->]";
-  logFile << msg << std::endl;
-  logFile.flush();
-}
