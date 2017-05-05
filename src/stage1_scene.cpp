@@ -1,36 +1,50 @@
 #include "stage1_scene.hpp"
+    bool canJump = true;
 
 void Stage1Scene::game_logic(){
     GameObject* player = &get_game_object("player");
 
+    int ground = 550;
+    int maxJump = 100;
+    float gravityDown = 5;
+    float gravityUp = gravityDown * 3;
+
     Animation* idle = (dynamic_cast<Animation *>(player->get_component("playerIdle")));
 
-    if((player->main_positionY+player->main_height)<550){
-        player->main_positionY += 10;
+    //Test if player is not on ground
+    if((player->main_positionY + player->main_height) < ground){
+        player->main_positionY += gravityDown;
+        canJump = false;
+    }else{
+        canJump = true;
     }
+
     if(Game::instance.keyboard->isKeyDown(SDLK_d)){
-        walkR= true; 
+        walkR= true;
     }
     if(Game::instance.keyboard->isKeyDown(SDLK_a)){
-        walkL= true; 
+        walkL= true;
     }
-    if(Game::instance.keyboard->isKeyDown(SDLK_w)){
-        jump = true; 
+    if(Game::instance.keyboard->isKeyDown(SDLK_w) && canJump){
+        jump = true;
+    }else{
+        jump = false;
     }
+
     if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
-        attack = true; 
+        attack = true;
     }
     if(Game::instance.keyboard->isKeyUp(SDLK_d)){
-        walkR= false; 
+        walkR= false;
     }
     if(Game::instance.keyboard->isKeyUp(SDLK_a)){
-        walkL= false; 
+        walkL= false;
     }
     if(Game::instance.keyboard->isKeyUp(SDLK_w)){
-        jump = false; 
+        jump = false;
     }
     if(Game::instance.keyboard->isKeyUp(SDLK_SPACE)){
-        attack = false; 
+        attack = false;
     }
     if(walkR && (player->main_positionX+player->main_width)<800){
         idle->useAnimation("walk");
@@ -48,12 +62,12 @@ void Stage1Scene::game_logic(){
         idle->useAnimation("stay");
     }
 
+    if(jump){
+        jumptime = Game::instance.timer->getTicks() + maxJump;
+    }
 
-    if(jump){ 
-        jumptime = Game::instance.timer->getTicks() + 150; 
-    } 
-    if(Game::instance.timer->getTicks() <= jumptime){ 
-        player->main_positionY -= 20;
+    if(Game::instance.timer->getTicks() <= jumptime){
+        player->main_positionY -= gravityUp;
     }
 
 }

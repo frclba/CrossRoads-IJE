@@ -44,7 +44,7 @@ bool Scene::remove_game_object(const std::string &id){
 }
 
 bool Scene::init(){
-    Log::instance.info("Inicializando cena");
+    Log::instance.info("Inicializando cena " + scene_name);
 
     //Iterando o mapa e inicilizando cada um dos game objects.
     for(auto id_obj: scene_objects){

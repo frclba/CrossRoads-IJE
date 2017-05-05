@@ -82,28 +82,34 @@ bool Game::createWindow(){
     }
 
     void Game::run(){
+        current_state = State::init;
+
         if( startSDL() && createWindow() ){
             Log::instance.info("Iniciando o jogo");
+            current_state = State::main_loop;
+
             unsigned int frame_time = 1000.0/ FRAME;
 
-            //Verifica se o jogo está sendo executado
-            bool open_game = true;
             timer->start();
-            //Cada cena tem um método init que inicializa a cena. No caso, estamos inicializando a cena atual.
            // current_scene->init();
-            init_scenes();
+           if(current_scene != NULL)
+                current_state = State::main_loop_change_scene;
 
-            while(open_game){
+            while(current_state != State::exit_loop){
+
+                if(handle_scene_changes() == false)
+                    break;
+
                 SDL_Event evt;
-                
+
                 //get mouse position
                 mouse->set_position();
                 while( SDL_PollEvent(&evt) != 0 ){
                     if( evt.type == SDL_QUIT ){
-                        open_game = false;
+                        current_state = State::exit_loop;
                     }
 
-                    keyboard->setKeys(&evt);  
+                    keyboard->setKeys(&evt);
                     if( evt.type == SDL_KEYDOWN ){
                         switch (evt.key.keysym.sym) {
                             case SDLK_SPACE:
@@ -122,55 +128,89 @@ bool Game::createWindow(){
                 //Exibe o Canvas secundário para o usuário
                 SDL_RenderPresent(main_canvas);
 
-                if( frame_time > timer->get_elapseTime() )
-                {
-                    SDL_Delay( timer->get_elapseTime() );
+                if( frame_time > timer->get_elapseTime()){
+                    SDL_Delay( timer->get_elapseTime());
                 }
 
-                keyboard->clearKeyboard();  
+                keyboard->clearKeyboard();
                 timer->set_TimeStep();
-
             }
 
+            Log::instance.info("Cleaning scene...");
+            if(current_scene)
+                current_scene->shutdown();
         }
+
         Log::instance.info("Desligando tudo");
+        current_state = State::shutdown;
         destroyWindow();
         offSDL();
     }
 
-    void Game::init_scenes(){
-     for(auto id_obj: scenes_list){
-        auto obj = id_obj.second;
-        obj->init();
-     }
+bool Game::add_scene(Scene &scene){
+    //Isso faz o id ser o name.
+    auto id = scene.name();
+    Log::instance.info("Adicionando cena. Nome da cena: " + id);
 
-   
+    //A scene desejada sempre tem que ser a ultima. Se não for, vai ser adicionada novamente.
+    if( scenes_list.find(id) != scenes_list.end() ){
+        Log::instance.warning("Essa cena já está carregada !");
+        return false;
     }
 
-    bool Game::add_scene(Scene &scene){
-        //Isso faz o id ser o name.
-        auto id = scene.name();
-        Log::instance.info("Adicionando cena. Nome da cena: " + id);
+    scenes_list[id] = &scene;
 
-        //A scene desejada sempre tem que ser a ultima. Se não for, vai ser adicionada novamente.
-        if( scenes_list.find(id) != scenes_list.end() ){
-            Log::instance.warning("Essa cena já está carregada !");
-            return false;
-        }
-
-        scenes_list[id] = &scene;
-
-        if( current_scene == NULL )
+    if( current_scene == NULL )
         change_scene(id);
 
-        return true;
+    return true;
+}
+
+bool Game::change_scene(const std::string &id){
+
+    if( scenes_list.find(id) == scenes_list.end() ){
+        return false;
     }
 
-    bool Game::change_scene(const std::string &id){
-        if( scenes_list.find(id) == scenes_list.end() ){
-            return false;
-        }
+    last_current_scene = current_scene;
 
+    // current_scene = scenes_list[id];
+    if(next_scene == NULL){
+        //Quando for rodado a primeira vez.
         current_scene = scenes_list[id];
-        return true;
+    }else{
+        printf("Pŕoxima cena que foi setada\n");
+        next_scene = scenes_list[id];
     }
+
+    current_state = State::main_loop_change_scene;
+
+    return true;
+}
+
+bool Game::handle_scene_changes(){
+    if(current_state == State::main_loop_change_scene){
+        if(current_scene == NULL){
+            return false;
+        }else{
+            Log::instance.info("Changing scene: '" + current_scene->name() + "'");
+
+            if(next_scene != NULL){
+                current_scene = next_scene;
+            }else{
+                //Somente na primeira vez.
+                next_scene = current_scene;
+            }
+
+            if(last_current_scene)
+                last_current_scene->shutdown();
+
+            current_scene->init();
+
+            current_state = State::main_loop;
+
+        }
+    }
+
+    return true;
+}
