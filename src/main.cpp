@@ -60,11 +60,11 @@ int main(int, char **){
 
     GameObject player("player");
 
-    Animation player_idle(player, "playerIdle", "assets/sprites/personagem.png",900/5,495/2, 10);
-    // player_idle.setAnimation("idle",0, 7);
-    player_idle.setDelay(100);
+    //Animation player_idle(player, "playerIdle", "assets/sprites/personagem.png",900/5,495/2, 10);
 
-    player.add_component(player_idle);
+    //player_idle.setDelay(100);
+
+    //player.add_component(player_idle);
     stage1.add_game_object(player);
 
     //==================================== GAME LOOP ============================================

@@ -2,6 +2,7 @@
 
 using namespace engine ;
 
+//Pega posição do mouse,armazena em x e y e coloca como atributo da classe mouse.
 void Mouse::set_position(){
     int x,y;
     SDL_GetMouseState(&x, &y);

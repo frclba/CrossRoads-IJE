@@ -80,21 +80,27 @@ bool Game::createWindow(){
     }
 
     void Game::run(){
+        current_state = State::init;
 
         if( startSDL() && createWindow() ){
             Log::instance.info("Iniciando o jogo");
+            current_state = State::main_loop;
 
             unsigned int frame_time = 1000.0/ FRAME;
 
-            //Verifica se o jogo está sendo executado
-            bool open_game = true;
             timer->start();
 
             //Cada cena tem um método init que inicializa a cena. No caso, estamos inicializando a cena atual.
-            current_scene->init();
-            Log::instance.debug("Initializing Current Scene '" + current_scene->scene_name +"'");
+            //current_scene->init();
+            //Log::instance.debug("Initializing Current Scene '" + current_scene->scene_name +"'");
+            if(current_scene != NULL)
+                current_state = State::main_loop_change_scene;
 
-            while(open_game){
+            while(current_state != State::exit_loop){
+
+                if(handle_scene_changes() == false)
+                    break;
+
                 SDL_Event evt;
 
                 //get mouse position
@@ -102,7 +108,11 @@ bool Game::createWindow(){
 
                 while( SDL_PollEvent(&evt) != 0 ){
                     if( evt.type == SDL_QUIT ){
-                        open_game = false;
+                        current_state = State::exit_loop;
+                    }
+
+                    if( evt.type == SDL_MOUSEBUTTONDOWN){
+                        change_scene("Fase 1");
                     }
                     // Events::handleEvents(evt);
                 }
@@ -117,15 +127,20 @@ bool Game::createWindow(){
                 //Exibe o Canvas secundário para o usuário
                 SDL_RenderPresent(main_canvas);
 
-                if( frame_time > timer->get_elapseTime() )
-                {
+                if( frame_time > timer->get_elapseTime()){
                     SDL_Delay( timer->get_elapseTime() );
                 }
+
                 timer->set_TimeStep();
             }
+
+            Log::instance.info("Cleaning scene...");
+            if(current_scene)
+                current_scene->shutdown();
         }
 
         Log::instance.info("Desligando tudo");
+        current_state = State::shutdown;
         destroyWindow();
         offSDL();
     }
@@ -150,10 +165,32 @@ bool Game::createWindow(){
     }
 
     bool Game::change_scene(const std::string &id){
+
         if( scenes_list.find(id) == scenes_list.end() ){
             return false;
         }
 
+        last_current_scene = current_scene;
         current_scene = scenes_list[id];
+        current_state = State::main_loop_change_scene;
+        return true;
+    }
+
+    bool Game::handle_scene_changes(){
+        if(current_state == State::main_loop_change_scene){
+            if(current_scene == NULL){
+                return false;
+            }else{
+                Log::instance.info("Changing Scene: '" + current_scene->name() + "'");
+
+                if(last_current_scene)
+                    last_current_scene->shutdown();
+
+                current_scene->init();
+
+                current_state = State::main_loop;
+            }
+
+        }
         return true;
     }
