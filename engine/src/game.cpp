@@ -33,6 +33,7 @@ bool Game::startSDL(){
 
     timer = new Timer();
     mouse = new Mouse();
+    keyboard = new Keyboard();
     return true;
 
 }
@@ -101,10 +102,11 @@ bool Game::createWindow(){
                         open_game = false;
                     }
 
+                    keyboard->setKeys(&evt);  
                     if( evt.type == SDL_KEYDOWN ){
                         switch (evt.key.keysym.sym) {
                             case SDLK_SPACE:
-                                Log::instance.debug("teste teclado");
+                                //Log::instance.debug("teste teclado");
                                 //Keyboard::isKeyDown(keycode::KEY_SPACE);
                                 break;
 
@@ -123,6 +125,8 @@ bool Game::createWindow(){
                 {
                     SDL_Delay( timer->get_elapseTime() );
                 }
+
+                keyboard->clearKeyboard();  
                 timer->set_TimeStep();
 
             }

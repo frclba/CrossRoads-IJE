@@ -10,7 +10,7 @@
 #include "Timer.hpp"
 #include "scene.hpp"
 #include "mouse.hpp"
-
+#include "Keyboard.hpp"
 namespace engine{
 
     class Game{
@@ -46,6 +46,7 @@ namespace engine{
 
         Timer *timer;
         Mouse *mouse;
+        Keyboard* keyboard;
 
     private:
         Game()
