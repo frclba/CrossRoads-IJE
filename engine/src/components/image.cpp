@@ -4,7 +4,7 @@
 using namespace engine;
 
 bool ImageComponent::init(){
-    Log::instance.info("Iniciando componente de imagem");
+    Log::instance.info("Iniciando componente de imagem: " + main_path);
 
     if(main_path == ""){
         Log::instance.error("Caminho inválido!");

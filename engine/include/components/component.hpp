@@ -27,11 +27,12 @@ namespace engine{
 
     std::string component_id;
 
+    State main_state;
+    // State main_state;
   protected:
     //O componente guarda uma referência do game object ao qual pertence.
     GameObject* _main_game_object;
 
-    State main_state;
 
   };
 }

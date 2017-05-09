@@ -63,12 +63,40 @@ int main(int, char **){
 
 
     GameObject player("player");
+    GameObject background_stage1("backgroundForest");
+    GameObject ground_stage1("ground");
+
+    ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
+
+    ImageComponent tile1(ground_stage1, "tile1", "assets/sprites/ChãoMap1.png");
+    ImageComponent tile2(ground_stage1,"tile2", "assets/sprites/ChãoMap2.png");
+    ImageComponent tile3(ground_stage1,"tile3", "assets/sprites/ChãoMap3.png");
+    ImageComponent tile4(ground_stage1,"tile4", "assets/sprites/ChãoMap4.png");
+
 
     Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",800/8,50, 8);
-    // player_idle.setDelay(100);
-    player.add_component(player_idle);
-    stage1.add_game_object(player);
+    player_idle.setDelay(100);
 
+    Animation player_running(player, "playerRunning", "assets/sprites/hero_running.png" ,400/4, 50, 4);
+
+    player_running.setDelay(100);
+
+    player.add_component(player_idle);
+    player.add_component(player_running);
+
+    background_stage1.add_component(backgroundForest);
+
+    ground_stage1.add_component(tile1);
+    ground_stage1.main_positionX = 0;
+    ground_stage1.main_positionY = 552;
+    ground_stage1.add_component(tile2);
+    ground_stage1.add_component(tile3);
+    ground_stage1.add_component(tile4);
+
+
+    stage1.add_game_object(player);
+    stage1.add_game_object(ground_stage1);
+    stage1.add_game_object(background_stage1);
     //==================================== GAME LOOP ============================================
 
     Game::instance.run();
