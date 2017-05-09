@@ -83,6 +83,7 @@ int main(int, char **){
 
     player.add_component(player_idle);
     player.add_component(player_running);
+    player.main_positionY = 552;
 
     background_stage1.add_component(backgroundForest);
 
