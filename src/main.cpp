@@ -64,11 +64,8 @@ int main(int, char **){
 
     GameObject player("player");
 
-    Animation player_idle(player, "playerIdle", "assets/sprites/tes.png",524/13,53, 13);
-    player_idle.setDelay(100);
-    player_idle.setAnimation("stay",0,2);
-    player_idle.setAnimation("walk",3,11);
-    player_idle.setAnimation("attack",12,12);
+    Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",800/8,50, 8);
+    // player_idle.setDelay(100);
     player.add_component(player_idle);
     stage1.add_game_object(player);
 
