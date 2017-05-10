@@ -93,5 +93,13 @@ void Animation::draw(){
     }
 
    // std::cout<<main_frame<<std::endl;
-    SDL_RenderCopy(Game::instance.main_canvas, main_texture, imageVector[main_frame] , renderQuad);
+    SDL_RenderCopyEx(Game::instance.main_canvas, main_texture, imageVector[main_frame] , renderQuad, 0, NULL, flip);
+}
+
+void Animation::flipping(bool isFlip){
+  if(isFlip){
+    flip = SDL_FLIP_HORIZONTAL;
+  }else{
+    flip = SDL_FLIP_NONE;
+  }
 }

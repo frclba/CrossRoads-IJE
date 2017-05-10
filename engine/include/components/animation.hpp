@@ -65,6 +65,9 @@ namespace engine{
             //setDelat = seleciona o delay em ms que a animacao da ao passar de imagem
             void setDelay(int delay);
 
+            void flipping(bool isFlip);
+
+            SDL_RendererFlip flip = SDL_FLIP_NONE;
         private:
 
             const int BEGIN = 0;
@@ -86,6 +89,7 @@ namespace engine{
             int delay;
 
             int timestep;
+
     };
 }
 #endif

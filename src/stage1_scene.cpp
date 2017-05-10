@@ -4,6 +4,7 @@
 bool canJump = true;
 bool jump = false;
 bool isFalling = false;
+bool isRight = true;
 
 void Stage1Scene::game_logic(){
     GameObject* player = &get_game_object("player");
@@ -78,20 +79,26 @@ void Stage1Scene::game_logic(){
     // if(Game::instance.keyboard->isKeyUp(SDLK_w)){
         // jump = false;
     // }
+    running->flipping(isRight);
+    idle->flipping(isRight);
+    attackComp->flipping(isRight);
+    damage->flipping(isRight);
 
     if(Game::instance.keyboard->isKeyUp(SDLK_SPACE)){
         attack = false;
     }
     if(walkR && (player->main_positionX+player->main_width)<800){
+        isRight = true;
         idle->main_state = Component::State::disabled;
-	damage->main_state = Component::State::disabled;
+	      damage->main_state = Component::State::disabled;
         attackComp->main_state = Component::State::disabled;
         running->main_state = Component::State::enabled;
 
-	
+
         player->main_positionX += moveForce;
     }
     else if(walkL && (player->main_positionX)>=0 ){
+        isRight = false;
         idle->main_state = Component::State::disabled;
 	damage->main_state = Component::State::disabled;
         attackComp->main_state = Component::State::disabled;
