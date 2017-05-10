@@ -15,9 +15,11 @@ void Stage1Scene::game_logic(){
 
     Animation* idle = (dynamic_cast<Animation *>(player->get_component("playerIdle")));
     Animation* running = (dynamic_cast<Animation *>(player->get_component("playerRunning")));
+    Animation* damage = (dynamic_cast<Animation *>(player->get_component("playerDamage")));
 
     idle->main_state = Component::State::enabled;
     running->main_state = Component::State::disabled;
+    damage->main_state = Component::State::disabled;
 
 
 //========================== JUMP LOGIC ======================================
@@ -59,13 +61,18 @@ void Stage1Scene::game_logic(){
     if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
         attack = true;
     }
+    if(Game::instance.keyboard->isKeyDown(SDLK_q)){
+        damageBool = true;
+    }
     if(Game::instance.keyboard->isKeyUp(SDLK_d)){
         walkR= false;
     }
     if(Game::instance.keyboard->isKeyUp(SDLK_a)){
         walkL= false;
     }
-
+    if(Game::instance.keyboard->isKeyUp(SDLK_q)){
+        damageBool = false;
+    }
     // if(Game::instance.keyboard->isKeyUp(SDLK_w)){
         // jump = false;
     // }
@@ -84,6 +91,11 @@ void Stage1Scene::game_logic(){
         running->main_state = Component::State::enabled;
 
         player->main_positionX -= moveForce;
+    }
+    else if(damageBool){
+        idle->main_state = Component::State::disabled;
+        running->main_state = Component::State::disabled;
+        damage->main_state = Component::State::enabled;
     }
     else if(attack){
 

@@ -78,11 +78,14 @@ int main(int, char **){
     player_idle.setDelay(100);
 
     Animation player_running(player, "playerRunning", "assets/sprites/hero_running.png" ,400/4, 50, 4);
-
     player_running.setDelay(100);
+
+    Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
+    player_damage.setDelay(100);
 
     player.add_component(player_idle);
     player.add_component(player_running);
+    player.add_component(player_damage);
     player.main_positionY = 552;
 
     background_stage1.add_component(backgroundForest);

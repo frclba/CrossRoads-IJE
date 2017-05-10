@@ -21,6 +21,7 @@ class Stage1Scene : public Scene{
     bool jump;
     bool stand;
     bool attack;
+    bool damageBool;
     unsigned int jumptime;
 
 };
