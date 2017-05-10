@@ -9,7 +9,7 @@ class Stage1Scene : public Scene{
     public:
 
         Stage1Scene(std::string name):
-            Scene(name),jumptime(0),walkR(false),walkL(false),jump(false),attack(false){}
+	  Scene(name),jumptime(0),walkR(false),walkL(false),jump(false),attack(false),damageBool(false){}
 
         ~Stage1Scene();
 

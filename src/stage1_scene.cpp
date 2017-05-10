@@ -16,10 +16,12 @@ void Stage1Scene::game_logic(){
     Animation* idle = (dynamic_cast<Animation *>(player->get_component("playerIdle")));
     Animation* running = (dynamic_cast<Animation *>(player->get_component("playerRunning")));
     Animation* damage = (dynamic_cast<Animation *>(player->get_component("playerDamage")));
+    Animation* attackComp = (dynamic_cast<Animation *>(player->get_component("playerAttack")));
 
     idle->main_state = Component::State::enabled;
     running->main_state = Component::State::disabled;
     damage->main_state = Component::State::disabled;
+    attackComp->main_state = Component::State::disabled;
 
 
 //========================== JUMP LOGIC ======================================
@@ -82,12 +84,17 @@ void Stage1Scene::game_logic(){
     }
     if(walkR && (player->main_positionX+player->main_width)<800){
         idle->main_state = Component::State::disabled;
+	damage->main_state = Component::State::disabled;
+        attackComp->main_state = Component::State::disabled;
         running->main_state = Component::State::enabled;
 
+	
         player->main_positionX += moveForce;
     }
     else if(walkL && (player->main_positionX)>=0 ){
         idle->main_state = Component::State::disabled;
+	damage->main_state = Component::State::disabled;
+        attackComp->main_state = Component::State::disabled;
         running->main_state = Component::State::enabled;
 
         player->main_positionX -= moveForce;
@@ -95,11 +102,14 @@ void Stage1Scene::game_logic(){
     else if(damageBool){
         idle->main_state = Component::State::disabled;
         running->main_state = Component::State::disabled;
+        attackComp->main_state = Component::State::disabled;
         damage->main_state = Component::State::enabled;
     }
     else if(attack){
-
-        // idle->useAnimation("attack");
+        idle->main_state = Component::State::disabled;
+        running->main_state = Component::State::disabled;
+        damage->main_state = Component::State::disabled;
+        attackComp->main_state = Component::State::enabled;
     }
     else{
 
