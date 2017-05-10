@@ -84,7 +84,7 @@ int main(int, char **){
     player_damage.setDelay(100);
 
     Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,800/8, 50, 8);
-    player_damage.setDelay(10);
+    player_attack.setDelay(50);
     
     player.add_component(player_idle);
     player.add_component(player_running);
