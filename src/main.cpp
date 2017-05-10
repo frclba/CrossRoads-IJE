@@ -85,12 +85,12 @@ int main(int, char **){
 
     Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,800/8, 50, 8);
     player_attack.setDelay(50);
-    
+
     player.add_component(player_idle);
     player.add_component(player_running);
     player.add_component(player_damage);
     player.add_component(player_attack);
-    player.main_positionY = 552;
+    player.main_positionY = 502;
 
     background_stage1.add_component(backgroundForest);
 
