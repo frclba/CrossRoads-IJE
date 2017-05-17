@@ -38,7 +38,6 @@ void Stage1Scene::game_logic(){
     move_player(player);
     attack_player(player);
     damage_player(player);
-
 }
 
 // =================================================== DAMAGE LOGIC =================================================
@@ -74,10 +73,10 @@ void Stage1Scene::attack_player(GameObject *player){
     }
 
     if(attack){
+        attackComp->main_state = Component::State::enabled;
         idle->main_state = Component::State::disabled;
         running->main_state = Component::State::disabled;
         damage->main_state = Component::State::disabled;
-        attackComp->main_state = Component::State::enabled;
     } else{
 
     }
