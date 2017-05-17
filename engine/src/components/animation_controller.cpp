@@ -1,4 +1,5 @@
 #include "components/animation_controller.hpp"
+#include "game.hpp"
 
 using namespace engine;
 

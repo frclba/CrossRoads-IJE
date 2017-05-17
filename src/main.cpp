@@ -73,6 +73,7 @@ int main(int, char **){
     ImageComponent tile3(ground_stage1,"tile3", "assets/sprites/ChãoMap3.png");
     ImageComponent tile4(ground_stage1,"tile4", "assets/sprites/ChãoMap4.png");
 
+    AnimationControllerComponent animation_controller(player, "animationController");
 
     Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",800/8,50, 8);
     player_idle.setDelay(100);
@@ -86,10 +87,7 @@ int main(int, char **){
     Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,836/11, 50, 11);
     player_attack.setDelay(50);
 
-    player.add_component(player_idle);
-    player.add_component(player_running);
-    player.add_component(player_damage);
-    player.add_component(player_attack);
+    // player.add_component(player_idle);
     player.main_positionY = 502;
 
     background_stage1.add_component(backgroundForest);

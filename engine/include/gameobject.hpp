@@ -48,6 +48,12 @@ namespace engine{
             //funcao que busca um component a partir do seu id.
             Component* get_component(std::string name);
 
+            // template<typename T> T *get_component(){
+            //     return dynamic_cast<T *>(main_components[std::type_index(typeid(T))].front());
+            // }
+
+            // template<typename T> std::list<Component *> get_components();
+
             inline std::string name() const {return main_name;}
             inline State state() const {return main_state;}
             inline void set_size(int width, int height) {main_width = width; main_height = height;}

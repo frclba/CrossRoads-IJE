@@ -3,8 +3,10 @@
 
 #include <scene.hpp>
 #include "components/animation.hpp"
+#include "components/animation_controller.hpp"
 
 using namespace engine;
+
 class Stage1Scene : public Scene{
     public:
 
@@ -22,19 +24,15 @@ class Stage1Scene : public Scene{
     void jump_player(GameObject *player);
 
     GameObject *player;
-    Animation *idle;
-    Animation *running;
-    Animation *damage;
-    Animation *attackComp;
 
     private:
-    bool walkR;
-    bool walkL;
-    bool jump;
-    bool stand;
-    bool attack;
-    bool damageBool;
-    unsigned int jumptime;
+        bool walkR;
+        bool walkL;
+        bool jump;
+        bool stand;
+        bool attack;
+        bool damageBool;
+        unsigned int jumptime;
 
 };
 

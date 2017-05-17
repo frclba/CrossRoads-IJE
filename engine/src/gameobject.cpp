@@ -82,6 +82,10 @@ Component* GameObject::get_component(std::string name){
     return NULL;
 }
 
+// template<typename T>std::list<Component *> GameObject::get_components(){
+//     return main_components[std::type_index(typeid(T))];
+// }
+
 void GameObject::setState(State state){
     main_state = state;
 }

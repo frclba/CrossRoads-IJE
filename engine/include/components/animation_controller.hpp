@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include "sdl2core.hpp"
 
 #include "components/component.hpp"
@@ -10,6 +11,12 @@
 #include "gameobject.hpp"
 
 namespace engine {
+    class AnimationControllerComponent : public Component {
+        public:
+            AnimationControllerComponent(GameObject &main_game_object, std::string id)
+            : Component(main_game_object, id), current_animation("a"), next_animation("b"){};
+        //
+            ~AnimationControllerComponent(){};
 
 class AnimationControllerComponent : public Component {
     public:
@@ -31,7 +38,6 @@ class AnimationControllerComponent : public Component {
 
         void change_animations();
     };
-
 }
 
 #endif
