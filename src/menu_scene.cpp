@@ -8,6 +8,9 @@ void MenuScene::game_logic(){
     fireMenu->main_positionX = 690;
     fireMenu->main_positionY = 470;
 
+}
+
+void buttons_controller(){
     //pega gameobject bNew
     GameObject* bNew = &get_game_object("bNew");
     //define a posicao do botao novo jogo na tela
@@ -41,6 +44,5 @@ void MenuScene::game_logic(){
         bloadAnimation->useAnimation("mouseON");
     }
 }
-
 
 MenuScene::~MenuScene(){}
