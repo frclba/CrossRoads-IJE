@@ -18,25 +18,16 @@ void Stage1Scene::setup(){
     running = (dynamic_cast<Animation *>(player->get_component("playerRunning")));
     damage = (dynamic_cast<Animation *>(player->get_component("playerDamage")));
     attackComp = (dynamic_cast<Animation *>(player->get_component("playerAttack")));
-}
-
-// ================================================= GAME LOGIC ====================================================
-void Stage1Scene::game_logic(){
-    setup();
-    // Animation* idle = (dynamic_cast<Animation *>(player->get_component("playerIdle")));
-    // Animation* running = (dynamic_cast<Animation *>(player->get_component("playerRunning")));
-    // Animation* damage = (dynamic_cast<Animation *>(player->get_component("playerDamage")));
-    // Animation* attackComp = (dynamic_cast<Animation *>(player->get_component("playerAttack")));
-
-    // idle = (dynamic_cast<Animation *>(player->get_component("playerIdle")));
-    // running = (dynamic_cast<Animation *>(player->get_component("playerRunning")));
-    // damage = (dynamic_cast<Animation *>(player->get_component("playerDamage")));
-    // attackComp = (dynamic_cast<Animation *>(player->get_component("playerAttack")));
 
     idle->main_state = Component::State::enabled;
     running->main_state = Component::State::disabled;
     damage->main_state = Component::State::disabled;
     attackComp->main_state = Component::State::disabled;
+}
+
+// ================================================= GAME LOGIC ====================================================
+void Stage1Scene::game_logic(){
+    setup();
 
     running->flipping(isRight);
     idle->flipping(isRight);
