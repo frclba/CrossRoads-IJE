@@ -25,6 +25,9 @@ namespace engine{
 
     inline State state(){ return main_state; }
 
+    inline void enable() { main_state = State::enabled; }
+    inline void disable() { main_state = State::disabled; }
+
     std::string component_id;
 
     State main_state;
