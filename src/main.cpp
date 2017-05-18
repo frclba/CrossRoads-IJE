@@ -3,6 +3,7 @@
 #include "scene.hpp"
 #include "components/image.hpp"
 #include "components/animation.hpp"
+#include "components/animation_controller.hpp"
 #include "components/music.hpp"
 #include "sdl2core.hpp"
 #include "menu_scene.hpp"
@@ -61,7 +62,6 @@ int main(int, char **){
     Stage1Scene stage1("Fase 1");
     Game::instance.add_scene(stage1);
 
-
     GameObject player("player");
     GameObject background_stage1("backgroundForest");
     GameObject ground_stage1("ground");
@@ -73,7 +73,7 @@ int main(int, char **){
     ImageComponent tile3(ground_stage1,"tile3", "assets/sprites/ChãoMap3.png");
     ImageComponent tile4(ground_stage1,"tile4", "assets/sprites/ChãoMap4.png");
 
-    AnimationControllerComponent animation_controller(player, "animationController");
+    AnimationControllerComponent animCtrl(player, "animationController");
 
     Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",800/8,50, 8);
     player_idle.setDelay(100);
