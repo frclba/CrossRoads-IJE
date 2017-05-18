@@ -67,6 +67,10 @@ namespace engine{
 
             void flipping(bool isFlip);
 
+            bool has_finished();
+
+            void setup();
+
             SDL_RendererFlip flip = SDL_FLIP_NONE;
         private:
 

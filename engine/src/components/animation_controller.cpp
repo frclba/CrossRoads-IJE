@@ -32,7 +32,7 @@ void AnimationControllerComponent::update(){
 }
 
 void AnimationControllerComponent::add_animation(std::string name,
-                                                 AnimationComponent & animation){
+                                                 Animation & animation){
     if (m_animations_map.find(name) != m_animations_map.end()){
         // Log::instance.warning("Animation " + name + " already exists!");
         return;

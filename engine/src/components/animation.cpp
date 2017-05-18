@@ -75,6 +75,25 @@ void Animation::setDelay(int toSetDelay){
     this->delay = toSetDelay;
 }
 
+void Animation::flipping(bool isFlip){
+  if(isFlip){
+    flip = SDL_FLIP_HORIZONTAL;
+  }else{
+    flip = SDL_FLIP_NONE;
+  }
+}
+
+bool Animation::has_finished(){
+  if(main_frame == main_animation[END]){
+    return true;
+  }
+  return false;
+}
+
+void Animation::setup(){
+  _main_game_object->set_size(m_widthDiv, m_heightDiv);
+}
+
 void Animation::draw(){
 
     SDL_Rect *renderQuad = new SDL_Rect();
@@ -96,10 +115,3 @@ void Animation::draw(){
     SDL_RenderCopyEx(Game::instance.main_canvas, main_texture, imageVector[main_frame] , renderQuad, 0, NULL, flip);
 }
 
-void Animation::flipping(bool isFlip){
-  if(isFlip){
-    flip = SDL_FLIP_HORIZONTAL;
-  }else{
-    flip = SDL_FLIP_NONE;
-  }
-}
