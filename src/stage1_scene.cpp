@@ -30,17 +30,17 @@ void Stage1Scene::setup(){
 // ================================================= GAME LOGIC ====================================================
 void Stage1Scene::game_logic(){
     setup();
+    AnimationControllerComponent* animCtrl = (dynamic_cast<AnimationControllerComponent *>(player->get_component("animationController")));
 
     // running->flipping(isRight);
     // idle->flipping(isRight);
     // attackComp->flipping(isRight);
     // damage->flipping(isRight);
     // AnimationControllerComponent *animCtrl = player->get_component("animation_controller");
-    // AnimationControllerComponent* animCtrl = (dynamic_cast<AnimationControllerComponent *>(player->get_component("animationController")));
     // animCtrl->play_animation("player_idle");
 
     // jump_player(player, animCtrl);
-    // move_player(player, animCtrl);
+    move_player(player, animCtrl);
     // attack_player(player, animCtrl);
     // damage_player(player, animCtrl);
 }
@@ -88,41 +88,42 @@ void Stage1Scene::game_logic(){
 // }
 //
 // // ============================================== MOVE LOGIC ===================================================
-// void Stage1Scene::move_player(GameObject *player, AnimationControllerComponent *animCtrl){
+void Stage1Scene::move_player(GameObject *player, AnimationControllerComponent *animCtrl){
 //     //Detect move right
-//     if(Game::instance.keyboard->isKeyDown(SDLK_d)){
-//         walkR= true;
-//     }
-//     if(Game::instance.keyboard->isKeyUp(SDLK_d)){
-//         walkR= false;
-//     }
+    if(Game::instance.keyboard->isKeyDown(SDLK_d)){
+        walkR= true;
+    }
+    if(Game::instance.keyboard->isKeyUp(SDLK_d)){
+        walkR= false;
+    }
 //
-//     //Detect move left
-//     if(Game::instance.keyboard->isKeyDown(SDLK_a)){
-//         walkL= true;
-//     }
-//     if(Game::instance.keyboard->isKeyUp(SDLK_a)){
-//         walkL= false;
-//     }
+    //Detect move left
+    if(Game::instance.keyboard->isKeyDown(SDLK_a)){
+        walkL= true;
+    }
+    if(Game::instance.keyboard->isKeyUp(SDLK_a)){
+        walkL= false;
+    }
 //
-//     if(walkR && (player->main_positionX+player->main_width)<800){
-//         isRight = true;
+    if(walkR && (player->main_positionX+player->main_width)<800){
+        isRight = true;
+        animCtrl->play_animation("player_running");
 //         idle->main_state = Component::State::disabled;
 //         damage->main_state = Component::State::disabled;
 //         attackComp->main_state = Component::State::disabled;
 //         running->main_state = Component::State::enabled;
 //
-//         player->main_positionX += moveForce;
-//     } else if(walkL && (player->main_positionX)>=0 ){
-//         isRight = false;
+        player->main_positionX += moveForce;
+    } else if(walkL && (player->main_positionX)>=0 ){
+        isRight = false;
 //         idle->main_state = Component::State::disabled;
 //         damage->main_state = Component::State::disabled;
 //         attackComp->main_state = Component::State::disabled;
 //         running->main_state = Component::State::enabled;
 //
-//         player->main_positionX -= moveForce;
-//     }
-// }
+        player->main_positionX -= moveForce;
+    }
+}
 //
 // //=========================================== JUMP LOGIC==========================================
 // void Stage1Scene::jump_player(GameObject *player, AnimationControllerComponent *animCtrl){

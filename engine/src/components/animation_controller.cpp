@@ -44,8 +44,8 @@ void AnimationControllerComponent::add_animation(std::string name,
         current_animation = name;
 }
 
-void AnimationControllerComponent::play_animation(std::string name,
-                                                  bool wait_to_finish){
+void AnimationControllerComponent::play_animation(std::string name, bool wait_to_finish){
+    Log::instance.info("Play animation " + name );
     next_animation = name;
 
     if (!wait_to_finish)

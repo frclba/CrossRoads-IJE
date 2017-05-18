@@ -20,7 +20,7 @@ class Stage1Scene : public Scene{
     void game_logic();
     void damage_player(GameObject *player);
     void attack_player(GameObject *player);
-    void move_player(GameObject *player);
+    void move_player(GameObject *player, AnimationControllerComponent *animCtrl);
     void jump_player(GameObject *player);
 
     GameObject *player;
