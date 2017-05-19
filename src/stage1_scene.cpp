@@ -30,17 +30,17 @@ void Stage1Scene::setup(){
 // ================================================= GAME LOGIC ====================================================
 void Stage1Scene::game_logic(){
     setup();
-    AnimationControllerComponent* animCtrl = (dynamic_cast<AnimationControllerComponent *>(player->get_component("animationController")));
+    animCtrl = (dynamic_cast<AnimationControllerComponent *>(player->get_component("animationController")));
 
     // running->flipping(isRight);
     // idle->flipping(isRight);
     // attackComp->flipping(isRight);
     // damage->flipping(isRight);
     // AnimationControllerComponent *animCtrl = player->get_component("animation_controller");
-    // animCtrl->play_animation("player_idle");
-
+    animCtrl->play_animation("player_idle");
+     
     // jump_player(player, animCtrl);
-    move_player(player, animCtrl);
+    move_player(player);
     // attack_player(player, animCtrl);
     // damage_player(player, animCtrl);
 }
@@ -88,7 +88,7 @@ void Stage1Scene::game_logic(){
 // }
 //
 // // ============================================== MOVE LOGIC ===================================================
-void Stage1Scene::move_player(GameObject *player, AnimationControllerComponent *animCtrl){
+void Stage1Scene::move_player(GameObject *player){
 //     //Detect move right
     if(Game::instance.keyboard->isKeyDown(SDLK_d)){
         walkR= true;
@@ -107,7 +107,7 @@ void Stage1Scene::move_player(GameObject *player, AnimationControllerComponent *
 //
     if(walkR && (player->main_positionX+player->main_width)<800){
         isRight = true;
-        animCtrl->play_animation("player_running");
+	animCtrl->play_animation("player_running");
 //         idle->main_state = Component::State::disabled;
 //         damage->main_state = Component::State::disabled;
 //         attackComp->main_state = Component::State::disabled;

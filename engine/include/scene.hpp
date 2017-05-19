@@ -51,6 +51,7 @@ namespace engine{
 
             inline std::string name() const { return scene_name; }
 
+            void update();
         protected:
             std::string scene_name;
             std::unordered_map <std::string, GameObject *> scene_objects;

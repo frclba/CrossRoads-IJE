@@ -5,20 +5,23 @@
 
 using namespace engine;
 
-bool GameObject::init(){
-    Log::instance.info("Init game object");
+bool GameObject::init()
+{
+  //    INFO("Init game object " << m_name);
 
-    //Iterando o mapa de componentes, passando por cada tipo de componente.
-    for(auto id_componentList: main_components){
-        //Iterando a lista de componentes do tipo encontrado.
-        for(auto component:id_componentList.second){
-            if(component->state() == Component::State::enabled && component->init() == false)
-                return false;
+    for(auto id_componentlist: main_components)
+    {
+        for (auto component: id_componentlist.second)
+        {
+            if(component->init() == false) return false;
         }
     }
 
     return true;
 }
+
+
+
 
 bool GameObject::shutdown(){
     Log::instance.info("Shutdown game object");
@@ -67,6 +70,19 @@ void GameObject::add_component(Component &component){
     //Adiciona o componente no fim da lista referente ao tipo do mesmo.
     main_components[std::type_index(typeid(component))].push_back(&component);
 
+}
+
+void GameObject::update()
+{
+    for(auto id_componentlist: main_components)
+    {
+        for (auto component: id_componentlist.second)
+        {
+	  if(component->state() == Component::State::enabled){
+                component->update();
+	  }
+        }
+    }
 }
 
 Component* GameObject::get_component(std::string name){

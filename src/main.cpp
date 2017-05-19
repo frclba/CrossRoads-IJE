@@ -81,16 +81,17 @@ int main(int, char **){
     // Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,836/11, 50, 11);
     // player_attack.setDelay(50);
 
-    animCtrl.add_animation("player_idle", player_idle);
 
     Animation player_running(player, "playerRunning", "assets/sprites/hero_running.png" ,220/4, 46, 4);
     player_running.setDelay(100);
 
+    animCtrl.add_animation("player_idle", player_idle);
     animCtrl.add_animation("player_running", player_running);
     // Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
     // player_damage.setDelay(100);
 
     player.add_component(player_idle);
+    player.add_component(player_running);
     player.add_component(animCtrl);
     player.main_positionY = 502;
 

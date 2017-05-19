@@ -7,7 +7,7 @@ bool AnimationControllerComponent::init(){
     // Log::instance.info("Init AnimationControllerComponent");
 
     for(auto id_animation: m_animations_map) {
-        if (current_animation != id_animation.first)
+      if (current_animation != id_animation.first)
             id_animation.second->disable();
         else
             id_animation.second->enable();
@@ -22,19 +22,20 @@ bool AnimationControllerComponent::shutdown(){
 }
 
 void AnimationControllerComponent::update(){
-    if (current_animation == ""){
-        // Log::instance.warning("No animations to play!");
+  if (current_animation == ""){
+         Log::instance.warning("No animations to play!");
     }else{
         auto animation = m_animations_map[current_animation];
-        if(next_animation != "" && animation->has_finished())
-            change_animations();
+        if(next_animation != "" && animation->has_finished()){
+	   change_animations();
+	}
     }
 }
 
 void AnimationControllerComponent::add_animation(std::string name,
                                                  Animation & animation){
     if (m_animations_map.find(name) != m_animations_map.end()){
-        // Log::instance.warning("Animation " + name + " already exists!");
+        Log::instance.warning("Animation " + name + " already exists!");
         return;
     }
 

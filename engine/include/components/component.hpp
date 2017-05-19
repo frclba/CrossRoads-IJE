@@ -22,6 +22,8 @@ namespace engine{
     virtual ~Component() {};
     virtual bool init(){ return true; }
     virtual bool shutdown(){ return true; }
+    
+    virtual void update()   { return; }
 
     inline State state(){ return main_state; }
 

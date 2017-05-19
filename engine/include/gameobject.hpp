@@ -40,6 +40,7 @@ namespace engine{
             //Search, does a type cast and draw on screen a component, if its state is enabled
             virtual bool draw();
 
+            void update();
             //Add the component on the end of a list of its type.
             void add_component(Component &component);
 

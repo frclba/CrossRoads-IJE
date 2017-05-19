@@ -69,6 +69,15 @@ bool Scene::shutdown(){
     return true;
 }
 
+void Scene::update()
+{
+    for (auto id_obj: scene_objects)
+    {
+        auto obj = id_obj.second;
+        if (obj->state() == GameObject::State::enabled) obj->update();
+    }
+}
+
 bool Scene::draw(){
 
     //Iterando o mapa e inicilizando cada um dos game objects.

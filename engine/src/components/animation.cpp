@@ -111,7 +111,6 @@ void Animation::draw(){
             main_frame = main_animation[BEGIN];
     }
 
-   // std::cout<<main_frame<<std::endl;
     SDL_RenderCopyEx(Game::instance.main_canvas, main_texture, imageVector[main_frame] , renderQuad, 0, NULL, flip);
 }
 
