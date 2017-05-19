@@ -56,6 +56,7 @@ int main(int, char **){
     menu.add_game_object(background);
 
     // =================================== STAGE 1 =======================================
+    Log::instance.jumpLine("Starting configurations && Instantiations\n");
 
     //Criando cena da fase
     Stage1Scene stage1("Fase 1");
@@ -106,6 +107,7 @@ int main(int, char **){
     stage1.add_game_object(background_stage1);
     //==================================== GAME LOOP ============================================
 
+    Log::instance.jumpLine("Ending Instantiations. Running Game\n");
     Game::instance.run();
 
     return 0;

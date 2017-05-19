@@ -150,11 +150,11 @@ bool Game::createWindow(){
 bool Game::add_scene(Scene &scene){
     //Isso faz o id ser o name.
     auto id = scene.name();
-    Log::instance.info("Adicionando cena. Nome da cena: " + id);
+    Log::instance.info("Adding Scene: '" + id + "' to Scenes List.");
 
     //A scene desejada sempre tem que ser a ultima. Se não for, vai ser adicionada novamente.
     if( scenes_list.find(id) != scenes_list.end() ){
-        Log::instance.warning("Essa cena já está carregada !");
+        Log::instance.warning("The scene '"+ id +"' is already loaded!");
         return false;
     }
 

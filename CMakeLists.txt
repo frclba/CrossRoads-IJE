@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(game LANGUAGES CXX)
 
-
-
 # Set directory folders
 set (PROJECT_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 set (PROJECT_SRC_DIR     "${PROJECT_SOURCE_DIR}/src")
@@ -14,7 +12,6 @@ file(GLOB_RECURSE SOURCES "${PROJECT_SRC_DIR}/*.cpp"
 
 # Include Headers
 include_directories("${PROJECT_INCLUDE_DIR}")
-
 
 
 #### Compilation ####

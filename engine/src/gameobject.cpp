@@ -6,8 +6,7 @@
 using namespace engine;
 
 bool GameObject::init(){
-    Log::instance.info("Init game object");
-
+    Log::instance.info("Initilizing GameObject '" + main_name + "'.");
     //Iterando o mapa de componentes, passando por cada tipo de componente.
     for(auto id_componentList: main_components){
         //Iterando a lista de componentes do tipo encontrado.
@@ -63,7 +62,7 @@ bool GameObject::draw(){
 }
 
 void GameObject::add_component(Component &component){
-    Log::instance.info("Adding components to game object");
+    Log::instance.info("Adding component: '" + component.component_id + "' to game object: '" + main_name + "'.");
     //Adiciona o componente no fim da lista referente ao tipo do mesmo.
     main_components[std::type_index(typeid(component))].push_back(&component);
 
