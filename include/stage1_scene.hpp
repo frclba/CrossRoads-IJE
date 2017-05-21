@@ -9,7 +9,7 @@ class Stage1Scene : public Scene{
     public:
 
     Stage1Scene(std::string name):
-	Scene(name),jumptime(0),walkR(false),walkL(false),jump(false),attack(false),damageBool(false){}
+	  Scene(name), jumptime(0), walkR(false), walkL(false), jump(false), attack(false), damageBool(false){}
 
 
     ~Stage1Scene();
@@ -28,13 +28,14 @@ class Stage1Scene : public Scene{
     Animation *attackComp;
 
     private:
+    unsigned int jumptime;
     bool walkR;
     bool walkL;
     bool jump;
     bool stand;
     bool attack;
     bool damageBool;
-    unsigned int jumptime;
+
 
 };
 
