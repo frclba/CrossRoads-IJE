@@ -32,16 +32,11 @@ void Stage1Scene::game_logic(){
     setup();
     animCtrl = (dynamic_cast<AnimationControllerComponent *>(player->get_component("animationController")));
 
-    // running->flipping(isRight);
-    // idle->flipping(isRight);
-    // attackComp->flipping(isRight);
-    // damage->flipping(isRight);
-    // AnimationControllerComponent *animCtrl = player->get_component("animation_controller");
     animCtrl->play_animation("player_idle");
-     
-    // jump_player(player, animCtrl);
+
+    jump_player(player);
     move_player(player);
-    // attack_player(player, animCtrl);
+    attack_player(player);
     // damage_player(player, animCtrl);
 }
 
@@ -67,26 +62,23 @@ void Stage1Scene::game_logic(){
 // }
 //
 // // ============================================= ATTACK LOGIC ===================================================
-// void Stage1Scene::attack_player(GameObject *player, AnimationControllerComponent *animCtrl){
-//
-//     if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
-//         attack = true;
-//     }
-//
-//     if(Game::instance.keyboard->isKeyUp(SDLK_SPACE)){
-//         attack = false;
-//     }
-//
-//     if(attack){
-//         attackComp->main_state = Component::State::enabled;
-//         idle->main_state = Component::State::disabled;
-//         running->main_state = Component::State::disabled;
-//         damage->main_state = Component::State::disabled;
-//     } else{
-//
-//     }
-// }
-//
+void Stage1Scene::attack_player(GameObject *player){
+
+    if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
+        attack = true;
+    }
+
+    if(Game::instance.keyboard->isKeyUp(SDLK_SPACE)){
+        attack = false;
+    }
+
+    if(attack){
+        animCtrl->play_animation("player_attack");
+    }else{
+
+    }
+}
+
 // // ============================================== MOVE LOGIC ===================================================
 void Stage1Scene::move_player(GameObject *player){
 //     //Detect move right
@@ -107,51 +99,43 @@ void Stage1Scene::move_player(GameObject *player){
 //
     if(walkR && (player->main_positionX+player->main_width)<800){
         isRight = true;
-	animCtrl->play_animation("player_running");
-//         idle->main_state = Component::State::disabled;
-//         damage->main_state = Component::State::disabled;
-//         attackComp->main_state = Component::State::disabled;
-//         running->main_state = Component::State::enabled;
-//
+	    animCtrl->play_animation("player_running");
         player->main_positionX += moveForce;
+
     } else if(walkL && (player->main_positionX)>=0 ){
         isRight = false;
-//         idle->main_state = Component::State::disabled;
-//         damage->main_state = Component::State::disabled;
-//         attackComp->main_state = Component::State::disabled;
-//         running->main_state = Component::State::enabled;
-//
+        animCtrl->play_animation("player_running");
         player->main_positionX -= moveForce;
     }
 }
 //
 // //=========================================== JUMP LOGIC==========================================
-// void Stage1Scene::jump_player(GameObject *player, AnimationControllerComponent *animCtrl){
-//     //Player try jump and he can jump
-//     if(Game::instance.keyboard->isKeyDown(SDLK_w) && canJump){
-//         jump = true;
-//     }
-//
-//     if(jump){
-//         if(player->main_positionY >= (ground - maxHeight)){
-//             player->main_positionY -= gravity;
-//             isFalling = false;
-//         }else{
-//             jump = false;
-//             isFalling = true;
-//         }
-//     }
-//
-//     //Test if player is not on ground
-//     if(isFalling){
-//         if((player->main_positionY + player->main_height) < ground){
-//             player->main_positionY += gravity;
-//             canJump = false;
-//         }else{
-//             canJump = true;
-//         }
-//
-//     }
-// }
+void Stage1Scene::jump_player(GameObject *player){
+    //Player try jump and he can jump
+    if(Game::instance.keyboard->isKeyDown(SDLK_w) && canJump){
+        jump = true;
+    }
+
+    if(jump){
+        if(player->main_positionY >= (ground - maxHeight)){
+            player->main_positionY -= gravity;
+            isFalling = false;
+        }else{
+            jump = false;
+            isFalling = true;
+        }
+    }
+
+    //Test if player is not on ground
+    if(isFalling){
+        if((player->main_positionY + player->main_height) < ground){
+            player->main_positionY += gravity;
+            canJump = false;
+        }else{
+            canJump = true;
+        }
+
+    }
+}
 
 Stage1Scene::~Stage1Scene(){}

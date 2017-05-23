@@ -78,15 +78,15 @@ int main(int, char **){
     Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",800/8,50, 8);
     player_idle.setDelay(100);
 
-    // Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,836/11, 50, 11);
-    // player_attack.setDelay(50);
-
+    Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,836/11, 50, 11);
+    player_attack.setDelay(100);
 
     Animation player_running(player, "playerRunning", "assets/sprites/hero_running.png" ,220/4, 46, 4);
     player_running.setDelay(100);
 
     animCtrl.add_animation("player_idle", player_idle);
     animCtrl.add_animation("player_running", player_running);
+    animCtrl.add_animation("player_attack", player_attack);
     // Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
     // player_damage.setDelay(100);
 
