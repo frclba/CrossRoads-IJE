@@ -46,6 +46,8 @@ namespace engine{
 
             void setState(State state);
 
+            bool checkCollision(GameObject* object);
+      
             //funcao que busca um component a partir do seu id.
             Component* get_component(std::string name);
 

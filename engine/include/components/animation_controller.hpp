@@ -26,7 +26,9 @@ namespace engine {
 
             void play_animation(std::string name, bool wait_to_finish=false);
 
+            void flipping(bool isFlip);
         private:
+            bool flip;
             std::unordered_map<std::string, Animation *> m_animations_map;
             std::string current_animation;
             std::string next_animation;

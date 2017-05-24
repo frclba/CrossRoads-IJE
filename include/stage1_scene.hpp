@@ -23,7 +23,14 @@ class Stage1Scene : public Scene{
     void move_player(GameObject *player);
     void jump_player(GameObject *player);
 
+
+  void processPos(GameObject *player);
+  void gravityF(GameObject *player);
+  void monsterAI(GameObject* obj);
+
     GameObject *player;
+    GameObject *plataform;
+    GameObject *monster;
 
     private:
         bool walkR;
@@ -34,6 +41,7 @@ class Stage1Scene : public Scene{
         bool damageBool;
         unsigned int jumptime;
         AnimationControllerComponent* animCtrl;
+        AnimationControllerComponent* monster_controler;
 };
 
 #endif

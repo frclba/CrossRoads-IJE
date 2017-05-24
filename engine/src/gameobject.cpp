@@ -105,3 +105,20 @@ Component* GameObject::get_component(std::string name){
 void GameObject::setState(State state){
     main_state = state;
 }
+
+bool GameObject::checkCollision(GameObject* object){
+  SDL_Rect obj1;
+  SDL_Rect obj2;
+  SDL_Rect result;
+
+  obj1.x = main_positionX;
+  obj1.y = main_positionY;
+  obj1.w = main_width;
+  obj1.h = main_height;
+  obj2.x = object->main_positionX;
+  obj2.y = object->main_positionY;
+  obj2.w = object->main_width;
+  obj2.h = object->main_height;
+
+  return SDL_IntersectRect( &obj1, &obj2, &result);
+}
