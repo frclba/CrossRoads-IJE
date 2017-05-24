@@ -4,22 +4,32 @@ using namespace engine;
 
 //constructor
 Sound::Sound(){
-    gSound = NULL;
+    gMenuButton = NULL;
+    gJump = NULL;
+    gAttack = NULL;
 }
+
 //destructor
 Sound::~Sound(){
+  Mix_FreeChunk( gMenuButton );
+  Mix_FreeChunk( gJump );
+  Mix_FreeChunk( gAttack );
 
+  gMenuButton = NULL;
+  gJump = NULL;
+  gAttack = NULL;
 }
 
-bool Sound::loadSound(std::string music){
-    gSound = Mix_LoadWAV(music.c_str());
+bool Sound::loadSound(std::string path_to_audio, Mix_Chunk* global_sound_ptr){
+    bool success = true;
 
-    if(gSound==NULL){
-        Log::instance.error("Failed to load sound: " + music);
-        return false;
+    global_sound_ptr = Mix_LoadWAV(path_to_audio.c_str());
+    if(global_sound_ptr == NULL){
+        Log::instance.error("Failed to load sound: gMenuButton");
+        success = false;
     }
 
-    return true;
+    return success;
 }
 
 void Sound::playSound(){

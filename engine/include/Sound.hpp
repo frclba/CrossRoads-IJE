@@ -4,8 +4,7 @@
 namespace engine{
 
     class Sound{
-
-    public:
+      public:
         //constructor
         Sound();
         //destructor
@@ -17,12 +16,35 @@ namespace engine{
         //Play audio on call
         void playSound();
 
+        void pauseSound();
+        void resumeSound();
 
+        std::string audio_name;
 
-    private:
+    protected:
         //The music that will be played
-        Mix_Chunk *gSound;
+        Mix_Chunk* gMenuButton;
+        Mix_Chunk* gJump;
+        Mix_Chunk* gAttack;
 
+        std::string path_to_audio;
     };
 
+    class Music{
+    public:
+      Music();
+
+      ~Music();
+
+      bool loadMusic(std::string music_name);
+
+      void playMusic();
+
+      void pauseMusic();
+
+      void stopMusic();
+    private:
+      Mix_Music *gMusic;
+
+    };
 }
