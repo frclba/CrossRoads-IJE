@@ -3,7 +3,7 @@
 #include "scene.hpp"
 #include "components/image.hpp"
 #include "components/animation.hpp"
-#include "components/music.hpp"
+#include "components/Music.hpp"
 #include "sdl2core.hpp"
 #include "menu_scene.hpp"
 #include "stage1_scene.hpp"
@@ -22,7 +22,7 @@ int main(int, char **){
 
     GameObject background("background");
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
-    MusicComponent musica(background, "musicaBackground", "assets/music/gm.wav");
+    Music musica(background, "musicaBackground", "assets/music/gm.wav");
 
     GameObject menuFire("menuFire");
     Animation animationFire(menuFire,"imageFire", "assets/sprites/menuFire.png",348/6,76,6);

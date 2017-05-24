@@ -1,5 +1,4 @@
 #include "scene.hpp"
-#include "logger.hpp"
 
 using namespace engine;
 

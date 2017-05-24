@@ -1,5 +1,14 @@
 #include "menu_scene.hpp"
 
+
+void MenuScene::init_menu_sounds(){
+  Mix_Chunk* gMenuButton;
+  Mix_Chunk* gJump;
+  Mix_Chunk* gAttack;
+
+  Sound::loadSound(gMenuButton, "assets/sounds/button_grab.wav")
+}
+
 void MenuScene::game_logic(){
 
     //pega objeto menuFire

@@ -1,19 +1,19 @@
 #ifndef __ENGINE_COMPONENTS_MUSIC__
 #define __ENGINE_COMPONENTS_MUSIC__
 
-#include<iostream>
+#include <iostream>
 
 #include "sdl2core.hpp"
 #include "components/component.hpp"
 #include "gameobject.hpp"
 
 namespace engine{
-    class MusicComponent : public Component {
+    class Music : public Component {
         public:
-            MusicComponent(GameObject &main_game_object, std::string id, std::string path)
+            Music(GameObject &main_game_object, std::string id, std::string path)
             : Component(main_game_object, id), main_path(path){}
 
-            ~MusicComponent(){};
+            ~Music(){};
 
             bool init();
             bool shutdown();

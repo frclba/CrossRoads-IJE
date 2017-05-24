@@ -44,7 +44,7 @@ namespace engine{
             //Check on map and initialize each game object. Return true if success
             virtual bool draw();
 
-           
+
             virtual void declaration();
             //gamelogic
             virtual void game_logic();

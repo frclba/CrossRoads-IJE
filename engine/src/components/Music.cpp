@@ -1,11 +1,13 @@
-#include "components/music.hpp"
+#include "components/Music.hpp"
 #include "game.hpp"
 
 using namespace engine;
 
-//TODO -> constructor, desctuctor, loadMusic, stopMusic, pauseMusic. 
-bool MusicComponent::init(){
-    Log::instance.info("Iniciando MusicComponent '" + component_id +"'");
+//TODO -> constructor, desctuctor, loadMusic, stopMusic, pauseMusic.
+
+
+bool Music::init(){
+    Log::instance.info("Iniciando Music '" + component_id +"'");
     gMusic = Mix_LoadMUS(main_path.c_str());
 
     if(gMusic == NULL){
@@ -19,9 +21,9 @@ bool MusicComponent::init(){
     return true;
 }
 
-bool MusicComponent::shutdown(){
+bool Music::shutdown(){
   //TODO -> write logic to shutdown
-    Log::instance.info("Shutdown MusicComponent");
+    Log::instance.info("Shutdown Music");
 
     return true;
 }

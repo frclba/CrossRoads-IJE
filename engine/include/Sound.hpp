@@ -6,7 +6,7 @@ namespace engine{
     class Sound{
       public:
         //constructor
-        Sound();
+        Sound(std::string path_to_audio1, std::string path_to_audio2, std::string path_to_audio3);
         //destructor
         ~Sound();
 
@@ -23,15 +23,13 @@ namespace engine{
 
     protected:
         //The music that will be played
-        Mix_Chunk* gMenuButton;
-        Mix_Chunk* gJump;
-        Mix_Chunk* gAttack;
+        Mix_Chunk* gSoung;
 
     };
 
     class Music{
     public:
-      Music();                                    // Initialize Music
+      Music(std::string path_to_music);    // Initialize Music
       ~Music();                                   // Destroys Music
 
       bool loadMusic(std::string music_name);     // Loads Music Into Memory
@@ -40,7 +38,7 @@ namespace engine{
       void stopMusic();
 
     private:
-      Mix_Music *gMusic;
+      Mix_Music *gSoundMusic;
 
     };
 }
