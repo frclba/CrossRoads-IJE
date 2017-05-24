@@ -105,8 +105,8 @@ int main(int, char **){
     stage1.add_game_object(player);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);
-    //==================================== GAME LOOP ============================================
 
+    //==================================== GAME LOOP ============================================
     Log::instance.jumpLine("Ending Instantiations. Running Game\n");
     Game::instance.run();
 

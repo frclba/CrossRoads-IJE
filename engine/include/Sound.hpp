@@ -11,7 +11,7 @@ namespace engine{
         ~Sound();
 
         //Load audio file on memory
-        bool loadSound(std::string);
+        bool loadSound(std::string path_to_audio, Mix_Chunk* global_sound_ptr);
 
         //Play audio on call
         void playSound();
@@ -27,22 +27,18 @@ namespace engine{
         Mix_Chunk* gJump;
         Mix_Chunk* gAttack;
 
-        std::string path_to_audio;
     };
 
     class Music{
     public:
-      Music();
+      Music();                                    // Initialize Music
+      ~Music();                                   // Destroys Music
 
-      ~Music();
-
-      bool loadMusic(std::string music_name);
-
-      void playMusic();
-
+      bool loadMusic(std::string music_name);     // Loads Music Into Memory
+      void playMusic();                           // Plays Music
       void pauseMusic();
-
       void stopMusic();
+
     private:
       Mix_Music *gMusic;
 
