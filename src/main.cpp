@@ -22,6 +22,8 @@ int main(int, char **){
 
     GameObject background("background");
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
+
+    //TODO - Put in a specific place where it belongs with large scalability
     Music musica(background, "musicaBackground", "assets/music/gm.wav");
 
     GameObject menuFire("menuFire");
@@ -38,6 +40,7 @@ int main(int, char **){
     Animation image_bLoad(bLoad,"imageBLoad","assets/sprites/bLoad.png",448/2,100,2);
     image_bLoad.setAnimation("normal",0,0);
     image_bLoad.setAnimation("mouseON",1,1);
+    Sound button_hover_sound(bLoad, "button_hover_sound", "assets/sounds/button_grab.wav");
 
     //coloca o tempo que a nimacao do fogo percorre.
     animationFire.setDelay(100);
@@ -48,6 +51,7 @@ int main(int, char **){
     menuFire.add_component(animationFire);
     bNew.add_component(image_bNew);
     bLoad.add_component(image_bLoad);
+    bLoad.add_component(button_hover_sound);
 
     //adiciona game objects ao menu
     menu.add_game_object(menuFire);
@@ -61,7 +65,6 @@ int main(int, char **){
     //Criando cena da fase
     Stage1Scene stage1("Fase 1");
     Game::instance.add_scene(stage1);
-
 
     GameObject player("player");
     GameObject background_stage1("backgroundForest");

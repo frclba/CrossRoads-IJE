@@ -77,7 +77,7 @@ Component* GameObject::get_component(std::string name){
             }
         }
     }
-    Log::instance.warning("Component"+ name + " not found");
+    Log::instance.warning("Component '"+ name + "' not found in '" + main_name + "' gameobject.");
     return NULL;
 }
 
