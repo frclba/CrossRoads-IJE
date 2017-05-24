@@ -33,7 +33,7 @@ void Stage1Scene::game_logic(){
     animCtrl = (dynamic_cast<AnimationControllerComponent *>(player->get_component("animationController")));
 
     animCtrl->play_animation("player_idle");
-
+    // animCtrl->play_animation("player_attack");
     jump_player(player);
     move_player(player);
     attack_player(player);
