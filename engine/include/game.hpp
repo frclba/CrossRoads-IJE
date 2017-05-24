@@ -66,7 +66,7 @@ namespace engine{
             : main_canvas(NULL), main_name(""),
             main_window_size({0,0}), main_window(NULL),
             main_background_color({0xff, 0xff, 0xff, 0xff}),
-            current_scene(NULL), current_state(State::created), last_current_scene(NULL){};
+            current_state(State::created), current_scene(NULL), last_current_scene(NULL){};
 
         std::string main_name;
         std::pair<int,int> main_window_size;

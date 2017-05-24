@@ -4,10 +4,17 @@ void MenuScene::game_logic(){
 
     //pega objeto menuFire
     GameObject* fireMenu = &get_game_object("menuFire");
+
     //define a posicao do fogona tela
     fireMenu->main_positionX = 690;
     fireMenu->main_positionY = 470;
 
+    //Gerenciando botões na cena
+    buttons_controller();
+
+}
+
+void MenuScene::buttons_controller(){
     //pega gameobject bNew
     GameObject* bNew = &get_game_object("bNew");
     //define a posicao do botao novo jogo na tela
@@ -26,7 +33,7 @@ void MenuScene::game_logic(){
 
     //Faz efeito de passar o mause em cima
     if(Game::instance.mouse->is_over(bNew)){
-        if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+        if (Game::instance.mouse->is_right_button()) {
             Game::instance.change_scene("Fase 1");
         }
         bnewAnimation->useAnimation("normal");
@@ -40,7 +47,7 @@ void MenuScene::game_logic(){
     else{
         bloadAnimation->useAnimation("mouseON");
     }
-}
 
+}
 
 MenuScene::~MenuScene(){}

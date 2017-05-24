@@ -17,7 +17,9 @@ namespace engine{
             void set_position();
             //funcao para verificar se omause esta em cima de uma gameobject
             bool is_over(GameObject *gameObject);
-            
+            bool is_right_button();
+            bool is_left_button();
+
             //posicao do mause
             int mouseX;
             int mouseY;

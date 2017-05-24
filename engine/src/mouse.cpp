@@ -22,3 +22,15 @@ bool Mouse::is_over(engine::GameObject *gameObject){
     }
     return false;
 }
+bool Mouse::is_right_button(){
+    if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+        return true;
+    }
+    return false;
+}
+bool Mouse::is_left_button(){
+    if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+        return true;
+    }
+    return false;
+}
