@@ -11,7 +11,7 @@ class Stage1Scene : public Scene{
     public:
 
     Stage1Scene(std::string name):
-	Scene(name),jumptime(0),walkR(false),walkL(false),jump(false),attack(false),damageBool(false){}
+	  Scene(name), jumptime(0), walkR(false), walkL(false), jump(false), attack(false), damageBool(false){}
 
 
     ~Stage1Scene();
@@ -26,22 +26,22 @@ class Stage1Scene : public Scene{
 
   void processPos(GameObject *player);
   void gravityF(GameObject *player);
-  void monsterAI(GameObject* obj);
+  void monsterAI(GameObject *obj);
 
     GameObject *player;
     GameObject *plataform;
     GameObject *monster;
 
     private:
+        unsigned int jumptime;
         bool walkR;
         bool walkL;
         bool jump;
         bool stand;
         bool attack;
         bool damageBool;
-        unsigned int jumptime;
-        AnimationControllerComponent* animCtrl;
-        AnimationControllerComponent* monster_controler;
+        AnimationControllerComponent *animCtrl;
+        AnimationControllerComponent *monster_controler;
 };
 
 #endif

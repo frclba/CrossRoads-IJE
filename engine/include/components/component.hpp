@@ -14,15 +14,15 @@ namespace engine{
     };
 
     //Sobrecarga do construtor para  componentes criados sem parâmetros serem invalidados.
-    Component(): _main_game_object(NULL), main_state(State::invalid){}
+    Component(): main_state(State::invalid), _main_game_object(NULL){}
 
     Component(GameObject &gameObject, std::string name)
-    : component_id(name), _main_game_object(&gameObject), main_state(State::enabled){}
+    : component_id(name), main_state(State::enabled), _main_game_object(&gameObject){}
 
     virtual ~Component() {};
     virtual bool init(){ return true; }
     virtual bool shutdown(){ return true; }
-    
+
     virtual void update()   { return; }
 
     inline State state(){ return main_state; }

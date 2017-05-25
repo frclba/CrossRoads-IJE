@@ -171,7 +171,7 @@ void Stage1Scene::gravityF(GameObject *player){
   if ( (player->main_positionY + player->main_height) <= ground ){      // If the player is not on the platform
     dy += gravity;
   }
- 
+
   else{
     dy = 0;
   }
@@ -185,11 +185,11 @@ void Stage1Scene::monsterAI(GameObject* obj){
   monster_controler->play_animation("monster_walk");
   if(player->main_positionX > obj->main_positionX){
     monster_controler->flipping(true);
-    obj->main_positionX += monster_move; 
+    obj->main_positionX += monster_move;
   }
   else{
     monster_controler->flipping(false);
-    obj->main_positionX -= monster_move; 
+    obj->main_positionX -= monster_move;
   }
 
   if(obj->checkCollision(player)){
