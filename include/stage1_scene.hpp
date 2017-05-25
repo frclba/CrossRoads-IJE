@@ -18,14 +18,14 @@ class Stage1Scene : public Scene{
 
     void setup();
     void game_logic();
-    void damage_player(GameObject *player);
-    void attack_player(GameObject *player);
-    void move_player(GameObject *player);
-    void jump_player(GameObject *player);
+    void damage_player();
+    void attack_player();
+    void move_player();
+    void jump_player();
 
 
-  void processPos(GameObject *player);
-  void gravityF(GameObject *player);
+  void processPos();
+  void gravityF();
   void monsterAI(GameObject *obj);
 
     GameObject *player;

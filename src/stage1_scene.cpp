@@ -37,11 +37,11 @@ void Stage1Scene::game_logic(){
 
     animCtrl->play_animation("player_idle");
     // animCtrl->play_animation("player_attack");
-    gravityF(player);
-    jump_player(player);
-    move_player(player);
-    attack_player(player);
-    processPos(player);
+    gravityF();
+    jump_player();
+    move_player();
+    attack_player();
+    processPos();
     // damage_player(player, animCtrl);
 
     //gravityF(monster);
@@ -71,7 +71,7 @@ void Stage1Scene::game_logic(){
 // }
 //
 // // ============================================= ATTACK LOGIC ===================================================
-void Stage1Scene::attack_player(GameObject *player){
+void Stage1Scene::attack_player(){
 
     if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
         attack = true;
@@ -89,7 +89,7 @@ void Stage1Scene::attack_player(GameObject *player){
 }
 
 // // ============================================== MOVE LOGIC ===================================================
-void Stage1Scene::move_player(GameObject *player){
+void Stage1Scene::move_player(){
 //     //Detect move right
     if(Game::instance.keyboard->isKeyDown(SDLK_d)){
         walkR= true;
@@ -153,7 +153,7 @@ void Stage1Scene::jump_player(GameObject *player){
 
 //
 // //=========================================== JUMP LOGIC==========================================
-void Stage1Scene::jump_player(GameObject *player){
+void Stage1Scene::jump_player(){
     //Player try jump and he can jump
 
   if(Game::instance.keyboard->isKeyDown(SDLK_w) && (dy==0)){
@@ -161,13 +161,13 @@ void Stage1Scene::jump_player(GameObject *player){
     }
 }
 
-void Stage1Scene::processPos(GameObject *player)
+void Stage1Scene::processPos()
 {
      player->main_positionY += dy;   // current velocity components.
 }
 
 
-void Stage1Scene::gravityF(GameObject *player){
+void Stage1Scene::gravityF(){
   if ( (player->main_positionY + player->main_height) <= ground ){      // If the player is not on the platform
     dy += gravity;
   }
