@@ -32,7 +32,7 @@ bool ImageComponent::init(){
 }
 
 bool ImageComponent::shutdown(){
-    Log::instance.info("Shutdown ImageComponent");
+    Log::instance.info("Shutdown ImageComponent : '"+ component_id + "'.");
 
     SDL_DestroyTexture(main_texture);
     main_texture = NULL;

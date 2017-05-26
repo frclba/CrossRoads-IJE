@@ -1,4 +1,4 @@
-#include "logger.hpp"
+#include "Logger.hpp"
 
 Log Log::instance;
 

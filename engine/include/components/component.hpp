@@ -32,8 +32,6 @@ namespace engine{
   protected:
     //O componente guarda uma referência do game object ao qual pertence.
     GameObject* _main_game_object;
-
-
   };
 }
 

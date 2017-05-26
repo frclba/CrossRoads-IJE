@@ -3,7 +3,7 @@
 #include "scene.hpp"
 #include "components/image.hpp"
 #include "components/animation.hpp"
-#include "components/music.hpp"
+#include "components/Music.hpp"
 #include "sdl2core.hpp"
 #include "menu_scene.hpp"
 #include "stage1_scene.hpp"
@@ -22,7 +22,9 @@ int main(int, char **){
 
     GameObject background("background");
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
-    MusicComponent musica(background, "musicaBackground", "assets/music/gm.wav");
+
+    //TODO - Put in a specific place where it belongs with large scalability
+    Music musica(background, "musicaBackground", "assets/music/gm.wav");
 
     GameObject menuFire("menuFire");
     Animation animationFire(menuFire,"imageFire", "assets/sprites/menuFire.png",348/6,76,6);
@@ -38,6 +40,7 @@ int main(int, char **){
     Animation image_bLoad(bLoad,"imageBLoad","assets/sprites/bLoad.png",448/2,100,2);
     image_bLoad.setAnimation("normal",0,0);
     image_bLoad.setAnimation("mouseON",1,1);
+    Sound button_hover_sound(bLoad, "button_hover_sound", "assets/sounds/button_grab.wav");
 
     //coloca o tempo que a nimacao do fogo percorre.
     animationFire.setDelay(100);
@@ -48,6 +51,7 @@ int main(int, char **){
     menuFire.add_component(animationFire);
     bNew.add_component(image_bNew);
     bLoad.add_component(image_bLoad);
+    bLoad.add_component(button_hover_sound);
 
     //adiciona game objects ao menu
     menu.add_game_object(menuFire);
@@ -61,7 +65,6 @@ int main(int, char **){
     //Criando cena da fase
     Stage1Scene stage1("Fase 1");
     Game::instance.add_scene(stage1);
-
 
     GameObject player("player");
     GameObject background_stage1("backgroundForest");
@@ -105,8 +108,8 @@ int main(int, char **){
     stage1.add_game_object(player);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);
-    //==================================== GAME LOOP ============================================
 
+    //==================================== GAME LOOP ============================================
     Log::instance.jumpLine("Ending Instantiations. Running Game\n");
     Game::instance.run();
 
