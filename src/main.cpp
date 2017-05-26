@@ -9,6 +9,8 @@
 #include "menu_scene.hpp"
 #include "stage1_scene.hpp"
 
+#include "monsterAI.hpp"
+
 using namespace engine;
 
 int main(int, char **){
@@ -97,9 +99,11 @@ int main(int, char **){
     Animation monster_walk(monster, "monster_walk", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
     monster_walk.setDelay(50);
 
+    MonsterAI monster_ai(monster, "monster_ai",&player,&monster_controler);
     monster_controler.add_animation("monster_walk",monster_walk);
     monster.add_component(monster_walk);
     monster.add_component(monster_controler);
+    monster.add_component(monster_ai);
 
     animCtrl.add_animation("player_idle", player_idle);
     animCtrl.add_animation("player_running", player_running);
@@ -111,6 +115,8 @@ int main(int, char **){
     player.add_component(player_damage);
     player.add_component(animCtrl);
     player.main_positionY = 502;
+
+
 
     background_stage1.add_component(backgroundForest);
 

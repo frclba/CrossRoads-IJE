@@ -19,7 +19,7 @@ float dy = 0;
 void Stage1Scene::setup(){
     player = &get_game_object("player");
     plataform = &get_game_object("plataform");
-    monster = &get_game_object("monster");
+    //monster = &get_game_object("monster");
     plataform->main_positionY = 400;
     plataform->main_positionX = 400;
     // auto animCtrl = player->get_component("animation_controller");
@@ -31,9 +31,10 @@ void Stage1Scene::setup(){
 }
 // ================================================= GAME LOGIC ====================================================
 void Stage1Scene::game_logic(){
+
     setup();
     animCtrl = (dynamic_cast<AnimationControllerComponent *>(player->get_component("animationController")));
-    monster_controler = (dynamic_cast<AnimationControllerComponent *>(monster->get_component("monster_controler")));
+    //monster_controler = (dynamic_cast<AnimationControllerComponent *>(monster->get_component("monster_controler")));
 
     animCtrl->play_animation("player_idle");
     // animCtrl->play_animation("player_attack");
@@ -46,7 +47,7 @@ void Stage1Scene::game_logic(){
 
     //gravityF(monster);
     //processPos(monster);
-    monsterAI(monster);
+    //    monsterAI(monster);
 }
 
 // // =================================================== DAMAGE LOGIC =================================================
@@ -180,7 +181,7 @@ void Stage1Scene::gravityF(){
   }
 }
 
-void Stage1Scene::monsterAI(GameObject* obj){
+/*void Stage1Scene::monsterAI(GameObject* obj){
   monster->main_positionY = ground - monster->main_height;
   monster_controler->play_animation("monster_walk");
   if(player->main_positionX > obj->main_positionX){
@@ -196,6 +197,6 @@ void Stage1Scene::monsterAI(GameObject* obj){
     animCtrl->play_animation("player_damage");
   }
 
-}
+  }*/
 
 Stage1Scene::~Stage1Scene(){}

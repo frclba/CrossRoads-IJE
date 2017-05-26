@@ -26,7 +26,7 @@ class Stage1Scene : public Scene{
 
   void processPos();
   void gravityF();
-  void monsterAI(GameObject *obj);
+  //void monsterAI(GameObject *obj);
 
     GameObject *player;
     GameObject *plataform;
