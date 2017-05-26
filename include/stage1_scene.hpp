@@ -3,8 +3,10 @@
 
 #include <scene.hpp>
 #include "components/animation.hpp"
+#include "components/animation_controller.hpp"
 
 using namespace engine;
+
 class Stage1Scene : public Scene{
     public:
 
@@ -16,27 +18,30 @@ class Stage1Scene : public Scene{
 
     void setup();
     void game_logic();
-    void damage_player(GameObject *player);
-    void attack_player(GameObject *player);
-    void move_player(GameObject *player);
-    void jump_player(GameObject *player);
+    void damage_player();
+    void attack_player();
+    void move_player();
+    void jump_player();
+
+
+  void processPos();
+  void gravityF();
+  //void monsterAI(GameObject *obj);
 
     GameObject *player;
-    Animation *idle;
-    Animation *running;
-    Animation *damage;
-    Animation *attackComp;
+    GameObject *plataform;
+    GameObject *monster;
 
     private:
-    unsigned int jumptime;
-    bool walkR;
-    bool walkL;
-    bool jump;
-    bool stand;
-    bool attack;
-    bool damageBool;
-
-
+        unsigned int jumptime;
+        bool walkR;
+        bool walkL;
+        bool jump;
+        bool stand;
+        bool attack;
+        bool damageBool;
+        AnimationControllerComponent *animCtrl;
+        AnimationControllerComponent *monster_controler;
 };
 
 #endif

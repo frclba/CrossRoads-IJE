@@ -3,10 +3,13 @@
 #include "scene.hpp"
 #include "components/image.hpp"
 #include "components/animation.hpp"
-#include "components/Music.hpp"
+#include "components/animation_controller.hpp"
+#include "components/music.hpp"
 #include "sdl2core.hpp"
 #include "menu_scene.hpp"
 #include "stage1_scene.hpp"
+
+#include "monsterAI.hpp"
 
 using namespace engine;
 
@@ -67,6 +70,8 @@ int main(int, char **){
     Game::instance.add_scene(stage1);
 
     GameObject player("player");
+    GameObject plataform("plataform");
+    GameObject monster("monster");
     GameObject background_stage1("backgroundForest");
     GameObject ground_stage1("ground");
 
@@ -77,6 +82,11 @@ int main(int, char **){
     ImageComponent tile3(ground_stage1,"tile3", "assets/sprites/ChãoMap3.png");
     ImageComponent tile4(ground_stage1,"tile4", "assets/sprites/ChãoMap4.png");
 
+    ImageComponent img_plataform(plataform,"plataform", "assets/sprites/plataform.png");
+    plataform.add_component(img_plataform);
+    
+    AnimationControllerComponent animCtrl(player, "animationController");
+    AnimationControllerComponent monster_controler(player, "monster_controler");
 
     Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",800/8,50, 8);
     player_idle.setDelay(100);
@@ -84,17 +94,34 @@ int main(int, char **){
     Animation player_running(player, "playerRunning", "assets/sprites/hero_running.png" ,220/4, 46, 4);
     player_running.setDelay(100);
 
-    Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
-    player_damage.setDelay(100);
-
     Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,836/11, 50, 11);
     player_attack.setDelay(50);
 
+    Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
+    player_damage.setDelay(100);
+
+    
+    Animation monster_walk(monster, "monster_walk", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
+    monster_walk.setDelay(50);
+
+    MonsterAI monster_ai(monster, "monster_ai",&player,&monster_controler);
+    monster_controler.add_animation("monster_walk",monster_walk);
+    monster.add_component(monster_walk);
+    monster.add_component(monster_controler);
+    monster.add_component(monster_ai);
+
+    animCtrl.add_animation("player_idle", player_idle);
+    animCtrl.add_animation("player_running", player_running);
+    animCtrl.add_animation("player_attack", player_attack);
+    animCtrl.add_animation("player_damage", player_damage);
     player.add_component(player_idle);
     player.add_component(player_running);
-    player.add_component(player_damage);
     player.add_component(player_attack);
+    player.add_component(player_damage);
+    player.add_component(animCtrl);
     player.main_positionY = 502;
+
+
 
     background_stage1.add_component(backgroundForest);
 
@@ -105,7 +132,11 @@ int main(int, char **){
     ground_stage1.add_component(tile3);
     ground_stage1.add_component(tile4);
 
+
+    
     stage1.add_game_object(player);
+    stage1.add_game_object(monster);
+    stage1.add_game_object(plataform);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);
 

@@ -120,6 +120,7 @@ bool Game::createWindow(){
                         }
                     }
                 }
+		current_scene->update();
                 current_scene->game_logic();
                 //Limpa o Canvas visualizado pelo  usuário
                 SDL_RenderClear(main_canvas);

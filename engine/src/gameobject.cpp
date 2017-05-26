@@ -5,19 +5,23 @@
 
 using namespace engine;
 
-bool GameObject::init(){
-    Log::instance.info("Initilizing GameObject '" + main_name + "'.");
-    //Iterando o mapa de componentes, passando por cada tipo de componente.
-    for(auto id_componentList: main_components){
-        //Iterando a lista de componentes do tipo encontrado.
-        for(auto component:id_componentList.second){
-            if(component->state() == Component::State::enabled && component->init() == false)
-                return false;
+bool GameObject::init()
+{
+  //    INFO("Init game object " << m_name);
+
+    for(auto id_componentlist: main_components)
+    {
+        for (auto component: id_componentlist.second)
+        {
+            if(component->init() == false) return false;
         }
     }
 
     return true;
 }
+
+
+
 
 bool GameObject::shutdown(){
     Log::instance.info("Shutdown game object");
@@ -68,6 +72,19 @@ void GameObject::add_component(Component &component){
 
 }
 
+void GameObject::update()
+{
+    for(auto id_componentlist: main_components)
+    {
+        for (auto component: id_componentlist.second)
+        {
+	  if(component->state() == Component::State::enabled){
+                component->update();
+	  }
+        }
+    }
+}
+
 Component* GameObject::get_component(std::string name){
     for(auto id_componentList: main_components){
         //Iterando a lista de componentes do tipo encontrado.
@@ -81,6 +98,27 @@ Component* GameObject::get_component(std::string name){
     return NULL;
 }
 
+// template<typename T>std::list<Component *> GameObject::get_components(){
+//     return main_components[std::type_index(typeid(T))];
+// }
+
 void GameObject::setState(State state){
     main_state = state;
+}
+
+bool GameObject::checkCollision(GameObject* object){
+  SDL_Rect obj1;
+  SDL_Rect obj2;
+  SDL_Rect result;
+
+  obj1.x = main_positionX;
+  obj1.y = main_positionY;
+  obj1.w = main_width;
+  obj1.h = main_height;
+  obj2.x = object->main_positionX;
+  obj2.y = object->main_positionY;
+  obj2.w = object->main_width;
+  obj2.h = object->main_height;
+
+  return SDL_IntersectRect( &obj1, &obj2, &result);
 }

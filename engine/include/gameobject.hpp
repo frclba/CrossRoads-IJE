@@ -39,13 +39,22 @@ namespace engine{
             //Search, does a type cast and draw on screen a component, if its state is enabled
             virtual bool draw();
 
+            void update();
             //Add the component on the end of a list of its type.
             void add_component(Component &component);
 
             void setState(State state);
 
+            bool checkCollision(GameObject* object);
+      
             //funcao que busca um component a partir do seu id.
             Component* get_component(std::string name);
+
+            // template<typename T> T *get_component(){
+            //     return dynamic_cast<T *>(main_components[std::type_index(typeid(T))].front());
+            // }
+
+            // template<typename T> std::list<Component *> get_components();
 
             inline std::string name() const {return main_name;}
             inline State state() const {return main_state;}
