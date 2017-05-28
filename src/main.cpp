@@ -66,11 +66,18 @@ int main(int, char **){
     Game::instance.add_scene(stage1);
 
     GameObject player("player");
-    GameObject plataform("plataform");
+    GameObject plataform("plataform",true,"ground");
     GameObject monster("monster",true,"monster");
     GameObject background_stage1("backgroundForest");
-    GameObject ground_stage1("ground");
+    GameObject ground_stage1("ground",true,"ground");
+    ground_stage1.main_positionY = 552;
+    ground_stage1.main_positionX = 0; 
+    ground_stage1.main_width = 800;
+    ground_stage1.main_height = 200;
 
+    plataform.main_positionY = 400;
+    plataform.main_positionX = 400; 
+    
     ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
 
     ImageComponent tile1(ground_stage1, "tile1", "assets/sprites/ChãoMap1.png");
@@ -126,17 +133,8 @@ int main(int, char **){
 
     background_stage1.add_component(backgroundForest);
 
-    ground_stage1.add_component(tile1);
-    ground_stage1.main_positionX = 0;
-    ground_stage1.main_positionY = 552;
-    ground_stage1.add_component(tile2);
-    ground_stage1.add_component(tile3);
-    ground_stage1.add_component(tile4);
-
-
-    
     stage1.add_game_object(player);
-    stage1.add_game_object(monster);
+    // stage1.add_game_object(monster);
     stage1.add_game_object(plataform);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);

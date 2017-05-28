@@ -5,12 +5,12 @@ bool jump = false;
 bool isFalling = false;
 bool isRight = true;
 
-int ground = 552;
 int maxHeight = 200;
 float gravity = 1;
 float jumpF = 20;
 float moveForce = 7;
 float monster_move = 4;
+float prev_position_y;
 
 float dy = 0;
 
@@ -82,12 +82,14 @@ void Player::move_player(){
 void Player::jump_player(){
     //Player try jump and he can jump
   if(Game::instance.keyboard->isKeyDown(SDLK_w) && (dy==0)){
-	dy -= jumpF;
+       jump = true;
+       dy -= jumpF;
     }
 }
 
 void Player::processPos()
 {
+     prev_position_y = _main_game_object->main_positionY;
      _main_game_object->main_positionY += dy;   // current velocity components.
 }
 
@@ -102,7 +104,12 @@ void Player::gravityF(){
   }
 }
 bool Player::has_ground(){
-  if(_main_game_object->main_positionY + dy + _main_game_object->main_height > ground){
+  ground = Game::instance.collision_manager->checkCollision(_main_game_object,"ground"); 
+  if(ground && dy>=0 ){
+    if(dy>5){
+      _main_game_object->main_positionY = ground->main_positionY - _main_game_object->main_height ;// prev_position_y -(dy-gravity) ;
+
+    }
     return true;
   }
   return false;

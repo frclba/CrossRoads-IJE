@@ -48,6 +48,7 @@ class Player : public Component{
         bool damageBool;
         AnimationControllerComponent *animCtrl;
         AnimationControllerComponent *monster_controler;
+        GameObject *ground;
 
 
         float dy;
