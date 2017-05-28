@@ -10,6 +10,7 @@
 #include "stage1_scene.hpp"
 
 #include "monsterAI.hpp"
+#include "player.hpp"
 
 using namespace engine;
 
@@ -66,7 +67,7 @@ int main(int, char **){
 
     GameObject player("player");
     GameObject plataform("plataform");
-    GameObject monster("monster");
+    GameObject monster("monster",true,"monster");
     GameObject background_stage1("backgroundForest");
     GameObject ground_stage1("ground");
 
@@ -105,6 +106,8 @@ int main(int, char **){
     monster.add_component(monster_controler);
     monster.add_component(monster_ai);
 
+    Player player_logic(player,"player_logic",&animCtrl);
+
     animCtrl.add_animation("player_idle", player_idle);
     animCtrl.add_animation("player_running", player_running);
     animCtrl.add_animation("player_attack", player_attack);
@@ -114,6 +117,9 @@ int main(int, char **){
     player.add_component(player_attack);
     player.add_component(player_damage);
     player.add_component(animCtrl);
+
+    player.add_component(player_logic);
+
     player.main_positionY = 502;
 
 

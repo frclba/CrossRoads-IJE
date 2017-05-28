@@ -34,6 +34,7 @@ bool Game::startSDL(){
     timer = new Timer();
     mouse = new Mouse();
     keyboard = new Keyboard();
+    collision_manager = new CollisionManager();
     return true;
 
 }
@@ -120,6 +121,8 @@ bool Game::createWindow(){
                         }
                     }
                 }
+		//	current_scene->get_collide_objects();
+		collision_manager->getCollisions(current_scene->get_collide_objects());
 		current_scene->update();
                 current_scene->game_logic();
                 //Limpa o Canvas visualizado pelo  usuário
@@ -134,6 +137,7 @@ bool Game::createWindow(){
                 }
 
                 keyboard->clearKeyboard();
+		current_scene->clear_collide_objects();
                 timer->set_TimeStep();
             }
 

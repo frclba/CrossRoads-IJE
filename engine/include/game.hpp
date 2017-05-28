@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <list>
 
 #include "sdl2core.hpp"
 
@@ -11,6 +12,7 @@
 #include "scene.hpp"
 #include "mouse.hpp"
 #include "Keyboard.hpp"
+#include "collision_manager.hpp"
 
 enum class State{
     created,
@@ -60,6 +62,7 @@ namespace engine{
         Timer *timer;
         Mouse *mouse;
         Keyboard* keyboard;
+        CollisionManager* collision_manager;
 
     private:
         Game()

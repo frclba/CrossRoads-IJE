@@ -106,7 +106,7 @@ void GameObject::setState(State state){
     main_state = state;
 }
 
-bool GameObject::checkCollision(GameObject* object){
+/*bool GameObject::collision(GameObject* object){
   SDL_Rect obj1;
   SDL_Rect obj2;
   SDL_Rect result;
@@ -121,4 +121,9 @@ bool GameObject::checkCollision(GameObject* object){
   obj2.h = object->main_height;
 
   return SDL_IntersectRect( &obj1, &obj2, &result);
-}
+}*/
+
+//GameObject* GameObject::checkCollision(){
+// Game::instance.current_scene->
+
+//}
