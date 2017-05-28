@@ -65,7 +65,7 @@ int main(int, char **){
     Stage1Scene stage1("Fase 1");
     Game::instance.add_scene(stage1);
 
-    GameObject player("player");
+    GameObject player("player",true,"player");
     GameObject plataform("plataform",true,"ground");
     GameObject monster("monster",true,"monster");
     GameObject background_stage1("backgroundForest");
@@ -134,7 +134,7 @@ int main(int, char **){
     background_stage1.add_component(backgroundForest);
 
     stage1.add_game_object(player);
-    // stage1.add_game_object(monster);
+    stage1.add_game_object(monster);
     stage1.add_game_object(plataform);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);

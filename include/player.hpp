@@ -10,7 +10,6 @@ using namespace engine;
 
 class Player : public Component{
     public:
-
     Player(GameObject &_main_game_object, std::string component_id, AnimationControllerComponent *animC):
       Component(_main_game_object,component_id), animCtrl(animC),
       walkR(false), walkL(false), jump(false), stand(false), attack(false), damageBool(false){}
@@ -27,6 +26,7 @@ class Player : public Component{
     void attack_player();
     void move_player();
     void jump_player();
+    void damage();
 
 
   void processPos();
@@ -37,6 +37,7 @@ class Player : public Component{
     GameObject *player;
     GameObject *plataform;
     GameObject *monster;
+
 
     private:
         unsigned int jumptime;

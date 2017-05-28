@@ -1,6 +1,8 @@
 #ifndef PLAYER_HPP_
 #define PLAYER_HPP_
 #include<iostream>
+
+#include "game.hpp"
 #include "components/component.hpp"
 #include "components/animation_controller.hpp"
 

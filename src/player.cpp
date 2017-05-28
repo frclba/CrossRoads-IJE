@@ -24,6 +24,7 @@ void Player::update(){
     jump_player();
     move_player();
     attack_player();
+    damage();
 
     processPos();
 }
@@ -32,11 +33,11 @@ void Player::update(){
 void Player::attack_player(){
 
     if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
-        attack = true;
+      attack = true;
     }
 
     if(Game::instance.keyboard->isKeyUp(SDLK_SPACE)){
-        attack = false;
+      attack = false;
     }
 
     if(attack){
@@ -114,6 +115,12 @@ bool Player::has_ground(){
   }
   return false;
   
+}
+
+void Player::damage(){
+  if(Game::instance.collision_manager->checkCollision(_main_game_object,"monster")){
+    animCtrl->play_animation("player_damage");
+  }
 }
 
 Player::~Player(){}
