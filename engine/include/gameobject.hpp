@@ -21,12 +21,12 @@ namespace engine{
                 invalid
             };
             //Sobrecarga do construtor, para caso seja criado um gameobject sem parâmetros, ele ser tratado com inválido.
-            GameObject(): GameObject("",State::invalid){}
+      GameObject(): GameObject("",false,"",State::invalid){}
 
             //Constructor
-            GameObject(std::string name, State state=State::enabled)
-            : main_positionX(0), main_positionY(0), main_width(0), main_height(0), main_rotation(0),
-            main_name(name), main_state(state){}
+      GameObject(std::string name,bool collision = false,std::string m_type = "", State state=State::enabled)
+	: main_positionX(0), main_positionY(0), main_width(0), main_height(0), main_rotation(0),m_collision(collision),
+	  main_name(name), main_state(state),type(m_type){}
 
             virtual ~GameObject(){};
 
@@ -63,6 +63,9 @@ namespace engine{
             int main_positionX, main_positionY;
             int main_width, main_height;
             int main_rotation;
+            bool m_collision;
+
+            std::string type;
 
         private:
             std::string main_name;

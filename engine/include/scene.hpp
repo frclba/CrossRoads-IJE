@@ -3,9 +3,9 @@
 
 #include <string>
 #include <unordered_map>
-#include <gameobject.hpp>
-#include <mouse.hpp>
+#include <list>
 #include "sdl2core.hpp"
+#include "gameobject.hpp"
 
 namespace engine{
 
@@ -44,9 +44,10 @@ namespace engine{
             //Check on map and initialize each game object. Return true if success
             virtual bool draw();
 
-
-            virtual void declaration();
-            //gamelogic
+           
+            std::list<GameObject*> *get_collide_objects();
+            void clear_collide_objects();
+   //gamelogic
             virtual void game_logic();
 
             inline std::string name() const { return scene_name; }
@@ -55,6 +56,7 @@ namespace engine{
         protected:
             std::string scene_name;
             std::unordered_map <std::string, GameObject *> scene_objects;
+            std::list <GameObject *> collide_objects;
 
             State scene_state;
     };

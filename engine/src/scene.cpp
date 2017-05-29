@@ -89,6 +89,19 @@ bool Scene::draw(){
     return true;
 }
 
+std::list <GameObject *> * Scene::get_collide_objects(){
+    //Iterando o mapa e inicilizando cada um dos game objects.
+    for(auto id_obj: scene_objects){
+        auto obj = id_obj.second;
+       if(obj->state() == GameObject::State::enabled && obj->m_collision == true)
+	 collide_objects.push_back(obj);
+    }
 
-void Scene::declaration(){}
+    return &collide_objects; 
+}
+
+void Scene::clear_collide_objects(){
+  collide_objects.clear();
+}
+
 void Scene::game_logic(){}
