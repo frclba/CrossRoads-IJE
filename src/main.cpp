@@ -8,7 +8,6 @@
 #include "sdl2core.hpp"
 #include "menu_scene.hpp"
 #include "stage1_scene.hpp"
-
 #include "monsterAI.hpp"
 #include "player.hpp"
 
@@ -76,13 +75,13 @@ int main(int, char **){
     GameObject background_stage1("backgroundForest");
     GameObject ground_stage1("ground",true,"ground");
     ground_stage1.main_positionY = 552;
-    ground_stage1.main_positionX = 0; 
+    ground_stage1.main_positionX = 0;
     ground_stage1.main_width = 800;
     ground_stage1.main_height = 200;
 
     plataform.main_positionY = 400;
-    plataform.main_positionX = 400; 
-    
+    plataform.main_positionX = 400;
+
     ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
 
     ImageComponent tile1(ground_stage1, "tile1", "assets/sprites/ChãoMap1.png");
@@ -92,7 +91,7 @@ int main(int, char **){
 
     ImageComponent img_plataform(plataform,"plataform", "assets/sprites/plataform.png");
     plataform.add_component(img_plataform);
-    
+
     AnimationControllerComponent animCtrl(player, "animationController");
     AnimationControllerComponent monster_controler(player, "monster_controler");
 
@@ -108,7 +107,7 @@ int main(int, char **){
     Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
     player_damage.setDelay(100);
 
-    
+
     Animation monster_walk(monster, "monster_walk", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
     monster_walk.setDelay(50);
 
