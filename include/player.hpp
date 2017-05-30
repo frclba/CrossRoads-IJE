@@ -5,6 +5,7 @@
 #include "components/component.hpp"
 #include "components/animation_controller.hpp"
 #include "game.hpp"
+#include "Logger.hpp"
 
 using namespace engine;
 
@@ -15,13 +16,14 @@ class Player : public Component{
       walkR(false), walkL(false), jump(false), stand(false), attack(false), damageBool(false){}
 
 
-  
+
 
     ~Player();
 
     bool init();
     void update();
-  
+
+    void is_dead();
     void damage_player();
     void attack_player();
     void move_player();

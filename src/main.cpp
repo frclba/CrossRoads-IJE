@@ -95,13 +95,13 @@ int main(int, char **){
     AnimationControllerComponent animCtrl(player, "animationController");
     AnimationControllerComponent monster_controler(player, "monster_controler");
 
-    Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",800/8,50, 8);
+    Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",480/8,49, 8);
     player_idle.setDelay(100);
 
     Animation player_running(player, "playerRunning", "assets/sprites/hero_running.png" ,220/4, 46, 4);
     player_running.setDelay(100);
 
-    Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,836/11, 50, 11);
+    Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,825/11, 49, 11);
     player_attack.setDelay(50);
 
     Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);

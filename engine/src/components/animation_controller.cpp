@@ -46,7 +46,7 @@ void AnimationControllerComponent::add_animation(std::string name,
 }
 
 void AnimationControllerComponent::play_animation(std::string name, bool wait_to_finish){
-    Log::instance.info("Play animation " + name );
+    // Log::instance.info("Play animation " + name );
     next_animation = name;
     m_animations_map[current_animation]->flipping(flip);
 
@@ -69,4 +69,3 @@ void AnimationControllerComponent::change_animations(){
 void AnimationControllerComponent::flipping(bool isFlip){
   flip = isFlip;
 }
-

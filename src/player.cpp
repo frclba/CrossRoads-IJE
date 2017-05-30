@@ -1,5 +1,10 @@
 #include "player.hpp"
 
+int life_points = 5;
+float DAMAGE_DELAY = 4000;
+int damage_time = 0;
+bool attacked = false;
+
 bool canJump = true;
 bool jump = false;
 bool isFalling = false;
@@ -25,6 +30,7 @@ void Player::update(){
     move_player();
     attack_player();
     damage();
+    // is_dead();
 
     processPos();
 }
@@ -88,8 +94,7 @@ void Player::jump_player(){
     }
 }
 
-void Player::processPos()
-{
+void Player::processPos(){
      prev_position_y = _main_game_object->main_positionY;
      _main_game_object->main_positionY += dy;   // current velocity components.
 }
@@ -104,8 +109,9 @@ void Player::gravityF(){
     dy = 0;
   }
 }
+
 bool Player::has_ground(){
-  ground = Game::instance.collision_manager->checkCollision(_main_game_object,"ground"); 
+  ground = Game::instance.collision_manager->checkCollision(_main_game_object,"ground");
   if(ground && dy>=0 ){
     if(dy>5){
       _main_game_object->main_positionY = ground->main_positionY - _main_game_object->main_height ;// prev_position_y -(dy-gravity) ;
@@ -114,12 +120,30 @@ bool Player::has_ground(){
     return true;
   }
   return false;
-  
+
 }
 
 void Player::damage(){
-  if(Game::instance.collision_manager->checkCollision(_main_game_object,"monster")){
+
+  if(Game::instance.timer->getTicks() > damage_time){
+    damage_time = Game::instance.timer->getTicks() + DAMAGE_DELAY;
+    attacked = true;
+  }
+
+  if(attacked && Game::instance.collision_manager->checkCollision(_main_game_object,"monster")){
+    // Log::instance.info("Perdeu HP");
+    printf("Perdeu HP\n");
+    life_points--;
     animCtrl->play_animation("player_damage");
+    damage_time = 0;
+    attacked = false;
+  }
+}
+
+void Player::is_dead(){
+  if(life_points <= 0){
+    printf("Player dead\n");
+    Log::instance.info("Player dead");
   }
 }
 
