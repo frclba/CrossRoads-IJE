@@ -5,10 +5,11 @@
 
 MonsterAI::~MonsterAI(){}
 
-int timestep;
+unsigned int timestep;
 
 bool MonsterAI::init(){
      _main_game_object->main_positionY = ground - _main_game_object->main_height;
+     return true;
 }
 
 void MonsterAI::update(){
