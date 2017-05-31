@@ -21,8 +21,10 @@ public:
 private:
     void gravityF();
     void processPos();
+    void move_monster();
+    void jump_monster();
 
-    float monster_move = 4;
+    const int MONSTER_MOVE = 3;
     const int ground = 552;
     const int gravity = 1;
     const float jumpF = 2;

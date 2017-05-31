@@ -3,8 +3,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-MonsterAI::~MonsterAI(){}
-
 unsigned int timestep;
 
 bool MonsterAI::init(){
@@ -14,30 +12,31 @@ bool MonsterAI::init(){
 
 void MonsterAI::update(){
 
-    if(Game::instance.timer->getTicks() > timestep){
-    timestep =  Game::instance.timer->getTicks() + 1000;
-    monster_move = 3;
-    }
-
     m_monster_controler->play_animation("monster_walk");
     gravityF();
 
+    move_monster();
+    jump_monster();
+    processPos();
+}
+
+void MonsterAI::jump_monster(){
+    //monster jump
+    if(_main_game_object->main_positionY > m_player->main_positionY + 30){
+        //dy += jumpF;
+    }
+}
+
+void MonsterAI::move_monster(){
     if(m_player->main_positionX > _main_game_object->main_positionX){
         m_monster_controler->flipping(true);
-        _main_game_object->main_positionX += monster_move;
+        _main_game_object->main_positionX += MONSTER_MOVE;
     }if(m_player->main_positionX < _main_game_object->main_positionX){
         m_monster_controler->flipping(false);
-        _main_game_object->main_positionX -= monster_move;
+        _main_game_object->main_positionX -= MONSTER_MOVE;
     }else{
 
     }
-
-    //monster jump
-    if(_main_game_object->main_positionY > m_player->main_positionY + 30){
-    //dy += jumpF;
-    }
-
-    processPos();
 }
 
 void MonsterAI::processPos(){
@@ -58,3 +57,5 @@ void MonsterAI::gravityF(){
     //     dy = 0;
   }
 }
+
+MonsterAI::~MonsterAI(){}
