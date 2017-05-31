@@ -14,34 +14,33 @@ bool MonsterAI::init(){
 
 void MonsterAI::update(){
 
-  if(Game::instance.timer->getTicks() > timestep){
+    if(Game::instance.timer->getTicks() > timestep){
     timestep =  Game::instance.timer->getTicks() + 1000;
     monster_move = 3;
-  }
+    }
 
-  m_monster_controler->play_animation("monster_walk");
-  gravityF();
+    m_monster_controler->play_animation("monster_walk");
+    gravityF();
 
-  if(m_player->main_positionX > _main_game_object->main_positionX){
-    m_monster_controler->flipping(true);
-    _main_game_object->main_positionX += monster_move;
-  }
+    if(m_player->main_positionX > _main_game_object->main_positionX){
+        m_monster_controler->flipping(true);
+        _main_game_object->main_positionX += monster_move;
+    }if(m_player->main_positionX < _main_game_object->main_positionX){
+        m_monster_controler->flipping(false);
+        _main_game_object->main_positionX -= monster_move;
+    }else{
 
-  else{
-    m_monster_controler->flipping(false);
-    _main_game_object->main_positionX -= monster_move;
-  }
+    }
 
-  //monster jump
-  if(_main_game_object->main_positionY > m_player->main_positionY + 30){
+    //monster jump
+    if(_main_game_object->main_positionY > m_player->main_positionY + 30){
     //dy += jumpF;
-   }
+    }
 
-
-  processPos();
+    processPos();
 }
-void MonsterAI::processPos()
-{
+
+void MonsterAI::processPos(){
   //std::cout<<dy<<std::endl;
    _main_game_object->main_positionY -= dy;   // current velocity components.
 }
