@@ -5,6 +5,7 @@
 #include "game.hpp"
 #include "components/component.hpp"
 #include "components/animation_controller.hpp"
+#include "math.h"
 
 using namespace engine;
 
@@ -23,8 +24,9 @@ private:
     void processPos();
     void move_monster();
     void jump_monster();
+    void see_player();
 
-    const int MONSTER_MOVE = 3;
+    const int MONSTER_MOVE = 4;
     const int ground = 552;
     const int gravity = 1;
     const float jumpF = 2;
