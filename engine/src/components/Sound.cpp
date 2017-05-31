@@ -12,12 +12,14 @@ bool Sound::init(){
     Log::instance.warning("Sound component '" + component_id +"' wasn't Initialized.");
     return false;
   }
+  return true;
 }
 
 bool Sound::shutdown(){
   Log::instance.info("Shuting-down Sound '" + component_id +"' component.");
   Mix_FreeChunk( gSound );
-  gSound == NULL;
+  gSound = NULL;
+  return true;
 }
 
 void Sound::playSound(){
