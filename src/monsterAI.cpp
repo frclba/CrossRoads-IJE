@@ -3,12 +3,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-unsigned int timestep;
+unsigned int time_damage;
 const int PLAYER_DISTANCE = 250;
 
 
 bool MonsterAI::init(){
      _main_game_object->main_positionY = ground - _main_game_object->main_height;
+     _main_game_object->main_positionX = 400;
      return true;
 }
 
@@ -38,15 +39,14 @@ void MonsterAI::jump_monster(){
 }
 
 void MonsterAI::move_monster(){
-    if(!has_damage && m_player->main_positionX > _main_game_object->main_positionX){
-        m_monster_controler->flipping(true);
-        _main_game_object->main_positionX += MONSTER_MOVE;
-    }if(!has_damage && m_player->main_positionX < _main_game_object->main_positionX){
-        m_monster_controler->flipping(false);
-        _main_game_object->main_positionX -= MONSTER_MOVE;
-    }else{
-
-    }
+  if(!has_damage && m_player->main_positionX > _main_game_object->main_positionX){
+    m_monster_controler->flipping(true);
+    _main_game_object->main_positionX += MONSTER_MOVE;
+  }if(!has_damage && m_player->main_positionX < _main_game_object->main_positionX){
+    m_monster_controler->flipping(false);
+    _main_game_object->main_positionX -= MONSTER_MOVE;
+  }else{
+  }
 }
 
 void MonsterAI::processPos(){
@@ -78,6 +78,13 @@ void MonsterAI::damage(){
       }
       if(side == LEFT){
 	//_main_game_object->main_positionX += 10;
+      }
+      if(Game::instance.timer->getTicks() > time_damage){
+	life--;
+	time_damage = Game::instance.timer->getTicks() + 1000;
+      }
+      if(life <= 0){
+	_main_game_object->setState(GameObject::State::disabled);
       }
     }
     else{

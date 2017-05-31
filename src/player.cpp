@@ -1,7 +1,7 @@
 #include "player.hpp"
 
 int life_points = 5;
-float DAMAGE_DELAY = 4000;
+float DAMAGE_DELAY = 1000;
 int damage_time = 0;
 bool attacked = false;
 
@@ -141,19 +141,15 @@ bool Player::has_ground(){
 }
 
 void Player::damage(){
-
-  if(Game::instance.timer->getTicks() > damage_time){
-    damage_time = Game::instance.timer->getTicks() + DAMAGE_DELAY;
-    attacked = true;
-  }
-
   if(!attack && Game::instance.collision_manager->checkCollision(_main_game_object,"monster")){
-    // Log::instance.info("Perdeu HP");
-    // printf("Perdeu HP\n");
-    life_points--;
     animCtrl->play_animation("player_damage");
-    damage_time = 0;
-    attacked = false;
+    if(Game::instance.timer->getTicks() > damage_time){
+      life_points--;
+      damage_time = Game::instance.timer->getTicks() + 1000;
+    }
+    if(life_points <= 0){
+      _main_game_object->setState(GameObject::State::disabled);
+    }
   }
 }
 

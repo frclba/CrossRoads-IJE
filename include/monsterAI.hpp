@@ -36,6 +36,7 @@ private:
     const bool LEFT = false;
     bool has_damage = false;
     float dy;
+    int life = 3;
 
     GameObject* m_player;
     AnimationControllerComponent* m_monster_controler;
