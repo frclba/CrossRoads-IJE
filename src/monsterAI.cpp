@@ -15,7 +15,7 @@ void MonsterAI::update(){
 
   if(Game::instance.timer->getTicks() > timestep){
     timestep =  Game::instance.timer->getTicks() + 1000;
-    monster_move = (rand() % 7) + 1;
+    monster_move = 3;
   }
 
   m_monster_controler->play_animation("monster_walk");

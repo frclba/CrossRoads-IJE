@@ -102,7 +102,7 @@ int main(int, char **){
     player_running.setDelay(100);
 
     Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,825/11, 49, 11);
-    player_attack.setDelay(50);
+    player_attack.setDelay(35);
 
     Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
     player_damage.setDelay(100);
