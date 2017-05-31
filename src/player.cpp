@@ -38,11 +38,26 @@ void Player::update(){
 // // ============================================= ATTACK LOGIC ===================================================
 void Player::attack_player(){
 
-    if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
-      attack = true;
+    if(side == LEFT){
+      m_attack_box->main_positionX = _main_game_object->main_positionX;
+      m_attack_box->main_positionY = _main_game_object->main_positionY;
+      m_attack_box->main_width = _main_game_object->main_width/2 ;
+      m_attack_box->main_height = _main_game_object->main_height;
+    }
+    if(side == RIGHT){
+      m_attack_box->main_positionX = _main_game_object->main_positionX + _main_game_object->main_width;
+      m_attack_box->main_positionY = _main_game_object->main_positionY;
+      m_attack_box->main_width = _main_game_object->main_width/2 ;
+      m_attack_box->main_height = _main_game_object->main_height;
+    }
+
+      if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
+	m_attack_box->setState(GameObject::State::enabled);
+	attack = true;
     }
 
     if(Game::instance.keyboard->isKeyUp(SDLK_SPACE)){
+      m_attack_box->setState(GameObject::State::disabled);
       attack = false;
     }
 
@@ -74,13 +89,15 @@ void Player::move_player(){
     if(walkR && (_main_game_object->main_positionX+_main_game_object->main_width)<800){
         isRight = true;
 	animCtrl->play_animation("player_running");
-        animCtrl->flipping(true);
+	side = RIGHT;
+        animCtrl->flipping(side);
 	_main_game_object->main_positionX += moveForce;
 
     } else if(walkL && (_main_game_object->main_positionX)>=0 ){
         isRight = false;
         animCtrl->play_animation("player_running");
-        animCtrl->flipping(false);
+	side = LEFT;
+        animCtrl->flipping(side);
         _main_game_object->main_positionX -= moveForce;
     }
 }
@@ -130,7 +147,7 @@ void Player::damage(){
     attacked = true;
   }
 
-  if(attacked && Game::instance.collision_manager->checkCollision(_main_game_object,"monster")){
+  if(!attack && Game::instance.collision_manager->checkCollision(_main_game_object,"monster")){
     // Log::instance.info("Perdeu HP");
     printf("Perdeu HP\n");
     life_points--;

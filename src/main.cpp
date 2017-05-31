@@ -107,17 +107,23 @@ int main(int, char **){
     Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
     player_damage.setDelay(100);
 
+    GameObject attack_box("attack_box",true,"attack_box",GameObject::State::disabled);
+
 
     Animation monster_walk(monster, "monster_walk", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
+    Animation monster_damage(monster, "monster_damage", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
     monster_walk.setDelay(50);
+    monster_damage.setDelay(100);
 
     MonsterAI monster_ai(monster, "monster_ai",&player,&monster_controler);
     monster_controler.add_animation("monster_walk",monster_walk);
+    monster_controler.add_animation("monster_damage",monster_damage);
     monster.add_component(monster_walk);
+    monster.add_component(monster_damage);
     monster.add_component(monster_controler);
     monster.add_component(monster_ai);
 
-    Player player_logic(player,"player_logic",&animCtrl);
+    Player player_logic(player,"player_logic",&animCtrl,attack_box);
 
     animCtrl.add_animation("player_idle", player_idle);
     animCtrl.add_animation("player_running", player_running);
@@ -138,6 +144,7 @@ int main(int, char **){
     background_stage1.add_component(backgroundForest);
 
     stage1.add_game_object(player);
+    stage1.add_game_object(attack_box);
     stage1.add_game_object(monster);
     stage1.add_game_object(plataform);
     stage1.add_game_object(ground_stage1);

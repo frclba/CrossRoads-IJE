@@ -12,7 +12,7 @@ class MonsterAI : public Component{
 
 public:
     MonsterAI(GameObject &_main_game_object, std::string component_id, GameObject *player, AnimationControllerComponent *monster_controler):
-        Component(_main_game_object, component_id), dy(0), m_player(player), m_monster_controler(monster_controler){}
+      Component(_main_game_object, component_id), dy(0), m_player(player), m_monster_controler(monster_controler),side(false){}
     ~MonsterAI();
 
     bool init();
@@ -21,11 +21,16 @@ public:
 private:
     void gravityF();
     void processPos();
+    void damage();
 
     float monster_move = 4;
     const int ground = 552;
     const int gravity = 1;
     const float jumpF = 2;
+    bool side; 
+    const bool RIGHT = true;
+    const bool LEFT = false;
+    bool has_damage = false;
     float dy;
 
     GameObject* m_player;

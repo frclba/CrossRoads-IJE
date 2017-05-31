@@ -7,6 +7,7 @@ MonsterAI::~MonsterAI(){}
 
 unsigned int timestep;
 
+
 bool MonsterAI::init(){
      _main_game_object->main_positionY = ground - _main_game_object->main_height;
      return true;
@@ -22,11 +23,13 @@ void MonsterAI::update(){
     m_monster_controler->play_animation("monster_walk");
     gravityF();
 
-    if(m_player->main_positionX > _main_game_object->main_positionX){
-        m_monster_controler->flipping(true);
+    if(!has_damage && m_player->main_positionX > _main_game_object->main_positionX){
+      side = RIGHT;
+      m_monster_controler->flipping(side);
         _main_game_object->main_positionX += monster_move;
-    }if(m_player->main_positionX < _main_game_object->main_positionX){
-        m_monster_controler->flipping(false);
+    }if(!has_damage && m_player->main_positionX < _main_game_object->main_positionX){
+      side = LEFT;
+         m_monster_controler->flipping(side);
         _main_game_object->main_positionX -= monster_move;
     }else{
 
@@ -37,6 +40,8 @@ void MonsterAI::update(){
     //dy += jumpF;
     }
 
+
+    damage();
     processPos();
 }
 
@@ -57,4 +62,21 @@ void MonsterAI::gravityF(){
   else{
     //     dy = 0;
   }
+}
+
+
+void MonsterAI::damage(){
+    if(Game::instance.collision_manager->checkCollision(_main_game_object,"attack_box")){
+      m_monster_controler->play_animation("monster_damage");
+      has_damage = true;
+      if(side == RIGHT){
+	//_main_game_object->main_positionX -= 10;
+      }
+      if(side == LEFT){
+	//_main_game_object->main_positionX += 10;
+      }
+    }
+    else{
+      has_damage = false;
+    }
 }

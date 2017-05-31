@@ -11,9 +11,9 @@ using namespace engine;
 
 class Player : public Component{
 public:
-    Player(GameObject &_main_game_object, std::string component_id, AnimationControllerComponent *animC):
-    Component(_main_game_object,component_id), animCtrl(animC),
-    walkR(false), walkL(false), jump(false), stand(false), attack(false), damageBool(false){}
+  Player(GameObject &_main_game_object, std::string component_id, AnimationControllerComponent *animC,GameObject &attack_box ):
+    Component(_main_game_object,component_id), animCtrl(animC),m_attack_box(&attack_box),
+    walkR(false), walkL(false), jump(false), stand(false), attack(false), damageBool(false),side(false){}
 
     ~Player();
 
@@ -38,6 +38,8 @@ public:
     GameObject *monster;
 
 private:
+    const bool RIGHT = true;
+    const bool LEFT = false;
     AnimationControllerComponent *animCtrl;
     AnimationControllerComponent *monster_controler;
     unsigned int jumptime;
@@ -47,7 +49,9 @@ private:
     bool stand;
     bool attack;
     bool damageBool;
+    bool side;
     GameObject *ground;
+    GameObject* m_attack_box;
     float dy;
 };
 
