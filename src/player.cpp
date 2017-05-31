@@ -149,7 +149,7 @@ void Player::damage(){
 
   if(!attack && Game::instance.collision_manager->checkCollision(_main_game_object,"monster")){
     // Log::instance.info("Perdeu HP");
-    printf("Perdeu HP\n");
+    // printf("Perdeu HP\n");
     life_points--;
     animCtrl->play_animation("player_damage");
     damage_time = 0;

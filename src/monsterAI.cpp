@@ -3,9 +3,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-MonsterAI::~MonsterAI(){}
-
 unsigned int timestep;
+const int PLAYER_DISTANCE = 250;
 
 
 bool MonsterAI::init(){
@@ -15,34 +14,39 @@ bool MonsterAI::init(){
 
 void MonsterAI::update(){
 
-    if(Game::instance.timer->getTicks() > timestep){
-    timestep =  Game::instance.timer->getTicks() + 1000;
-    monster_move = 3;
-    }
-
     m_monster_controler->play_animation("monster_walk");
     gravityF();
 
+
+    see_player();
+    damage();
+    jump_monster();
+    processPos();
+}
+
+void MonsterAI::see_player(){
+    if(fabs(_main_game_object->main_positionX - m_player->main_positionX) <= PLAYER_DISTANCE){
+        move_monster();
+    }
+}
+
+void MonsterAI::jump_monster(){
+    //monster jump
+    if(_main_game_object->main_positionY > m_player->main_positionY + 30){
+        //dy += jumpF;
+    }
+}
+
+void MonsterAI::move_monster(){
     if(!has_damage && m_player->main_positionX > _main_game_object->main_positionX){
-      side = RIGHT;
-      m_monster_controler->flipping(side);
-        _main_game_object->main_positionX += monster_move;
+        m_monster_controler->flipping(true);
+        _main_game_object->main_positionX += MONSTER_MOVE;
     }if(!has_damage && m_player->main_positionX < _main_game_object->main_positionX){
-      side = LEFT;
-         m_monster_controler->flipping(side);
-        _main_game_object->main_positionX -= monster_move;
+        m_monster_controler->flipping(false);
+        _main_game_object->main_positionX -= MONSTER_MOVE;
     }else{
 
     }
-
-    //monster jump
-    if(_main_game_object->main_positionY > m_player->main_positionY + 30){
-    //dy += jumpF;
-    }
-
-
-    damage();
-    processPos();
 }
 
 void MonsterAI::processPos(){
@@ -80,3 +84,4 @@ void MonsterAI::damage(){
       has_damage = false;
     }
 }
+MonsterAI::~MonsterAI(){}
