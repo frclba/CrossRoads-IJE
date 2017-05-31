@@ -27,7 +27,7 @@ int main(int, char **){
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
 
     //TODO - Put in a specific place where it belongs with large scalability
-    Music musica(background, "musicaBackground", "assets/music/gm.wav");
+    Music menu_music(background, "menu_musicBackground", "assets/music/gm.wav");
 
     GameObject menuFire("menuFire");
     Animation animationFire(menuFire,"imageFire", "assets/sprites/menuFire.png",348/6,76,6);
@@ -50,7 +50,7 @@ int main(int, char **){
 
     //Adiciona components aos gameobjects
     background.add_component(backgroundImage);
-    background.add_component(musica);
+    background.add_component(menu_music);
     menuFire.add_component(animationFire);
     bNew.add_component(image_bNew);
     bLoad.add_component(image_bLoad);
@@ -69,6 +69,7 @@ int main(int, char **){
     Stage1Scene stage1("Fase 1");
     Game::instance.add_scene(stage1);
 
+
     GameObject player("player",true,"player");
     GameObject plataform("plataform",true,"ground");
     GameObject monster("monster",true,"monster");
@@ -82,6 +83,7 @@ int main(int, char **){
     plataform.main_positionY = 400;
     plataform.main_positionX = 400;
 
+    Music stage1_music(background_stage1, "menu_musicStage1", "assets/music/battle.mp3");
     ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
 
     ImageComponent tile1(ground_stage1, "tile1", "assets/sprites/ChãoMap1.png");
@@ -119,6 +121,7 @@ int main(int, char **){
 
     Player player_logic(player,"player_logic",&animCtrl);
 
+    background_stage1.add_component(stage1_music);
     animCtrl.add_animation("player_idle", player_idle);
     animCtrl.add_animation("player_running", player_running);
     animCtrl.add_animation("player_attack", player_attack);
