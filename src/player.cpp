@@ -148,7 +148,8 @@ void Player::damage(){
       damage_time = Game::instance.timer->getTicks() + 1000;
     }
     if(life_points <= 0){
-      _main_game_object->setState(GameObject::State::disabled);
+        _main_game_object->setState(GameObject::State::disabled);
+        Game::instance.change_scene("Lose Scene");
     }
   }
 }

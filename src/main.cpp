@@ -10,6 +10,7 @@
 #include "stage1_scene.hpp"
 #include "monsterAI.hpp"
 #include "player.hpp"
+#include "restart.hpp"
 
 using namespace engine;
 
@@ -141,8 +142,6 @@ int main(int, char **){
 
     player.main_positionY = 502;
 
-
-
     background_stage1.add_component(backgroundForest);
     background_stage1.add_component(stage1_music);
 
@@ -152,6 +151,32 @@ int main(int, char **){
     stage1.add_game_object(plataform);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);
+
+    //==================================== WIN SCREEN =============================================
+    Scene win("Win Scene");
+    Game::instance.add_scene(win);
+
+    GameObject win_background("win_background");
+    ImageComponent image_win (win_background, "image_win", "assets/sprites/new_win.png");
+    Restart restart_button_win(win_background, "restart_button_win");
+
+    win_background.add_component(image_win);
+    win_background.add_component(restart_button_win);
+
+    win.add_game_object(win_background);
+
+    //==================================== WIN SCREEN =============================================
+    Scene lose("Lose Scene");
+    Game::instance.add_scene(lose);
+
+    GameObject lose_background("lose_background");
+    ImageComponent image_lose (lose_background, "image_lose", "assets/sprites/lose.jpg");
+    Restart restart_button_lose(lose_background, "restart_button_lose");
+
+    lose_background.add_component(image_lose);
+    lose_background.add_component(restart_button_lose);
+
+    lose.add_game_object(lose_background);
 
     //==================================== GAME LOOP ============================================
     Log::instance.jumpLine("Ending Instantiations. Running Game\n");
