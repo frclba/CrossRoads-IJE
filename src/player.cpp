@@ -51,14 +51,14 @@ void Player::attack_player(){
       m_attack_box->main_height = _main_game_object->main_height;
     }
 
-      if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
-	m_attack_box->setState(GameObject::State::enabled);
+    if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
+	    m_attack_box->setState(GameObject::State::enabled);
 	attack = true;
     }
 
     if(Game::instance.keyboard->isKeyUp(SDLK_SPACE)){
-      m_attack_box->setState(GameObject::State::disabled);
-      attack = false;
+        m_attack_box->setState(GameObject::State::disabled);
+        attack = false;
     }
 
     if(attack){
@@ -88,10 +88,10 @@ void Player::move_player(){
 //
     if(walkR && (_main_game_object->main_positionX+_main_game_object->main_width)<800){
         isRight = true;
-	animCtrl->play_animation("player_running");
-	side = RIGHT;
+	    animCtrl->play_animation("player_running");
+	    side = RIGHT;
         animCtrl->flipping(side);
-	_main_game_object->main_positionX += moveForce;
+	    _main_game_object->main_positionX += moveForce;
 
     } else if(walkL && (_main_game_object->main_positionX)>=0 ){
         isRight = false;

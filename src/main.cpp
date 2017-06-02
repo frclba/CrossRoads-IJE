@@ -127,7 +127,6 @@ int main(int, char **){
 
     Player player_logic(player,"player_logic",&animCtrl,attack_box);
 
-    background_stage1.add_component(stage1_music);
     animCtrl.add_animation("player_idle", player_idle);
     animCtrl.add_animation("player_running", player_running);
     animCtrl.add_animation("player_attack", player_attack);
@@ -145,6 +144,7 @@ int main(int, char **){
 
 
     background_stage1.add_component(backgroundForest);
+    background_stage1.add_component(stage1_music);
 
     stage1.add_game_object(player);
     stage1.add_game_object(attack_box);
