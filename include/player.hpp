@@ -11,9 +11,9 @@ using namespace engine;
 
 class Player : public Component{
 public:
-  Player(GameObject &_main_game_object, std::string component_id, AnimationControllerComponent *animC,GameObject &attack_box ):
-    Component(_main_game_object,component_id), animCtrl(animC),m_attack_box(&attack_box),
-    walkR(false), walkL(false), jump(false), stand(false), attack(false), damageBool(false),side(false){}
+  Player(GameObject &_main_game_object, std::string component_id, AnimationControllerComponent *animC, GameObject &attack_box ):
+    Component(_main_game_object, component_id), animCtrl(animC), walkR(false), walkL(false),
+      jump(false), stand(false), attack(false), damageBool(false), side(false), m_attack_box(&attack_box){}
 
     ~Player();
 

@@ -5,3 +5,5 @@ cmake ..
 make
 
 ./game
+
+cat log.txt
