@@ -1,0 +1,7 @@
+package: game-crossroads
+Priority: optional
+Version: 0.1
+Architecture: amd64
+Maintainer: Fernando Ribeiro Aguilar
+Depends: cmake, libsdl2-dev, libsdl2-image-dev, libsdl2-mixer-dev, libsdl2-ttf-dev
+Description: Este é um pacote gerado com o intuito de instalar e executar o jogo CrossRoads
