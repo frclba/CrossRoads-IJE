@@ -78,13 +78,19 @@ void Scene::update()
 }
 
 bool Scene::draw(){
-
-    //Iterando o mapa e inicilizando cada um dos game objects.
+  GameObject::Layer layers[] ={GameObject::Layer::background,
+			       GameObject::Layer::layer1,
+			       GameObject::Layer::layer2,
+			       GameObject::Layer::layer3};
+  
+  //Iterando o mapa e inicilizando cada um dos game objects.
+  for(int cont = 0; cont<4;cont++){
     for(auto id_obj: scene_objects){
-        auto obj = id_obj.second;
-       if(obj->state() == GameObject::State::enabled && obj->draw() == false)
-            return false;
+      auto obj = id_obj.second;
+      if(obj->m_layer == layers[cont] && obj->state() == GameObject::State::enabled && obj->draw() == false)
+	return false;
     }
+  }
 
     return true;
 }

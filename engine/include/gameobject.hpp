@@ -15,6 +15,12 @@ namespace engine{
 
     class GameObject{
     public:
+        enum class Layer{
+	  background,
+	  layer1,
+	  layer2,
+	  layer3
+        };
         enum class State{
             enabled,
             disabled,
@@ -26,7 +32,7 @@ namespace engine{
         //Constructor
         GameObject(std::string name,bool collision = false,std::string m_type = "", State state=State::enabled)
         : main_positionX(0), main_positionY(0), main_width(0), main_height(0), main_rotation(0),m_collision(collision),
-        type(m_type), main_state(state), main_name(name){}
+	  type(m_type), main_state(state), main_name(name),m_layer(Layer::layer2){}
 
         virtual ~GameObject(){};
 
@@ -60,12 +66,16 @@ namespace engine{
         inline State state() const {return main_state;}
         inline void set_size(int width, int height) {main_width = width; main_height = height;}
 
+        inline void set_layer(Layer layer) {m_layer = layer;}
+
         int main_positionX, main_positionY;
         int main_width, main_height;
         int main_rotation;
         bool m_collision;
 
         std::string type;
+
+        Layer m_layer;
 
     private:
         State main_state;

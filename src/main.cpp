@@ -79,7 +79,8 @@ int main(int, char **){
 
     Music stage1_music(background_stage1, "menu_musicStage1", "assets/music/battle.mp3");
     ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
-
+    background_stage1.set_layer(GameObject::Layer::background);
+    
     ImageComponent tile1(ground_stage1, "tile1", "assets/sprites/ChãoMap1.png");
     ImageComponent tile2(ground_stage1,"tile2", "assets/sprites/ChãoMap2.png");
     ImageComponent tile3(ground_stage1,"tile3", "assets/sprites/ChãoMap3.png");
