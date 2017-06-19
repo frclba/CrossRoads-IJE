@@ -1,6 +1,6 @@
 # CrossRoads
 
-![Menu Image](/assets/sprites/capa.png)
+![Menu Image](assets/sprites/capa.png)
 
 ### Descrição
 O jogo é um 2D hack'n slash plataforma, onde o jogador controla um heroi em sua longa aventura.
@@ -33,14 +33,14 @@ Download do repositório através do github
 
     git clone https://github.com/fernand0aguilar/ije-fga-UnB.git
 
-### Compilando 
+### Compilando
 Utilizando as configurações dos arquivos CmakeList.txt e Makefile
 
     cd ije-fga-unb
     mkdir build && cd build
     cmake ..
     make
-   
+
 #### Execução
 
     ./game

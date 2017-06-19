@@ -70,7 +70,6 @@ int main(int, char **){
     Stage1Scene stage1("Fase 1");
     Game::instance.add_scene(stage1);
 
-
     GameObject player("player",true,"player");
     GameObject plataform("plataform",true,"ground");
     GameObject monster("monster",true,"monster");
