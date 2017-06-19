@@ -11,7 +11,7 @@ bool Scene::add_game_object(GameObject &obj){
 
     //Iterando mapa para ver se aquele game object já existe nela
     if (scene_objects.find(id) != scene_objects.end()){
-        Log::instance.warning("Game object já existe!");
+        Log::instance.warning("Game object: '" + id + "' já existe!");
         return false;
     }
 
@@ -48,10 +48,10 @@ bool Scene::init(){
     //Iterando o mapa e inicilizando cada um dos game objects.
     for(auto id_obj: scene_objects){
         auto obj = id_obj.second;
-        if(obj->state() == GameObject::State::enabled && obj->init() == false)
+        if(obj->state() == GameObject::State::enabled && obj->init() == false){
             return false;
+        }
     }
-
     return true;
 }
 
@@ -62,9 +62,8 @@ bool Scene::shutdown(){
     for(auto id_obj: scene_objects){
         auto obj = id_obj.second;
         if(obj->state() == GameObject::State::enabled && obj->shutdown() == false)
-            return false;
+        return false;
     }
-
     return true;
 }
 
@@ -73,41 +72,43 @@ void Scene::update()
     for (auto id_obj: scene_objects)
     {
         auto obj = id_obj.second;
-        if (obj->state() == GameObject::State::enabled) obj->update();
+        if (obj->state() == GameObject::State::enabled){
+            obj->update();
+        }
     }
 }
 
 bool Scene::draw(){
-  GameObject::Layer layers[] ={GameObject::Layer::background,
-			       GameObject::Layer::layer1,
-			       GameObject::Layer::layer2,
-			       GameObject::Layer::layer3};
-  
-  //Iterando o mapa e inicilizando cada um dos game objects.
-  for(int cont = 0; cont<4;cont++){
-    for(auto id_obj: scene_objects){
-      auto obj = id_obj.second;
-      if(obj->m_layer == layers[cont] && obj->state() == GameObject::State::enabled && obj->draw() == false)
-	return false;
-    }
-  }
+    GameObject::Layer layers[] = { GameObject::Layer::background,
+        GameObject::Layer::layer1,
+        GameObject::Layer::layer2,
+        GameObject::Layer::layer3 };
 
-    return true;
-}
-
-std::list <GameObject *> * Scene::get_collide_objects(){
-    //Iterando o mapa e inicilizando cada um dos game objects.
-    for(auto id_obj: scene_objects){
-        auto obj = id_obj.second;
-       if(obj->state() == GameObject::State::enabled && obj->m_collision == true)
-	 collide_objects.push_back(obj);
+        //Iterando o mapa e inicilizando cada um dos game objects.
+        for(int cont = 0; cont < 4; cont++){
+            for(auto id_obj: scene_objects){
+                auto obj = id_obj.second;
+                if(obj->m_layer == layers[cont] && obj->state() == GameObject::State::enabled && obj->draw() == false){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
-    return &collide_objects; 
-}
+    std::list <GameObject *> * Scene::get_collide_objects(){
+        //Iterando o mapa e inicilizando cada um dos game objects.
+        for(auto id_obj: scene_objects){
+            auto obj = id_obj.second;
+            if(obj->state() == GameObject::State::enabled && obj->m_collision == true){
+                collide_objects.push_back(obj);
+            }
+        }
+        return &collide_objects;
+    }
 
-void Scene::clear_collide_objects(){
-  collide_objects.clear();
-}
+    void Scene::clear_collide_objects(){
+        collide_objects.clear();
+    }
 
-void Scene::game_logic(){}
+    void Scene::game_logic(){}

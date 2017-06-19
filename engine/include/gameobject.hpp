@@ -62,11 +62,22 @@ namespace engine{
 
     // template<typename T> std::list<Component *> get_components();
 
-    inline std::string name() const {return main_name;}
-    inline State state() const {return main_state;}
-    inline void set_size(int width, int height) {main_width = width; main_height = height;}
+    inline std::string name() const {
+        return main_name;
+    }
 
-    inline void set_layer(Layer layer) {m_layer = layer;}
+    inline State state() const {
+        return main_state;
+    }
+
+    inline void set_size(int width, int height) {
+        main_width = width;
+        main_height = height;
+    }
+
+    inline void set_layer(Layer layer) {
+        m_layer = layer;
+    }
 
     int main_positionX, main_positionY;
     int main_width, main_height;

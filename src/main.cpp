@@ -99,6 +99,7 @@ int main(int, char **){
     Animation player_running(player, "playerRunning", "assets/sprites/hero_running.png" ,220/4, 46, 4);
     Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,825/11, 49, 11);
     Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
+
     // Monster Animations
     Animation monster_walk(monster, "monster_walk", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
     Animation monster_damage(monster, "monster_damage", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
@@ -138,6 +139,8 @@ int main(int, char **){
     player.add_component(player_logic);
 
     player.main_positionY = 502;
+
+    player.set_layer(GameObject::Layer::layer2);
 
     background_stage1.add_component(backgroundForest);
     background_stage1.add_component(stage1_music);
