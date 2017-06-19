@@ -81,6 +81,8 @@ int main(int, char **){
 
     //ImageComponent tile1(ground_stage1, "tile1", "/usr/share/crossroads/assets/sprites/ChãoMap1.png");
 
+    background_stage1.set_layer(GameObject::Layer::background);
+
     ImageComponent tile1(ground_stage1, "tile1", "assets/sprites/ChãoMap1.png");
     ImageComponent tile2(ground_stage1,"tile2", "assets/sprites/ChãoMap2.png");
     ImageComponent tile3(ground_stage1,"tile3", "assets/sprites/ChãoMap3.png");
