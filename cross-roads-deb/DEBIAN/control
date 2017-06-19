@@ -1,7 +1,11 @@
-package: game-crossroads
-Priority: optional
-Version: 0.1
+Package: cross-roads-game
+Version: 0.0.2
+Maintainer: @fernand0aguilar <fernando@aguilar.net.br>
+Section: games
+Source: https://github.com/fernand0aguilar/ije-fga-UnB
+Homepage: https://github.com/fernand0aguilar/ije-fga-UnB#crossroads
 Architecture: amd64
-Maintainer: Fernando Ribeiro Aguilar
-Depends: cmake, libsdl2-dev, libsdl2-image-dev, libsdl2-mixer-dev, libsdl2-ttf-dev
-Description: Este é um pacote gerado com o intuito de instalar e executar o jogo CrossRoads
+Priority: optional
+Depends: libsdl2-dev , libsdl2-image-dev, make, cmake, libsdl2-mixer-dev, libsdl2-ttf-dev
+Description: A 2D game made with SDL2
+ A 2D game made with SDL2 for a subject called Introduction to Eletronic Games. Coursed in the first semester of 2017 in University of Brasilia.

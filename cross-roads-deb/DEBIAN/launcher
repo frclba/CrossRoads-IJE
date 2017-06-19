@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=CrossRoads Game
+Version=1.0
+Exec=crossroads
+Comment=2D Game
+Icon=/usr/share/crossroads/assets/sprites/capa.png
+Type=Application
+Terminal=false
+StartupNotify=true
+Encoding=UTF-8
+Categories=2DGraphics;

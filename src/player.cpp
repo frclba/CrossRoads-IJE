@@ -2,7 +2,7 @@
 
 int life_points = 5;
 float DAMAGE_DELAY = 1000;
-int damage_time = 0;
+unsigned int damage_time = 0;
 bool attacked = false;
 
 bool canJump = true;

@@ -11,8 +11,8 @@ using namespace engine;
 
 class Restart : public Component{
 public:
-  Restart(GameObject &_main_game_object, std::string component_id):
-    Component(_main_game_object,component_id){}
+  Restart(GameObject &main_game_object, std::string id):
+    Component(main_game_object, id){}
 
     ~Restart();
 
