@@ -73,7 +73,6 @@ int main(int, char **){
     Game::instance.add_scene(stage1);
 
     GameObject player("player",true,"player");
-    GameObject plataform("plataform",true,"ground");
     GameObject monster("monster",true,"monster");
     GameObject background_stage1("backgroundForest");
     GameObject ground_stage1("ground",true,"ground");
@@ -90,8 +89,6 @@ int main(int, char **){
     ImageComponent tile3(ground_stage1,"tile3", "assets/sprites/ChãoMap3.png");
     ImageComponent tile4(ground_stage1,"tile4", "assets/sprites/ChãoMap4.png");
 
-    ImageComponent img_plataform(plataform,"plataform", "assets/sprites/plataform.png");
-    plataform.add_component(img_plataform);
 
     AnimationControllerComponent player_anim_ctrl(player, "animationController");
     AnimationControllerComponent monster_anim_ctrl(player, "monster_controler");
@@ -147,10 +144,22 @@ int main(int, char **){
     background_stage1.add_component(backgroundForest);
     background_stage1.add_component(stage1_music);
 
+    GameObject plataform("plataform",true,"ground");
+    ImageComponent img_plataform(plataform,"plataform", "assets/sprites/plataform.png");
+    plataform.add_component(img_plataform);
+
+    GameObject plataform2("plataform2",true,"ground");
+    ImageComponent img_plataform2(plataform2,"plataform2", "assets/sprites/plataform.png");
+    plataform2.add_component(img_plataform2);
+
+    GameObject plataform3("plataform3",true,"ground");
+    ImageComponent img_plataform3(plataform3,"plataform3", "assets/sprites/plataform.png");
+    plataform3.add_component(img_plataform3);
+
     GameObject fireball("fireball",true,"fireball");
     fireball.main_positionX = 200;
 
-    FireballController fireball_controller(fireball, "fireball", 10, &player);
+    FireballController fireball_controller(fireball, "fireball", 15, &player);
     fireball.add_component(fireball_controller);
 
     ImageComponent img_fireball(fireball,"fireball", "assets/sprites/fire.jpg");
@@ -169,10 +178,12 @@ int main(int, char **){
     stage1.add_game_object(attack_box);
     stage1.add_game_object(monster);
     stage1.add_game_object(plataform);
+    stage1.add_game_object(plataform2);
+    stage1.add_game_object(plataform3);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);
-    stage1.add_game_object(fireball);
-    stage1.add_game_object(boss);
+    // stage1.add_game_object(fireball);
+    // stage1.add_game_object(boss);
 
     //==================================== WIN SCREEN =============================================
     Scene win("Win Scene");
