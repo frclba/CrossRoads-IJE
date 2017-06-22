@@ -5,6 +5,8 @@
 
 unsigned int time_damage;
 const int PLAYER_DISTANCE = 250;
+const int PLAYER_ATTACK_DISTANCE = 150;
+
 
 
 bool MonsterAI::init(){
@@ -14,10 +16,8 @@ bool MonsterAI::init(){
 }
 
 void MonsterAI::update(){
-
     m_monster_controler->play_animation("monster_walk");
     gravityF();
-
 
     see_player();
     damage();
@@ -27,14 +27,25 @@ void MonsterAI::update(){
 
 void MonsterAI::see_player(){
     if(fabs(_main_game_object->main_positionX - m_player->main_positionX) <= PLAYER_DISTANCE){
-        move_monster();
+        if(fabs(_main_game_object->main_positionX - m_player->main_positionX) <= PLAYER_ATTACK_DISTANCE)
+            attack_player();
+        else
+            move_monster();
     }
 }
+
+void MonsterAI::attack_player(){
+    if(fabs(_main_game_object->main_positionX - m_player->main_positionX) <= PLAYER_ATTACK_DISTANCE){
+        printf("SE JOGOU NO PLAYER\n");
+        // move_monster();
+    }
+}
+
 
 void MonsterAI::jump_monster(){
     //monster jump
     if(_main_game_object->main_positionY > m_player->main_positionY + 30){
-        //dy += jumpF;
+        // dy += jumpF;
     }
 }
 

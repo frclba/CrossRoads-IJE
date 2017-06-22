@@ -19,7 +19,11 @@ float prev_position_y;
 
 float dy = 0;
 
-bool Player::init(){return true;}
+bool Player::init(){
+    _main_game_object->main_positionY = 502;
+
+    return true;
+}
 
 // ================================================= GAME LOGIC ====================================================
 void Player::update(){
