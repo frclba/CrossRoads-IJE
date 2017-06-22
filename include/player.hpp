@@ -4,6 +4,7 @@
 
 #include "components/component.hpp"
 #include "components/animation_controller.hpp"
+#include "components/image.hpp"
 #include "game.hpp"
 #include "Logger.hpp"
 
@@ -11,9 +12,11 @@ using namespace engine;
 
 class Player : public Component{
 public:
-  Player(GameObject &main_game_object, std::string id, AnimationControllerComponent *animC, GameObject &attack_box ):
+  Player(GameObject &main_game_object, std::string id, AnimationControllerComponent *animC, GameObject &attack_box,
+	 ImageComponent *background):
     Component(main_game_object, id), animCtrl(animC), walkR(false), walkL(false),
-      jump(false), stand(false), attack(false), damageBool(false), side(false), m_attack_box(&attack_box){}
+    jump(false), stand(false), attack(false), damageBool(false), side(false), m_attack_box(&attack_box),
+    m_background(background){}
 
     ~Player();
 
@@ -53,6 +56,7 @@ private:
     GameObject *ground;
     GameObject* m_attack_box;
     float dy;
+    ImageComponent* m_background;
 };
 
 #endif

@@ -21,6 +21,7 @@ float dy = 0;
 
 bool Player::init(){
     _main_game_object->main_positionY = 502;
+    m_background->imagePart->x = 0;
 
     return true;
 }
@@ -103,6 +104,10 @@ void Player::move_player(){
         side = LEFT;
         animCtrl->flipping(side);
         _main_game_object->main_positionX -= moveForce;
+    }
+    
+    if(_main_game_object->main_positionX > 700 ){
+      m_background->move_img_rect(7);
     }
 }
 

@@ -28,6 +28,7 @@ int main(int, char **){
     GameObject background("background");
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
 
+    
     //TODO - Put in a specific place where it belongs with large scalability
     Music menu_music(background, "menu_musicBackground", "assets/music/gm.wav");
 
@@ -79,7 +80,7 @@ int main(int, char **){
 
     Music stage1_music(background_stage1, "menu_musicStage1", "assets/music/battle.mp3");
     ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
-
+    backgroundForest.set_back_rect(800,600);
     //ImageComponent tile1(ground_stage1, "tile1", "/usr/share/crossroads/assets/sprites/ChãoMap1.png");
 
     background_stage1.set_layer(GameObject::Layer::background);
@@ -123,7 +124,7 @@ int main(int, char **){
     monster.add_component(monster_anim_ctrl);
     monster.add_component(monster_ai);
 
-    Player player_logic(player,"player_logic",&player_anim_ctrl,attack_box);
+    Player player_logic(player,"player_logic",&player_anim_ctrl,attack_box,&backgroundForest);
 
     //Adding animation to animation mananger
     player_anim_ctrl.add_animation("player_idle", player_idle);

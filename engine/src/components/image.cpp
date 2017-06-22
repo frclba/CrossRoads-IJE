@@ -31,6 +31,25 @@ bool ImageComponent::init(){
     return true;
 }
 
+
+void ImageComponent::set_back_rect(int width,int height){
+    imagePart = new SDL_Rect();
+    imagePart->x =0;
+    imagePart->y =0;
+    imagePart->w = width;
+    imagePart->h = height;
+}
+
+void ImageComponent::move_img_rect(int value){
+  if( imagePart->x+ imagePart->w + value < _main_game_object->main_width &&
+      imagePart->x + value > 0)
+    {
+    imagePart->x = imagePart->x + value;
+    }
+}
+
+
+
 bool ImageComponent::shutdown(){
     Log::instance.info("Shutdown ImageComponent : '"+ component_id + "'.");
 
