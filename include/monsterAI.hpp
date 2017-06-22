@@ -1,5 +1,5 @@
-#ifndef PLAYER_HPP_
-#define PLAYER_HPP_
+#ifndef _MONSTER_HPP_
+#define _MONSTER_HPP_
 #include<iostream>
 
 #include "game.hpp"

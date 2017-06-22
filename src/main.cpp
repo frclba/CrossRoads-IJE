@@ -11,6 +11,7 @@
 #include "monsterAI.hpp"
 #include "player.hpp"
 #include "restart.hpp"
+#include "fireball.hpp"
 
 using namespace engine;
 
@@ -145,6 +146,23 @@ int main(int, char **){
     background_stage1.add_component(backgroundForest);
     background_stage1.add_component(stage1_music);
 
+    GameObject fireball("fireball",true,"fireball");
+    fireball.main_positionX = 200;
+
+    FireballController fireball_controller(fireball, "fireball", 10, &player);
+    fireball.add_component(fireball_controller);
+
+    ImageComponent img_fireball(fireball,"fireball", "assets/sprites/fire.jpg");
+    fireball.add_component(img_fireball);
+
+    GameObject boss("boss",true,"boss");
+    boss.main_positionX = 600;
+    boss.main_positionY = 300;
+
+    Animation boss_idle(boss, "bossIdle", "assets/sprites/boss.png",552/3,244, 3);
+    boss_idle.setDelay(220);
+    boss.add_component(boss_idle);
+
     // Adding defined gameobjects to stage 1 scene
     stage1.add_game_object(player);
     stage1.add_game_object(attack_box);
@@ -152,6 +170,8 @@ int main(int, char **){
     stage1.add_game_object(plataform);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);
+    stage1.add_game_object(fireball);
+    stage1.add_game_object(boss);
 
     //==================================== WIN SCREEN =============================================
     Scene win("Win Scene");
