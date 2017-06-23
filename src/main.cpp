@@ -12,6 +12,7 @@
 #include "player.hpp"
 #include "restart.hpp"
 #include "fireball.hpp"
+#include "portal.hpp"
 
 using namespace engine;
 
@@ -73,7 +74,6 @@ int main(int, char **){
     Game::instance.add_scene(stage1);
 
     GameObject player("player",true,"player");
-    GameObject monster("monster",true,"monster");
     GameObject background_stage1("backgroundForest");
     GameObject ground_stage1("ground",true,"ground");
 
@@ -99,28 +99,96 @@ int main(int, char **){
     Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,825/11, 49, 11);
     Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
 
-    // Monster Animations
-    Animation monster_walk(monster, "monster_walk", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
-    Animation monster_damage(monster, "monster_damage", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
-
     player_idle.setDelay(100);
     player_running.setDelay(100);
     player_attack.setDelay(30);
     player_damage.setDelay(100);
-    monster_walk.setDelay(50);
-    monster_damage.setDelay(100);
-
     GameObject attack_box("attack_box",true,"attack_box",GameObject::State::disabled);
 
-    //Monster artificial intelligence controller
-    MonsterAI monster_ai(monster, "monster_ai",&player,&monster_anim_ctrl);
-    monster_anim_ctrl.add_animation("monster_walk",monster_walk);
-    monster_anim_ctrl.add_animation("monster_damage",monster_damage);
-    monster.add_component(monster_walk);
-    monster.add_component(monster_damage);
-    monster.add_component(monster_anim_ctrl);
-    monster.add_component(monster_ai);
 
+    //monsters
+    GameObject monster1("monster1",true,"monster");
+    AnimationControllerComponent monster_anim_ctrl1(player, "monster_controler");
+
+    Animation monster_walk1(monster1, "monster_walk1", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
+    Animation monster_damage1(monster1, "monster_damage1", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
+    monster_walk1.setDelay(50);
+    monster_damage1.setDelay(100);
+    //Monster artificial intelligence controller
+    MonsterAI monster_ai1(monster1, "monster_ai1",&player,&monster_anim_ctrl);
+    monster_anim_ctrl.add_animation("monster_walk",monster_walk1);
+    monster_anim_ctrl.add_animation("monster_damage",monster_damage1);
+    monster1.add_component(monster_walk1);
+    monster1.add_component(monster_damage1);
+    monster1.add_component(monster_anim_ctrl1);
+    monster1.add_component(monster_ai1);
+
+    GameObject monster2("monster2",true,"monster");
+    AnimationControllerComponent monster_anim_ctrl2(player, "monster_controler");
+
+    Animation monster_walk2(monster2, "monster_walk2", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
+    Animation monster_damage2(monster2, "monster_damage2", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
+    monster_walk2.setDelay(50);
+    monster_damage2.setDelay(100);
+    //Monster artificial intelligence controller
+    MonsterAI monster_ai2(monster2, "monster_ai2",&player,&monster_anim_ctrl2);
+    monster_anim_ctrl2.add_animation("monster_walk",monster_walk2);
+    monster_anim_ctrl2.add_animation("monster_damage",monster_damage2);
+    monster2.add_component(monster_walk2);
+    monster2.add_component(monster_damage2);
+    monster2.add_component(monster_anim_ctrl2);
+    monster2.add_component(monster_ai2);
+
+    GameObject monster3("monster3",true,"monster");
+    AnimationControllerComponent monster_anim_ctrl3(player, "monster_controler");
+
+    Animation monster_walk3(monster3, "monster_walk3", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
+    Animation monster_damage3(monster3, "monster_damage3", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
+    monster_walk3.setDelay(50);
+    monster_damage3.setDelay(100);
+    //Monster artificial intelligence controller
+    MonsterAI monster_ai3(monster3, "monster_ai",&player,&monster_anim_ctrl);
+    monster_anim_ctrl3.add_animation("monster_walk",monster_walk3);
+    monster_anim_ctrl3.add_animation("monster_damage",monster_damage3);
+    monster3.add_component(monster_walk3);
+    monster3.add_component(monster_damage3);
+    monster3.add_component(monster_anim_ctrl3);
+    monster3.add_component(monster_ai3);
+
+    GameObject monster4("monster4",true,"monster");
+    AnimationControllerComponent monster_anim_ctrl4(player, "monster_controler");
+
+    Animation monster_walk4(monster4, "monster_walk4", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
+    Animation monster_damage4(monster4, "monster_damage4", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
+    monster_walk4.setDelay(50);
+    monster_damage4.setDelay(100);
+    //Monster artificial intelligence controller
+    MonsterAI monster_ai4(monster4, "monster_ai4",&player,&monster_anim_ctrl4);
+    monster_anim_ctrl4.add_animation("monster_walk",monster_walk4);
+    monster_anim_ctrl4.add_animation("monster_damage",monster_damage4);
+    monster4.add_component(monster_walk4);
+    monster4.add_component(monster_damage4);
+    monster4.add_component(monster_anim_ctrl4);
+    monster4.add_component(monster_ai4);
+
+    //.monsters
+    
+    //Portal
+    GameObject portal("portal");
+    ImageComponent portal_img(portal,"portal","assets/sprites/portal.png");
+    Portal portal_logic(portal,"portal_logic");
+    portal.add_component(portal_img);
+    portal.add_component(portal_logic);
+
+    portal_logic.add_monster(&monster1);
+    portal_logic.add_monster(&monster2);
+    portal_logic.add_monster(&monster3);
+    portal_logic.add_monster(&monster4);
+    
+    stage1.add_game_object(portal);
+    
+
+    
     Player player_logic(player,"player_logic",&player_anim_ctrl,attack_box,&backgroundForest);
 
     //Adding animation to animation mananger
@@ -176,7 +244,10 @@ int main(int, char **){
     // Adding defined gameobjects to stage 1 scene
     stage1.add_game_object(player);
     stage1.add_game_object(attack_box);
-    stage1.add_game_object(monster);
+    stage1.add_game_object(monster1);
+    stage1.add_game_object(monster2);
+    stage1.add_game_object(monster3);
+    stage1.add_game_object(monster4);
     stage1.add_game_object(plataform);
     stage1.add_game_object(plataform2);
     stage1.add_game_object(plataform3);

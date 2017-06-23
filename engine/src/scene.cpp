@@ -48,7 +48,7 @@ bool Scene::init(){
     //Iterando o mapa e inicilizando cada um dos game objects.
     for(auto id_obj: scene_objects){
         auto obj = id_obj.second;
-        if(obj->state() == GameObject::State::enabled && obj->init() == false){
+        if(obj->init() == false){
             return false;
         }
     }
