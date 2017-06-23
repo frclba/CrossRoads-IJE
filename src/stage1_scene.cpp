@@ -9,11 +9,17 @@ void Stage1Scene::game_logic(){
   GameObject* plataform2 = &get_game_object("plataform2");
   GameObject* plataform3 = &get_game_object("plataform3");
 
+  GameObject* portal = &get_game_object("portal");
+  GameObject* background = &get_game_object("backgroundForest");
+
+  
   ground_stage1->main_positionY = 552;
   ground_stage1->main_positionX = 0;
   ground_stage1->main_width = 800;
   ground_stage1->main_height = 200;
 
+
+  /*
   plataform->main_positionY = 350;
   plataform->main_positionX = 600;
 
@@ -22,6 +28,7 @@ void Stage1Scene::game_logic(){
 
   plataform3->main_positionY = 400;
   plataform3->main_positionX = 100;
+  */
 }
 
 Stage1Scene::~Stage1Scene(){}

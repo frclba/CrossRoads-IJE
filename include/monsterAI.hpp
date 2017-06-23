@@ -25,8 +25,7 @@ private:
     void damage();
     void move_monster();
     void jump_monster();
-    void see_player();
-    void attack_player();
+    bool see_player();
 
     const int MONSTER_MOVE = 4;
     const int ground = 552;

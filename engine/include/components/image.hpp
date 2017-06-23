@@ -25,6 +25,8 @@ namespace engine{
             virtual void draw();
 
             SDL_Rect* imagePart = NULL;
+
+            bool enable_camera;
         protected:
             //Caminho da imagem
             std::string main_path;

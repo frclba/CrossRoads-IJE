@@ -13,6 +13,7 @@
 #include "restart.hpp"
 #include "fireball.hpp"
 #include "portal.hpp"
+#include "plataform.hpp"
 
 using namespace engine;
 
@@ -74,6 +75,9 @@ int main(int, char **){
     Game::instance.add_scene(stage1);
 
     GameObject player("player",true,"player");
+
+    player.main_positionY = 502;
+    player.set_layer(GameObject::Layer::layer3);
     GameObject background_stage1("backgroundForest");
     GameObject ground_stage1("ground",true,"ground");
 
@@ -176,7 +180,7 @@ int main(int, char **){
     //Portal
     GameObject portal("portal");
     ImageComponent portal_img(portal,"portal","assets/sprites/portal.png");
-    Portal portal_logic(portal,"portal_logic");
+    Portal portal_logic(portal,"portal_logic",&backgroundForest);
     portal.add_component(portal_img);
     portal.add_component(portal_logic);
 
@@ -205,25 +209,31 @@ int main(int, char **){
     player.add_component(player_anim_ctrl);
     player.add_component(player_logic);
 
-    player.main_positionY = 502;
-
-    player.set_layer(GameObject::Layer::layer2);
-
     background_stage1.add_component(backgroundForest);
     background_stage1.add_component(stage1_music);
 
+    //plataforms
     GameObject plataform("plataform",true,"ground");
     ImageComponent img_plataform(plataform,"plataform", "assets/sprites/plataform.png");
+    Plataform plataform_ai(plataform,"plataform_ai",&backgroundForest,600,350);
+    plataform.add_component(plataform_ai);
     plataform.add_component(img_plataform);
 
     GameObject plataform2("plataform2",true,"ground");
     ImageComponent img_plataform2(plataform2,"plataform2", "assets/sprites/plataform.png");
+    Plataform plataform_ai2(plataform2,"plataform_ai2",&backgroundForest,200,200);
+    plataform.add_component(plataform_ai2);
     plataform2.add_component(img_plataform2);
 
     GameObject plataform3("plataform3",true,"ground");
     ImageComponent img_plataform3(plataform3,"plataform3", "assets/sprites/plataform.png");
+    Plataform plataform_ai3(plataform3,"plataform_ai3",&backgroundForest,100,400);
+    plataform.add_component(plataform_ai3);
     plataform3.add_component(img_plataform3);
 
+
+    //.plataforms
+    
     GameObject fireball("fireball",true,"fireball");
     fireball.main_positionX = 200;
 

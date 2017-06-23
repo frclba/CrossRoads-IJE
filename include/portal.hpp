@@ -6,15 +6,15 @@
 #include "game.hpp"
 #include "gameobject.hpp"
 #include "components/component.hpp"
-#include "components/animation_controller.hpp"
+#include "components/image.hpp"
 
 using namespace engine;
 
 class Portal : public Component{
 
 public:
-  Portal(GameObject &main_game_object, std::string id):
-    Component(main_game_object, id),interator(0){}
+  Portal(GameObject &main_game_object, std::string id,ImageComponent *background):
+    Component(main_game_object, id),interator(0), m_background(background){}
     ~Portal();
 
     bool init();
@@ -26,6 +26,9 @@ private:
   std::vector <GameObject*> m_monsters;
   unsigned int timestep;
   unsigned int interator;
+  unsigned int monster_number;
+  ImageComponent *m_background;
+  
   
   
 };
