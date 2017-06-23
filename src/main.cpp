@@ -72,6 +72,10 @@ int main(int, char **){
     Game::instance.add_scene(stage1);
 
     GameObject player("player",true,"player");
+
+    player.main_positionY = 502;
+    player.set_layer(GameObject::Layer::layer3);
+
     GameObject monster("monster",true,"monster");
     GameObject background_stage1("backgroundForest");
     GameObject ground_stage1("ground",true,"ground");
@@ -135,10 +139,6 @@ int main(int, char **){
     player.add_component(player_damage);
     player.add_component(player_anim_ctrl);
     player.add_component(player_logic);
-
-    player.main_positionY = 502;
-
-    player.set_layer(GameObject::Layer::layer2);
 
     background_stage1.add_component(backgroundForest);
     background_stage1.add_component(stage1_music);
