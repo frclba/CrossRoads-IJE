@@ -21,6 +21,7 @@ float dy = 0;
 
 bool Player::init(){
     _main_game_object->main_positionY = 502;
+    _main_game_object->main_positionX = 0;
     m_background->imagePart->x = 0;
 
     return true;
@@ -157,8 +158,9 @@ void Player::damage(){
             damage_time = Game::instance.timer->getTicks() + 1000;
         }
         if(life_points <= 0){
-            _main_game_object->setState(GameObject::State::disabled);
-            Game::instance.change_scene("Lose Scene");
+	  //_main_game_object->setState(GameObject::State::disabled);
+	    life_points = 5;
+	    Game::instance.change_scene("Lose Scene");
         }
     }
 }

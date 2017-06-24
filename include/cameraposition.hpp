@@ -1,5 +1,5 @@
-#ifndef _PLATAFORM_HPP_
-#define _PLATAFORM_HPP_
+#ifndef _CAMERA_POSITION_HPP_
+#define _CAMERA_POSITION_HPP_
 #include <iostream>
 
 #include "game.hpp"
@@ -8,12 +8,12 @@
 
 using namespace engine;
 
-class Plataform : public Component{
+class CameraPosition : public Component{
 
 public:
-  Plataform(GameObject &main_game_object, std::string id,ImageComponent *background,int init_posX,int init_posY):
+  CameraPosition(GameObject &main_game_object, std::string id,ImageComponent *background,int init_posX,int init_posY):
     Component(main_game_object, id),m_background(background),m_init_posX(init_posX),m_init_posY(init_posY){}
-    ~Plataform();
+    ~CameraPosition();
 
     bool init();
     void update();

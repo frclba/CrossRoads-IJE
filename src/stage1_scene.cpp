@@ -11,6 +11,8 @@ void Stage1Scene::game_logic(){
 
   GameObject* portal = &get_game_object("portal");
   GameObject* background = &get_game_object("backgroundForest");
+  ImageComponent* back_img = (dynamic_cast<ImageComponent *>(background->get_component("backgroundForest")));
+  GameObject* fire_ball = &get_game_object("fireball");
 
   
   ground_stage1->main_positionY = 552;
@@ -18,6 +20,9 @@ void Stage1Scene::game_logic(){
   ground_stage1->main_width = 800;
   ground_stage1->main_height = 200;
 
+  if(back_img->imagePart->x > 800){
+    fire_ball->setState(GameObject::State::enabled);
+  }
 
   /*
   plataform->main_positionY = 350;

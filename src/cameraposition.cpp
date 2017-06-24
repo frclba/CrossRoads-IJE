@@ -1,16 +1,16 @@
-#include "plataform.hpp"
+#include "cameraposition.hpp"
 
-Plataform::~Plataform(){}
+CameraPosition::~CameraPosition(){}
 
 
-bool Plataform::init(){
+bool CameraPosition::init(){
   _main_game_object->main_positionX = m_init_posX;
   _main_game_object->main_positionY = m_init_posY;
   return true;
 }
 
 
-void Plataform::update(){
+void CameraPosition::update(){
   _main_game_object->main_positionY = m_init_posY;
   _main_game_object->main_positionX = m_init_posX - m_background->imagePart->x;
 }

@@ -13,7 +13,8 @@
 #include "restart.hpp"
 #include "fireball.hpp"
 #include "portal.hpp"
-#include "plataform.hpp"
+#include "cameraposition.hpp"
+
 
 using namespace engine;
 
@@ -215,19 +216,19 @@ int main(int, char **){
     //plataforms
     GameObject plataform("plataform",true,"ground");
     ImageComponent img_plataform(plataform,"plataform", "assets/sprites/plataform.png");
-    Plataform plataform_ai(plataform,"plataform_ai",&backgroundForest,600,350);
+    CameraPosition plataform_ai(plataform,"plataform_ai",&backgroundForest,600,350);
     plataform.add_component(plataform_ai);
     plataform.add_component(img_plataform);
 
     GameObject plataform2("plataform2",true,"ground");
     ImageComponent img_plataform2(plataform2,"plataform2", "assets/sprites/plataform.png");
-    Plataform plataform_ai2(plataform2,"plataform_ai2",&backgroundForest,200,200);
+    CameraPosition plataform_ai2(plataform2,"plataform_ai2",&backgroundForest,200,200);
     plataform.add_component(plataform_ai2);
     plataform2.add_component(img_plataform2);
 
     GameObject plataform3("plataform3",true,"ground");
     ImageComponent img_plataform3(plataform3,"plataform3", "assets/sprites/plataform.png");
-    Plataform plataform_ai3(plataform3,"plataform_ai3",&backgroundForest,100,400);
+    CameraPosition plataform_ai3(plataform3,"plataform_ai3",&backgroundForest,100,400);
     plataform.add_component(plataform_ai3);
     plataform3.add_component(img_plataform3);
 
@@ -242,10 +243,13 @@ int main(int, char **){
 
     ImageComponent img_fireball(fireball,"fireball", "assets/sprites/fire.jpg");
     fireball.add_component(img_fireball);
+    fireball.setState(GameObject::State::disabled);
 
     GameObject boss("boss",true,"boss");
     boss.main_positionX = 600;
     boss.main_positionY = 300;
+    CameraPosition bos_pos(boss,"boss_pos",&backgroundForest,650*4,320);
+    boss.add_component(bos_pos);
 
     Animation boss_idle(boss, "bossIdle", "assets/sprites/boss.png",552/3,244, 3);
     boss_idle.setDelay(220);
@@ -263,8 +267,8 @@ int main(int, char **){
     stage1.add_game_object(plataform3);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);
-    // stage1.add_game_object(fireball);
-    // stage1.add_game_object(boss);
+    stage1.add_game_object(fireball);
+    stage1.add_game_object(boss);
 
     //==================================== WIN SCREEN =============================================
     Scene win("Win Scene");
