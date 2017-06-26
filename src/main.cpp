@@ -214,6 +214,7 @@ int main(int, char **){
     background_stage1.add_component(stage1_music);
 
     //plataforms
+    //part1
     GameObject plataform("plataform",true,"ground");
     ImageComponent img_plataform(plataform,"plataform", "assets/sprites/plataform.png");
     CameraPosition plataform_ai(plataform,"plataform_ai",&backgroundForest,600,350);
@@ -223,18 +224,52 @@ int main(int, char **){
     GameObject plataform2("plataform2",true,"ground");
     ImageComponent img_plataform2(plataform2,"plataform2", "assets/sprites/plataform.png");
     CameraPosition plataform_ai2(plataform2,"plataform_ai2",&backgroundForest,200,200);
-    plataform.add_component(plataform_ai2);
+    plataform2.add_component(plataform_ai2);
     plataform2.add_component(img_plataform2);
 
     GameObject plataform3("plataform3",true,"ground");
     ImageComponent img_plataform3(plataform3,"plataform3", "assets/sprites/plataform.png");
     CameraPosition plataform_ai3(plataform3,"plataform_ai3",&backgroundForest,100,400);
-    plataform.add_component(plataform_ai3);
+    plataform3.add_component(plataform_ai3);
     plataform3.add_component(img_plataform3);
+    //part2
+    GameObject plataform4("plataform",true,"ground");
+    ImageComponent img_plataform4(plataform4,"plataform4", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai4(plataform4,"plataform_ai4",&backgroundForest,600,350);
+    plataform4.add_component(plataform_ai4);
+    plataform4.add_component(img_plataform4);
 
+    GameObject plataform5("plataform5",true,"ground");
+    ImageComponent img_plataform5(plataform5,"plataform5", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai5(plataform5,"plataform_ai5",&backgroundForest,900,200);
+    plataform5.add_component(plataform_ai5);
+    plataform5.add_component(img_plataform5);
 
+    GameObject plataform6("plataform6",true,"ground");
+    ImageComponent img_plataform6(plataform6,"plataform6", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai6(plataform6,"plataform_ai6",&backgroundForest,1200,400);
+    plataform6.add_component(plataform_ai6);
+    plataform6.add_component(img_plataform6);
+    //part3
+    GameObject plataform7("plataform7",true,"ground");
+    ImageComponent img_plataform7(plataform7,"plataform7", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai7(plataform7,"plataform_ai7",&backgroundForest,1500,350);
+    plataform7.add_component(plataform_ai7);
+    plataform7.add_component(img_plataform7);
+
+    GameObject plataform8("plataform8",true,"ground");
+    ImageComponent img_plataform8(plataform8,"plataform8", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai8(plataform8,"plataform_ai8",&backgroundForest,1800,200);
+    plataform8.add_component(plataform_ai8);
+    plataform8.add_component(img_plataform8);
+
+    GameObject plataform9("plataform9",true,"ground");
+    ImageComponent img_plataform9(plataform9,"plataform9", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai9(plataform9,"plataform_ai9",&backgroundForest,2100,400);
+    plataform9.add_component(plataform_ai9);
+    plataform9.add_component(img_plataform9);
     //.plataforms
-    
+
     GameObject fireball("fireball",true,"fireball");
     fireball.main_positionX = 200;
 
@@ -265,6 +300,12 @@ int main(int, char **){
     stage1.add_game_object(plataform);
     stage1.add_game_object(plataform2);
     stage1.add_game_object(plataform3);
+    stage1.add_game_object(plataform4);
+    stage1.add_game_object(plataform5);
+    stage1.add_game_object(plataform6);
+    stage1.add_game_object(plataform7);
+    stage1.add_game_object(plataform8);
+    stage1.add_game_object(plataform9);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);
     stage1.add_game_object(fireball);
