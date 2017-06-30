@@ -18,10 +18,10 @@ public:
     bool init();
     void update();
 
-
+    int m_init_posX;
+    int m_init_posY;
 private:
-  int m_init_posX;
-  int m_init_posY;
+ 
   ImageComponent *m_background;
 };
 

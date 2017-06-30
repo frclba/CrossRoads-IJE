@@ -13,7 +13,7 @@ class Stage1Scene : public Scene{
 public:
 
   Stage1Scene(std::string name):
-    Scene(name){}//, jumptime(0), walkR(false), walkL(false), jump(false), attack(false), damageBool(false){}
+    Scene(name),timestep(0){}
 
 
   ~Stage1Scene();
@@ -40,6 +40,7 @@ private:
   bool bulletDir1;
   unsigned int timestep ;
   
+  GameObject *go_arrow ;
 };
 
 #endif

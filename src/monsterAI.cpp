@@ -23,6 +23,12 @@ void MonsterAI::update(){
     damage();
     processPos();
     jump_monster();
+
+
+    if(_main_game_object->main_positionX<0||_main_game_object->main_positionX+_main_game_object->main_width>800){
+      _main_game_object->setState(GameObject::State::disabled);
+    }
+
 }
 
 bool MonsterAI::see_player(){

@@ -80,6 +80,7 @@ int main(int, char **){
     GameObject bullet("bullet",true,"bullet");
     ImageComponent img_bullet(bullet,"img_bullet","assets/sprites/cross.png");
     bullet.add_component(img_bullet);
+    bullet.setState(GameObject::State::disabled);
 
     player.main_positionY = 502;
     player.set_layer(GameObject::Layer::layer3);
@@ -181,20 +182,32 @@ int main(int, char **){
     monster4.add_component(monster_ai4);
 
     //.monsters
+
+    // Animação da setinha
+    GameObject go_arrow("go_arrow");
+    go_arrow.main_positionX = 600;
+    go_arrow.main_positionY = 100;
+    Animation go_arrow_anim(go_arrow,"go_arrow_anim","assets/sprites/arrow.png",200,200,10);
+    go_arrow_anim.setDelay(200);
+    go_arrow.add_component(go_arrow_anim);
     
     //Portal
     GameObject portal("portal");
-    ImageComponent portal_img(portal,"portal","assets/sprites/portal.png");
-    Portal portal_logic(portal,"portal_logic",&backgroundForest);
+    portal.set_layer(GameObject::Layer::layer1);
+    Animation portal_img(portal,"portal","assets/sprites/portal.png",138,140,4);
+    portal_img.setDelay(50);
+    CameraPosition portal_pos(portal,"portal_pos",&backgroundForest,600,420);
+  
+    Portal portal_logic(portal,"portal_logic",&backgroundForest,&portal_pos);
     portal.add_component(portal_img);
     portal.add_component(portal_logic);
+    portal.add_component(portal_pos);
 
     portal_logic.add_monster(&monster1);
     portal_logic.add_monster(&monster2);
     portal_logic.add_monster(&monster3);
     portal_logic.add_monster(&monster4);
     
-    stage1.add_game_object(portal);
     
 
     
@@ -297,11 +310,13 @@ int main(int, char **){
     // Adding defined gameobjects to stage 1 scene
     stage1.add_game_object(player);
     stage1.add_game_object(bullet);
+    stage1.add_game_object(go_arrow);
     stage1.add_game_object(attack_box);
     stage1.add_game_object(monster1);
     stage1.add_game_object(monster2);
     stage1.add_game_object(monster3);
     stage1.add_game_object(monster4);
+    stage1.add_game_object(portal);
     stage1.add_game_object(plataform);
     stage1.add_game_object(plataform2);
     stage1.add_game_object(plataform3);

@@ -107,7 +107,8 @@ void Player::move_player(){
         _main_game_object->main_positionX -= moveForce;
     }
     
-    if(_main_game_object->main_positionX > 700 ){
+    if(_main_game_object->main_positionX > 200 && walkR && m_background->enable_camera){
+      _main_game_object->main_positionX -= moveForce;
       m_background->move_img_rect(7);
     }
 }
