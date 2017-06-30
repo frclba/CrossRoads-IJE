@@ -74,8 +74,12 @@ void MonsterAI::gravityF(){
 
 
 void MonsterAI::damage(){
-    if(Game::instance.collision_manager->checkCollision(_main_game_object,"attack_box")){
+    bullet = Game::instance.collision_manager->checkCollision(_main_game_object,"bullet");
+    if(Game::instance.collision_manager->checkCollision(_main_game_object,"attack_box")||bullet){
       m_monster_controler->play_animation("monster_damage");
+      if(bullet){
+        bullet->setState(GameObject::State::disabled);
+      }
       has_damage = true;
       if(side == RIGHT){
 	//_main_game_object->main_positionX -= 10;
@@ -96,4 +100,10 @@ void MonsterAI::damage(){
       has_damage = false;
     }
 }
+
+void MonsterAI::bullet_damage(){
+
+
+}
+
 MonsterAI::~MonsterAI(){}

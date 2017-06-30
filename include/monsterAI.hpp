@@ -26,8 +26,9 @@ private:
     void move_monster();
     void jump_monster();
     bool see_player();
+    void bullet_damage();
 
-    const int MONSTER_MOVE = 4;
+  const int MONSTER_MOVE = 4;
     const int ground = 552;
     const int gravity = 1;
     const float jumpF = 2;
@@ -39,6 +40,7 @@ private:
     int life = 3;
 
     GameObject* m_player;
+    GameObject* bullet;
     AnimationControllerComponent* m_monster_controler;
 };
 

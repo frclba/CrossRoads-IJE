@@ -40,6 +40,8 @@ public:
     GameObject *plataform;
     GameObject *monster;
 
+    bool attack;
+    bool side;
 private:
     const bool RIGHT = true;
     const bool LEFT = false;
@@ -50,9 +52,7 @@ private:
     bool walkL;
     bool jump;
     bool stand;
-    bool attack;
     bool damageBool;
-    bool side;
     GameObject *ground;
     GameObject* m_attack_box;
     float dy;

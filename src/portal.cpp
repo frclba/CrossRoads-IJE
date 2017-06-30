@@ -23,8 +23,6 @@ void Portal::update(){
     monster_number++;
     timestep = Game::instance.timer->getTicks() + 1000;
   }
-
-    m_background->enable_camera = true;
   if(monster_number > 10 && m_background->imagePart->x == 0){
     m_background->enable_camera = true;
     _main_game_object->setState(GameObject::State::disabled);

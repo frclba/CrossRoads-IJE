@@ -77,6 +77,10 @@ int main(int, char **){
 
     GameObject player("player",true,"player");
 
+    GameObject bullet("bullet",true,"bullet");
+    ImageComponent img_bullet(bullet,"img_bullet","assets/sprites/cross.png");
+    bullet.add_component(img_bullet);
+
     player.main_positionY = 502;
     player.set_layer(GameObject::Layer::layer3);
     GameObject background_stage1("backgroundForest");
@@ -292,6 +296,7 @@ int main(int, char **){
 
     // Adding defined gameobjects to stage 1 scene
     stage1.add_game_object(player);
+    stage1.add_game_object(bullet);
     stage1.add_game_object(attack_box);
     stage1.add_game_object(monster1);
     stage1.add_game_object(monster2);

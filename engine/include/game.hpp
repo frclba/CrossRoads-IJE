@@ -64,6 +64,7 @@ namespace engine{
         Keyboard* keyboard;
         CollisionManager* collision_manager;
 
+        Scene *current_scene;
     private:
         Game()
             : main_canvas(NULL), main_name(""),
@@ -77,7 +78,6 @@ namespace engine{
         SDL_Color main_background_color;
         State current_state;
 
-        Scene *current_scene;
         Scene *last_current_scene;
         Scene *next_scene;
 
