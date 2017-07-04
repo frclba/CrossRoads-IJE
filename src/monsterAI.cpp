@@ -4,7 +4,7 @@
 #include<stdlib.h>
 
 unsigned int time_damage;
-const int PLAYER_DISTANCE = 250;
+const int PLAYER_DISTANCE = 550;
 const int PLAYER_ATTACK_DISTANCE = 150;
 
 
@@ -12,6 +12,8 @@ const int PLAYER_ATTACK_DISTANCE = 150;
 bool MonsterAI::init(){
      _main_game_object->main_positionY = ground - _main_game_object->main_height;
      _main_game_object->main_positionX = 400;
+     MONSTER_MOVE = (rand() % 5)+2;
+     life = 3; 
      return true;
 }
 
@@ -112,6 +114,7 @@ void MonsterAI::damage(){
       }
       if(life <= 0){
 	    _main_game_object->setState(GameObject::State::disabled);
+	    life = 3;
 	    //Game::instance.change_scene("Win Scene");
       }
     }

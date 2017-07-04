@@ -1,6 +1,5 @@
 #include "player.hpp"
 
-int life_points = 5;
 float DAMAGE_DELAY = 1000;
 unsigned int damage_time = 0;
 bool attacked = false;
@@ -23,6 +22,7 @@ bool Player::init(){
     _main_game_object->main_positionY = 502;
     _main_game_object->main_positionX = 0;
     m_background->imagePart->x = 0;
+    life_points = 5;
 
     return true;
 }

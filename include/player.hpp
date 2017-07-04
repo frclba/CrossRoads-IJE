@@ -42,6 +42,8 @@ public:
 
     bool attack;
     bool side;
+
+    int life_points;
 private:
     const bool RIGHT = true;
     const bool LEFT = false;
@@ -57,6 +59,7 @@ private:
     GameObject* m_attack_box;
     float dy;
     ImageComponent* m_background;
+
 };
 
 #endif

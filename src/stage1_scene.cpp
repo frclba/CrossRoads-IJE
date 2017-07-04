@@ -57,7 +57,6 @@ void Stage1Scene::bullet(){
   }
    
   if(bullet1->state() == GameObject::State::enabled ){
-  std::cout<< "asdasd" <<std::endl;
     if(bulletDir1){
       bullet1->main_positionX += 20;
     }

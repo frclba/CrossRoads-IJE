@@ -29,7 +29,7 @@ private:
     void bullet_damage();
     bool has_ground();
 
-  const int MONSTER_MOVE = 4;
+    int MONSTER_MOVE;
     const int ground = 552;
     const int gravity = 1;
     const float jumpF = 2;

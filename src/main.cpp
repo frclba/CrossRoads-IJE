@@ -14,6 +14,7 @@
 #include "fireball.hpp"
 #include "portal.hpp"
 #include "cameraposition.hpp"
+#include "heart.hpp"
 
 
 using namespace engine;
@@ -307,8 +308,61 @@ int main(int, char **){
     boss_idle.setDelay(220);
     boss.add_component(boss_idle);
 
+
+    //player life
+    GameObject heart1("heart1");
+    ImageComponent heart1_img(heart1,"heart1_img", "assets/sprites/heart.png");
+    Heart heart1_controller(heart1,"heart1_controller",&player_logic,1);
+    heart1.add_component(heart1_img);
+    heart1.add_component(heart1_controller);
+
+    GameObject heart2("heart2");
+    ImageComponent heart2_img(heart2,"heart2_img", "assets/sprites/heart.png");
+    Heart heart2_controller(heart2,"heart1_controller",&player_logic,2);
+    heart2.add_component(heart2_img);
+    heart2.add_component(heart2_controller);
+
+    GameObject heart3("heart3");
+    ImageComponent heart3_img(heart3,"heart3_img", "assets/sprites/heart.png");
+    Heart heart3_controller(heart3,"heart3_controller",&player_logic,3);
+    heart3.add_component(heart3_img);
+    heart3.add_component(heart3_controller);
+
+    GameObject heart4("heart4");
+    ImageComponent heart4_img(heart4,"heart4_img", "assets/sprites/heart.png");
+    Heart heart4_controller(heart4,"heart4_controller",&player_logic,4);
+    heart4.add_component(heart4_img);
+    heart4.add_component(heart4_controller);
+
+    GameObject heart5("heart5");
+    ImageComponent heart5_img(heart5,"heart5_img", "assets/sprites/heart.png");
+    Heart heart5_controller(heart5,"heart5_controller",&player_logic,5);
+    heart5.add_component(heart5_img);
+    heart5.add_component(heart5_controller);
+
+    heart1.main_positionX = 1 * 40;
+    heart2.main_positionX = 2 * 40;
+    heart3.main_positionX = 3 * 40;
+    heart4.main_positionX = 4 * 40;
+    heart5.main_positionX = 5 * 40;
+
+    heart1.main_positionY = 75;
+    heart2.main_positionY = 75;
+    heart3.main_positionY = 75;
+    heart4.main_positionY = 75;
+    heart5.main_positionY = 75;
+
+
+    //player life.
+
+    
     // Adding defined gameobjects to stage 1 scene
     stage1.add_game_object(player);
+    stage1.add_game_object(heart1);
+    stage1.add_game_object(heart2);
+    stage1.add_game_object(heart3);
+    stage1.add_game_object(heart4);
+    stage1.add_game_object(heart5);
     stage1.add_game_object(bullet);
     stage1.add_game_object(go_arrow);
     stage1.add_game_object(attack_box);
