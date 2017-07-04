@@ -44,7 +44,7 @@ void MonsterAI::jump_monster(){
     bool isOnGround = Game::instance.collision_manager->checkCollision(m_player,"ground");
 
     if(see_player() && isOnGround && _main_game_object->main_positionY > m_player->main_positionY){
-        dy += jumpF;
+        dy -= jumpF;
     }
 }
 
@@ -62,21 +62,34 @@ void MonsterAI::move_monster(){
 
 void MonsterAI::processPos(){
   //std::cout<<dy<<std::endl;
-   _main_game_object->main_positionY -= dy;   // current velocity components.
+   _main_game_object->main_positionY += dy;   // current velocity components.
 }
 
 void MonsterAI::gravityF(){
-  if(_main_game_object->main_positionY > (ground - _main_game_object->main_height)){
-     _main_game_object->main_positionY = ground - _main_game_object->main_height;
+  // if(_main_game_object->main_positionY > (ground - _main_game_object->main_height)){
+  //  _main_game_object->main_positionY = ground - _main_game_object->main_height;
+  //}
+  if(!has_ground()){ 
+    dy += gravity;
   }
-  if ( (_main_game_object->main_positionY + _main_game_object->main_height) < ground ){
-         dy -= gravity;
-  }
-
   else{
-    //     dy = 0;
+    dy = 0;
   }
 }
+
+bool MonsterAI::has_ground(){
+    ground_obj = Game::instance.collision_manager->checkCollision(_main_game_object,"ground");
+    if(ground_obj && dy>=0 ){
+        if(dy>0){
+            _main_game_object->main_positionY = ground_obj->main_positionY - _main_game_object->main_height ;
+        }
+        return true;
+    }
+    return false;
+
+}
+
+
 
 
 void MonsterAI::damage(){

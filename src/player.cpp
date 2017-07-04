@@ -142,8 +142,7 @@ bool Player::has_ground(){
     ground = Game::instance.collision_manager->checkCollision(_main_game_object,"ground");
     if(ground && dy>=0 ){
         if(dy>5){
-            _main_game_object->main_positionY = ground->main_positionY - _main_game_object->main_height ;// prev_position_y -(dy-gravity) ;
-
+            _main_game_object->main_positionY = ground->main_positionY - _main_game_object->main_height ;
         }
         return true;
     }

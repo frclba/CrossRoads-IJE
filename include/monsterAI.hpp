@@ -27,6 +27,7 @@ private:
     void jump_monster();
     bool see_player();
     void bullet_damage();
+    bool has_ground();
 
   const int MONSTER_MOVE = 4;
     const int ground = 552;
@@ -41,6 +42,7 @@ private:
 
     GameObject* m_player;
     GameObject* bullet;
+    GameObject* ground_obj;
     AnimationControllerComponent* m_monster_controler;
 };
 
