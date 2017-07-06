@@ -38,7 +38,7 @@ void MenuScene::buttons_controller(){
             Game::instance.change_scene("Fase 1");
         }
         bnewAnimation->useAnimation("normal");
-        button_hover_sound->play(0);
+        button_hover_sound->play(0,-1);
     }
     else{
         bnewAnimation->useAnimation("mouseON");

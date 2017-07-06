@@ -32,7 +32,8 @@ int main(int, char **){
 
     GameObject background("background");
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
-
+    background.set_layer(GameObject::Layer::background);
+    
     AudioComponent menu_music(background, "menu_musicBackground", "assets/music/menu.wav", true);
 
     GameObject menuFire("menuFire");
