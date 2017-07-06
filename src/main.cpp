@@ -80,7 +80,7 @@ int main(int, char **){
     GameObject player("player",true,"player");
 
     GameObject bullet("bullet",true,"bullet");
-    ImageComponent img_bullet(bullet,"img_bullet","assets/sprites/cross.png");
+    Animation img_bullet(bullet,"img_bullet","assets/sprites/cross.png",24,13,1);
     bullet.add_component(img_bullet);
     bullet.setState(GameObject::State::disabled);
 
@@ -92,8 +92,6 @@ int main(int, char **){
     Music stage1_music(background_stage1, "menu_musicStage1", "assets/music/battle.mp3");
     ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
     backgroundForest.set_back_rect(800,600);
-    //ImageComponent tile1(ground_stage1, "tile1", "/usr/share/crossroads/assets/sprites/ChãoMap1.png");
-
     background_stage1.set_layer(GameObject::Layer::background);
 
     ImageComponent tile1(ground_stage1, "tile1", "assets/sprites/ChãoMap1.png");
@@ -124,14 +122,18 @@ int main(int, char **){
 
     Animation monster_walk1(monster1, "monster_walk1", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
     Animation monster_damage1(monster1, "monster_damage1", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
+    Animation monster_attack1(monster1, "monster_attack1", "assets/sprites/monster_attack.png" ,184/4, 40, 4);
     monster_walk1.setDelay(50);
     monster_damage1.setDelay(100);
+    monster_attack1.setDelay(100);
     //Monster artificial intelligence controller
     MonsterAI monster_ai1(monster1, "monster_ai1",&player,&monster_anim_ctrl);
     monster_anim_ctrl.add_animation("monster_walk",monster_walk1);
     monster_anim_ctrl.add_animation("monster_damage",monster_damage1);
+    monster_anim_ctrl.add_animation("monster_attack",monster_attack1);
     monster1.add_component(monster_walk1);
     monster1.add_component(monster_damage1);
+    monster1.add_component(monster_attack1);
     monster1.add_component(monster_anim_ctrl1);
     monster1.add_component(monster_ai1);
 
@@ -140,15 +142,19 @@ int main(int, char **){
 
     Animation monster_walk2(monster2, "monster_walk2", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
     Animation monster_damage2(monster2, "monster_damage2", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
+    Animation monster_attack2(monster2, "monster_attack2", "assets/sprites/monster_attack.png" ,184/4, 40, 4);
     monster_walk2.setDelay(50);
     monster_damage2.setDelay(100);
+    monster_attack2.setDelay(100);
     //Monster artificial intelligence controller
     MonsterAI monster_ai2(monster2, "monster_ai2",&player,&monster_anim_ctrl2);
     monster_anim_ctrl2.add_animation("monster_walk",monster_walk2);
     monster_anim_ctrl2.add_animation("monster_damage",monster_damage2);
+    monster_anim_ctrl2.add_animation("monster_attack",monster_attack2);
     monster2.add_component(monster_walk2);
     monster2.add_component(monster_damage2);
     monster2.add_component(monster_anim_ctrl2);
+    monster2.add_component(monster_attack2);
     monster2.add_component(monster_ai2);
 
     GameObject monster3("monster3",true,"monster");
@@ -156,14 +162,18 @@ int main(int, char **){
 
     Animation monster_walk3(monster3, "monster_walk3", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
     Animation monster_damage3(monster3, "monster_damage3", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
+    Animation monster_attack3(monster3, "monster_attack3", "assets/sprites/monster_attack.png" ,184/4, 40, 4);
     monster_walk3.setDelay(50);
     monster_damage3.setDelay(100);
+    monster_attack3.setDelay(100);
     //Monster artificial intelligence controller
     MonsterAI monster_ai3(monster3, "monster_ai",&player,&monster_anim_ctrl);
     monster_anim_ctrl3.add_animation("monster_walk",monster_walk3);
     monster_anim_ctrl3.add_animation("monster_damage",monster_damage3);
+    monster_anim_ctrl3.add_animation("monster_attack",monster_attack3);
     monster3.add_component(monster_walk3);
     monster3.add_component(monster_damage3);
+    monster3.add_component(monster_attack3);
     monster3.add_component(monster_anim_ctrl3);
     monster3.add_component(monster_ai3);
 
@@ -172,15 +182,19 @@ int main(int, char **){
 
     Animation monster_walk4(monster4, "monster_walk4", "assets/sprites/monster_walk.png" ,153/4, 38, 4);
     Animation monster_damage4(monster4, "monster_damage4", "assets/sprites/monster_damage.png" ,153/4, 38, 4);
+    Animation monster_attack4(monster4, "monster_attack4", "assets/sprites/monster_attack.png" ,184/4, 40, 4);
     monster_walk4.setDelay(50);
     monster_damage4.setDelay(100);
+    monster_attack4.setDelay(100);
     //Monster artificial intelligence controller
     MonsterAI monster_ai4(monster4, "monster_ai4",&player,&monster_anim_ctrl4);
     monster_anim_ctrl4.add_animation("monster_walk",monster_walk4);
     monster_anim_ctrl4.add_animation("monster_damage",monster_damage4);
+    monster_anim_ctrl4.add_animation("monster_attack",monster_attack4);
     monster4.add_component(monster_walk4);
     monster4.add_component(monster_damage4);
     monster4.add_component(monster_anim_ctrl4);
+    monster4.add_component(monster_attack4);
     monster4.add_component(monster_ai4);
 
     //.monsters
