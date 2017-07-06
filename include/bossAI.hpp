@@ -23,7 +23,7 @@ public:
     void boss_move();
 
 private:
-  void fireball_controller();
+  void boss_damage();
   
   AnimationControllerComponent *m_boss_animation;
   CameraPosition *m_position;
@@ -32,10 +32,14 @@ private:
   unsigned int timestep;
   unsigned int fireball_time;
   unsigned int move_time;
+  unsigned int time_damage;
+  
 
   bool side;
   bool dash_attack;
   bool fireball_attack;
+
+  unsigned int life;
   
 };
 

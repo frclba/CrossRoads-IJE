@@ -196,9 +196,9 @@ int main(int, char **){
     //Portal
     GameObject portal("portal");
     portal.set_layer(GameObject::Layer::layer1);
-    Animation portal_img(portal,"portal","assets/sprites/portal.png",138,140,4);
+    Animation portal_img(portal,"portal","assets/sprites/portal.png",240/4,80,4);
     portal_img.setDelay(50);
-    CameraPosition portal_pos(portal,"portal_pos",&backgroundForest,600,420);
+    CameraPosition portal_pos(portal,"portal_pos",&backgroundForest,600,470);
   
     Portal portal_logic(portal,"portal_logic",&backgroundForest,&portal_pos);
     portal.add_component(portal_img);
@@ -402,6 +402,7 @@ int main(int, char **){
 
     
     // Adding defined gameobjects to stage 1 scene
+    //portal.setState(GameObject::State::disabled);
     stage1.add_game_object(player);
     stage1.add_game_object(heart1);
     stage1.add_game_object(heart2);

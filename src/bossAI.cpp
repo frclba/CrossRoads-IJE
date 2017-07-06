@@ -3,6 +3,7 @@
 
 
 bool Boss::init(){
+  life = 10;
   timestep = 0;
   move_time = 0;
   fireball_time = 0;
@@ -44,19 +45,23 @@ void Boss::update(){
       
       timestep = Game::instance.timer->getTicks() + 3000;
      }
-
+    
+    boss_damage();
   }
   
 }
-void Boss::fireball_controller(){
-    m_boss_animation->play_animation("boss_howl");
-    if(fireball_time <  Game::instance.timer->getTicks()){
-      m_fireball->setState(GameObject::State::enabled);
+void Boss::boss_damage(){
+  if(Game::instance.collision_manager->checkCollision(_main_game_object,"attack_box") ||
+     Game::instance.collision_manager->checkCollision(_main_game_object,"bullet")){
+    if(time_damage < Game::instance.timer->getTicks()){
+      life--;
+      time_damage = Game::instance.timer->getTicks()+1000; 
     }
-    else{
-      
+     
+    if(life <= 0){
+      Game::instance.change_scene("Win Scene");
     }
-  
+  }
 }
 
 void Boss::boss_move(){
