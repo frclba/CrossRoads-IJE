@@ -33,7 +33,7 @@ int main(int, char **){
     GameObject background("background");
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
     background.set_layer(GameObject::Layer::background);
-    
+
     AudioComponent menu_music(background, "menu_musicBackground", "assets/music/menu.wav", true);
 
     GameObject menuFire("menuFire");
@@ -307,21 +307,21 @@ int main(int, char **){
 
     //boss plataforms
 
-    GameObject plataform10("plataform10",true,"ground");
-    ImageComponent img_plataform10(plataform10,"plataform10", "assets/sprites/plataform.png");
-    CameraPosition plataform_ai10(plataform10,"plataform_ai10",&backgroundForest,2600,300);
+    GameObject plataform10("plataform10", true, "ground");
+    ImageComponent img_plataform10(plataform10, "plataform10", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai10(plataform10, "plataform_ai10", &backgroundForest, 2650, 370);
     plataform10.add_component(plataform_ai10);
     plataform10.add_component(img_plataform10);
 
-    GameObject plataform11("plataform11",true,"ground");
-    ImageComponent img_plataform11(plataform11,"plataform11", "assets/sprites/plataform.png");
-    CameraPosition plataform_ai11(plataform11,"plataform_ai11",&backgroundForest,2300,400);
+    GameObject plataform11("plataform11", true, "ground");
+    ImageComponent img_plataform11(plataform11, "plataform11", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai11(plataform11, "plataform_ai11", &backgroundForest, 2300, 400);
     plataform11.add_component(plataform_ai11);
     plataform11.add_component(img_plataform11);
 
     GameObject plataform12("plataform12",true,"ground");
     ImageComponent img_plataform12(plataform12,"plataform12", "assets/sprites/plataform.png");
-    CameraPosition plataform_ai12(plataform12,"plataform_ai12",&backgroundForest,2400,200);
+    CameraPosition plataform_ai12(plataform12,"plataform_ai12", &backgroundForest, 2400, 200);
     plataform12.add_component(plataform_ai12);
     plataform12.add_component(img_plataform12);
 
