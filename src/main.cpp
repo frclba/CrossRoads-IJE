@@ -15,6 +15,7 @@
 #include "portal.hpp"
 #include "cameraposition.hpp"
 #include "heart.hpp"
+#include "bossAI.hpp"
 
 
 using namespace engine;
@@ -283,9 +284,33 @@ int main(int, char **){
 
     GameObject plataform9("plataform9",true,"ground");
     ImageComponent img_plataform9(plataform9,"plataform9", "assets/sprites/plataform.png");
-    CameraPosition plataform_ai9(plataform9,"plataform_ai9",&backgroundForest,2100,400);
+    CameraPosition plataform_ai9(plataform9,"plataform_ai9",&backgroundForest,2000,400);
     plataform9.add_component(plataform_ai9);
-    plataform9.add_component(img_plataform9);
+    plataform9.add_component(img_plataform9 );
+
+
+    //boss plataforms
+    
+    GameObject plataform10("plataform10",true,"ground");
+    ImageComponent img_plataform10(plataform10,"plataform10", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai10(plataform10,"plataform_ai10",&backgroundForest,2600,300);
+    plataform10.add_component(plataform_ai10);
+    plataform10.add_component(img_plataform10);
+
+    GameObject plataform11("plataform11",true,"ground");
+    ImageComponent img_plataform11(plataform11,"plataform11", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai11(plataform11,"plataform_ai11",&backgroundForest,2300,400);
+    plataform11.add_component(plataform_ai11);
+    plataform11.add_component(img_plataform11);
+
+    GameObject plataform12("plataform12",true,"ground");
+    ImageComponent img_plataform12(plataform12,"plataform12", "assets/sprites/plataform.png");
+    CameraPosition plataform_ai12(plataform12,"plataform_ai12",&backgroundForest,2400,200);
+    plataform12.add_component(plataform_ai12);
+    plataform12.add_component(img_plataform12);
+
+
+
     //.plataforms
 
     GameObject fireball("fireball",true,"fireball");
@@ -294,19 +319,39 @@ int main(int, char **){
     FireballController fireball_controller(fireball, "fireball", 15, &player);
     fireball.add_component(fireball_controller);
 
-    ImageComponent img_fireball(fireball,"fireball", "assets/sprites/fire.jpg");
+    Animation img_fireball(fireball,"fireball", "assets/sprites/meteoro.png",144/3,72,3);
+    img_fireball.setDelay(100);
     fireball.add_component(img_fireball);
     fireball.setState(GameObject::State::disabled);
 
     GameObject boss("boss",true,"boss");
     boss.main_positionX = 600;
     boss.main_positionY = 300;
-    CameraPosition bos_pos(boss,"boss_pos",&backgroundForest,650*4,320);
-    boss.add_component(bos_pos);
+    CameraPosition boss_pos(boss,"boss_pos",&backgroundForest,2800,320);
 
     Animation boss_idle(boss, "bossIdle", "assets/sprites/boss.png",552/3,244, 3);
+    Animation boss_dash(boss, "bossIdle", "assets/sprites/dash.png",2560/10,240, 10);
+    Animation boss_howl(boss, "bossIdle", "assets/sprites/rugido.png",1288/7,256, 7);
+
     boss_idle.setDelay(220);
+    boss_dash.setDelay(50);
+    boss_howl.setDelay(200);
+
+    AnimationControllerComponent boss_anim_ctrl(boss, "boss_controler");
+    boss_anim_ctrl.add_animation("boss_idle",boss_idle);
+    boss_anim_ctrl.add_animation("boss_dash",boss_dash);
+    boss_anim_ctrl.add_animation("boss_howl",boss_howl);
+
+    Boss boss_ai(boss,"boss_ai",&boss_anim_ctrl,&fireball,&boss_pos,&player);
+
     boss.add_component(boss_idle);
+    boss.add_component(boss_dash);
+    boss.add_component(boss_howl);
+    boss.add_component(boss_anim_ctrl);
+    boss.add_component(boss_ai);
+    boss.add_component(boss_pos);
+
+
 
 
     //player life
@@ -346,11 +391,11 @@ int main(int, char **){
     heart4.main_positionX = 4 * 40;
     heart5.main_positionX = 5 * 40;
 
-    heart1.main_positionY = 75;
-    heart2.main_positionY = 75;
-    heart3.main_positionY = 75;
-    heart4.main_positionY = 75;
-    heart5.main_positionY = 75;
+    heart1.main_positionY = 55;
+    heart2.main_positionY = 55;
+    heart3.main_positionY = 55;
+    heart4.main_positionY = 55;
+    heart5.main_positionY = 55;
 
 
     //player life.
@@ -380,6 +425,9 @@ int main(int, char **){
     stage1.add_game_object(plataform7);
     stage1.add_game_object(plataform8);
     stage1.add_game_object(plataform9);
+    stage1.add_game_object(plataform10);
+    stage1.add_game_object(plataform11);
+    stage1.add_game_object(plataform12);
     stage1.add_game_object(ground_stage1);
     stage1.add_game_object(background_stage1);
     stage1.add_game_object(fireball);

@@ -23,12 +23,13 @@ void Portal::update(){
     m_monsters[interator]->main_positionX = _main_game_object->main_positionX;
     m_monsters[interator]->main_positionY = _main_game_object->main_positionY;
     m_monsters[interator]->setState(GameObject::State::enabled);
-    interator = (interator + 1)%m_monsters.size();
 
     monster_number++;
     timestep = Game::instance.timer->getTicks() + 1000;
   }
   
+  interator = (interator + 1)%m_monsters.size();
+
   if(monster_number <= 10 && m_background->imagePart->x == 0){
     m_portal_pos->m_init_posX = 650;
   }

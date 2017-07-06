@@ -26,7 +26,7 @@ void Stage1Scene::game_logic(){
 
   if(back_img->imagePart->x > 2170){
     back_img->enable_camera = false;
-    fire_ball->setState(GameObject::State::enabled);
+    //fire_ball->setState(GameObject::State::enabled);
   }
   else{
     fire_ball->setState(GameObject::State::disabled);
