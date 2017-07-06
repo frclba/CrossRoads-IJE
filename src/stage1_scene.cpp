@@ -32,7 +32,7 @@ void Stage1Scene::game_logic(){
     fire_ball->setState(GameObject::State::disabled);
   }
 
-  if(portal->state() == GameObject::State::enabled && ((portal->main_positionX + portal->main_width < 800) || back_img->imagePart->x > 2190)){
+  if((portal->state() == GameObject::State::enabled && portal->main_positionX + portal->main_width < 800) || back_img->imagePart->x > 2190){
     back_img->enable_camera = false;
     go_arrow->setState(GameObject::State::disabled);
   }
