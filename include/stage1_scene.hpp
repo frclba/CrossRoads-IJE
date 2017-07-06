@@ -26,7 +26,13 @@ private:
   GameObject* ground_stage1;
   GameObject* plataform ;
   GameObject* plataform2; 
-  GameObject* plataform3; 
+  GameObject* plataform3;
+
+  
+  GameObject* monster1; 
+  GameObject* monster2; 
+  GameObject* monster3; 
+  GameObject* monster4; 
 
   GameObject* portal ;
   GameObject* background; 
@@ -41,6 +47,8 @@ private:
   unsigned int timestep ;
   
   GameObject *go_arrow ;
+
+  bool is_inside(GameObject* object);
 };
 
 #endif

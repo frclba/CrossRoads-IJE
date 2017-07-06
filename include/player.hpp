@@ -14,7 +14,7 @@ class Player : public Component{
 public:
   Player(GameObject &main_game_object, std::string id, AnimationControllerComponent *animC, GameObject &attack_box,
 	 ImageComponent *background):
-    Component(main_game_object, id), side(false), attack(false), animCtrl(animC), stand(false), jump(false),
+    Component(main_game_object, id), side(false), attack_meele(false),attack_ranged(false), animCtrl(animC), stand(false), jump(false),
     walkR(false), walkL(false), damageBool(false),  m_attack_box(&attack_box),
     m_background(background){}
 
@@ -41,7 +41,8 @@ public:
     GameObject *monster;
 
     bool side;
-    bool attack;
+    bool attack_meele;
+    bool attack_ranged;
 
     int life_points;
 
@@ -51,6 +52,7 @@ private:
     AnimationControllerComponent *animCtrl;
     AnimationControllerComponent *monster_controler;
     unsigned int jumptime;
+    unsigned int time_attack;
 
     bool stand;
     bool jump;

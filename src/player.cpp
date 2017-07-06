@@ -23,6 +23,7 @@ bool Player::init(){
     _main_game_object->main_positionX = 0;
     m_background->imagePart->x = 0;
     life_points = 5;
+    time_attack = 0;
 
     return true;
 }
@@ -58,17 +59,32 @@ void Player::attack_player(){
     }
 
     if(Game::instance.keyboard->isKeyDown("space")){
-        m_attack_box->setState(GameObject::State::enabled);
-        attack = true;
+        attack_meele = true;
     }
 
     if(Game::instance.keyboard->isKeyUp("space")){
-        m_attack_box->setState(GameObject::State::disabled);
-        attack = false;
+        attack_meele = false;
+    }
+    if(Game::instance.keyboard->isKeyDown("f")){
+        attack_ranged = true;
     }
 
-    if(attack){
-        animCtrl->play_animation("player_attack");
+    if(Game::instance.keyboard->isKeyUp("f")){
+        attack_ranged = false;
+    }
+
+
+    if(attack_meele||attack_ranged){
+      animCtrl->play_animation("player_attack");
+      if(attack_meele){
+	if(time_attack < Game::instance.timer->getTicks()){
+	  m_attack_box->setState(GameObject::State::enabled);
+	  time_attack = Game::instance.timer->getTicks() + 50;
+	}
+	else{
+	  m_attack_box->setState(GameObject::State::disabled);
+	}
+      }
     }else{
 
     }
@@ -151,7 +167,7 @@ bool Player::has_ground(){
 }
 
 void Player::damage(){
-    if(!attack && Game::instance.collision_manager->checkCollision(_main_game_object,"monster")){
+    if(!attack_meele && Game::instance.collision_manager->checkCollision(_main_game_object,"monster")){
         animCtrl->play_animation("player_damage");
         if(Game::instance.timer->getTicks() > damage_time){
             life_points--;
