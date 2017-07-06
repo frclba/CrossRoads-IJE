@@ -1,6 +1,6 @@
 #include<scene.hpp>
 #include "components/animation.hpp"
-#include "components/Sound.hpp"
+#include "components/audio.hpp"
 
 using namespace engine;
 class MenuScene : public Scene{
@@ -17,6 +17,7 @@ class MenuScene : public Scene{
     void init_sounds();
 
     private:
-      Mix_Chunk* button_hover_in_Sound;
+      AudioComponent* button_hover_in_Sound;
+      // Mix_Chunk* button_hover_in_Sound;
 
 };

@@ -31,14 +31,14 @@ void MenuScene::buttons_controller(){
     Animation* bnewAnimation = (dynamic_cast<Animation *>(bNew->get_component("imageBNew")));
     Animation* bloadAnimation = (dynamic_cast<Animation *>(bLoad->get_component("imageBLoad")));
 
-    Sound* button_hover_sound = (dynamic_cast<Sound *>(bLoad->get_component("button_hover_sound")));
+    AudioComponent* button_hover_sound = (dynamic_cast<AudioComponent *>(bLoad->get_component("button_hover_sound")));
     //Faz efeito de passar o mause em cima
     if(Game::instance.mouse->is_over(bNew)){
         if (Game::instance.mouse->is_right_button()) {
             Game::instance.change_scene("Fase 1");
         }
         bnewAnimation->useAnimation("normal");
-        button_hover_sound->playSound();
+        button_hover_sound->play(0);
     }
     else{
         bnewAnimation->useAnimation("mouseON");

@@ -4,7 +4,7 @@
 #include "components/image.hpp"
 #include "components/animation.hpp"
 #include "components/animation_controller.hpp"
-#include "components/music.hpp"
+#include "components/audio.hpp"
 #include "sdl2core.hpp"
 #include "menu_scene.hpp"
 #include "stage1_scene.hpp"
@@ -33,9 +33,7 @@ int main(int, char **){
     GameObject background("background");
     ImageComponent backgroundImage(background,"imageBackground", "assets/sprites/menu.png");
 
-    
-    //TODO - Put in a specific place where it belongs with large scalability
-    Music menu_music(background, "menu_musicBackground", "assets/music/gm.wav");
+    AudioComponent menu_music(background, "menu_musicBackground", "assets/music/menu.wav", true);
 
     GameObject menuFire("menuFire");
     Animation animationFire(menuFire,"imageFire", "assets/sprites/menuFire.png",348/6,76,6);
@@ -51,7 +49,7 @@ int main(int, char **){
     Animation image_bLoad(bLoad,"imageBLoad","assets/sprites/bLoad.png",448/2,100,2);
     image_bLoad.setAnimation("normal",0,0);
     image_bLoad.setAnimation("mouseON",1,1);
-    Sound button_hover_sound(bLoad, "button_hover_sound", "assets/sounds/button_grab.wav");
+    AudioComponent button_hover_sound(bLoad, "button_hover_sound", "assets/sounds/button_grab.wav", false, false);
 
     //coloca o tempo que a nimacao do fogo percorre.
     animationFire.setDelay(100);
@@ -89,7 +87,9 @@ int main(int, char **){
     GameObject background_stage1("backgroundForest");
     GameObject ground_stage1("ground",true,"ground");
 
-    Music stage1_music(background_stage1, "menu_musicStage1", "assets/music/battle.mp3");
+    AudioComponent stage1_music(background_stage1, "menu_musicStage1", "assets/music/stage.wav", true);
+    AudioComponent boss_music(background_stage1, "boss_music", "assets/music/boss.wav",true, false);
+
     ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
     backgroundForest.set_back_rect(800,600);
     background_stage1.set_layer(GameObject::Layer::background);
@@ -115,7 +115,6 @@ int main(int, char **){
     player_damage.setDelay(100);
     GameObject attack_box("attack_box",true,"attack_box",GameObject::State::disabled);
 
-
     //monsters
     GameObject monster1("monster1",true,"monster");
     AnimationControllerComponent monster_anim_ctrl1(player, "monster_controler");
@@ -126,6 +125,7 @@ int main(int, char **){
     monster_walk1.setDelay(50);
     monster_damage1.setDelay(100);
     monster_attack1.setDelay(100);
+
     //Monster artificial intelligence controller
     MonsterAI monster_ai1(monster1, "monster_ai1",&player,&monster_anim_ctrl);
     monster_anim_ctrl.add_animation("monster_walk",monster_walk1);
@@ -146,6 +146,7 @@ int main(int, char **){
     monster_walk2.setDelay(50);
     monster_damage2.setDelay(100);
     monster_attack2.setDelay(100);
+
     //Monster artificial intelligence controller
     MonsterAI monster_ai2(monster2, "monster_ai2",&player,&monster_anim_ctrl2);
     monster_anim_ctrl2.add_animation("monster_walk",monster_walk2);
@@ -166,6 +167,7 @@ int main(int, char **){
     monster_walk3.setDelay(50);
     monster_damage3.setDelay(100);
     monster_attack3.setDelay(100);
+
     //Monster artificial intelligence controller
     MonsterAI monster_ai3(monster3, "monster_ai",&player,&monster_anim_ctrl);
     monster_anim_ctrl3.add_animation("monster_walk",monster_walk3);
@@ -206,14 +208,14 @@ int main(int, char **){
     Animation go_arrow_anim(go_arrow,"go_arrow_anim","assets/sprites/arrow.png",200,200,10);
     go_arrow_anim.setDelay(200);
     go_arrow.add_component(go_arrow_anim);
-    
+
     //Portal
     GameObject portal("portal");
     portal.set_layer(GameObject::Layer::layer1);
     Animation portal_img(portal,"portal","assets/sprites/portal.png",240/4,80,4);
     portal_img.setDelay(50);
     CameraPosition portal_pos(portal,"portal_pos",&backgroundForest,600,470);
-  
+
     Portal portal_logic(portal,"portal_logic",&backgroundForest,&portal_pos);
     portal.add_component(portal_img);
     portal.add_component(portal_logic);
@@ -223,10 +225,8 @@ int main(int, char **){
     portal_logic.add_monster(&monster2);
     portal_logic.add_monster(&monster3);
     portal_logic.add_monster(&monster4);
-    
-    
 
-    
+
     Player player_logic(player,"player_logic",&player_anim_ctrl,attack_box,&backgroundForest);
 
     //Adding animation to animation mananger
@@ -245,6 +245,7 @@ int main(int, char **){
 
     background_stage1.add_component(backgroundForest);
     background_stage1.add_component(stage1_music);
+    background_stage1.add_component(boss_music);
 
     //plataforms
     //part1
@@ -304,7 +305,7 @@ int main(int, char **){
 
 
     //boss plataforms
-    
+
     GameObject plataform10("plataform10",true,"ground");
     ImageComponent img_plataform10(plataform10,"plataform10", "assets/sprites/plataform.png");
     CameraPosition plataform_ai10(plataform10,"plataform_ai10",&backgroundForest,2600,300);
@@ -365,9 +366,6 @@ int main(int, char **){
     boss.add_component(boss_ai);
     boss.add_component(boss_pos);
 
-
-
-
     //player life
     GameObject heart1("heart1");
     ImageComponent heart1_img(heart1,"heart1_img", "assets/sprites/heart.png");
@@ -414,7 +412,7 @@ int main(int, char **){
 
     //player life.
 
-    
+
     // Adding defined gameobjects to stage 1 scene
     //portal.setState(GameObject::State::disabled);
     stage1.add_game_object(player);
