@@ -57,12 +57,12 @@ void Player::attack_player(){
         m_attack_box->main_height = _main_game_object->main_height;
     }
 
-    if(Game::instance.keyboard->isKeyDown(SDLK_SPACE)){
+    if(Game::instance.keyboard->isKeyDown("space")){
         m_attack_box->setState(GameObject::State::enabled);
         attack = true;
     }
 
-    if(Game::instance.keyboard->isKeyUp(SDLK_SPACE)){
+    if(Game::instance.keyboard->isKeyUp("space")){
         m_attack_box->setState(GameObject::State::disabled);
         attack = false;
     }
@@ -77,18 +77,18 @@ void Player::attack_player(){
 // // ============================================== MOVE LOGIC ===================================================
 void Player::move_player(){
     //     //Detect move right
-    if(Game::instance.keyboard->isKeyDown(SDLK_d)){
+    if(Game::instance.keyboard->isKeyDown("d")){
         walkR= true;
     }
-    if(Game::instance.keyboard->isKeyUp(SDLK_d)){
+    if(Game::instance.keyboard->isKeyUp("d")){
         walkR= false;
     }
     //
     //Detect move left
-    if(Game::instance.keyboard->isKeyDown(SDLK_a)){
+    if(Game::instance.keyboard->isKeyDown("a")){
         walkL= true;
     }
-    if(Game::instance.keyboard->isKeyUp(SDLK_a)){
+    if(Game::instance.keyboard->isKeyUp("a")){
         walkL= false;
     }
     //
@@ -116,7 +116,7 @@ void Player::move_player(){
 // //=========================================== JUMP LOGIC==========================================
 void Player::jump_player(){
     //Player try jump and he can jump
-    if(Game::instance.keyboard->isKeyDown(SDLK_w) && (dy==0)){
+    if(Game::instance.keyboard->isKeyDown("w") && (dy==0)){
         jump = true;
         dy -= jumpF;
     }
