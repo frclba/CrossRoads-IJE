@@ -14,10 +14,10 @@ void Stage1Scene::game_logic(){
    bullet1 = &get_game_object("bullet");
    player = &get_game_object("player");
    player_controller = (dynamic_cast<Player *>(player->get_component("player_logic")));
-  
-  
+
+
   go_arrow = &get_game_object("go_arrow");
-   
+
   ground_stage1->main_positionY = 552;
   ground_stage1->main_positionX = 0;
   ground_stage1->main_width = 800;
@@ -32,7 +32,7 @@ void Stage1Scene::game_logic(){
     fire_ball->setState(GameObject::State::disabled);
   }
 
-  if(portal->state() == GameObject::State::enabled && (portal->main_positionX + portal->main_width < 800) || back_img->imagePart->x > 2190){
+  if(portal->state() == GameObject::State::enabled && ((portal->main_positionX + portal->main_width < 800) || back_img->imagePart->x > 2190)){
     back_img->enable_camera = false;
     go_arrow->setState(GameObject::State::disabled);
   }
@@ -55,19 +55,19 @@ void Stage1Scene::bullet(){
     timestep = Game::instance.timer->getTicks()+1000;
     bullet1->setState(GameObject::State::enabled);
   }
-   
+
   if(bullet1->state() == GameObject::State::enabled ){
     if(bulletDir1){
       bullet1->main_positionX += 20;
     }
     else{
-	
+
       bullet1->main_positionX -= 20;
     }
   }
   if(bullet1->main_positionX > 800 || bullet1->main_positionX < 0){
     bullet1->setState(GameObject::State::disabled);
-      
+
   }
 
 

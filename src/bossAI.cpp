@@ -8,7 +8,8 @@ bool Boss::init(){
   move_time = 0;
   fireball_time = 0;
   side = false;
-  
+
+  return true;
 }
 
 
@@ -17,7 +18,7 @@ void Boss::update(){
 
   if(_main_game_object->main_positionX > -10 &&
      _main_game_object->main_positionX + _main_game_object->main_width < 850){
-  
+
 
     if (fireball_attack){
       //fireball_controller();
@@ -29,7 +30,7 @@ void Boss::update(){
 
 
     m_boss_animation->flipping(!side);
-  
+
     if(timestep < Game::instance.timer->getTicks()){
       if(m_player->main_positionY > 300){
 	dash_attack = true;
@@ -42,22 +43,22 @@ void Boss::update(){
 	m_boss_animation->play_animation("boss_howl");
       m_fireball->setState(GameObject::State::enabled);
       }
-      
+
       timestep = Game::instance.timer->getTicks() + 3000;
      }
-    
+
     boss_damage();
   }
-  
+
 }
 void Boss::boss_damage(){
   if(Game::instance.collision_manager->checkCollision(_main_game_object,"attack_box") ||
      Game::instance.collision_manager->checkCollision(_main_game_object,"bullet")){
     if(time_damage < Game::instance.timer->getTicks()){
       life--;
-      time_damage = Game::instance.timer->getTicks()+1000; 
+      time_damage = Game::instance.timer->getTicks()+1000;
     }
-     
+
     if(life <= 0){
       Game::instance.change_scene("Win Scene");
     }
@@ -72,11 +73,11 @@ void Boss::boss_move(){
     //side = !side;
     move_time = Game::instance.timer->getTicks() + 900;
   }
-  
+
   if(side){
     m_position->m_init_posX -=10;
   }
-  
+
   else{
     m_position->m_init_posX +=10;
   }
@@ -89,8 +90,8 @@ void Boss::boss_move(){
       side = !side;
       dash_attack = false;
   }
-  
-  
+
+
 }
 
 Boss::~Boss(){}

@@ -4,6 +4,7 @@ Heart::~Heart(){}
 
 bool Heart::init(){
   _main_game_object->setState(GameObject::State::enabled);
+  return true;
 }
 
 void Heart::update(){

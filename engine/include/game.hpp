@@ -63,18 +63,18 @@ namespace engine{
         Mouse *mouse;
         Keyboard* keyboard;
         CollisionManager* collision_manager;
+        Scene* current_scene;
 
-        Scene *current_scene;
     private:
         Game()
-            : main_canvas(NULL), main_name(""),
+            : main_canvas(NULL), current_scene(NULL), main_name(""),
             main_window_size({0,0}), main_window(NULL),
             main_background_color({0xff, 0xff, 0xff, 0xff}),
-            current_state(State::created), current_scene(NULL), last_current_scene(NULL){};
+            current_state(State::created), last_current_scene(NULL){};
 
         std::string main_name;
         std::pair<int,int> main_window_size;
-        SDL_Window * main_window;
+        SDL_Window* main_window;
         SDL_Color main_background_color;
         State current_state;
 

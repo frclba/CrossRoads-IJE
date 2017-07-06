@@ -12,7 +12,7 @@ class CameraPosition : public Component{
 
 public:
   CameraPosition(GameObject &main_game_object, std::string id,ImageComponent *background,int init_posX,int init_posY):
-    Component(main_game_object, id),m_background(background),m_init_posX(init_posX),m_init_posY(init_posY){}
+    Component(main_game_object, id), m_init_posX(init_posX), m_init_posY(init_posY), m_background(background){}
     ~CameraPosition();
 
     bool init();
@@ -21,7 +21,7 @@ public:
     int m_init_posX;
     int m_init_posY;
 private:
- 
+
   ImageComponent *m_background;
 };
 

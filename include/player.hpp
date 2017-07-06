@@ -14,8 +14,8 @@ class Player : public Component{
 public:
   Player(GameObject &main_game_object, std::string id, AnimationControllerComponent *animC, GameObject &attack_box,
 	 ImageComponent *background):
-    Component(main_game_object, id), animCtrl(animC), walkR(false), walkL(false),
-    jump(false), stand(false), attack(false), damageBool(false), side(false), m_attack_box(&attack_box),
+    Component(main_game_object, id), side(false), attack(false), animCtrl(animC), stand(false), jump(false),
+    walkR(false), walkL(false), damageBool(false),  m_attack_box(&attack_box),
     m_background(background){}
 
     ~Player();
@@ -40,21 +40,24 @@ public:
     GameObject *plataform;
     GameObject *monster;
 
-    bool attack;
     bool side;
+    bool attack;
 
     int life_points;
+
 private:
     const bool RIGHT = true;
     const bool LEFT = false;
     AnimationControllerComponent *animCtrl;
     AnimationControllerComponent *monster_controler;
     unsigned int jumptime;
+
+    bool stand;
+    bool jump;
     bool walkR;
     bool walkL;
-    bool jump;
-    bool stand;
     bool damageBool;
+
     GameObject *ground;
     GameObject* m_attack_box;
     float dy;
