@@ -27,8 +27,6 @@ void Boss::update(){
         boss_move();
       }
 
-
-
       m_boss_animation->flipping(!side);
 
       if(timestep < Game::instance.timer->getTicks()){
@@ -52,13 +50,17 @@ void Boss::update(){
 
   }
   void Boss::boss_damage(){
+    AudioComponent* boss_full_putasso_audio = (dynamic_cast<AudioComponent*> (_main_game_object->get_component("boss_full_putasso_audio")));
+
     if(Game::instance.collision_manager->checkCollision(_main_game_object,"attack_box") ||
     Game::instance.collision_manager->checkCollision(_main_game_object,"bullet")){
       if(time_damage < Game::instance.timer->getTicks()){
         life--;
-        time_damage = Game::instance.timer->getTicks()+1000;
+        time_damage = Game::instance.timer->getTicks() + 1000;
       }
-
+      if(life == 3){
+        boss_full_putasso_audio->play(0,-1);
+      }
       if(life <= 0){
         Game::instance.change_scene("Win Scene");
       }
@@ -66,6 +68,9 @@ void Boss::update(){
   }
 
   void Boss::boss_move(){
+    AudioComponent* boss_dash_audio = (dynamic_cast<AudioComponent*> (_main_game_object->get_component("boss_dash_audio")));
+
+    boss_dash_audio->play(0,-1);
 
     m_boss_animation->play_animation("boss_dash",true);
 

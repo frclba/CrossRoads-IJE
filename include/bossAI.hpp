@@ -6,6 +6,7 @@
 #include "components/component.hpp"
 #include "components/animation_controller.hpp"
 #include "cameraposition.hpp"
+#include "components/audio.hpp"
 
 using namespace engine;
 

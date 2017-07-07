@@ -364,7 +364,9 @@ int main(int, char **){
     img_fireball.setDelay(100);
     fireball.add_component(img_fireball);
     fireball.setState(GameObject::State::disabled);
-
+    AudioComponent fireball_droping_audio(fireball, "fireball_droping_audio", "assets/sounds/meteoro1.1.wav", false, false);
+    fireball.add_component(fireball_droping_audio);
+    
     GameObject boss("boss",true,"boss");
     boss.main_positionX = 600;
     boss.main_positionY = 300;
@@ -446,7 +448,7 @@ int main(int, char **){
 
 
     // Adding defined gameobjects to stage 1 scene
-    // portal.setState(GameObject::State::disabled);
+     portal.setState(GameObject::State::disabled);
     stage1.add_game_object(player);
     stage1.add_game_object(heart1);
     stage1.add_game_object(heart2);

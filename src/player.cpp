@@ -184,6 +184,10 @@ void Player::damage(){
       life_points--;
       damage_time = Game::instance.timer->getTicks() + 1000;
     }
+    if(life_points == 2){
+      AudioComponent* player_low_life_audio = (dynamic_cast<AudioComponent*>(_main_game_object->get_component("player_low_life_audio")));
+      player_low_life_audio->play(0,-1);
+    }
     if(life_points <= 0){
       //_main_game_object->setState(GameObject::State::disabled);
       life_points = 5;
