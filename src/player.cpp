@@ -75,8 +75,8 @@ void Player::attack_player(){
 
 
     if(attack_meele||attack_ranged){
-      animCtrl->play_animation("player_attack");
       if(attack_meele){
+	animCtrl->play_animation("player_attack");
 	if(time_attack < Game::instance.timer->getTicks()){
 	  m_attack_box->setState(GameObject::State::enabled);
 	  time_attack = Game::instance.timer->getTicks() + 50;
@@ -84,6 +84,9 @@ void Player::attack_player(){
 	else{
 	  m_attack_box->setState(GameObject::State::disabled);
 	}
+      }
+      else{
+	animCtrl->play_animation("player_ranged");
       }
     }else{
 
