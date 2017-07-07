@@ -13,15 +13,17 @@ using namespace engine;
 class InitialStory : public Component{
 
 public:
-  InitialStory(GameObject &main_game_object, std::string id,AnimationControllerComponent* story):
-    Component(main_game_object, id),m_story(story){}
+  InitialStory(GameObject &main_game_object, std::string id,AnimationControllerComponent* story,GameObject* image1,GameObject* image2):
+    Component(main_game_object, id),m_story(story),m_image1(image1),m_image2(image2){}
     ~InitialStory();
 
     bool init();
     void update();
 
 private:
-  
+
+    GameObject* m_image1;
+    GameObject* m_image2;
     AnimationControllerComponent *m_story;
     unsigned int timestep;
     unsigned int interator;
