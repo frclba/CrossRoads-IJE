@@ -87,10 +87,9 @@ void Player::attack_player(){
         m_attack_box->setState(GameObject::State::disabled);
       }
     }
-  }else{
-
   }
 }
+
 
 // // ============================================== MOVE LOGIC ===================================================
 void Player::move_player(){
@@ -177,7 +176,9 @@ bool Player::has_ground(){
 }
 
 void Player::damage(){
-  if(!attack_meele && Game::instance.collision_manager->checkCollision(_main_game_object,"monster")){
+  if(!attack_meele && (Game::instance.collision_manager->checkCollision(_main_game_object,"monster")||
+  Game::instance.collision_manager->checkCollision(_main_game_object,"fireball")||
+  Game::instance.collision_manager->checkCollision(_main_game_object,"boss"))){
     animCtrl->play_animation("player_damage");
     if(Game::instance.timer->getTicks() > damage_time){
       life_points--;
@@ -189,7 +190,13 @@ void Player::damage(){
       Game::instance.change_scene("Lose Scene");
     }
   }
+  if(life_points <= 0){
+    //_main_game_object->setState(GameObject::State::disabled);
+    life_points = 5;
+    Game::instance.change_scene("Lose Scene");
+  }
 }
+
 
 void Player::is_dead(){
   if(life_points <= 0){

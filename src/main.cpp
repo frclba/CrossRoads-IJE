@@ -125,11 +125,13 @@ int main(int, char **){
     Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",480/8,49, 8);
     Animation player_running(player, "playerRunning", "assets/sprites/hero_running.png" ,220/4, 46, 4);
     Animation player_attack(player, "playerAttack", "assets/sprites/attack.png" ,825/11, 49, 11);
+    Animation player_ranged(player, "playerAttackRanged", "assets/sprites/cross_attack.png" ,252/7, 45, 7);
     Animation player_damage(player, "playerDamage", "assets/sprites/damage.png" ,800/8, 50, 8);
 
     player_idle.setDelay(100);
     player_running.setDelay(100);
     player_attack.setDelay(30);
+    player_ranged.setDelay(50);
     player_damage.setDelay(100);
     GameObject attack_box("attack_box",true,"attack_box",GameObject::State::disabled);
 
@@ -256,12 +258,14 @@ int main(int, char **){
     player_anim_ctrl.add_animation("player_idle", player_idle);
     player_anim_ctrl.add_animation("player_running", player_running);
     player_anim_ctrl.add_animation("player_attack", player_attack);
+    player_anim_ctrl.add_animation("player_ranged", player_ranged);
     player_anim_ctrl.add_animation("player_damage", player_damage);
 
     //Adding componentes to player
     player.add_component(player_idle);
     player.add_component(player_running);
     player.add_component(player_attack);
+    player.add_component(player_ranged);
     player.add_component(player_damage);
     player.add_component(player_anim_ctrl);
     player.add_component(player_logic);
@@ -442,7 +446,7 @@ int main(int, char **){
 
 
     // Adding defined gameobjects to stage 1 scene
-    //portal.setState(GameObject::State::disabled);
+    // portal.setState(GameObject::State::disabled);
     stage1.add_game_object(player);
     stage1.add_game_object(heart1);
     stage1.add_game_object(heart2);
