@@ -4,7 +4,7 @@
 #include<stdlib.h>
 
 unsigned int time_damage;
-const int PLAYER_DISTANCE = 550;
+const int PLAYER_DISTANCE = 850;
 const int PLAYER_ATTACK_DISTANCE = 150;
 
 

@@ -43,6 +43,10 @@ int main(int, char **){
     GameObject bNew("bNew");
     Animation image_bNew(bNew,"imageBNew", "assets/sprites/bNew.png",448/2,100,2);
 
+    GameObject title("title");
+    ImageComponent image_title(title,"image_title", "assets/sprites/menu_title.png");
+    title.add_component(image_title);
+
     //cadastrando dois tipos de animação, ado butao normal que pega a imagem de 0 a 0 e a mouseON que pega a imagem de 1 a 1
     image_bNew.setAnimation("normal",0,0);
     image_bNew.setAnimation("mouseON",1,1);
@@ -68,6 +72,7 @@ int main(int, char **){
     menu.add_game_object(menuFire);
     menu.add_game_object(bNew);
     menu.add_game_object(bLoad);
+    menu.add_game_object(title);
     menu.add_game_object(background);
 
     // =================================== STAGE 1 =======================================
