@@ -45,6 +45,7 @@ void Player::update(){
 // // ============================================= ATTACK LOGIC ===================================================
 void Player::attack_player(){
   AudioComponent* player_attack_audio = (dynamic_cast<AudioComponent*> (_main_game_object->get_component("player_attack_audio")));
+  AudioComponent* player_arrow_sound = (dynamic_cast<AudioComponent*> (_main_game_object->get_component("player_arrow_sound")));
 
   if(side == LEFT){
     m_attack_box->main_positionX = _main_game_object->main_positionX;
@@ -89,6 +90,7 @@ void Player::attack_player(){
     }
     else{
       animCtrl->play_animation("player_ranged");
+      player_arrow_sound->play(0,-1);
     }
   }
 }

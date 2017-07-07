@@ -102,6 +102,7 @@ int main(int, char **){
     AudioComponent player_attack_audio(player, "player_attack_audio", "assets/sounds/ataque.wav", false, false);
     AudioComponent player_jump_audio(player, "player_jump_audio", "assets/sounds/pulo.herói.2.wav", false, false);
     AudioComponent player_low_life_audio(player, "player_low_life_audio", "assets/sounds/Coracao.batendo.wav", false, false);
+    AudioComponent player_arrow_sound(player, "player_arrow_sound", "assets/sounds/Game.menu.sound.(1).wav", false, false);
 
 
     background_stage1.add_component(stage1_music);
@@ -112,6 +113,7 @@ int main(int, char **){
     player.add_component(player_attack_audio);
     player.add_component(player_jump_audio);
     player.add_component(player_low_life_audio);
+    player.add_component(player_arrow_sound);
 
     ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
     backgroundForest.set_back_rect(800,600);
@@ -282,7 +284,7 @@ int main(int, char **){
     //part1
     GameObject plataform("plataform",true,"ground");
     ImageComponent img_plataform(plataform,"plataform", "assets/sprites/plataform.png");
-    CameraPosition plataform_ai(plataform,"plataform_ai",&backgroundForest, 600, 350);
+    CameraPosition plataform_ai(plataform,"plataform_ai",&backgroundForest, 550, 350);
     plataform.add_component(plataform_ai);
     plataform.add_component(img_plataform);
 
@@ -371,7 +373,7 @@ int main(int, char **){
     fireball.setState(GameObject::State::disabled);
     AudioComponent fireball_droping_audio(fireball, "fireball_droping_audio", "assets/sounds/meteoro1.1.wav", false, false);
     fireball.add_component(fireball_droping_audio);
-    
+
     GameObject boss("boss",true,"boss");
     boss.main_positionX = 600;
     boss.main_positionY = 300;
@@ -502,12 +504,12 @@ int main(int, char **){
     Scene lose("Lose Scene");
     Game::instance.add_scene(lose);
 
-    
+
     GameObject lose_background("lose_background");
     //ImageComponent image_lose (lose_background, "image_lose", "assets/sprites/lose.jpg");
     Animation image_lose(lose_background,"image_lose","assets/sprites/LoseScreen.png",4800/6,600,6);
     image_lose.setDelay(100);
-    
+
     Restart restart_button_lose(lose_background, "restart_button_lose");
 
     lose_background.add_component(image_lose);
@@ -526,7 +528,7 @@ int main(int, char **){
     Animation story_anim3 (story, "story_anim3", "assets/sprites/st2.png",800,600,1);
     Animation story_anim4 (story, "story_anim4", "assets/sprites/init_story2.png",5600/7,600,7);
     AnimationControllerComponent story_anim_controller(story,"stary_controller");
-    
+
     story_anim_controller.add_animation("story1", story_anim1);
     story_anim_controller.add_animation("story2", story_anim2);
     story_anim_controller.add_animation("story3", story_anim3);
