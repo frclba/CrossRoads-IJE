@@ -95,6 +95,9 @@ void Player::attack_player(){
 
 // // ============================================== MOVE LOGIC ===================================================
 void Player::move_player(){
+    AudioComponent* player_running_audio = (dynamic_cast<AudioComponent*> (_main_game_object->get_component("player_running_audio")));
+    AudioComponent* player_running_audio2 = (dynamic_cast<AudioComponent*> (_main_game_object->get_component("player_running_audio2")));
+
     //     //Detect move right
     if(Game::instance.keyboard->isKeyDown("d")){
         walkR= true;
@@ -114,6 +117,7 @@ void Player::move_player(){
     if(walkR && (_main_game_object->main_positionX+_main_game_object->main_width)<800){
         isRight = true;
         animCtrl->play_animation("player_running");
+        player_running_audio->play(0, -1);
         side = RIGHT;
         animCtrl->flipping(side);
         _main_game_object->main_positionX += moveForce;
@@ -121,11 +125,12 @@ void Player::move_player(){
     } else if(walkL && (_main_game_object->main_positionX)>=0 ){
         isRight = false;
         animCtrl->play_animation("player_running");
+        player_running_audio2->play(0, -1);
         side = LEFT;
         animCtrl->flipping(side);
         _main_game_object->main_positionX -= moveForce;
     }
-    
+
     if(_main_game_object->main_positionX > 200 && walkR && m_background->enable_camera){
       _main_game_object->main_positionX -= moveForce;
       m_background->move_img_rect(7);

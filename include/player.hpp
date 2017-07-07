@@ -5,6 +5,8 @@
 #include "components/component.hpp"
 #include "components/animation_controller.hpp"
 #include "components/image.hpp"
+#include "components/audio.hpp"
+
 #include "game.hpp"
 #include "Logger.hpp"
 

@@ -13,7 +13,8 @@ bool AudioComponent::init(){
             Log::instance.error("Music not found!");
             return false;
         }
-    }else{
+    }
+    else{
         m_sound = Mix_LoadWAV(m_path.c_str());
 
         if (m_sound == NULL){
