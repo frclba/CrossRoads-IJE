@@ -6,6 +6,7 @@
 #include "components/component.hpp"
 #include "components/animation_controller.hpp"
 #include "math.h"
+#include "components/audio.hpp"
 
 using namespace engine;
 
@@ -39,7 +40,8 @@ private:
     const bool LEFT = false;
     bool has_damage = false;
     int life = 3;
-
+    bool is_first = false;
+    
     GameObject* m_player;
     GameObject* bullet;
     GameObject* ground_obj;

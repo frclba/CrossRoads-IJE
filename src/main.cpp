@@ -91,13 +91,22 @@ int main(int, char **){
 
     AudioComponent stage1_music(background_stage1, "menu_musicStage1", "assets/music/stage.wav", true);
     AudioComponent boss_music(background_stage1, "boss_music", "assets/music/boss.wav",true, false);
+
     AudioComponent player_running_audio(player, "player_running_audio", "assets/sounds/Passo.4.wav", false, false);
     AudioComponent player_running_audio2(player, "player_running_audio2", "assets/sounds/Passo.2.wav", false, false);
+    AudioComponent player_attack_audio(player, "player_attack_audio", "assets/sounds/ataque.wav", false, false);
+    AudioComponent player_jump_audio(player, "player_jump_audio", "assets/sounds/pulo.herói.2.wav", false, false);
+    AudioComponent player_low_life_audio(player, "player_low_life_audio", "assets/sounds/Coracao.batendo.wav", false, false);
+
 
     background_stage1.add_component(stage1_music);
     background_stage1.add_component(boss_music);
+
     player.add_component(player_running_audio);
     player.add_component(player_running_audio2);
+    player.add_component(player_attack_audio);
+    player.add_component(player_jump_audio);
+    player.add_component(player_low_life_audio);
 
     ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
     backgroundForest.set_back_rect(800,600);
@@ -209,6 +218,11 @@ int main(int, char **){
     monster4.add_component(monster_ai4);
 
     //.monsters
+    AudioComponent goblin_spawn_audio(monster1, "goblin_spawn_audio", "assets/sounds/vocalizacoes.goblin.wav", false, false);
+    AudioComponent goblin_aggro_audio(monster1, "goblin_aggro_audio", "assets/sounds/vocalizacoes.goblin.3.wav", false, false);
+
+    monster1.add_component(goblin_spawn_audio);
+    monster1.add_component(goblin_aggro_audio);
 
     // Animação da setinha
     GameObject go_arrow("go_arrow");
@@ -367,12 +381,18 @@ int main(int, char **){
 
     Boss boss_ai(boss,"boss_ai",&boss_anim_ctrl,&fireball,&boss_pos,&player);
 
+    AudioComponent boss_dash_audio(boss, "boss_dash_audio", "assets/sounds/dash.wav", false, false);
+    AudioComponent boss_full_putasso_audio(boss, "boss_full_putasso_audio", "assets/sounds/Ferimento.wav", false, false);
+
     boss.add_component(boss_idle);
     boss.add_component(boss_dash);
     boss.add_component(boss_howl);
     boss.add_component(boss_anim_ctrl);
     boss.add_component(boss_ai);
     boss.add_component(boss_pos);
+
+    boss.add_component(boss_dash_audio);
+    boss.add_component(boss_full_putasso_audio);
 
     //player life
     GameObject heart1("heart1");
