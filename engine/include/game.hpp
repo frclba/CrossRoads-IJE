@@ -77,6 +77,7 @@ namespace engine{
         SDL_Window* main_window;
         SDL_Color main_background_color;
         State current_state;
+        SDL_Joystick* gGameController =NULL;
 
         Scene *last_current_scene;
         Scene *next_scene;

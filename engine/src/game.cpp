@@ -14,8 +14,8 @@ bool Game::startSDL(){
 
   Log::instance.info("Iniciando video e audio");
 
-  if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0){
-    Log::instance.error("Error ao inicializar video ou audio");
+  if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) < 0){
+    Log::instance.error("Error ao inicializar video ou audio ou joystick");
     return false;
   }
 
@@ -35,8 +35,23 @@ bool Game::startSDL(){
   mouse = new Mouse();
   keyboard = new Keyboard();
   collision_manager = new CollisionManager();
-  return true;
 
+  if( SDL_NumJoysticks() < 1 )
+    {
+      //printf( "Warning: No joysticks connected!\n" );
+    }
+  else
+    {
+      //Load joystick
+      gGameController = SDL_JoystickOpen( 0 );
+      if( gGameController == NULL )
+	{
+	  //printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
+	}
+    }
+
+
+  return true;
 }
 
 bool Game::createWindow(){
@@ -77,6 +92,8 @@ bool Game::createWindow(){
   }
 
   void Game::offSDL(){
+    SDL_JoystickClose( gGameController );
+    gGameController = NULL;
     Mix_Quit();
     IMG_Quit();
     SDL_Quit();

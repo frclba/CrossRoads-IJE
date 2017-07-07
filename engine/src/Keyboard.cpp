@@ -16,6 +16,65 @@ void Keyboard::setKeys(SDL_Event* evt){
     else if(evt->type == SDL_KEYUP){
         keycode_up.push_back(evt->key.keysym.sym);
     }
+
+    else if(evt->type == SDL_JOYBUTTONDOWN){
+      if(((int)evt->jbutton.button) == 1){
+        keycode_down.push_back(SDLK_SPACE);
+      }
+      if(((int)evt->jbutton.button) == 2){
+        keycode_down.push_back(SDLK_w);
+      }
+      if(((int)evt->jbutton.button) == 0){
+        keycode_down.push_back(SDLK_f);
+      }
+      //std::cout<<((int)evt->jbutton.button)<<std::endl;
+    }
+    else if(evt->type == SDL_JOYBUTTONUP){
+      if(((int)evt->jbutton.button) == 1){
+        keycode_up.push_back(SDLK_SPACE);
+      }
+      if(((int)evt->jbutton.button) == 2){
+        keycode_up.push_back(SDLK_w);
+      }
+      if(((int)evt->jbutton.button) == 0){
+        keycode_up.push_back(SDLK_f);
+      }
+    }
+
+    else if(evt->type == SDL_JOYAXISMOTION){
+	if(evt->jaxis.axis == 0){
+	  if(evt->jaxis.value > 8000){
+	    keycode_down.push_back(SDLK_d);
+	  }
+	  else{
+	    keycode_up.push_back(SDLK_d);
+	  }
+	  if(evt->jaxis.value < -8000){
+	    keycode_down.push_back(SDLK_a);
+	  }
+	  else{
+	    keycode_up.push_back(SDLK_a);
+	  }
+	}
+
+	if(evt->jaxis.axis == 1){
+	  if(evt->jaxis.value > 8000){
+	    keycode_down.push_back(SDLK_s);
+	  }
+	  else{
+	    keycode_up.push_back(SDLK_s);
+	  }
+	  if(evt->jaxis.value < -8000){
+	    keycode_down.push_back(SDLK_w);
+	  }
+	  else{
+	    keycode_up.push_back(SDLK_w);
+	  }
+	}
+	//std::cout<<evt->jaxis.value<<std::endl;
+    }
+
+    
 }
 
 
