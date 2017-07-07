@@ -27,6 +27,9 @@ void Keyboard::setKeys(SDL_Event* evt){
       if(((int)evt->jbutton.button) == 0){
         keycode_down.push_back(SDLK_f);
       }
+      if(((int)evt->jbutton.button) == 9){
+        keycode_down.push_back(SDLK_RETURN);
+      }
       //std::cout<<((int)evt->jbutton.button)<<std::endl;
     }
     else if(evt->type == SDL_JOYBUTTONUP){
@@ -38,6 +41,9 @@ void Keyboard::setKeys(SDL_Event* evt){
       }
       if(((int)evt->jbutton.button) == 0){
         keycode_up.push_back(SDLK_f);
+      }
+      if(((int)evt->jbutton.button) == 9){
+        keycode_up.push_back(SDLK_RETURN);
       }
     }
 

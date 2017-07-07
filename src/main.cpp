@@ -448,7 +448,7 @@ int main(int, char **){
 
 
     // Adding defined gameobjects to stage 1 scene
-     portal.setState(GameObject::State::disabled);
+    //portal.setState(GameObject::State::disabled);
     stage1.add_game_object(player);
     stage1.add_game_object(heart1);
     stage1.add_game_object(heart2);
@@ -497,8 +497,12 @@ int main(int, char **){
     Scene lose("Lose Scene");
     Game::instance.add_scene(lose);
 
+    
     GameObject lose_background("lose_background");
-    ImageComponent image_lose (lose_background, "image_lose", "assets/sprites/lose.jpg");
+    //ImageComponent image_lose (lose_background, "image_lose", "assets/sprites/lose.jpg");
+    Animation image_lose(lose_background,"image_lose","assets/sprites/LoseScreen.png",4800/6,600,6);
+    image_lose.setDelay(100);
+    
     Restart restart_button_lose(lose_background, "restart_button_lose");
 
     lose_background.add_component(image_lose);
