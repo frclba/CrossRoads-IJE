@@ -5,6 +5,7 @@
 #include "game.hpp"
 #include "components/component.hpp"
 #include "components/animation_controller.hpp"
+#include "components/audio.hpp"
 #include "math.h"
 
 using namespace engine;

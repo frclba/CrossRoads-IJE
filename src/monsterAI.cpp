@@ -12,8 +12,8 @@ const int PLAYER_ATTACK_DISTANCE = 150;
 bool MonsterAI::init(){
   _main_game_object->main_positionY = ground - _main_game_object->main_height;
   _main_game_object->main_positionX = 400;
-  MONSTER_MOVE = (rand() % 1) + 2;
-  life = 3;
+  MONSTER_MOVE = (rand() % 3) + 1;
+  life = 2;
   return true;
 }
 
@@ -38,7 +38,7 @@ void MonsterAI::update(){
 }
 
 bool MonsterAI::see_player(){
-  if(fabs(_main_game_object->main_positionX - m_player->main_positionX) <= PLAYER_DISTANCE){
+  if(fabs(_main_game_object->main_positionX - m_player->main_positionX) <= PLAYER_DISTANCE-100){
     return true;
   }else{
     return false;
@@ -56,13 +56,14 @@ void MonsterAI::jump_monster(){
 
 void MonsterAI::move_monster(){
   bool isSee = see_player();
+
   if(isSee && !has_damage && m_player->main_positionX > _main_game_object->main_positionX){
     m_monster_controler->flipping(true);
     _main_game_object->main_positionX += MONSTER_MOVE;
-  }if(isSee && !has_damage && m_player->main_positionX < _main_game_object->main_positionX){
+  }
+  if(isSee && !has_damage && m_player->main_positionX < _main_game_object->main_positionX){
     m_monster_controler->flipping(false);
     _main_game_object->main_positionX -= MONSTER_MOVE;
-  }else{
   }
 }
 
