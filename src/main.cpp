@@ -426,7 +426,7 @@ int main(int, char **){
 
 
     // Adding defined gameobjects to stage 1 scene
-    //portal.setState(GameObject::State::disabled);
+    // portal.setState(GameObject::State::disabled);
     stage1.add_game_object(player);
     stage1.add_game_object(heart1);
     stage1.add_game_object(heart2);
