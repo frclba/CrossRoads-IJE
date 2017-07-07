@@ -35,8 +35,8 @@ void MenuScene::buttons_controller(){
     //Faz efeito de passar o mause em cima
     if(Game::instance.mouse->is_over(bNew)){
         if (Game::instance.mouse->is_right_button()) {
-	  //Game::instance.change_scene("Fase 1");
-            Game::instance.change_scene("initial_story");
+	  Game::instance.change_scene("Fase 1");
+	  //Game::instance.change_scene("initial_story");
         }
         bnewAnimation->useAnimation("normal");
         button_hover_sound->play(0,-1);
