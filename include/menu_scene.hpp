@@ -7,7 +7,7 @@ class MenuScene : public Scene{
     public:
 
         MenuScene(std::string name):
-            Scene(name){}
+	  Scene(name),enter(false){}
 
         ~MenuScene();
 
@@ -17,6 +17,7 @@ class MenuScene : public Scene{
     void init_sounds();
 
     private:
+      bool enter;
       AudioComponent* button_hover_in_Sound;
       // Mix_Chunk* button_hover_in_Sound;
 

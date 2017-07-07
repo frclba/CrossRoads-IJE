@@ -87,6 +87,9 @@ void Player::attack_player(){
         m_attack_box->setState(GameObject::State::disabled);
       }
     }
+    else{
+      animCtrl->play_animation("player_ranged");
+    }
   }
 }
 

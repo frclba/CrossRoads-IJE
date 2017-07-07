@@ -33,6 +33,12 @@ void MenuScene::buttons_controller(){
 
     AudioComponent* button_hover_sound = (dynamic_cast<AudioComponent*>(bLoad->get_component("button_hover_sound")));
     //Faz efeito de passar o mause em cima
+
+    if(Game::instance.keyboard->isKeyDown("enter")){
+	Game::instance.change_scene("Fase 1");
+	//Game::instance.change_scene("initial_story");
+
+    }
     if(Game::instance.mouse->is_over(bNew)){
         if (Game::instance.mouse->is_right_button()) {
 	  Game::instance.change_scene("Fase 1");
