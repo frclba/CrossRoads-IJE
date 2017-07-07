@@ -16,6 +16,7 @@
 #include "cameraposition.hpp"
 #include "heart.hpp"
 #include "bossAI.hpp"
+#include "initialStory.hpp"
 
 
 using namespace engine;
@@ -473,6 +474,38 @@ int main(int, char **){
 
     lose.add_game_object(lose_background);
 
+
+    //=====================================Initial Story======================================//
+    Scene initial_story("initial_story");
+    Game::instance.add_scene(initial_story);
+
+    GameObject story("story");
+    Animation story_anim1 (story, "story_anim1", "assets/sprites/st1.png",800,600,1);
+    Animation story_anim2 (story, "story_anim2", "assets/sprites/init_story1.png",5600/7,600,7);
+    Animation story_anim3 (story, "story_anim3", "assets/sprites/st2.png",800,600,1);
+    Animation story_anim4 (story, "story_anim4", "assets/sprites/init_story2.png",5600/7,600,7);
+    AnimationControllerComponent story_anim_controller(story,"stary_controller");
+    
+    story_anim_controller.add_animation("story1", story_anim1);
+    story_anim_controller.add_animation("story2", story_anim2);
+    story_anim_controller.add_animation("story3", story_anim3);
+    story_anim_controller.add_animation("story4", story_anim4);
+    story_anim2.setDelay(500);
+    story_anim4.setDelay(500);
+
+    InitialStory story_controller(story,"story_controller",&story_anim_controller);
+
+    story.add_component(story_anim1);
+    story.add_component(story_anim2);
+    story.add_component(story_anim3);
+    story.add_component(story_anim4);
+    story.add_component(story_anim_controller);
+    story.add_component(story_controller);
+
+    initial_story.add_game_object(story);
+
+
+    
     //==================================== GAME LOOP ============================================
     Log::instance.jumpLine("Ending Instantiations. Running Game\n");
     Game::instance.run();
