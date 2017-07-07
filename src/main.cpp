@@ -51,7 +51,7 @@ int main(int, char **){
     Animation image_bLoad(bLoad,"imageBLoad","assets/sprites/bLoad.png",448/2,100,2);
     image_bLoad.setAnimation("normal",0,0);
     image_bLoad.setAnimation("mouseON",1,1);
-    AudioComponent button_hover_sound(bLoad, "button_hover_sound", "assets/sounds/button_grab.wav", false, false);
+    AudioComponent button_hover_sound(bLoad, "button_hover_sound", "assets/sounds/Game.menu.sound.(10).wav", false, false);
 
     //coloca o tempo que a nimacao do fogo percorre.
     animationFire.setDelay(100);
@@ -91,6 +91,13 @@ int main(int, char **){
 
     AudioComponent stage1_music(background_stage1, "menu_musicStage1", "assets/music/stage.wav", true);
     AudioComponent boss_music(background_stage1, "boss_music", "assets/music/boss.wav",true, false);
+    AudioComponent player_running_audio(player, "player_running_audio", "assets/sounds/Passo.4.wav", false, false);
+    AudioComponent player_running_audio2(player, "player_running_audio2", "assets/sounds/Passo.2.wav", false, false);
+
+    background_stage1.add_component(stage1_music);
+    background_stage1.add_component(boss_music);
+    player.add_component(player_running_audio);
+    player.add_component(player_running_audio2);
 
     ImageComponent backgroundForest(background_stage1,"backgroundForest", "assets/sprites/backgroundFloresta.png");
     backgroundForest.set_back_rect(800,600);
@@ -246,20 +253,19 @@ int main(int, char **){
     player.add_component(player_logic);
 
     background_stage1.add_component(backgroundForest);
-    background_stage1.add_component(stage1_music);
-    background_stage1.add_component(boss_music);
+
 
     //plataforms
     //part1
     GameObject plataform("plataform",true,"ground");
     ImageComponent img_plataform(plataform,"plataform", "assets/sprites/plataform.png");
-    CameraPosition plataform_ai(plataform,"plataform_ai",&backgroundForest,600,350);
+    CameraPosition plataform_ai(plataform,"plataform_ai",&backgroundForest, 600, 350);
     plataform.add_component(plataform_ai);
     plataform.add_component(img_plataform);
 
     GameObject plataform2("plataform2",true,"ground");
     ImageComponent img_plataform2(plataform2,"plataform2", "assets/sprites/plataform.png");
-    CameraPosition plataform_ai2(plataform2,"plataform_ai2",&backgroundForest,200,200);
+    CameraPosition plataform_ai2(plataform2,"plataform_ai2",&backgroundForest, 200, 200);
     plataform2.add_component(plataform_ai2);
     plataform2.add_component(img_plataform2);
 
@@ -487,7 +493,7 @@ int main(int, char **){
     ImageComponent story_anim3 (story_img2, "story_anim3", "assets/sprites/st2.png");
     Animation story_anim4 (story, "story_anim4", "assets/sprites/init_story2.png",5600/7,600,7);
     AnimationControllerComponent story_anim_controller(story,"stary_controller");
-    
+
     story_anim_controller.add_animation("story2", story_anim2);
     story_anim_controller.add_animation("story4", story_anim4);
     story_anim2.setDelay(500);
@@ -500,7 +506,7 @@ int main(int, char **){
 
     story_img1.setState(GameObject::State::disabled);
     story_img2.setState(GameObject::State::disabled);
-    
+
     story.add_component(story_anim2);
     story.add_component(story_anim4);
     story.add_component(story_anim_controller);
@@ -511,7 +517,7 @@ int main(int, char **){
     initial_story.add_game_object(story_img2);
 
 
-    
+
     //==================================== GAME LOOP ============================================
     Log::instance.jumpLine("Ending Instantiations. Running Game\n");
     Game::instance.run();

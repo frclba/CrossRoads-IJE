@@ -22,12 +22,12 @@ public:
 
 private:
 
+    AnimationControllerComponent *m_story;
     GameObject* m_image1;
     GameObject* m_image2;
-    AnimationControllerComponent *m_story;
     unsigned int timestep;
     unsigned int interator;
-  
+
 };
 
 #endif

@@ -31,7 +31,7 @@ void MenuScene::buttons_controller(){
     Animation* bnewAnimation = (dynamic_cast<Animation *>(bNew->get_component("imageBNew")));
     Animation* bloadAnimation = (dynamic_cast<Animation *>(bLoad->get_component("imageBLoad")));
 
-    AudioComponent* button_hover_sound = (dynamic_cast<AudioComponent *>(bLoad->get_component("button_hover_sound")));
+    AudioComponent* button_hover_sound = (dynamic_cast<AudioComponent*>(bLoad->get_component("button_hover_sound")));
     //Faz efeito de passar o mause em cima
     if(Game::instance.mouse->is_over(bNew)){
         if (Game::instance.mouse->is_right_button()) {

@@ -4,6 +4,7 @@ InitialStory::~InitialStory(){}
 
 bool InitialStory::init(){
   interator = 0;
+  return true;
 }
 
 void InitialStory::update(){
@@ -14,24 +15,24 @@ void InitialStory::update(){
   }
   switch (interator) {
   case 1: {
-    m_image1->setState(GameObject::State::enabled); 
+    m_image1->setState(GameObject::State::enabled);
     m_image2->setState(GameObject::State::disabled);
     break;
   }
   case 2: {
     m_story->play_animation("story2");
-    m_image1->setState(GameObject::State::disabled); 
-    m_image2->setState(GameObject::State::disabled); 
+    m_image1->setState(GameObject::State::disabled);
+    m_image2->setState(GameObject::State::disabled);
     break;
   }
   case 3: {
-    m_image1->setState(GameObject::State::disabled); 
+    m_image1->setState(GameObject::State::disabled);
     m_image2->setState(GameObject::State::enabled);
     break;
   }
   case 4: {
     m_story->play_animation("story4");
-    m_image1->setState(GameObject::State::disabled); 
+    m_image1->setState(GameObject::State::disabled);
     m_image2->setState(GameObject::State::disabled);
     break;
   }
