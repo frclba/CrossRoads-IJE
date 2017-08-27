@@ -13,7 +13,8 @@ Timer::Timer() {
 
 }
 
-Timer::~Timer(){
+Timer::~Timer() {
+
 }
 
 // The various clock actions
@@ -34,6 +35,7 @@ void Timer::start() {
     mPausedTicks = 0;
 
 }
+
 void Timer::stop() {
 
     // Stop the timer
@@ -68,6 +70,7 @@ void Timer::pause() {
     }
 
 }
+
 void Timer::unpause() {
 
     // If the timer is running and paused

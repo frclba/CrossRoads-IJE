@@ -2,6 +2,7 @@
 #define __STAGE1_H__
 
 #include <scene.hpp>
+
 #include "components/animation.hpp"
 #include "components/animation_controller.hpp"
 #include "components/component.hpp"
@@ -9,46 +10,48 @@
 
 using namespace engine;
 
-class Stage1Scene : public Scene{
+class Stage1Scene : public Scene {
+
 public:
 
-  Stage1Scene(std::string name):
-    Scene(name),timestep(0){}
+    Stage1Scene( std::string name ):
+               Scene(name),timestep(0){}
 
+    ~Stage1Scene();
 
-  ~Stage1Scene();
+    void game_logic();
+    void bullet();
 
-
-  void game_logic();
-  void bullet();
 private:
 
-  GameObject* ground_stage1;
-  GameObject* plataform ;
-  GameObject* plataform2; 
-  GameObject* plataform3;
+    GameObject* ground_stage1;
 
-  
-  GameObject* monster1; 
-  GameObject* monster2; 
-  GameObject* monster3; 
-  GameObject* monster4; 
+    GameObject* plataform;
+    GameObject* plataform2;
+    GameObject* plataform3;
 
-  GameObject* portal ;
-  GameObject* background; 
-  ImageComponent* back_img;
-  GameObject* fire_ball ;
+    GameObject* monster1;
+    GameObject* monster2;
+    GameObject* monster3;
+    GameObject* monster4;
 
-  GameObject *bullet1 ;
-  GameObject *player ;
-  Player *player_controller;
+    GameObject* portal;
+    GameObject* background;
 
-  bool bulletDir1;
-  unsigned int timestep ;
-  
-  GameObject *go_arrow ;
+    GameObject *bullet1;
+    GameObject *player;
+    GameObject* fire_ball;
+    GameObject *go_arrow;
 
-  bool is_inside(GameObject* object);
+    ImageComponent* back_img;
+
+    Player *player_controller;
+
+    bool bulletDir1;
+    unsigned int timestep;
+
+    bool is_inside( GameObject* object );
+
 };
 
-#endif
+#endif // __STAGE1_H__
