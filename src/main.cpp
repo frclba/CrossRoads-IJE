@@ -23,7 +23,7 @@ using namespace engine;
 
 int main(int, char **){
 
-    // Configuring name and size
+    // Configurando nome e tamanho
 
     std::pair<int, int> window_size(800, 600);
     Game::instance.set_properties("Nome do Jogo",window_size);
