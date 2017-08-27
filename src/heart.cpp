@@ -1,17 +1,18 @@
-#include"heart.hpp"
+#include "heart.hpp"
 
-Heart::~Heart(){}
+Heart::~Heart() {}
 
-bool Heart::init(){
-  _main_game_object->setState(GameObject::State::enabled);
-  return true;
+bool Heart::init() {
+
+    _main_game_object->setState(GameObject::State::enabled);
+    return true;
+
 }
 
-void Heart::update(){
+void Heart::update() {
 
-  if(m_life > m_player->life_points){
-    _main_game_object->setState(GameObject::State::disabled);
-  }
-
+    if( m_life > m_player->life_points ) {
+        _main_game_object->setState(GameObject::State::disabled);
+    }
 
 }
