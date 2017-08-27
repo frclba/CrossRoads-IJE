@@ -1,32 +1,38 @@
-#ifndef MOUSE_HPP_
-#define MOUSE_HPP_
+#ifndef MOUSE_H_
+#define MOUSE_H_
 
-#include<iostream>
+#include <iostream>
 #include "sdl2core.hpp"
 #include "gameobject.hpp"
 
-namespace engine{
+namespace engine {
+
     class Mouse {
 
-        public:
+    public:
 
-            Mouse():mouseX(0),mouseY(0){};
-            ~Mouse();
+        Mouse():mouseX(0), mouseY(0) {};
+        ~Mouse();
 
-            //funcao para pegar posicao do mouse.
-            void set_position();
-            //funcao para verificar se omause esta em cima de uma gameobject
-            bool is_over(GameObject *gameObject);
-            bool is_right_button();
-            bool is_left_button();
+        // Function to get mouse position
 
-            //posicao do mause
-            int mouseX;
-            int mouseY;
+        void set_position();
 
-        private:
+        // Function to check if the mouse is over of a gameobject
+
+        bool is_over(GameObject *gameObject);
+        bool is_right_button();
+        bool is_left_button();
+
+        // Mouse position
+
+        int mouseX;
+        int mouseY;
+
+    private:
 
     };
+
 }
 
-#endif
+#endif // MOUSE_H_
