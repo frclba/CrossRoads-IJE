@@ -59,7 +59,7 @@ void Log::closeFile() {
 void Log::debug(std::string msg) {
 
     if( DEBUG ) {
-        ilogFile << "[DEBUG] ";
+        logFile << "[DEBUG] ";
         logFile << msg << std::endl;
         logFile.flush();
     }
