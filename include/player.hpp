@@ -17,9 +17,9 @@ class Player : public Component {
 
 public:
 
-    Player(GameObject &main_game_object, std::string id,
+    Player( GameObject &main_game_object, std::string id,
          AnimationControllerComponent *animC, GameObject &attack_box,
-	       ImageComponent *background):
+	       ImageComponent *background ):
          Component(main_game_object, id), side(false),
          attack_meele(false), attack_ranged(false), animCtrl(animC),
          stand(false), jump(false), walkR(false), walkL(false),
