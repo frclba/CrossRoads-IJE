@@ -9,13 +9,20 @@
 
 #define DEBUG 1
 
-//TODO -> write function to write time into logfile.txt
-//TODO -> Apply log on Iniciando componente de imagem, Iniciando componente de animacao, Init game object
+/*
+  TODO -> write function to write time into logfile.txt
+  TODO -> Apply log on Iniciando componente de imagem, Iniciando componente de
+  animacao, Init game object
+*/
+
 class Log {
+
 public:
+
     static Log instance;
 
     /* Functions to print on file according to type of message */
+
     void debug(std::string message);
     void warning(std::string message);
     void error(std::string message);
@@ -23,6 +30,7 @@ public:
     void jumpLine(std::string message);
 
 private:
+
     Log();
     ~Log();
 
@@ -30,8 +38,10 @@ private:
     std::string fileName;
 
     //Open and close stream file to be written
+
     void openFile();
     void closeFile();
+
 };
 
-#endif
+#endif // LOGGER_H

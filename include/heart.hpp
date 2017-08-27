@@ -1,18 +1,20 @@
-#ifndef _HEART_HPP_
-#define _HERAT_HPP_
+#ifndef _HEART_H_
+#define _HERAT_H_
 
-#include<iostream>
+#include <iostream>
 #include "game.hpp"
 #include "components/component.hpp"
 #include "player.hpp"
 
 using namespace engine;
 
-class Heart : public Component{
+class Heart : public Component {
 
 public:
-  Heart(GameObject &main_game_object, std::string id,Player* player,int life):
-    Component(main_game_object, id), m_player(player), m_life(life){}
+
+    Heart(GameObject &main_game_object, std::string id,
+          Player* player, int life):
+          Component(main_game_object, id), m_player(player), m_life(life) {}
 
     ~Heart();
 
@@ -20,9 +22,10 @@ public:
     void update();
 
 private:
-  Player *m_player;
+
+  Player* m_player;
   int m_life;
 
 };
 
-#endif
+#endif // _HEART_H_
