@@ -3,75 +3,89 @@
 
 using namespace engine;
 
-bool ImageComponent::init(){
+bool ImageComponent::init() {
+
     Log::instance.info("Iniciando componente de imagem: " + main_path);
 
-    if(main_path == ""){
+    if( main_path == "" ) {
         Log::instance.error("Caminho inválido!");
+
         return false;
     }
 
-    SDL_Surface *image = IMG_Load(main_path.c_str());
+    SDL_Surface *image = IMG_Load( main_path.c_str() );
 
-    if(image == NULL){
+    if( image == NULL ) {
         Log::instance.error("Could not load image from path: " + main_path);
     }
 
-    main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas, image);
+    main_texture = SDL_CreateTextureFromSurface( Game::instance.main_canvas, image );
 
-    if(main_texture == NULL){
+    if( main_texture == NULL ) {
         Log::instance.error("Could not create texture from image");
+
         return false;
     }
 
-    //Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho desejado
-    _main_game_object->set_size(image->w, image->h);
+    /*
+        Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho
+        desejado.
+    */
 
-    SDL_FreeSurface(image);
+    _main_game_object->set_size( image->w, image->h );
+
+    SDL_FreeSurface( image );
 
     enable_camera = false;
+
     return true;
 }
 
+void ImageComponent::set_back_rect( int width, int height ) {
 
-void ImageComponent::set_back_rect(int width,int height){
     imagePart = new SDL_Rect();
-    imagePart->x =0;
-    imagePart->y =0;
+    imagePart->x = 0;
+    imagePart->y = 0;
     imagePart->w = width;
     imagePart->h = height;
+
 }
 
-void ImageComponent::move_img_rect(int value){
-  if( imagePart->x+ imagePart->w + value < _main_game_object->main_width &&
-      imagePart->x + value > 0 && enable_camera)
-    {
-    imagePart->x = imagePart->x + value;
+void ImageComponent::move_img_rect( int value ) {
+  
+    if( imagePart->x+ imagePart->w + value < _main_game_object->main_width &&
+        imagePart->x + value > 0 && enable_camera ) {
+        imagePart->x = imagePart->x + value;
     }
+
 }
 
+bool ImageComponent::shutdown() {
 
-
-bool ImageComponent::shutdown(){
-    Log::instance.info("Shutdown ImageComponent : '"+ component_id + "'.");
+    Log::instance.info("Shutdown ImageComponent : '" + component_id + "'.");
 
     SDL_DestroyTexture(main_texture);
+
     main_texture = NULL;
 
     return true;
+
 }
 
-void ImageComponent::draw(){
+void ImageComponent::draw() {
+
     SDL_Rect *renderQuad = new SDL_Rect();
     renderQuad->x = _main_game_object->main_positionX;
     renderQuad->y = _main_game_object->main_positionY;
     renderQuad->w = _main_game_object->main_width;
     renderQuad->h = _main_game_object->main_height;
 
-    if(imagePart!=NULL){
+    if( imagePart!=NULL ) {
         renderQuad->w = imagePart->w;
         renderQuad->h = imagePart->h;
     }
 
-    SDL_RenderCopy(Game::instance.main_canvas, main_texture, imagePart , renderQuad);
+    SDL_RenderCopy( Game::instance.main_canvas, main_texture, imagePart,
+                    renderQuad );
+
 }
