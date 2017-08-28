@@ -25,7 +25,7 @@ bool AnimationControllerComponent::shutdown() {
 }
 
 void AnimationControllerComponent::update() {
-    
+
     if( current_animation == "" ) {
         Log::instance.warning("No animations to play!");
     }
@@ -44,7 +44,6 @@ void AnimationControllerComponent::add_animation(std::string name,
 
     if( m_animations_map.find(name) != m_animations_map.end() ) {
         Log::instance.warning("Animation " + name + " already exists!");
-        
         return;
     }
 
@@ -69,7 +68,7 @@ void AnimationControllerComponent::play_animation(std::string name,
 }
 
 void AnimationControllerComponent::change_animations() {
-    
+
     auto animation = m_animations_map[current_animation];
     animation->disable();
 
