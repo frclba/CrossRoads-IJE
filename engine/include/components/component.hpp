@@ -2,7 +2,10 @@
 #define _ENGINE_COMPONENTS_COMPONENT
 
 namespace engine{
-  //Define a class gameobject como vazia aqui, para não ter problemas de importação cíclica.
+
+  // Define a class gameobject como vazia aqui, para não ter problemas de
+  // importação cíclica
+
   class GameObject;
 
   class Component{
@@ -13,11 +16,14 @@ namespace engine{
       invalid
     };
 
-    //Sobrecarga do construtor para  componentes criados sem parâmetros serem invalidados.
-    Component(): main_state(State::invalid), _main_game_object(NULL){}
+    // Sobrecarga do construtor para  componentes criados sem parâmetros
+    // serem invalidados
+
+    Component(): main_state(State::invalid), _main_game_object(NULL) {}
 
     Component(GameObject &gameObject, std::string name)
-    : component_id(name), main_state(State::enabled), _main_game_object(&gameObject){}
+    : component_id(name), main_state(State::enabled),
+      _main_game_object(&gameObject){}
 
     virtual ~Component() {};
     virtual bool init(){ return true; }
@@ -35,9 +41,11 @@ namespace engine{
     State main_state;
     // State main_state;
   protected:
-    //O componente guarda uma referência do game object ao qual pertence.
+
+    // O componente guarda uma referência do game object ao qual pertence
+
     GameObject* _main_game_object;
   };
 }
 
-#endif
+#endif // _ENGINE_COMPONENTS_COMPONENT

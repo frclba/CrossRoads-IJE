@@ -3,7 +3,7 @@
 
 using namespace engine;
 
-bool AnimationControllerComponent::init(){
+bool AnimationControllerComponent::init() {
     // Log::instance.info("Init AnimationControllerComponent");
 
     for(auto id_animation: m_animations_map) {
@@ -16,25 +16,26 @@ bool AnimationControllerComponent::init(){
     return true;
 }
 
-bool AnimationControllerComponent::shutdown(){
+bool AnimationControllerComponent::shutdown() {
     // Log::instance.info("Shutdown AnimationControllerComponent");
     return true;
 }
 
-void AnimationControllerComponent::update(){
-  if (current_animation == ""){
+void AnimationControllerComponent::update() {
+    if (current_animation == "") {
          Log::instance.warning("No animations to play!");
-    }else{
+    }
+    else {
         auto animation = m_animations_map[current_animation];
-        if(next_animation != "" && animation->has_finished()){
-	   change_animations();
-	}
+        if (next_animation != "" && animation->has_finished()) {
+            change_animations();
+	    }
     }
 }
 
 void AnimationControllerComponent::add_animation(std::string name,
-                                                 Animation & animation){
-    if (m_animations_map.find(name) != m_animations_map.end()){
+                                                 Animation & animation) {
+    if (m_animations_map.find(name) != m_animations_map.end()) {
         Log::instance.warning("Animation " + name + " already exists!");
         return;
     }
@@ -45,7 +46,8 @@ void AnimationControllerComponent::add_animation(std::string name,
         current_animation = name;
 }
 
-void AnimationControllerComponent::play_animation(std::string name, bool wait_to_finish){
+void AnimationControllerComponent::play_animation(std::string name,
+                                                  bool wait_to_finish){
     // Log::instance.info("Play animation " + name );
     next_animation = name;
     m_animations_map[current_animation]->flipping(flip);
@@ -54,7 +56,7 @@ void AnimationControllerComponent::play_animation(std::string name, bool wait_to
         change_animations();
 }
 
-void AnimationControllerComponent::change_animations(){
+void AnimationControllerComponent::change_animations() {
     auto animation = m_animations_map[current_animation];
     animation->disable();
 
@@ -66,6 +68,6 @@ void AnimationControllerComponent::change_animations(){
     animation->setup();
 }
 
-void AnimationControllerComponent::flipping(bool isFlip){
+void AnimationControllerComponent::flipping(bool isFlip) {
   flip = isFlip;
 }
