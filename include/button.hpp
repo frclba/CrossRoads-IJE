@@ -11,7 +11,7 @@ class Button : public GameObject {
 
     public:
         Button();
-        void update( float timer = 0 );
+        void update(float timer = 0);
         
         Sprite *button_sprite;
 
