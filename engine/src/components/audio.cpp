@@ -9,7 +9,7 @@ bool AudioComponent::init() {
     Log::instance.info("Init audio component");
 
     if( m_is_music ) {
-        m_music = Mix_LoadMUS( m_path.c_str() );
+        m_music = Mix_LoadMUS(m_path.c_str());
 
         if( m_music == NULL ) {
             Log::instance.error("Music not found!");
@@ -18,7 +18,7 @@ bool AudioComponent::init() {
         }
     }
     else {
-        m_sound = Mix_LoadWAV( m_path.c_str() );
+        m_sound = Mix_LoadWAV(m_path.c_str());
 
         if ( m_sound == NULL ){
             Log::instance.error("Sound not found: " + m_path);
@@ -28,6 +28,7 @@ bool AudioComponent::init() {
     }
 
     return true;
+
 }
 
 bool AudioComponent::shutdown() {
@@ -48,11 +49,11 @@ void AudioComponent::update() {
 
 }
 
-void AudioComponent::play( int loops, int channel ) {
+void AudioComponent::play(int loops, int channel) {
 
     if( m_is_music ) {
         if( m_audio_state == AudioState::stopped ) {
-            Mix_PlayMusic( m_music, loops );
+            Mix_PlayMusic(m_music, loops);
         }
         else if( m_audio_state == AudioState::paused ) {
             Mix_ResumeMusic();
@@ -60,10 +61,10 @@ void AudioComponent::play( int loops, int channel ) {
     }
     else {
         if( m_audio_state == AudioState::stopped ) {
-            Mix_PlayChannel( channel, m_sound, loops );
+            Mix_PlayChannel(channel, m_sound, loops);
         }
         else if( m_audio_state == AudioState::paused ) {
-            Mix_Resume( channel );
+            Mix_Resume(channel);
         }
     }
 
@@ -75,20 +76,20 @@ void AudioComponent::play( int loops, int channel ) {
 
 }
 
-void AudioComponent::stop( int channel) {
+void AudioComponent::stop(int channel) {
     
     if( m_is_music ) {
         Mix_HaltMusic();
     }
     else {
-        Mix_HaltChannel( channel );
+        Mix_HaltChannel(channel);
     }
 
     m_audio_state = AudioState::stopped;
 
 }
 
-void AudioComponent::pause( int channel ){
+void AudioComponent::pause(int channel) {
     
     if( m_is_music ) {
       Mix_PauseMusic();
