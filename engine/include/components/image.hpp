@@ -13,8 +13,8 @@ namespace engine{
     class ImageComponent : public Component {
 
         public:
-            ImageComponent( GameObject &main_game_object, std::string id, std::string path )
-                : Component( main_game_object, id ), main_path( path ) {
+            ImageComponent(GameObject &main_game_object, std::string id, std::string path)
+                : Component(main_game_object, id), main_path(path) {
 
             }
 
@@ -25,8 +25,8 @@ namespace engine{
             bool init();
             bool shutdown();
 
-            void move_img_rect( int value );
-            void set_back_rect( int width, int height );
+            void move_img_rect(int value);
+            void set_back_rect(int width, int height);
             virtual void draw();
 
             SDL_Rect* imagePart = NULL;

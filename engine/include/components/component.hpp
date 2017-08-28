@@ -21,57 +21,68 @@ namespace engine {
         
             };
 
-        /*
-            Sobrecarga do construtor para  componentes criados sem parâmetros serem
-            invalidados.
-        */
+            /*
+                Sobrecarga do construtor para  componentes criados sem parâmetros serem
+                invalidados.
+            */
 
-        Component(): main_state( State::invalid ), _main_game_object( NULL ) {
+            Component(): main_state(State::invalid), _main_game_object(NULL) {
 
-        }
+            }
 
-        Component( GameObject &gameObject, std::string name )
-            : component_id( name ), main_state( State::enabled ),
-            _main_game_object( &gameObject ) {
+            Component(GameObject &gameObject, std::string name)
+                : component_id(name), main_state(State::enabled),
+                _main_game_object(&gameObject) {
 
-        }
+            }
 
-        virtual ~Component() {
+            virtual ~Component() {
 
-        };
+            };
 
-        virtual bool init() { 
-            return true;
-        }
+            virtual bool init() { 
 
-        virtual bool shutdown() {
-            return true;
-        }
+                return true;
 
-        virtual void update() {
-            
-        }
+            }
 
-        inline State state() { 
-            return main_state;
-        }
+            virtual bool shutdown() {
 
-        inline void enable() {
-            main_state = State::enabled;
-        }
+                return true;
 
-        inline void disable() { 
-            main_state = State::disabled;
-        }
+            }
 
-        std::string component_id;
+            virtual void update() {
+                
+            }
 
-        State main_state;
+            inline State state() { 
+
+                return main_state;
+
+            }
+
+            inline void enable() {
+
+                main_state = State::enabled;
+
+            }
+
+            inline void disable() { 
+
+                main_state = State::disabled;
+
+            }
+
+            std::string component_id;
+
+            State main_state;
 
         protected:
             //O componente guarda uma referência do game object ao qual pertence.
 
             GameObject* _main_game_object;
+            
     };
 
 }
