@@ -1,173 +1,215 @@
 #include "game.hpp"
 
 #define FRAME 60.0
+
 using namespace engine;
 
 Game Game::instance;
 
-void Game::set_properties(std::string name, std::pair<int, int> window_size){
-  main_name = name;
-  main_window_size = window_size;
+void Game::set_properties( std::string name, std::pair<int, int> window_size ) {
+
+    main_name = name;
+    main_window_size = window_size;
+
 }
 
-bool Game::startSDL(){
+bool Game::start_sdl() {
 
-  Log::instance.info("Iniciando video e audio");
+    Log::instance.info( "Iniciando video e audio" );
 
-  if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) < 0){
-    Log::instance.error("Error ao inicializar video ou audio ou joystick");
-    return false;
-  }
+    if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) < 0 ) {
+        Log::instance.error( "Error ao inicializar video ou audio ou joystick" );
+        return false;
+    }
 
-  Log::instance.info("Iniciando Imagem");
+    Log::instance.info( "Iniciando Imagem" );
 
-  int img_flags = IMG_INIT_PNG; //Caso forem ser usados outros tipos de imagem, inserir as flags aqui
-  if(!(IMG_Init(img_flags) & img_flags)){
-    Log::instance.error("Erro ao inicializar imagens !");
-    return false;
-  }
-  if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ){
-    Log::instance.error("Erro ao inicializar mixer");
-    return false;
-  }
+    //Caso forem ser usados outros tipos de imagem, inserir as flags aqui
 
-  timer = new Timer();
-  mouse = new Mouse();
-  keyboard = new Keyboard();
-  collision_manager = new CollisionManager();
+    int img_flags = IMG_INIT_PNG;
 
-  if( SDL_NumJoysticks() < 1 )
-    {
+    if( !( IMG_Init( img_flags ) & img_flags ) ) {
+        Log::instance.error( "Erro ao inicializar imagens !" );
+        return false;
+    }
+
+    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
+        Log::instance.error( "Erro ao inicializar mixer" );
+        return false;
+    }
+
+    timer = new Timer();
+    mouse = new Mouse();
+    keyboard = new Keyboard();
+    collision_manager = new CollisionManager();
+
+    if( SDL_NumJoysticks() < 1 ) {
+
       //printf( "Warning: No joysticks connected!\n" );
+
     }
-  else
-    {
+
+    else {
+
       //Load joystick
-      gGameController = SDL_JoystickOpen( 0 );
-      if( gGameController == NULL )
-	{
+
+      g_game_controller = SDL_JoystickOpen( 0 );
+
+      if( g_game_controller == NULL ) {
+
 	  //printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
-	}
+
+      }
+
     }
 
+    return true;
 
-  return true;
 }
 
-bool Game::createWindow(){
-  Log::instance.info("Criando janela");
+bool Game::create_window () {
 
-  main_window = SDL_CreateWindow( main_name.c_str(),          //Titulo
-  SDL_WINDOWPOS_CENTERED,     //Posicao em X
-  SDL_WINDOWPOS_CENTERED,     //Posicao em Y
-  main_window_size.first,     //Width
-  main_window_size.second,    //Height
-  SDL_WINDOW_SHOWN );         //Window flags
-  if( main_window == NULL ){
-    Log::instance.error("Falha ao criar janela");
-    return false;
-  }
+    Log::instance.info( "Criando janela" );
 
-  main_canvas = SDL_CreateRenderer( main_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+    main_window = SDL_CreateWindow(
+        main_name.c_str(),          //Titulo
+        SDL_WINDOWPOS_CENTERED,     //Posicao em X
+        SDL_WINDOWPOS_CENTERED,     //Posicao em Y
+        main_window_size.first,     //Width
+        main_window_size.second,    //Height
+        SDL_WINDOW_SHOWN            //Window flags
+    );
 
-  if ( main_canvas == NULL ){
-    Log::instance.error("Falha ao criar renderizador");
-    return false;
-  }
+    if( main_window == NULL ) {
+        Log::instance.error( "Falha ao criar janela" );
+        return false;
+    }
 
-  SDL_SetRenderDrawColor( main_canvas,
-    main_background_color.r,
-    main_background_color.g,
-    main_background_color.b,
-    main_background_color.a );
+    main_canvas = SDL_CreateRenderer(
+        main_window,
+        -1,
+        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+    );
+
+    if( main_canvas == NULL ) {
+        Log::instance.error( "Falha ao criar renderizador" );
+        return false;
+    }
+
+    SDL_SetRenderDrawColor(
+        main_canvas,
+        main_background_color.r,
+        main_background_color.g,
+        main_background_color.b,
+        main_background_color.a
+    );
+
     return true;
-  }
 
-  void Game::destroyWindow(){
+}
+
+void Game::destroy_window() {
+
     SDL_DestroyRenderer( main_canvas );
     main_canvas = NULL;
 
     SDL_DestroyWindow( main_window );
     main_window = NULL;
-  }
 
-  void Game::offSDL(){
-    SDL_JoystickClose( gGameController );
-    gGameController = NULL;
+}
+
+void Game::off_sdl() {
+
+    SDL_JoystickClose( g_game_controller );
+    g_game_controller = NULL;
     Mix_Quit();
     IMG_Quit();
     SDL_Quit();
-  }
 
-  void Game::run(){
+}
+
+void Game::run() {
+
     current_state = State::init;
 
-    if( startSDL() && createWindow() ){
-      Log::instance.info("Iniciando o jogo");
-      current_state = State::main_loop;
+    if( start_sdl() && create_window() ) {
+        Log::instance.info( "Iniciando o jogo" );
 
-      unsigned int frame_time = 1000.0/ FRAME;
+        current_state = State::main_loop;
 
-      timer->start();
-      // current_scene->init();
-      if(current_scene != NULL)
-      current_state = State::main_loop_change_scene;
+        unsigned int frame_time = 1000.0/ FRAME;
 
-      while(current_state != State::exit_loop){
+        timer -> start();
 
-        if(handle_scene_changes() == false)
-        break;
+        if( current_scene != NULL )
+        current_state = State::main_loop_change_scene;
 
-        SDL_Event evt;
+        while( current_state != State::exit_loop ) {
+            if(handle_scene_changes() == false)
+            break;
 
-        //get mouse position
-        mouse->set_position();
-        while( SDL_PollEvent(&evt) != 0 ){
-          if( evt.type == SDL_QUIT ){
-            current_state = State::exit_loop;
-          }
+            SDL_Event evt;
 
-          keyboard->setKeys(&evt);
-          if( evt.type == SDL_KEYDOWN ){
-            switch (evt.key.keysym.sym) {
-              case SDLK_SPACE:
-              //Log::instance.debug("teste teclado");
-              //Keyboard::isKeyDown(keycode::KEY_SPACE);
-              break;
+            //get mouse position
+            mouse -> set_position();
 
+            while( SDL_PollEvent( &evt ) != 0 ) {
+                if( evt.type == SDL_QUIT ) {
+                    current_state = State::exit_loop;
+                }
+
+                keyboard -> setKeys( &evt );
+
+                if( evt.type == SDL_KEYDOWN ) {
+                    switch( evt.key.keysym.sym ) {
+                        case SDLK_SPACE:
+
+                        //Log::instance.debug("teste teclado");
+
+                        //Keyboard::isKeyDown(keycode::KEY_SPACE);
+
+                        break;
+                    }
+                }
             }
-          }
+
+            //	current_scene->get_collide_objects();
+
+            collision_manager -> getCollisions( current_scene -> get_collide_objects() );
+            current_scene -> update();
+            current_scene -> game_logic();
+
+            //Limpa o Canvas visualizado pelo  usuário
+
+            SDL_RenderClear( main_canvas );
+
+            //Desenha no buffer secundário.
+
+            current_scene -> draw();
+
+            //Exibe o Canvas secundário para o usuário
+
+            SDL_RenderPresent(main_canvas);
+
+            if( frame_time > timer -> get_elapseTime() ) {
+                SDL_Delay( timer -> get_elapseTime() );
+            }
+
+            keyboard -> clearKeyboard();
+            current_scene -> clear_collide_objects();
+            timer -> set_TimeStep();
         }
-        //	current_scene->get_collide_objects();
-        collision_manager->getCollisions(current_scene->get_collide_objects());
-        current_scene->update();
-        current_scene->game_logic();
-        //Limpa o Canvas visualizado pelo  usuário
-        SDL_RenderClear(main_canvas);
-        //Desenha no buffer secundário.
-        current_scene->draw();
-        //Exibe o Canvas secundário para o usuário
-        SDL_RenderPresent(main_canvas);
 
-        if( frame_time > timer->get_elapseTime()){
-          SDL_Delay( timer->get_elapseTime());
-        }
-
-        keyboard->clearKeyboard();
-        current_scene->clear_collide_objects();
-        timer->set_TimeStep();
-      }
-
-      Log::instance.info("Cleaning scene...");
-      if(current_scene)
-      current_scene->shutdown();
+        Log::instance.info( "Cleaning scene..." );
+        if( current_scene )
+        current_scene -> shutdown();
     }
 
-    Log::instance.info("Desligando tudo");
+    Log::instance.info( "Desligando tudo" );
     current_state = State::shutdown;
-    destroyWindow();
-    offSDL();
-  }
+    destroy_window();
+    off_sdl();
+}
 
   bool Game::add_scene(Scene &scene){
     //Isso faz o id ser o name.
