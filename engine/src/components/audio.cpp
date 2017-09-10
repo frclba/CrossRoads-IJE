@@ -57,6 +57,7 @@ void AudioComponent::play(int loops, int channel) {
         }
         else if( m_audio_state == AudioState::paused ) {
             Mix_ResumeMusic();
+
         }
     }
     else {
@@ -69,6 +70,7 @@ void AudioComponent::play(int loops, int channel) {
     }
 
     m_audio_state = AudioState::playing;
+
 
     if( !m_is_music ) {
         m_audio_state = AudioState::stopped;

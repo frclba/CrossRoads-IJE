@@ -83,6 +83,7 @@ void ImageComponent::draw() {
     renderQuad->w = _main_game_object->main_width;
     renderQuad->h = _main_game_object->main_height;
 
+
     if( imagePart!=NULL ) {
         renderQuad->w = imagePart->w;
         renderQuad->h = imagePart->h;
