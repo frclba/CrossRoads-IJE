@@ -1,6 +1,15 @@
+/**
+    \file portal.cpp
+    This file implements the portal class
+*/
 #include <portal.hpp>
 
 Portal::~Portal(){}
+
+/**
+    This method initiates the portal in the game scene
+    \return return a true value that make the portal active
+*/
 
 bool Portal::init() {
 
@@ -16,6 +25,11 @@ bool Portal::init() {
     return true;
 
 }
+
+/**
+    This method is responsible for updating portal positions in the game for 
+    monsters to appear
+*/
 
 void Portal::update() {
 
@@ -56,6 +70,10 @@ void Portal::update() {
 
 //so chamar na main
 
+/**
+    This method is responsible for add a monster no game through the portal
+    @param monster specifies the monster that enters the game 
+*/
 void Portal::add_monster( GameObject* monster ){
     
     monster->setState( GameObject::State::disabled );
