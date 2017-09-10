@@ -77,7 +77,7 @@ void AudioComponent::play(int loops, int channel) {
 }
 
 void AudioComponent::stop(int channel) {
-    
+
     if( m_is_music ) {
         Mix_HaltMusic();
     }
@@ -90,7 +90,7 @@ void AudioComponent::stop(int channel) {
 }
 
 void AudioComponent::pause(int channel) {
-    
+
     if( m_is_music ) {
       Mix_PauseMusic();
     }

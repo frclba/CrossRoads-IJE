@@ -19,7 +19,8 @@ bool ImageComponent::init() {
         Log::instance.error("Could not load image from path: " + main_path);
     }
 
-    main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas, image);
+    main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas,
+                                                image);
 
     if( main_texture == NULL ) {
         Log::instance.error("Could not create texture from image");
@@ -53,7 +54,7 @@ void ImageComponent::set_back_rect(int width, int height) {
 }
 
 void ImageComponent::move_img_rect(int value) {
-  
+
     if( imagePart->x+ imagePart->w + value < _main_game_object->main_width &&
         imagePart->x + value > 0 && enable_camera ) {
         imagePart->x = imagePart->x + value;
