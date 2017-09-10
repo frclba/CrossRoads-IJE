@@ -1,119 +1,130 @@
 #include "Keyboard.hpp"
 
 using namespace engine;
+
 //const Uint8 *(Keyboard::Keyboard_State) = SDL_GetKeyboardState(nullptr);
 
-Keyboard::Keyboard(){
-  create_keyboard_mapping();
-}
-Keyboard::~Keyboard(){
+Keyboard::Keyboard() {
+
+    create_keyboard_mapping();
 
 }
-void Keyboard::setKeys(SDL_Event* evt){
-    if(evt->type == SDL_KEYDOWN){
-        keycode_down.push_back(evt->key.keysym.sym);
-    }
-    else if(evt->type == SDL_KEYUP){
-        keycode_up.push_back(evt->key.keysym.sym);
-    }
 
-    else if(evt->type == SDL_JOYBUTTONDOWN){
-      if(((int)evt->jbutton.button) == 1){
-        keycode_down.push_back(SDLK_SPACE);
-      }
-      if(((int)evt->jbutton.button) == 2){
-        keycode_down.push_back(SDLK_w);
-      }
-      if(((int)evt->jbutton.button) == 0){
-        keycode_down.push_back(SDLK_f);
-      }
-      if(((int)evt->jbutton.button) == 9){
-        keycode_down.push_back(SDLK_RETURN);
-      }
-      //std::cout<<((int)evt->jbutton.button)<<std::endl;
-    }
-    else if(evt->type == SDL_JOYBUTTONUP){
-      if(((int)evt->jbutton.button) == 1){
-        keycode_up.push_back(SDLK_SPACE);
-      }
-      if(((int)evt->jbutton.button) == 2){
-        keycode_up.push_back(SDLK_w);
-      }
-      if(((int)evt->jbutton.button) == 0){
-        keycode_up.push_back(SDLK_f);
-      }
-      if(((int)evt->jbutton.button) == 9){
-        keycode_up.push_back(SDLK_RETURN);
-      }
-    }
+Keyboard::~Keyboard() {
 
-    else if(evt->type == SDL_JOYAXISMOTION){
-	if(evt->jaxis.axis == 0){
-	  if(evt->jaxis.value > 8000){
-	    keycode_down.push_back(SDLK_d);
-	  }
-	  else{
-	    keycode_up.push_back(SDLK_d);
-	  }
-	  if(evt->jaxis.value < -8000){
-	    keycode_down.push_back(SDLK_a);
-	  }
-	  else{
-	    keycode_up.push_back(SDLK_a);
-	  }
-	}
-
-	if(evt->jaxis.axis == 1){
-	  if(evt->jaxis.value > 8000){
-	    keycode_down.push_back(SDLK_s);
-	  }
-	  else{
-	    keycode_up.push_back(SDLK_s);
-	  }
-	  if(evt->jaxis.value < -8000){
-	    keycode_down.push_back(SDLK_w);
-	  }
-	  else{
-	    keycode_up.push_back(SDLK_w);
-	  }
-	}
-	//std::cout<<evt->jaxis.value<<std::endl;
-    }
-
-    
 }
 
+void Keyboard::setKeys( SDL_Event* evt ) {
 
+    if( evt -> type == SDL_KEYDOWN ) {
+        keycode_down.push_back( evt -> key.keysym.sym );
+    }
 
+    else if( evt -> type == SDL_KEYUP ) {
+        keycode_up.push_back( evt -> key.keysym.sym );
+    }
 
-bool Keyboard::isKeyDown(std::string key){
-    for(auto m_key : keycode_down){
-      if(m_key == m_buttons[key]){
+    else if( evt -> type == SDL_JOYBUTTONDOWN ) {
+        if( ( ( int ) evt -> jbutton.button ) == 1 ) {
+            keycode_down.push_back( SDLK_SPACE );
+        }
+
+        if( ( ( int ) evt -> jbutton.button ) == 2 ) {
+            keycode_down.push_back( SDLK_w );
+        }
+        if( ( ( int ) evt -> jbutton.button ) == 0 ) {
+            keycode_down.push_back( SDLK_f );
+        }
+        if( ( ( int ) evt -> jbutton.button ) == 9 ) {
+            keycode_down.push_back( SDLK_RETURN );
+        }
+        //std::cout<<((int)evt->jbutton.button)<<std::endl;
+    }
+
+    else if( evt -> type == SDL_JOYBUTTONUP ) {
+        if( ( ( int ) evt -> jbutton.button ) == 1 ) {
+            keycode_up.push_back( SDLK_SPACE );
+        }
+        if( ( ( int ) evt -> jbutton.button ) == 2 ) {
+            keycode_up.push_back( SDLK_w );
+        }
+        if( ( ( int ) evt -> jbutton.button ) == 0 ) {
+            keycode_up.push_back( SDLK_f );
+        }
+        if( ( ( int ) evt -> jbutton.button ) == 9 ) {
+            keycode_up.push_back( SDLK_RETURN );
+        }
+    }
+
+    else if( evt -> type == SDL_JOYAXISMOTION ) {
+        if( evt -> jaxis.axis == 0 ) {
+            if( evt -> jaxis.value > 8000 ) {
+                keycode_down.push_back( SDLK_d );
+            }
+            else {
+                keycode_up.push_back( SDLK_d );
+            }
+            if( evt -> jaxis.value < -8000 ) {
+                keycode_down.push_back( SDLK_a );
+            }
+            else {
+                keycode_up.push_back( SDLK_a );
+            }
+        }
+
+        if( evt -> jaxis.axis == 1 ) {
+            if( evt -> jaxis.value > 8000 ) {
+                keycode_down.push_back( SDLK_s );
+            }
+            else {
+                keycode_up.push_back( SDLK_s );
+            }
+            if( evt -> jaxis.value < -8000 ) {
+                keycode_down.push_back( SDLK_w );
+            }
+            else {
+                keycode_up.push_back( SDLK_w );
+            }
+        }
+        //std::cout<<evt->jaxis.value<<std::endl;
+    }
+
+}
+
+bool Keyboard::isKeyDown( std::string key ) {
+
+    for( auto m_key : keycode_down ) {
+        if( m_key == m_buttons[key] ) {
             return true;
         }
     }
+
     return false;
 
 }
-bool Keyboard::isKeyUp(std::string key){    
-    for(auto m_key : keycode_up){
-        if(m_key == m_buttons[key]){
+
+bool Keyboard::isKeyUp( std::string key ) {
+    for( auto m_key : keycode_up ) {
+        if( m_key == m_buttons[key] ) {
             return true;
         }
     }
+
     return false;
+
 }
 
 
-void Keyboard::clearKeyboard(){
+void Keyboard::clearKeyboard() {
+
    keycode_up.clear();
    keycode_down.clear();
+
 }
 
 
+void Keyboard::create_keyboard_mapping() {
 
-void Keyboard::create_keyboard_mapping(){
-  
     m_buttons["unknown"] = SDLK_UNKNOWN;
     m_buttons["enter"] = SDLK_RETURN;
     m_buttons["esc"] = SDLK_ESCAPE;
@@ -362,4 +373,5 @@ void Keyboard::create_keyboard_mapping(){
     m_buttons["kbdillumup"] = SDLK_KBDILLUMUP;
     m_buttons["eject"] = SDLK_EJECT;
     m_buttons["sleep"] = SDLK_SLEEP;
+
 }
