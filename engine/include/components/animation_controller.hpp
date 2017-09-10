@@ -16,10 +16,8 @@ namespace engine {
 
         public:
 
-            AnimationControllerComponent(GameObject &main_game_object, std::string id)
-                : Component(main_game_object, id), current_animation(""), next_animation("") {
-
-            }
+            AnimationControllerComponent(GameObject &main_game_object, std::string id) :
+            Component(main_game_object, id), current_animation(""), next_animation("") {}
 
             ~AnimationControllerComponent() {
 
