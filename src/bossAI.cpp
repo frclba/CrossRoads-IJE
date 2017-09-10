@@ -1,5 +1,13 @@
+/**
+    \file bossAI.hpp
+    This file implements the Boss class
+*/
 #include"bossAI.hpp"
 
+/**
+    This method initiates the boss in the game scene
+    \return return a true value that make the boss active
+*/
 bool Boss::init() {
 
     life = 10;
@@ -12,6 +20,10 @@ bool Boss::init() {
 
 }
 
+/**
+    This method is reponsable for update Boss positions and life and controll
+    attacks
+*/
 void Boss::update() {
 
     m_boss_animation->play_animation("boss_idle", true);
@@ -53,6 +65,9 @@ void Boss::update() {
 
 }
 
+/**
+    This method is responsible for dectecting the damage to the boss life
+*/
 void Boss::boss_damage() {
 
     AudioComponent *boss_full_putasso_audio = (dynamic_cast<AudioComponent*> (
@@ -80,6 +95,9 @@ void Boss::boss_damage() {
 
 }
 
+/**
+    This method is responsible for changing the boss movement in the screen
+*/
 void Boss::boss_move() {
 
     AudioComponent *boss_dash_audio = (dynamic_cast<AudioComponent*> (
