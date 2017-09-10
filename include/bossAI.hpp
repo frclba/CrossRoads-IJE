@@ -15,7 +15,7 @@
 using namespace engine;
 
 /**
-    \class bossAI.hpp
+    \class bossAI
     This class is responsible for Boss movement and behavior
 */
 class Boss : public Component {

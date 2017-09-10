@@ -1,5 +1,5 @@
 /**
-    \file bossAI.hpp
+    \file bossAI.cpp
     This file implements the Boss class
 */
 #include"bossAI.hpp"
