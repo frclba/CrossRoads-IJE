@@ -8,7 +8,7 @@ class MenuScene : public Scene {
 
 public:
 
-    MenuScene(std::string name): Scene(name), enter(false) {}
+    MenuScene(std::string name) : Scene(name), enter(false) {}
     ~MenuScene();
 
     void game_logic();
@@ -19,7 +19,7 @@ public:
 private:
 
     bool enter;
-    AudioComponent* button_hover_in_Sound;
+    AudioComponent *button_hover_in_Sound;
 
     // Mix_Chunk* button_hover_in_Sound;
 
