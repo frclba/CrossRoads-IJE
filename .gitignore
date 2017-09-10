@@ -78,4 +78,6 @@ Session.vim
 # auto-generated tag files
 tags
 
+# Documentation
+Documentation/*
 # End of https://www.gitignore.io/api/vim,c++,linux,cmake
