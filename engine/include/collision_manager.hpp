@@ -1,3 +1,7 @@
+/**
+    \file collision_manager.hpp
+    This file declares the CollisionManager class
+*/
 #ifndef COLLISION_MANAGER_HPP_
 #define COLLISION_MANAGER_HPP_
 
@@ -10,6 +14,10 @@
 
 namespace engine {
 
+    /**
+        \class CollisionManager
+        This class is responsible for managing collision of objects in the game   
+    */
     class CollisionManager {
 
     public:
