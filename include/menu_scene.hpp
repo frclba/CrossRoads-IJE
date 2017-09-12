@@ -8,6 +8,7 @@
 
 using namespace engine;
 
+/// Class to control of menu scene 
 /**
     \class MenuScene
     This class is responsible for managing the game scene.
