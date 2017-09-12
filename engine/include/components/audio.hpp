@@ -21,10 +21,10 @@ namespace engine {
             };
 
             AudioComponent(GameObject &main_game_object, std::string id, std::string path,
-                           bool is_music = false, bool play_on_start = true)
-                : Component(main_game_object, id), m_path(path), m_is_music(is_music), 
-                  m_play_on_start(play_on_start), m_audio_state(AudioState::stopped),
-                  m_music(NULL), m_sound(NULL) {
+                           bool is_music = false, bool play_on_start = true) :
+                           Component(main_game_object, id), m_path(path), m_is_music(is_music), 
+                           m_play_on_start(play_on_start), m_audio_state(AudioState::stopped),
+                           m_music(NULL), m_sound(NULL) {
 
             }
 
