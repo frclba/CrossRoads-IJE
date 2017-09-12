@@ -1,3 +1,7 @@
+/**
+    \file sdl2core.hpp
+    This file include SDL2 libraries
+*/
 #ifndef FOO_BAR_ENGINE_SDL2_CORE_H_
 #define FOO_BAR_ENGINE_SDL2_CORE_H_
 
