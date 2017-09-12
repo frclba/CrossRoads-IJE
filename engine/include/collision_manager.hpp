@@ -14,6 +14,7 @@
 
 namespace engine {
 
+    /// Class to control object collisions
     /**
         \class CollisionManager
         This class is responsible for managing collision of objects in the game   
