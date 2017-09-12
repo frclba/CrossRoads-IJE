@@ -1,3 +1,7 @@
+/**
+    \file keyboard.cpp
+    This file use Keyboard functions
+*/
 #include "Keyboard.hpp"
 
 using namespace engine;
@@ -14,6 +18,15 @@ Keyboard::~Keyboard() {
 
 }
 
+/**
+    Set keys
+    \param evt
+    \parblock
+        This method evaluate what button was pressed with the variable evt
+        and then take decisions based on evt
+    \endparblock
+    \return anything because the method is void
+*/
 void Keyboard::setKeys( SDL_Event* evt ) {
 
     if( evt -> type == SDL_KEYDOWN ) {
@@ -91,6 +104,14 @@ void Keyboard::setKeys( SDL_Event* evt ) {
 
 }
 
+/**
+    Verify key up
+    \param key
+    \parblock
+        This method verify if key pressed is up
+    \endparblock
+    \return returns bool to key up or not
+*/
 bool Keyboard::isKeyDown( std::string key ) {
 
     for( auto m_key : keycode_down ) {
@@ -103,6 +124,14 @@ bool Keyboard::isKeyDown( std::string key ) {
 
 }
 
+/**
+    Verify key up
+    \param key
+    \parblock
+        This method verify if key pressed is up
+    \endparblock
+    \return returns bool to key up or not
+*/
 bool Keyboard::isKeyUp( std::string key ) {
     for( auto m_key : keycode_up ) {
         if( m_key == m_buttons[key] ) {
@@ -114,7 +143,9 @@ bool Keyboard::isKeyUp( std::string key ) {
 
 }
 
-
+/**
+    This method clear key down and key up logic after pressed by the player
+*/
 void Keyboard::clearKeyboard() {
 
    keycode_up.clear();
@@ -122,7 +153,9 @@ void Keyboard::clearKeyboard() {
 
 }
 
-
+/**
+   This method map all enable and not enable buttons that can be used in game 
+*/
 void Keyboard::create_keyboard_mapping() {
 
     m_buttons["unknown"] = SDLK_UNKNOWN;
