@@ -1,5 +1,5 @@
-#ifndef __ENGINE_COMPONENTS_AUDIO__
-#define __ENGINE_COMPONENTS_AUDIO__
+#ifndef FOO_BAR_ENGINE_COMPONENTS_AUDIO_H_
+#define FOO_BAR_ENGINE_COMPONENTS_AUDIO_H_
 
 #include <iostream>
 
@@ -9,38 +9,50 @@
 
 namespace engine {
 
-  class AudioComponent : public Component {
-    public:
-        enum class AudioState {
-            playing,
-            paused,
-            stopped
-        };
+    class AudioComponent : public Component {
 
-        AudioComponent(GameObject &main_game_object, std::string id, std::string path, bool is_music=false,
-                       bool play_on_start=true)
-            : Component(main_game_object, id), m_path(path), m_is_music(is_music),
-              m_play_on_start(play_on_start), m_audio_state(AudioState::stopped),
-              m_music(NULL), m_sound(NULL) {}
+        public:
+            enum class AudioState {
 
-        bool init();
-        bool shutdown();
-        void update();
+                playing,
+                paused,
+                stopped
 
-        void play(int loops=-1, int channel=-1);
-        void stop(int channel=-1);
-        void pause(int channel=-1);
+            };
 
-        inline bool is_music() { return m_is_music; }
+            AudioComponent(GameObject &main_game_object, std::string id, std::string path,
+                           bool is_music = false, bool play_on_start = true) :
+                           Component(main_game_object, id), m_path(path), m_is_music(is_music), 
+                           m_play_on_start(play_on_start), m_audio_state(AudioState::stopped),
+                           m_music(NULL), m_sound(NULL) {
 
-    private:
-        std::string m_path;
-        bool m_is_music;
-        bool m_play_on_start;
-        AudioState m_audio_state;
+            }
 
-        Mix_Music * m_music;
-        Mix_Chunk * m_sound;
+            bool init();
+            bool shutdown();
+            void update();
+
+            void play(int loops = -1, int channel = -1);
+            void stop(int channel = -1);
+            void pause(int channel = -1);
+
+            inline bool is_music() {
+
+                return m_is_music;
+
+            }
+
+        private:
+            std::string m_path;
+            bool m_is_music;
+            bool m_play_on_start;
+            AudioState m_audio_state;
+
+            Mix_Music * m_music;
+            Mix_Chunk * m_sound;
+
     };
+
 }
-#endif
+
+#endif // FOO_BAR_ENGINE_COMPONENTS_AUDIO_H_
