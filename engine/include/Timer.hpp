@@ -1,3 +1,7 @@
+/**
+    \file Time.hpp
+    This file declares the Timer class
+*/
 #ifndef TIMER_H_
 #define TIMER_H_
 
@@ -7,6 +11,11 @@
 
 namespace engine {
 
+    /// Class for game time control
+    /**
+        \class Time
+        This class is responsible for managing of game time
+    */
     class Timer {
 
         public:

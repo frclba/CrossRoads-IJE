@@ -1,3 +1,7 @@
+/**
+    \file scene.hpp
+    This file declares the Scene class
+*/
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
@@ -9,6 +13,11 @@
 
 namespace engine {
 
+    /// Class for control of game Scene
+    /**
+        \class Scene
+        This class is responsible for initializing the game scene
+    */
     class Scene {
 
         public:
@@ -19,7 +28,7 @@ namespace engine {
                 invalid
             };
 
-            //Sobrecarga do construtor para caso de criação de cenas sem parâmetros
+        // Overloading the constructor for creating scenes without parameters
 
         Scene() : Scene( "", State::invalid ) {
 
@@ -50,11 +59,11 @@ namespace engine {
 
         virtual bool init();
 
-        //Shutdown of scene
+        // Shutdown of scene
 
         virtual bool shutdown();
 
-        //Check on map and initialize each game object. Return true if success
+        // Check on map and initialize each game object. Return true if success
 
         virtual bool draw();
 
