@@ -1,7 +1,15 @@
+/**
+    \file cameraposition.cpp
+    This file implements the CameraPosition class
+*/
 #include "cameraposition.hpp"
 
 CameraPosition::~CameraPosition(){}
 
+/**
+    This method defines an initial position for the background image
+    \return return a true value that make the cameraposition active
+*/
 bool CameraPosition::init() {
 
     _main_game_object->main_positionX = m_init_posX;
@@ -11,6 +19,9 @@ bool CameraPosition::init() {
 
 }
 
+/**
+    This method updates the position for the background image
+*/
 void CameraPosition::update() {
 
     _main_game_object->main_positionY = m_init_posY;

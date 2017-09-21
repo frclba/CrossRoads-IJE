@@ -1,17 +1,26 @@
+/**
+    \file scene.cpp
+    This file declares the Scene class
+*/
 #include "scene.hpp"
 
 using namespace engine;
 
-// Definição de game object inválido
+// Invalid game object definition
 
 GameObject INVALID_GAME_OBJECT;
 
+/**
+    This method adds a game object in the scene
+    \param &obj is a input parameter that represents an address of game object
+    \return returns a true value when a non-existent object to enter the scene
+*/
 bool Scene::add_game_object( GameObject &obj ) {
 
     auto id = obj.name();
     Log::instance.info( "Adding GameObject '" + id + "' to scene '" + scene_name + "'." );
 
-    //Iterando mapa para ver se aquele game object já existe nela
+    // Iterating map to see if that game object already exists in it
 
     if( scene_objects.find( id ) != scene_objects.end() ) {
         Log::instance.warning( "Game object: '" + id + "' já existe!" );
@@ -52,11 +61,15 @@ bool Scene::remove_game_object( const std::string &id ) {
 
 }
 
+/**
+    This method initiates the scene in the game
+    \return return a true value when the scene is active
+*/
 bool Scene::init() {
 
     Log::instance.info( "Inicializando cena '" + scene_name + "'." );
 
-    //Iterando o mapa e inicilizando cada um dos game objects.
+    // Iterating the map and initializing each of the game objects.
 
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
@@ -70,11 +83,15 @@ bool Scene::init() {
 
 }
 
+/**
+    This method closes the scene in the game
+    \return return a true value when the scene is not active
+*/
 bool Scene::shutdown() {
 
     Log::instance.info( "Destruindo cena '" + scene_name + "'." );
 
-    //Iterando o mapa e inicilizando cada um dos game objects.
+    // Iterating the map and initializing each of the game objects.
 
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
@@ -89,18 +106,27 @@ bool Scene::shutdown() {
     return true;
 }
 
+/**
+    This method is reponsable for update the scene
+    with objects
+*/
 void Scene::update() {
 
-    for ( auto id_obj: scene_objects ) {
+    for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
 
-        if ( obj -> state() == GameObject::State::enabled ) {
+        if( obj -> state() == GameObject::State::enabled ) {
             obj -> update();
         }
     }
 
 }
 
+/**
+    This method is responsible for the background 
+    and layers that make up the game design
+    \return returns true when the scene is with layers and background.
+*/
 bool Scene::draw() {
 
     GameObject::Layer layers[] = {
@@ -110,48 +136,56 @@ bool Scene::draw() {
         GameObject::Layer::layer3
     };
 
-    //Iterando o mapa e inicilizando cada um dos game objects.
+    // Iterating the map and initializing each of the game objects.
 
     for( int cont = 0; cont < 4; cont++ ) {
-
-            for( auto id_obj: scene_objects ) {
-                auto obj = id_obj.second;
-
-                if( obj -> m_layer == layers[cont] &&
-                    obj -> state() == GameObject::State::enabled &&
-                    obj -> draw() == false ) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-
-    }
-
-    std::list <GameObject *> * Scene::get_collide_objects() {
-
-        //Iterando o mapa e inicilizando cada um dos game objects.
 
         for( auto id_obj: scene_objects ) {
             auto obj = id_obj.second;
 
-            if( obj -> state() == GameObject::State::enabled && obj -> m_collision == true ) {
-                collide_objects.push_back( obj );
+            if( obj -> m_layer == layers[cont] &&
+                obj -> state() == GameObject::State::enabled &&
+                obj -> draw() == false ) {
+                return false;
             }
+        }
+    }
 
+    return true;
+
+}
+
+std::list <GameObject *> * Scene::get_collide_objects() {
+
+    // Iterating the map and initializing each of the game objects.
+
+    for( auto id_obj: scene_objects ) {
+        auto obj = id_obj.second;
+
+        if( obj -> state() == GameObject::State::enabled && obj -> m_collision == true ) {
+            collide_objects.push_back( obj );
         }
 
-        return &collide_objects;
-
     }
 
-    void Scene::clear_collide_objects() {
+    return &collide_objects;
 
-        collide_objects.clear();
+}
 
-    }
+/**
+    This method is reponsable for clear collide of objects 
+    in the scene
+*/
+void Scene::clear_collide_objects() {
 
-    void Scene::game_logic() {
-        
-    }
+    collide_objects.clear();
+
+}
+
+/**
+    This method is reponsable for game logic 
+    in the scene
+*/
+void Scene::game_logic() {
+    
+}

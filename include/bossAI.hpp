@@ -1,3 +1,7 @@
+/**
+    \file bossAI.hpp
+    This file declares the Boss class
+*/
 #ifndef _BOSS_AI_H_
 #define _BOSS_AI_H_
 
@@ -10,6 +14,10 @@
 
 using namespace engine;
 
+/**
+    \class bossAI
+    This class is responsible for Boss movement and behavior
+*/
 class Boss : public Component {
 
 public:

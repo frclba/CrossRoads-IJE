@@ -1,5 +1,13 @@
+/**
+    \file menu_scene.cpp
+    This file implements the MenuScene class
+*/
 #include "menu_scene.hpp"
 
+/**
+    This method is responsible for the logic of the game in the scene menu,
+    such as the control buttons and the position of the fire on the screen
+*/
 void MenuScene::game_logic() {
 
     // Get menuFire object
@@ -17,6 +25,10 @@ void MenuScene::game_logic() {
 
 }
 
+/**
+    This method is responsible for the button controls in the
+    scene menu, such as the new game button and load game button.
+*/
 void MenuScene::buttons_controller() {
 
     // Get bNew gameobject
