@@ -1,10 +1,18 @@
+/**
+    \file menu_scene.cpp
+    This file implements the MenuScene class
+*/
 #include "menu_scene.hpp"
 
+/**
+    This method is responsible for the logic of the game in the scene menu,
+    such as the control buttons and the position of the fire on the screen
+*/
 void MenuScene::game_logic() {
 
     // Get menuFire object
 
-    GameObject* fireMenu = &get_game_object("menuFire");
+    GameObject *fireMenu = &get_game_object("menuFire");
 
     // Defines the position of the fire on the screen
 
@@ -17,11 +25,15 @@ void MenuScene::game_logic() {
 
 }
 
+/**
+    This method is responsible for the button controls in the
+    scene menu, such as the new game button and load game button.
+*/
 void MenuScene::buttons_controller() {
 
     // Get bNew gameobject
 
-    GameObject* bNew = &get_game_object("bNew");
+    GameObject *bNew = &get_game_object("bNew");
 
     // Sets the position of the new game button on the screen
 
@@ -30,7 +42,7 @@ void MenuScene::buttons_controller() {
 
     // Get bLoad gameobject
 
-    GameObject* bLoad = &get_game_object("bLoad");
+    GameObject *bLoad = &get_game_object("bLoad");
 
     // Sets the position of the load button on the screen
 
@@ -39,12 +51,12 @@ void MenuScene::buttons_controller() {
 
     // Takes animation components of the new game button and the load button
 
-    Animation* bnewAnimation = (dynamic_cast<Animation *>(
+    Animation *bnewAnimation = (dynamic_cast<Animation*> (
                                 bNew->get_component("imageBNew")));
-    Animation* bloadAnimation = (dynamic_cast<Animation *>(
+    Animation *bloadAnimation = (dynamic_cast<Animation*> (
                                  bLoad->get_component("imageBLoad")));
 
-    AudioComponent* button_hover_sound = (dynamic_cast<AudioComponent*>(
+    AudioComponent *button_hover_sound = (dynamic_cast<AudioComponent*> (
                                           bLoad->get_component(
                                           "button_hover_sound")));
 

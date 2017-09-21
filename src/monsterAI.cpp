@@ -37,7 +37,7 @@ void MonsterAI::update() {
     }
 
     if( Game::instance.collision_manager->checkCollision(
-        _main_game_object,"player") ) {
+        _main_game_object, "player") ) {
         m_monster_controler->play_animation("monster_attack");
     }
 
@@ -46,7 +46,7 @@ void MonsterAI::update() {
 bool MonsterAI::see_player() {
 
     if( fabs(_main_game_object->main_positionX - m_player->main_positionX) <=
-        PLAYER_DISTANCE-100 ) {
+        PLAYER_DISTANCE - 100 ) {
         return true;
     }
     else {
@@ -138,7 +138,7 @@ void MonsterAI::damage() {
              _main_game_object, "bullet");
 
     if( Game::instance.collision_manager->checkCollision(
-        _main_game_object,"attack_box") || bullet ) {
+        _main_game_object, "attack_box") || bullet ) {
 
         m_monster_controler->play_animation("monster_damage");
 

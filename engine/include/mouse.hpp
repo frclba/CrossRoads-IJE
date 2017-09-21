@@ -11,7 +11,7 @@ namespace engine {
 
     public:
 
-        Mouse():mouseX(0), mouseY(0) {};
+        Mouse() : mouseX(0), mouseY(0) {};
         ~Mouse();
 
         // Function to get mouse position

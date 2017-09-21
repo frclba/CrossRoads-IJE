@@ -55,7 +55,7 @@ void Boss::update() {
 
 void Boss::boss_damage() {
 
-    AudioComponent* boss_full_putasso_audio = (dynamic_cast<AudioComponent*> (
+    AudioComponent *boss_full_putasso_audio = (dynamic_cast<AudioComponent*> (
                                                _main_game_object->get_component(
                                                "boss_full_putasso_audio")));
 
@@ -82,7 +82,7 @@ void Boss::boss_damage() {
 
 void Boss::boss_move() {
 
-    AudioComponent* boss_dash_audio = (dynamic_cast<AudioComponent*> (
+    AudioComponent *boss_dash_audio = (dynamic_cast<AudioComponent*> (
                                        _main_game_object->get_component(
                                        "boss_dash_audio")));
 

@@ -1,5 +1,6 @@
 #ifndef __RESTART_HPP__
 #define __RESTART_HPP__
+
 #include <iostream>
 
 #include "components/component.hpp"
@@ -11,16 +12,16 @@ using namespace engine;
 
 class Restart : public Component{
 public:
-  Restart(GameObject &main_game_object, std::string id):
-    Component(main_game_object, id){}
+    Restart( GameObject &main_game_object, std::string id ):
+        Component( main_game_object, id ){}
 
-    ~Restart();
+        ~Restart();
 
-    bool init();
-    void update();
+        bool init();
+        void update();
 
 private:
 
 };
 
-#endif
+#endif  // __RESTART_HPP__
