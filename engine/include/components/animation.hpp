@@ -24,9 +24,13 @@ namespace engine{
         //    heightDiv = valor de altura que sera dividida a imagem.
         //    num_image = numero de sprites contida na imagem
             Animation(GameObject &main_game_object, std::string id, std::string path, unsigned int widthDiv, unsigned int heightDiv, int num_image):
-                ImageComponent(main_game_object, id, path), m_widthDiv(widthDiv),
-                m_heightDiv(heightDiv), m_num_image(num_image),
-                main_frame(0),delay(0), timestep(0){}
+                      ImageComponent(main_game_object, id, path), m_widthDiv(widthDiv),
+                      m_heightDiv(heightDiv), m_num_image(num_image),
+                      main_frame(0),delay(0), timestep(0){
+
+                // Default function call.
+
+             }
 
             //destrutor
             ~Animation();
@@ -53,7 +57,6 @@ namespace engine{
             //      |            |            |           |           |
             //      |##################################################
             //
-
             void setAnimation(std::string name,int begin, int end);
 
 
@@ -72,27 +75,28 @@ namespace engine{
             void setup();
 
             SDL_RendererFlip flip = SDL_FLIP_NONE;
+            
         private:
 
             const int BEGIN = 0;
             const int END = 1 ;
 
-            unsigned int m_widthDiv;
-            unsigned int m_heightDiv;
+            unsigned int m_widthDiv = 0;
+            unsigned int m_heightDiv = 0;
 
-            std::vector<SDL_Rect*> imageVector;
+            std::vector<SDL_Rect*> imageVector = NULL;
 
-            int main_animation[2];
+            int main_animation[2] = 0;
 
             std::unordered_map <std::string, int [2]> animationMap;
 
-            int m_num_image;
+            int m_num_image = 0;
 
-            int main_frame;
+            int main_frame = 0;
 
-            int delay;
+            int delay = 0;
 
-            int timestep;
+            int timestep = 0;
 
     };
 }

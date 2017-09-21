@@ -4,6 +4,8 @@ using namespace engine;
 
 Animation::~Animation() {
 
+    // Default method.
+
 }
 
 bool Animation::init() {
@@ -20,6 +22,8 @@ bool Animation::init() {
     if(image == NULL) {
 
         // SDL_IMG_ERROR("Could not load image from path !" << main_path);
+
+        // Default if.
 
     }
 
