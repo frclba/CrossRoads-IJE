@@ -1,7 +1,15 @@
+/**
+    \file stage1_scene.cpp
+    This file define methods content of the Stage1Scene class
+*/
+
 #include "stage1_scene.hpp"
 
-// GAME LOGIC
-
+/// Initializes and keeps the scene of the first stage
+/**
+    Initializes the scene of the first stage and assigns behavior in his
+    execution
+*/
 void Stage1Scene::game_logic() {
 
     ground_stage1 = &get_game_object("ground");
@@ -56,6 +64,10 @@ void Stage1Scene::game_logic() {
 
 }
 
+/**
+    Detects and define the position of the player's bullet(ranged attack)
+    on the scene
+*/
 void Stage1Scene::bullet() {
 
     if( player_controller->attack_ranged &&
@@ -85,8 +97,17 @@ void Stage1Scene::bullet() {
 
 }
 
+/**
+    Check if a object is inside the scene
+    \param object
+    \parblock
+        Is a input parameter that represents an object of the game(!=NULL)
+    \endparblock
+    \return true is inside
+    \return false isn't inside 
+*/
 bool Stage1Scene::is_inside( GameObject* object ) {
-  
+
     if( object->state() == GameObject::State::enabled &&
       ( object->main_positionX > 0 || object->main_positionX +
                                       object->main_width < 800 ) ) {

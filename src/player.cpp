@@ -1,3 +1,8 @@
+/**
+    \file player.cpp
+    This file define methods content of the Player class
+*/
+
 #include "player.hpp"
 
 unsigned int damage_time = 0;
@@ -18,6 +23,11 @@ float monster_move = 4;
 float prev_position_y;
 float dy = 0;
 
+/**
+    Initializes the player, defining their main attributes with inicial
+    values
+    \return Returns the initialization confirm
+*/
 bool Player::init() {
 
     _main_game_object->main_positionY = 502;
@@ -32,8 +42,10 @@ bool Player::init() {
 
 }
 
-// GAME LOGIC
-
+/**
+    Call methods that update player characteristics, changing values of their
+    attributes, thats make the player can move, jump, take damage, fall etc
+*/
 void Player::update() {
 
     animCtrl->play_animation("player_idle");
@@ -47,8 +59,10 @@ void Player::update() {
 
 }
 
-// ATTACK LOGIC
-
+/**
+    Define and detect player attacks, in cases of side(left or right) and
+    interface(buttons and their interactions). The attacks being meele or ranged
+*/
 void Player::attack_player() {
 
     AudioComponent* player_attack_audio = (dynamic_cast<AudioComponent*>(
@@ -89,7 +103,6 @@ void Player::attack_player() {
         attack_ranged = false;
     }
 
-
     if( attack_meele || attack_ranged ) {
         animCtrl->play_animation("player_attack");
         if( attack_meele ) {
@@ -110,9 +123,10 @@ void Player::attack_player() {
 
 }
 
-
-// MOVE LOGIC
-
+/**
+    Define player drive, detecting right and left movement, making interface
+    interactions of his walk
+*/
 void Player::move_player() {
 
     AudioComponent* player_running_audio = (dynamic_cast<AudioComponent*>(
@@ -174,8 +188,9 @@ void Player::move_player() {
 
 }
 
-// JUMP LOGIC
-
+/**
+    Define and detect interaction of the player jump
+*/
 void Player::jump_player() {
 
     AudioComponent* player_jump_audio = (dynamic_cast<AudioComponent*>(
@@ -200,6 +215,10 @@ void Player::processPos() {
 
 }
 
+/**
+    Apply the gravity on the player, depending where he is
+    (platform or in the air)
+*/
 void Player::gravityF() {
 
     if ( !has_ground() ) { // If the player is not on the platform
@@ -212,6 +231,11 @@ void Player::gravityF() {
 
 }
 
+/**
+    Detects if there is a ground where the player is
+    \return true has ground
+    \return false hasn't ground
+*/
 bool Player::has_ground() {
 
     ground = Game::instance.collision_manager->checkCollision(_main_game_object,
@@ -231,6 +255,9 @@ bool Player::has_ground() {
 
 }
 
+/**
+    Detect damage on the player and apply the changes
+*/
 void Player::damage() {
 
     if( !attack_meele &&
@@ -265,6 +292,9 @@ void Player::damage() {
 
 }
 
+/**
+    Detects if the player is dead
+*/
 void Player::is_dead() {
 
     if( life_points <= 0 ) {
@@ -275,5 +305,5 @@ void Player::is_dead() {
 }
 
 Player::~Player() {
-  
+
 }

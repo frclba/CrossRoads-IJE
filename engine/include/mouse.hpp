@@ -1,3 +1,8 @@
+/**
+    \file mouse.hpp
+    This file declares the Mouse class
+*/
+
 #ifndef MOUSE_H_
 #define MOUSE_H_
 
@@ -5,8 +10,14 @@
 #include "sdl2core.hpp"
 #include "gameobject.hpp"
 
+
 namespace engine {
 
+/// Class for mouse utilities
+/**
+    \class Mouse
+    This class controls all mouse interactions and features
+*/
     class Mouse {
 
     public:

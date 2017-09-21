@@ -1,3 +1,9 @@
+/**
+  \file player.hpp
+  This file declares the Player class, his methods and attributes with their
+  encapsulation.
+*/
+
 #ifndef __PLAYER_HPP__
 #define __PLAYER_HPP__
 
@@ -13,6 +19,11 @@
 
 using namespace engine;
 
+/// This class represents the player, their characteristics and behavior
+/**
+    \class Player
+    Class responsable for all logic about the player.
+*/
 class Player : public Component {
 
 public:
