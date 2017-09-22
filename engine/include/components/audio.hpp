@@ -1,14 +1,23 @@
+/**
+    \file audio.hpp
+    This file contains header declaration for AudioComponent class
+*/
+
 #ifndef FOO_BAR_ENGINE_COMPONENTS_AUDIO_H_
 #define FOO_BAR_ENGINE_COMPONENTS_AUDIO_H_
 
 #include <iostream>
-
 #include "sdl2core.hpp"
 #include "components/component.hpp"
 #include "gameobject.hpp"
 
 namespace engine {
 
+    /// Managing audio components
+    /**
+        \class AudioComponent
+        This class manages the audio components and exchanges between them
+    */
     class AudioComponent : public Component {
 
         public:

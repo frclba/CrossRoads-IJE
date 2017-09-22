@@ -2,15 +2,11 @@
     \file component.hpp
     This file declares GameObject and Component class
 */
+
 #ifndef FOO_BAR_ENGINE_COMPONENTS_COMPONENT_H_
 #define FOO_BAR_ENGINE_COMPONENTS_COMPONENT_H_
 
 namespace engine {
-
-    /*
-        Define the class gameobject as empty here to haven't any problem of
-        cyclic import.
-    */
 
     /// Class to control game objects
     /**
@@ -26,7 +22,7 @@ namespace engine {
         this class is here empty just to not have problems of cyclic imports
     */
     class Component {
-    
+
         public:
             /// Class to control states
             /**
@@ -38,18 +34,25 @@ namespace engine {
                 enabled,
                 disabled,
                 invalid
-        
+
             };
 
             /*
                 Overhead of build for created components without parameters
                 being invalid.
             */
-
             Component(): main_state(State::invalid), _main_game_object(NULL) {
 
             }
 
+            /**
+                Construct method for a GameObject already instantiated
+                \param[in] gameObject reference address to GameObject
+                \param[in] name string
+                \result component_id receive name as Component identifier
+                \result main_state set as enabled enum value
+                \result _main_game_object ponteir receive gameObject reference
+            */
             Component(GameObject &gameObject, std::string name)
                 : component_id(name), main_state(State::enabled),
                 _main_game_object(&gameObject) {
@@ -71,7 +74,7 @@ namespace engine {
                 return true;
 
             }
-      
+
             /**
                 This method finish components
             */
@@ -85,7 +88,7 @@ namespace engine {
                 This is an empty method
             */
             virtual void update() {
-                
+
             }
 
             /**
@@ -116,7 +119,6 @@ namespace engine {
             }
 
             std::string component_id;
-
             State main_state;
 
         protected:
@@ -125,9 +127,8 @@ namespace engine {
                 The component keeps a reference of the game object which it
                 belongs
             */
+            GameObject *_main_game_object;
 
-            GameObject* _main_game_object;
-            
     };
 
 }
