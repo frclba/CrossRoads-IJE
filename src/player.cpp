@@ -243,13 +243,16 @@ void Player::jump_player() {
                                         _main_game_object->get_component(
                                         "player_jump_audio")));
 
-    //Player try jump and he can jump
+    //Player try jump and he can
 
     if( Game::instance.keyboard->isKeyDown("w") && ( dy == 0 ) ) {
         player_jump_audio->play(0, -1);
 
         jump = true;
         dy -= jumpF;
+    }
+    else {
+        // Do nothing
     }
 
 }
@@ -267,11 +270,10 @@ void Player::processPos() {
 */
 void Player::gravityF() {
 
-    if ( !has_ground() ) { // If the player is not on the platform
+    if( !has_ground() ) { // If the player is not on the platform
         dy += gravity;
     }
-
-    else{
+    else {
         dy = 0;
     }
 
@@ -288,16 +290,23 @@ bool Player::has_ground() {
                                                               "ground");
 
     if( ground && dy >= 0 ) {
+
         if( dy > 5 ) {
             _main_game_object->main_positionY = ground->main_positionY -
                                                 _main_game_object->main_height;
+        }
+        else {
+            // Do nothing
         }
 
         return true;
 
     }
+    else {
 
-    return false;
+        return false;
+
+    }
 
 }
 
@@ -306,32 +315,54 @@ bool Player::has_ground() {
 */
 void Player::damage() {
 
-    if( !attack_meele &&
-        ( Game::instance.collision_manager->checkCollision(_main_game_object,
-                                                          "monster") ||
-         Game::instance.collision_manager->checkCollision(_main_game_object,
-                                                         "fireball") ||
-         Game::instance.collision_manager->checkCollision(_main_game_object,
-                                                         "boss") ) ) {
-        animCtrl->play_animation("player_damage");
+    if( !attack_meele ) {
 
-        if( Game::instance.timer->getTicks() > damage_time ) {
-            life_points--;
-            damage_time = Game::instance.timer->getTicks() + 1000;
+        if( (
+            Game::instance.collision_manager->checkCollision(_main_game_object,
+                                                             "monster") ||
+            Game::instance.collision_manager->checkCollision(_main_game_object,
+                                                             "fireball") ||
+            Game::instance.collision_manager->checkCollision(_main_game_object,
+                                                             "boss") ) ) {
+             if( Game::instance.timer->getTicks() > damage_time ) {
+                 life_points--;
+                 damage_time = Game::instance.timer->getTicks() + 1000;
+             }
+             else {
+                 // Do nothing
+             }
+
+             if( life_points == 2 ) {
+                AudioComponent* player_low_life_audio =
+                                (dynamic_cast<AudioComponent*>(
+                                _main_game_object->get_component(
+                                "player_low_life_audio")));
+                player_low_life_audio->play(0, -1);
+             }
+             else {
+                // Do nothing
+             }
+
+             if( life_points > 0) {
+                 // Do nothing
+             }
+             else {
+                 life_points = 5;
+                 Game::instance.change_scene("Lose Scene");
+             }
         }
-        if( life_points == 2 ) {
-            AudioComponent* player_low_life_audio =
-                            (dynamic_cast<AudioComponent*>(
-                             _main_game_object->get_component(
-                             "player_low_life_audio")));
-            player_low_life_audio->play(0, -1);
-        }
-        if( life_points <= 0 ) {
-            life_points = 5;
-            Game::instance.change_scene("Lose Scene");
+        else {
+            // Do nothing
         }
     }
-    if( life_points <= 0 ) {
+    else {
+        // Do nothing
+    }
+
+    if( life_points > 0 ) {
+        // Do nothing
+    }
+    else {
         life_points = 5;
         Game::instance.change_scene("Lose Scene");
     }
@@ -343,9 +374,12 @@ void Player::damage() {
 */
 void Player::is_dead() {
 
-    if( life_points <= 0 ) {
+    if( life_points <= 0 ){
         printf("Player dead\n");
         Log::instance.info("Player dead");
+    }
+    else {
+        // Do nothing
     }
 
 }
