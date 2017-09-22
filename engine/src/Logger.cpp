@@ -51,6 +51,9 @@ void Log::closeFile() {
         logFile.flush();
         logFile.close();
     }
+    else {
+        // Do nothing
+    }
 
 }
 
@@ -62,6 +65,9 @@ void Log::debug(std::string msg) {
         logFile << "[DEBUG] ";
         logFile << msg << std::endl;
         logFile.flush();
+    }
+    else {
+        // Do nothing
     }
 
 }
