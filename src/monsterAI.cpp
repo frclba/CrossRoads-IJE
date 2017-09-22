@@ -32,7 +32,7 @@ bool MonsterAI::init() {
 */
 void MonsterAI::update() {
 
-    m_monster_controler->play_animation("monster_walk", true);
+   
     gravityF();
 
     move_monster();
@@ -46,6 +46,8 @@ void MonsterAI::update() {
         _main_game_object->main_width > 800 ) {
         _main_game_object->setState(GameObject::State::disabled);
     }
+
+     m_monster_controler->play_animation("monster_walk", true);
 
     if( Game::instance.collision_manager->checkCollision(
         _main_game_object, "player") ) {
