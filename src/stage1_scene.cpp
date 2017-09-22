@@ -12,31 +12,24 @@
 */
 void Stage1Scene::game_logic() {
 
-    ground_stage1 = &get_game_object("ground");
 
-    monster1 = &get_game_object("monster1");
-    monster2 = &get_game_object("monster2");
-    monster3 = &get_game_object("monster3");
-    monster4 = &get_game_object("monster4");
-
-    portal = &get_game_object("portal");
     background = &get_game_object("backgroundForest");
-    back_img = (dynamic_cast<ImageComponent*>(
-                background->get_component("backgroundForest")));
 
-    fire_ball = &get_game_object("fireball");
     bullet1 = &get_game_object("bullet");
 
     player = &get_game_object("player");
     player_controller = (dynamic_cast<Player*>(
                          player->get_component("player_logic")));
 
-    go_arrow = &get_game_object("go_arrow");
+
+    ground_stage1 = &get_game_object("ground");
 
     ground_stage1->main_positionY = 552;
     ground_stage1->main_positionX = 0;
     ground_stage1->main_width = 800;
     ground_stage1->main_height = 200;
+
+    fire_ball = &get_game_object("fireball");
 
     if( back_img->imagePart->x > 2170 ) {
         back_img->enable_camera = false;
@@ -44,6 +37,16 @@ void Stage1Scene::game_logic() {
     else {
         fire_ball->setState(GameObject::State::disabled);
     }
+
+    back_img = (dynamic_cast<ImageComponent*>(
+        background->get_component("backgroundForest")));
+    go_arrow = &get_game_object("go_arrow");
+    portal = &get_game_object("portal");
+
+    monster1 = &get_game_object("monster1");
+    monster2 = &get_game_object("monster2");
+    monster3 = &get_game_object("monster3");
+    monster4 = &get_game_object("monster4");
 
     if( ( portal->state() == GameObject::State::enabled &&
         portal->main_positionX + portal->main_width < 800 ) ||
@@ -78,9 +81,15 @@ void Stage1Scene::bullet() {
                                       player->main_width;
             bullet1->main_positionY = player->main_positionY;
         }
+        else {
+            // Do nothing
+        }
 
         timestep = Game::instance.timer->getTicks() + 500;
         bullet1->setState(GameObject::State::enabled);
+    }
+    else {
+        // Do nothing
     }
 
     if( bullet1->state() == GameObject::State::enabled ) {
@@ -91,8 +100,14 @@ void Stage1Scene::bullet() {
             bullet1->main_positionX -= 20;
         }
     }
+    else {
+        // Do nothing
+    }
     if( bullet1->main_positionX > 800 || bullet1->main_positionX < 0 ) {
         bullet1->setState(GameObject::State::disabled);
+    }
+    else {
+        // Do nothing
     }
 
 }
@@ -104,7 +119,7 @@ void Stage1Scene::bullet() {
         Is a input parameter that represents an object of the game(!=NULL)
     \endparblock
     \return true is inside
-    \return false isn't inside 
+    \return false isn't inside
 */
 bool Stage1Scene::is_inside( GameObject* object ) {
 
@@ -115,9 +130,9 @@ bool Stage1Scene::is_inside( GameObject* object ) {
         return true;
 
     }
-
-    return false;
-
+    else {
+        return false;
+    }
 }
 
 Stage1Scene::~Stage1Scene(){
