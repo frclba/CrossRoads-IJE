@@ -33,22 +33,6 @@ int main(int, char **){
     MenuScene menu("Main Menu");
     Game::instance.add_scene(menu);
 
-    GameObject background("background");
-    ImageComponent backgroundImage(background, "imageBackground",
-                                   "assets/sprites/menu.png");
-    background.set_layer(GameObject::Layer::background);
-
-    AudioComponent menu_music(background, "menu_musicBackground",
-                              "assets/music/menu.wav", true);
-
-    GameObject menuFire("menuFire");
-    Animation animationFire(menuFire, "imageFire",
-                            "assets/sprites/menuFire.png", 348/6, 76, 6);
-
-    GameObject bNew("bNew");
-    Animation image_bNew(bNew,"imageBNew", "assets/sprites/bNew.png",
-                         448/2, 100, 2);
-
     GameObject title("title");
     ImageComponent image_title(title, "image_title",
                                "assets/sprites/menu_title.png");
@@ -57,29 +41,45 @@ int main(int, char **){
     // Cadastrando dois tipos de animação, a do butao normal que pega
     // a imagem de 0 a 0 e a mouseON que pega a imagem de 1 a 1
 
+    GameObject bNew("bNew");
+    Animation image_bNew(bNew,"imageBNew", "assets/sprites/bNew.png",
+                         448/2, 100, 2);
     image_bNew.setAnimation("normal", 0, 0);
     image_bNew.setAnimation("mouseON", 1, 1);
+    bNew.add_component(image_bNew);
 
     GameObject bLoad("bLoad");
     Animation image_bLoad(bLoad, "imageBLoad", "assets/sprites/bLoad.png",
                           448/2,100,2);
     image_bLoad.setAnimation("normal", 0, 0);
     image_bLoad.setAnimation("mouseON", 1, 1);
-    AudioComponent button_hover_sound(bLoad, "button_hover_sound",
-                                      "assets/sounds/Game.menu.sound.(10).wav",
-                                      false, false);
+    bLoad.add_component(image_bLoad);
 
     // Coloca o tempo que a nimacao do fogo percorre
 
+    GameObject menuFire("menuFire");
+    Animation animationFire(menuFire, "imageFire",
+                            "assets/sprites/menuFire.png", 348/6, 76, 6);
     animationFire.setDelay(100);
+    menuFire.add_component(animationFire);
+
 
     // Adiciona components aos gameobjects
 
+    GameObject background("background");
+    ImageComponent backgroundImage(background, "imageBackground",
+                                   "assets/sprites/menu.png");
+    background.set_layer(GameObject::Layer::background);
     background.add_component(backgroundImage);
+
+    AudioComponent menu_music(background, "menu_musicBackground",
+                              "assets/music/menu.wav", true);
     background.add_component(menu_music);
-    menuFire.add_component(animationFire);
-    bNew.add_component(image_bNew);
-    bLoad.add_component(image_bLoad);
+
+
+    AudioComponent button_hover_sound(bLoad, "button_hover_sound",
+                                      "assets/sounds/Game.menu.sound.(10).wav",
+                                      false, false);
     bLoad.add_component(button_hover_sound);
 
     // Adiciona game objects ao menu
@@ -99,96 +99,93 @@ int main(int, char **){
     Stage1Scene stage1("Fase 1");
     Game::instance.add_scene(stage1);
 
-    GameObject player("player", true, "player");
-
     GameObject bullet("bullet", true, "bullet");
     Animation img_bullet(bullet, "img_bullet", "assets/sprites/cross.png",
                          24, 13, 1);
     bullet.add_component(img_bullet);
     bullet.setState(GameObject::State::disabled);
 
+    GameObject player("player", true, "player");
     player.main_positionY = 502;
     player.set_layer(GameObject::Layer::layer3);
-    GameObject background_stage1("backgroundForest");
-    GameObject ground_stage1("ground", true, "ground");
 
+    GameObject background_stage1("backgroundForest");
     AudioComponent stage1_music(background_stage1, "menu_musicStage1",
                                 "assets/music/stage.wav", true);
+    background_stage1.add_component(stage1_music);
+
     AudioComponent boss_music(background_stage1, "boss_music",
                               "assets/music/boss.wav", true, false);
+    background_stage1.add_component(boss_music);
 
     AudioComponent player_running_audio(player, "player_running_audio",
                                         "assets/sounds/Passo.4.wav",
                                         false, false);
+    player.add_component(player_running_audio);
+
     AudioComponent player_running_audio2(player, "player_running_audio2",
                                          "assets/sounds/Passo.2.wav",
                                          false, false);
+    player.add_component(player_running_audio2);
+
     AudioComponent player_attack_audio(player, "player_attack_audio",
                                        "assets/sounds/ataque.wav",
                                        false, false);
+    player.add_component(player_attack_audio);
+
     AudioComponent player_jump_audio(player, "player_jump_audio",
                                      "assets/sounds/pulo.herói.2.wav",
                                      false, false);
+    player.add_component(player_jump_audio);
+
     AudioComponent player_low_life_audio(player, "player_low_life_audio",
                                          "assets/sounds/Coracao.batendo.wav",
                                          false, false);
+    player.add_component(player_low_life_audio);
+
     AudioComponent player_arrow_sound(player, "player_arrow_sound",
                                       "assets/sounds/Game.menu.sound.(1).wav",
                                       false, false);
-
-
-    background_stage1.add_component(stage1_music);
-    background_stage1.add_component(boss_music);
-
-    player.add_component(player_running_audio);
-    player.add_component(player_running_audio2);
-    player.add_component(player_attack_audio);
-    player.add_component(player_jump_audio);
-    player.add_component(player_low_life_audio);
     player.add_component(player_arrow_sound);
 
     ImageComponent backgroundForest(background_stage1, "backgroundForest",
                                     "assets/sprites/backgroundFloresta.png");
     backgroundForest.set_back_rect(800, 600);
+
     background_stage1.set_layer(GameObject::Layer::background);
 
+    GameObject ground_stage1("ground", true, "ground");
     ImageComponent tile1(ground_stage1, "tile1", "assets/sprites/ChãoMap1.png");
     ImageComponent tile2(ground_stage1, "tile2", "assets/sprites/ChãoMap2.png");
     ImageComponent tile3(ground_stage1, "tile3", "assets/sprites/ChãoMap3.png");
     ImageComponent tile4(ground_stage1, "tile4", "assets/sprites/ChãoMap4.png");
 
-
-    AnimationControllerComponent player_anim_ctrl(player,
-                                                  "animationController");
-    AnimationControllerComponent monster_anim_ctrl(player, "monster_controler");
-
     // Player Animations
+
 
     Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",
                           480/8, 49, 8);
+    player_idle.setDelay(100);
+
     Animation player_running(player, "playerRunning",
                              "assets/sprites/hero_running.png" ,220/4, 46, 4);
+    player_running.setDelay(100);
+
     Animation player_attack(player, "playerAttack", "assets/sprites/attack.png",
                             825/11, 49, 11);
+    player_attack.setDelay(30);
+
     Animation player_ranged(player, "playerAttackRanged",
                             "assets/sprites/cross_attack.png" ,252/7, 45, 7);
+    player_ranged.setDelay(50);
+
     Animation player_damage(player, "playerDamage", "assets/sprites/damage.png",
                             800/8, 50, 8);
-
-    player_idle.setDelay(100);
-    player_running.setDelay(100);
-    player_attack.setDelay(30);
-    player_ranged.setDelay(50);
     player_damage.setDelay(100);
-    GameObject attack_box("attack_box", true, "attack_box",
-                          GameObject::State::disabled);
 
     // Monsters
 
     GameObject monster1("monster1", true, "monster");
-    AnimationControllerComponent monster_anim_ctrl1(player,
-                                                    "monster_controler");
-
     Animation monster_walk1(monster1, "monster_walk1",
                             "assets/sprites/monster_walk.png", 153/4, 38, 4);
     Animation monster_damage1(monster1, "monster_damage1",
@@ -203,19 +200,24 @@ int main(int, char **){
 
     // Monster artificial intelligence controller
 
-    MonsterAI monster_ai1(monster1, "monster_ai1", &player, &monster_anim_ctrl);
+
+    AnimationControllerComponent monster_anim_ctrl(player, "monster_controler");
+
     monster_anim_ctrl.add_animation("monster_walk", monster_walk1);
     monster_anim_ctrl.add_animation("monster_damage", monster_damage1);
     monster_anim_ctrl.add_animation("monster_attack", monster_attack1);
     monster1.add_component(monster_walk1);
     monster1.add_component(monster_damage1);
     monster1.add_component(monster_attack1);
+
+    AnimationControllerComponent monster_anim_ctrl1(player,
+                                                    "monster_controler");
     monster1.add_component(monster_anim_ctrl1);
+
+    MonsterAI monster_ai1(monster1, "monster_ai1", &player, &monster_anim_ctrl);
     monster1.add_component(monster_ai1);
 
     GameObject monster2("monster2", true, "monster");
-    AnimationControllerComponent monster_anim_ctrl2(player, "monster_controler");
-
     Animation monster_walk2(monster2, "monster_walk2",
                             "assets/sprites/monster_walk.png", 153/4, 38, 4);
     Animation monster_damage2(monster2, "monster_damage2",
@@ -230,8 +232,10 @@ int main(int, char **){
 
     // Monster artificial intelligence controller
 
+    AnimationControllerComponent monster_anim_ctrl2(player, "monster_controler");
     MonsterAI monster_ai2(monster2, "monster_ai2", &player,
                           &monster_anim_ctrl2);
+
     monster_anim_ctrl2.add_animation("monster_walk", monster_walk2);
     monster_anim_ctrl2.add_animation("monster_damage", monster_damage2);
     monster_anim_ctrl2.add_animation("monster_attack", monster_attack2);
@@ -241,25 +245,26 @@ int main(int, char **){
     monster2.add_component(monster_attack2);
     monster2.add_component(monster_ai2);
 
-    GameObject monster3("monster3", true, "monster");
     AnimationControllerComponent monster_anim_ctrl3(player,
                                                     "monster_controler");
 
+    GameObject monster3("monster3", true, "monster");
     Animation monster_walk3(monster3, "monster_walk3",
                             "assets/sprites/monster_walk.png", 153/4, 38, 4);
+    monster_walk3.setDelay(50);
+
     Animation monster_damage3(monster3, "monster_damage3",
                               "assets/sprites/monster_damage.png",
                               153/4, 38, 4);
+    monster_damage3.setDelay(100);
+
     Animation monster_attack3(monster3, "monster_attack3",
                               "assets/sprites/monster_attack.png",
                               184/4, 40, 4);
-    monster_walk3.setDelay(50);
-    monster_damage3.setDelay(100);
     monster_attack3.setDelay(100);
 
     // Monster artificial intelligence controller
 
-    MonsterAI monster_ai3(monster3, "monster_ai", &player, &monster_anim_ctrl);
     monster_anim_ctrl3.add_animation("monster_walk", monster_walk3);
     monster_anim_ctrl3.add_animation("monster_damage", monster_damage3);
     monster_anim_ctrl3.add_animation("monster_attack", monster_attack3);
@@ -267,27 +272,29 @@ int main(int, char **){
     monster3.add_component(monster_damage3);
     monster3.add_component(monster_attack3);
     monster3.add_component(monster_anim_ctrl3);
+
+    MonsterAI monster_ai3(monster3, "monster_ai", &player, &monster_anim_ctrl);
     monster3.add_component(monster_ai3);
 
-    GameObject monster4("monster4", true, "monster");
     AnimationControllerComponent monster_anim_ctrl4(player, "monster_controler");
 
+    GameObject monster4("monster4", true, "monster");
     Animation monster_walk4(monster4, "monster_walk4",
                             "assets/sprites/monster_walk.png", 153/4, 38, 4);
+    monster_walk4.setDelay(50);
+
     Animation monster_damage4(monster4, "monster_damage4",
                               "assets/sprites/monster_damage.png",
                               153/4, 38, 4);
+    monster_damage4.setDelay(100);
+
     Animation monster_attack4(monster4, "monster_attack4",
                               "assets/sprites/monster_attack.png",
                               184/4, 40, 4);
-    monster_walk4.setDelay(50);
-    monster_damage4.setDelay(100);
     monster_attack4.setDelay(100);
 
     // Monster artificial intelligence controller
 
-    MonsterAI monster_ai4(monster4, "monster_ai4", &player,
-                          &monster_anim_ctrl4);
     monster_anim_ctrl4.add_animation("monster_walk", monster_walk4);
     monster_anim_ctrl4.add_animation("monster_damage", monster_damage4);
     monster_anim_ctrl4.add_animation("monster_attack", monster_attack4);
@@ -295,6 +302,9 @@ int main(int, char **){
     monster4.add_component(monster_damage4);
     monster4.add_component(monster_anim_ctrl4);
     monster4.add_component(monster_attack4);
+
+    MonsterAI monster_ai4(monster4, "monster_ai4", &player,
+                          &monster_anim_ctrl4);
     monster4.add_component(monster_ai4);
 
     // .monsters
@@ -302,11 +312,12 @@ int main(int, char **){
     AudioComponent goblin_spawn_audio(monster1, "goblin_spawn_audio",
                                       "assets/sounds/vocalizacoes.goblin.wav",
                                       false, false);
+    monster1.add_component(goblin_spawn_audio);
+
     AudioComponent goblin_aggro_audio(monster1, "goblin_aggro_audio",
                                       "assets/sounds/vocalizacoes.goblin.3.wav",
                                       false, false);
 
-    monster1.add_component(goblin_spawn_audio);
     monster1.add_component(goblin_aggro_audio);
 
     // Animação da setinha
@@ -330,8 +341,9 @@ int main(int, char **){
                               600, 470);
 
     Portal portal_logic(portal, "portal_logic", &backgroundForest, &portal_pos);
-    portal.add_component(portal_img);
     portal.add_component(portal_logic);
+
+    portal.add_component(portal_img);
     portal.add_component(portal_pos);
 
     portal_logic.add_monster(&monster1);
@@ -339,7 +351,10 @@ int main(int, char **){
     portal_logic.add_monster(&monster3);
     portal_logic.add_monster(&monster4);
 
-
+    AnimationControllerComponent player_anim_ctrl(player,
+                                                  "animationController");
+    GameObject attack_box("attack_box", true, "attack_box",
+                          GameObject::State::disabled);
     Player player_logic(player, "player_logic", &player_anim_ctrl,attack_box,
                         &backgroundForest);
 
@@ -390,6 +405,7 @@ int main(int, char **){
                                  100, 400);
     plataform3.add_component(plataform_ai3);
     plataform3.add_component(img_plataform3);
+
     //part2
     GameObject plataform4("plataform", true, "ground");
     ImageComponent img_plataform4(plataform4, "plataform4",
@@ -414,6 +430,7 @@ int main(int, char **){
                                  1200,400);
     plataform6.add_component(plataform_ai6);
     plataform6.add_component(img_plataform6);
+
     //part3
     GameObject plataform7("plataform7", true, "ground");
     ImageComponent img_plataform7(plataform7, "plataform7",
@@ -489,26 +506,25 @@ int main(int, char **){
     GameObject boss("boss",true,"boss");
     boss.main_positionX = 600;
     boss.main_positionY = 300;
-    CameraPosition boss_pos(boss,"boss_pos", &backgroundForest, 2800, 320);
 
     Animation boss_idle(boss, "bossIdle", "assets/sprites/boss.png",
                         552/3, 244, 3);
+    boss_idle.setDelay(220);
+
     Animation boss_dash(boss, "bossIdle", "assets/sprites/dash.png",
                         2560/10, 240, 10);
+    boss_dash.setDelay(50);
+
     Animation boss_howl(boss, "bossIdle", "assets/sprites/rugido.png",
                         1288/7, 256, 7);
-
-    boss_idle.setDelay(220);
-    boss_dash.setDelay(50);
     boss_howl.setDelay(200);
+
 
     AnimationControllerComponent boss_anim_ctrl(boss, "boss_controler");
     boss_anim_ctrl.add_animation("boss_idle", boss_idle);
     boss_anim_ctrl.add_animation("boss_dash", boss_dash);
     boss_anim_ctrl.add_animation("boss_howl", boss_howl);
 
-    Boss boss_ai(boss,"boss_ai", &boss_anim_ctrl, &fireball, &boss_pos,
-                 &player);
 
     AudioComponent boss_dash_audio(boss, "boss_dash_audio",
                                    "assets/sounds/dash.wav", false, false);
@@ -520,7 +536,13 @@ int main(int, char **){
     boss.add_component(boss_dash);
     boss.add_component(boss_howl);
     boss.add_component(boss_anim_ctrl);
+
+    CameraPosition boss_pos(boss,"boss_pos", &backgroundForest, 2800, 320);
+    Boss boss_ai(boss,"boss_ai", &boss_anim_ctrl, &fireball, &boss_pos,
+                 &player);
+
     boss.add_component(boss_ai);
+
     boss.add_component(boss_pos);
 
     boss.add_component(boss_dash_audio);
@@ -611,11 +633,12 @@ int main(int, char **){
     Game::instance.add_scene(win);
 
     GameObject win_background("win_background");
-    ImageComponent image_win (win_background, "image_win",
-                              "assets/sprites/new_win.png");
     Restart restart_button_win(win_background, "restart_button_win");
 
+    ImageComponent image_win (win_background, "image_win",
+                              "assets/sprites/new_win.png");
     win_background.add_component(image_win);
+
     win_background.add_component(restart_button_win);
 
     win.add_game_object(win_background);
@@ -665,14 +688,15 @@ int main(int, char **){
     story_anim2.setDelay(500);
     story_anim4.setDelay(500);
 
-    InitialStory story_controller(story, "story_controller",
-                                  &story_anim_controller);
 
     story.add_component(story_anim1);
     story.add_component(story_anim2);
     story.add_component(story_anim3);
     story.add_component(story_anim4);
     story.add_component(story_anim_controller);
+
+    InitialStory story_controller(story, "story_controller",
+                                  &story_anim_controller);
     story.add_component(story_controller);
 
     initial_story.add_game_object(story);
