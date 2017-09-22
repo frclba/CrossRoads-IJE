@@ -1,3 +1,7 @@
+/**
+    \file porta.hpp
+    This file declares the porta class
+*/
 #ifndef _MONSTER_H_
 #define _MONSTER_H_
 
@@ -9,6 +13,12 @@
 #include "components/audio.hpp"
 
 using namespace engine;
+
+
+/**
+    \class MonsterAI
+    This class is responsible through the interlligence of moster in the game
+*/
 
 class MonsterAI : public Component {
 
