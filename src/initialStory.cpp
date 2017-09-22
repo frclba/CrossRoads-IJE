@@ -1,11 +1,26 @@
+/**
+    \file initialStory.cpp
+    This file implements the initialStory class
+*/
 #include "initialStory.hpp"
 
 InitialStory::~InitialStory(){}
+
+
+
+/**
+    This method initiates the class InitialStory
+    initiates que interation in 0.
+*/
 
 bool InitialStory::init() {
     interator = 0;
 }
 
+/**
+    This method is responsible for updating in the game for story initial
+
+*/
 void InitialStory::update() {
 
   m_story->flipping( false );

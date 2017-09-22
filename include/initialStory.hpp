@@ -1,3 +1,7 @@
+/**
+    \file initialStory.hpp
+    This file declares the InitialStory class
+*/
 #ifndef _INITIAL_STORY_HPP_
 #define _INITIAL_STORY_HPP_
 
@@ -10,6 +14,12 @@
 #include "components/animation_controller.hpp"
 
 using namespace engine;
+
+/**
+    \class InitialStory
+    This class is responsible for create a story initial in the game
+*/
+
 
 class InitialStory : public Component{
 

@@ -1,3 +1,7 @@
+/**
+    \file porta.hpp
+    This file declares the porta class
+*/
 #ifndef _PORTAL_HPP_
 #define _PORTAL_HPP_
 
@@ -11,6 +15,12 @@
 #include "cameraposition.hpp"
 
 using namespace engine;
+
+
+/**
+    \class portal
+    This class is responsible for create a portal for monsters appear in the game
+*/
 
 class Portal : public Component{
 

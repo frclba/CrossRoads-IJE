@@ -1,3 +1,7 @@
+/**
+    \file restart.hpp
+    This file declares the restart class
+*/
 #ifndef __RESTART_HPP__
 #define __RESTART_HPP__
 
@@ -9,6 +13,11 @@
 #include "Logger.hpp"
 
 using namespace engine;
+
+/**
+    \class Restart
+    This class is responsible for restart in the game
+*/
 
 class Restart : public Component{
 public:
