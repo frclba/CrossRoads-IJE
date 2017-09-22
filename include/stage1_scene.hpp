@@ -34,31 +34,31 @@ public:
 
 private:
 
-    GameObject* ground_stage1;
+    GameObject* ground_stage1 = NULL;
 
-    GameObject* plataform;
-    GameObject* plataform2;
-    GameObject* plataform3;
+    GameObject* plataform = NULL;
+    GameObject* plataform2 = NULL;
+    GameObject* plataform3 = NULL;
 
-    GameObject* monster1;
-    GameObject* monster2;
-    GameObject* monster3;
-    GameObject* monster4;
+    GameObject* monster1 = NULL;
+    GameObject* monster2 = NULL;
+    GameObject* monster3 = NULL;
+    GameObject* monster4 = NULL;
 
-    GameObject* portal;
-    GameObject* background;
+    GameObject* portal = NULL;
+    GameObject* background = NULL;
 
-    GameObject *bullet1;
-    GameObject *player;
-    GameObject* fire_ball;
-    GameObject *go_arrow;
+    GameObject *bullet1 = NULL;
+    GameObject *player = NULL;
+    GameObject* fire_ball = NULL;
+    GameObject *go_arrow = NULL;
 
-    ImageComponent* back_img;
+    ImageComponent* back_img = NULL;
 
-    Player *player_controller;
+    Player *player_controller = NULL;
 
-    bool bulletDir1;
-    unsigned int timestep;
+    bool bulletDir1 = false;
+    unsigned int timestep = 0;
 
     bool is_inside( GameObject* object );
 
