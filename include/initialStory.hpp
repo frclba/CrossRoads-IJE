@@ -36,7 +36,7 @@ public:
         void update();
 
 private:
-    AnimationControllerComponent *m_story;
+    AnimationControllerComponent *m_story = NULL;
 
     unsigned int timestep = 0;
     unsigned int interator = 0;

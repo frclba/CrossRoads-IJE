@@ -29,9 +29,15 @@ void InitialStory::update() {
       interator = interator + 1;
       timestep = Game::instance.timer->getTicks() + 500*6;
   }
+  else{
+    // Do nothing
+  }
 
   if( Game::instance.keyboard->isKeyDown( "enter" ) ) {
 	    Game::instance.change_scene("Fase 1");
+  }
+  else{
+    // Do nothing
   }
 
   switch ( interator ) {
