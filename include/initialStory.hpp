@@ -38,8 +38,8 @@ public:
 private:
     AnimationControllerComponent *m_story;
 
-    unsigned int timestep;
-    unsigned int interator;
+    unsigned int timestep = 0;
+    unsigned int interator = 0;
   
 };
 
