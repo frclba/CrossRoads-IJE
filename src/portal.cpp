@@ -46,25 +46,44 @@ void Portal::update() {
         monster_number++;
         
         timestep = Game::instance.timer->getTicks() + 3000;
+    }else{
+        // Do nothing
     }
 
     interator = (interator + 1) % m_monsters.size();
 
     if( monster_number <= 5 && m_background->imagePart->x == 0 ) {
+        
         m_portal_pos->m_init_posX = 650;
+    
+    }else{
+        // Do nothing
     }
 
     if( monster_number < 10 && monster_number > 5 ) {
+        
         m_portal_pos->m_init_posX = 1200;
+    }
+    else{
+        // Do nothing
     }
 
     if( monster_number < 20 && monster_number > 10 ) {
+        
         m_portal_pos->m_init_posX = 1600;
+    
+    }else{
+        // Do nothing
     }
 
     if( monster_number > 20 ) {
+        
         _main_game_object->setState(GameObject::State::disabled);
+    
+    }else{
+        // Do nothing
     }
+
 
 }
 
