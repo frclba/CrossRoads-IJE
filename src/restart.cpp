@@ -21,6 +21,9 @@ void Restart::update(){
     if(Game::instance.keyboard->isKeyDown("enter")){
         Game::instance.change_scene("Main Menu");
     }
+    else{
+    	// Do nothing
+    }
 
 }
 
