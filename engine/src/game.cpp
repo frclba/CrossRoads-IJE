@@ -17,12 +17,12 @@ bool Game::start_sdl() {
 
     Log::instance.info( "Iniciando video e audio" );
 
-    if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) >= 0 ) {
-        // Do nothing
-    }
-    else {
+    if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) < 0 ) {
         Log::instance.error( "Error ao inicializar video ou audio ou joystick" );
         return false;
+    }
+    else {
+        // Do nothing
     }
 
     Log::instance.info( "Iniciando Imagem" );
@@ -31,20 +31,20 @@ bool Game::start_sdl() {
 
     int img_flags = IMG_INIT_PNG;
 
-    if( IMG_Init( img_flags ) & img_flags ) {
-        // Do nothing
-    }
-    else {
+    if( !(IMG_Init( img_flags ) & img_flags) ) {
         Log::instance.error( "Erro ao inicializar imagens !" );
         return false;
     }
-
-    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) != -1 ) {
+    else {
         // Do nothing
     }
-    else {
+
+    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
         Log::instance.error( "Erro ao inicializar mixer" );
         return false;
+    }
+    else {
+        // Do nothing
     }
 
     timer = new Timer();
@@ -86,12 +86,12 @@ bool Game::create_window () {
         SDL_WINDOW_SHOWN            //Window flags
     );
 
-    if( main_window != NULL ) {
-        // Do noting
-    }
-    else {
+    if( main_window == NULL ) {
         Log::instance.error( "Falha ao criar janela" );
         return false;
+    }
+    else {
+        // Do noting
     }
 
     main_canvas = SDL_CreateRenderer(
@@ -100,12 +100,12 @@ bool Game::create_window () {
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
 
-    if( main_canvas != NULL ) {
-        // Do nothing
-    }
-    else {
+    if( main_canvas == NULL ) {
         Log::instance.error( "Falha ao criar renderizador" );
         return false;
+    }
+    else {
+        // Do nothing
     }
 
     SDL_SetRenderDrawColor(
@@ -250,7 +250,7 @@ void Game::run() {
     Log::instance.info("Adding Scene: '" + id + "' to Scenes List.");
 
     // A scene desejada sempre tem que ser a ultima. Se não for, vai ser adicionada novamente.
-    if( scenes_list.find(id) == scenes_list.end() ){
+    if( scenes_list.find(id) != scenes_list.end() ){
       // Do nothing
     }
     else {
