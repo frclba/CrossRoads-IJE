@@ -63,7 +63,7 @@ void MenuScene::buttons_controller() {
     // Mouse over effect
 
     if( Game::instance.keyboard->isKeyDown("enter") ) {
-        Game::instance.change_scene("initial_story");
+        Game::instance.change_scene("Fase 1");
     }
 
     if( Game::instance.mouse->is_over(bNew) ) {
@@ -71,7 +71,7 @@ void MenuScene::buttons_controller() {
 
             // Game::instance.change_scene("Fase 1");
 
-            Game::instance.change_scene("initial_story");
+            Game::instance.change_scene("Fase 1");
         }
 
         bnewAnimation->useAnimation("normal");

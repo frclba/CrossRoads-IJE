@@ -23,6 +23,15 @@ void Stage1Scene::game_logic() {
 
 
     ground_stage1 = &get_game_object("ground");
+    back_img = (dynamic_cast<ImageComponent*>(
+        background->get_component("backgroundForest")));
+    go_arrow = &get_game_object("go_arrow");
+    portal = &get_game_object("portal");
+
+    monster1 = &get_game_object("monster1");
+    monster2 = &get_game_object("monster2");
+    monster3 = &get_game_object("monster3");
+    monster4 = &get_game_object("monster4");
 
     ground_stage1->main_positionY = 552;
     ground_stage1->main_positionX = 0;
@@ -38,15 +47,6 @@ void Stage1Scene::game_logic() {
         fire_ball->setState(GameObject::State::disabled);
     }
 
-    back_img = (dynamic_cast<ImageComponent*>(
-        background->get_component("backgroundForest")));
-    go_arrow = &get_game_object("go_arrow");
-    portal = &get_game_object("portal");
-
-    monster1 = &get_game_object("monster1");
-    monster2 = &get_game_object("monster2");
-    monster3 = &get_game_object("monster3");
-    monster4 = &get_game_object("monster4");
 
     if( ( portal->state() == GameObject::State::enabled &&
         portal->main_positionX + portal->main_width < 800 ) ||
