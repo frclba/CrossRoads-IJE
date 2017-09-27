@@ -1,3 +1,7 @@
+/**
+    \file porta.hpp
+    This file declares the porta class
+*/
 #ifndef _MONSTER_H_
 #define _MONSTER_H_
 
@@ -10,11 +14,17 @@
 
 using namespace engine;
 
+
+/**
+    \class MonsterAI
+    This class is responsible through the interlligence of moster in the game
+*/
+
 class MonsterAI : public Component {
 
 public:
     MonsterAI(GameObject &main_game_object, std::string id, GameObject *player,
-              AnimationControllerComponent *monster_controler):
+              AnimationControllerComponent *monster_controler) :
               Component(main_game_object, id), dy(0), side(false),
               m_player(player), m_monster_controler(monster_controler) {}
 
@@ -46,10 +56,10 @@ private:
     int life = 3;
     bool is_first = false;
 
-    GameObject* m_player;
-    GameObject* bullet;
-    GameObject* ground_obj;
-    AnimationControllerComponent* m_monster_controler;
+    GameObject *m_player;
+    GameObject *bullet;
+    GameObject *ground_obj;
+    AnimationControllerComponent *m_monster_controler;
 
 };
 

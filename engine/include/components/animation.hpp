@@ -1,19 +1,30 @@
-#ifndef ANIMATION_HPP_
-#define ANIMATION_HPP_
+/**
+    \file animation.hpp
+    This file contains header declaretion for Animation class
+*/
+
+#ifndef ANIMATION_H_
+#define ANIMATION_H_
 
 #include <iostream>
 #include <vector>
-
+#include <unordered_map>
 #include "sdl2core.hpp"
 #include "components/image.hpp"
 #include "game.hpp"
 #include "Timer.hpp"
 
-#include <unordered_map>
-#include <vector>
 
 namespace engine{
+
+    /// Class responsible for rendering an animated image
+    /**
+        \class Animation
+        Class responsible for picking up an image(png) and building the
+        animation related to that image.
+    */
     class Animation : public ImageComponent {
+
         public:
 
         //construtor animation
@@ -23,10 +34,15 @@ namespace engine{
         //    widthDiv = valor de largura que ira dividir a imagem.
         //    heightDiv = valor de altura que sera dividida a imagem.
         //    num_image = numero de sprites contida na imagem
-            Animation(GameObject &main_game_object, std::string id, std::string path, unsigned int widthDiv, unsigned int heightDiv, int num_image):
-                ImageComponent(main_game_object, id, path), m_widthDiv(widthDiv),
-                m_heightDiv(heightDiv), m_num_image(num_image),
-                main_frame(0),delay(0), timestep(0){}
+            Animation(GameObject &main_game_object, std::string id,
+                      std::string path, unsigned int widthDiv,
+                      unsigned int heightDiv, int num_image) :
+                      ImageComponent(main_game_object, id, path),
+                      m_widthDiv(widthDiv),
+                      m_heightDiv(heightDiv),
+                      m_num_image(num_image),
+                      main_frame(0),delay(0),
+                      timestep(0){}
 
             //destrutor
             ~Animation();
@@ -72,8 +88,8 @@ namespace engine{
             void setup();
 
             SDL_RendererFlip flip = SDL_FLIP_NONE;
-        private:
 
+        private:
             const int BEGIN = 0;
             const int END = 1 ;
 
@@ -95,5 +111,7 @@ namespace engine{
             int timestep;
 
     };
+
 }
-#endif
+
+#endif // ANIMATION_H

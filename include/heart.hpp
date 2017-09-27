@@ -1,3 +1,7 @@
+/**
+    \file heart.hpp
+    This file declares the Heart class
+*/
 #ifndef _HEART_H_
 #define _HERAT_H_
 
@@ -8,12 +12,16 @@
 
 using namespace engine;
 
+/**
+    \class Heart
+    This class is responsible for showing player's life
+*/
 class Heart : public Component {
 
 public:
 
-    Heart(GameObject &main_game_object, std::string id,
-          Player* player, int life):
+    Heart(GameObject &main_game_object, std::string id, Player *player,
+          int life) :
           Component(main_game_object, id), m_player(player), m_life(life) {}
 
     ~Heart();
@@ -23,7 +31,7 @@ public:
 
 private:
 
-  Player* m_player;
+  Player *m_player;
   int m_life;
 
 };

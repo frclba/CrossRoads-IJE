@@ -11,92 +11,130 @@
 #include "sdl2core.hpp"
 #include "components/component.hpp"
 
-namespace engine{
+namespace engine {
 
-  class GameObject{
-  public:
-    enum class Layer{
-      background,
-      layer1,
-      layer2,
-      layer3
-    };
-    enum class State{
-      enabled,
-      disabled,
-      invalid
-    };
-    //Sobrecarga do construtor, para caso seja criado um gameobject sem parâmetros, ele ser tratado com inválido.
-    GameObject(): GameObject("",false,"",State::invalid){}
+    class GameObject {
 
-    //Constructor
-    GameObject(std::string name,bool collision = false,std::string m_type = "", State state=State::enabled)
-    : main_positionX(0), main_positionY(0), main_width(0), main_height(0), main_rotation(0),m_collision(collision),
-    type(m_type), m_layer(Layer::layer2), main_state(state), main_name(name){}
+    public:
+        enum class Layer {
+            background,
+            layer1,
+            layer2,
+            layer3
+        };
 
-    virtual ~GameObject(){};
+        enum class State {
+            enabled,
+            disabled,
+            invalid
+        };
 
-    //Init on each component on a map of components, then for each element in a list of components
-    virtual bool init();
+        /* 
+            Overloading the constructor, in case a gameobject without parameters is
+            created, it will be treated with invalid.
+        */
 
-    //Shutdown on each component
-    virtual bool shutdown();
+        GameObject(): GameObject( "", false, "", State::invalid ){}
 
-    //Search, does a type cast and draw on screen a component, if its state is enabled
-    virtual bool draw();
+        // Constructor
 
-    void update();
-    //Add the component on the end of a list of its type.
-    void add_component(Component &component);
+        GameObject( std::string name, bool collision = false, 
+                    std::string m_type = "", State state = State::enabled )
+        : main_positionX( 0 ), main_positionY( 0 ), main_width( 0 ),
+          main_height( 0 ), main_rotation( 0 ), m_collision( collision ),
+        type( m_type ), m_layer( Layer::layer2 ), main_state( state ), 
+        main_name( name ){}
 
-    void setState(State state);
+        virtual ~GameObject(){};
 
-    bool checkCollision(GameObject* object);
+        /* 
+            Init on each component on a map of components, then for each element in 
+            a list of components.
+        */
+      
+        virtual bool init();
 
-    //funcao que busca um component a partir do seu id.
-    Component* get_component(std::string name);
+        // Shutdown on each component
+        
+        virtual bool shutdown();
 
-    // template<typename T> T *get_component(){
-    //     return dynamic_cast<T *>(main_components[std::type_index(typeid(T))].front());
-    // }
+        /* 
+            Search, does a type cast and draw on screen a component, if its state
+            is enabled.
+        */
 
-    // template<typename T> std::list<Component *> get_components();
+        virtual bool draw();
 
-    inline std::string name() const {
-        return main_name;
-    }
+        void update();
 
-    inline State state() const {
-        return main_state;
-    }
+        // Add the component on the end of a list of its type.
+        
+        void add_component( Component &component );
 
-    inline void set_size(int width, int height) {
-        main_width = width;
-        main_height = height;
-    }
+        void setState( State state );
 
-    inline void set_layer(Layer layer) {
-        m_layer = layer;
-    }
+        bool checkCollision( GameObject* object );
 
-    int main_positionX, main_positionY;
-    int main_width, main_height;
-    int main_rotation;
-    bool m_collision;
+        // Function that looks for a component from its id.
+        
+        Component* get_component( std::string name );
 
-    std::string type;
+        /*
+            template<typename T> T *get_component() {
+                return dynamic_cast<T *>( main_components[ std::type_index( typeid( T ) ) ].front() );
+            }
 
-    Layer m_layer;
+            template<typename T> std::list<Component *> get_components();
+        */
 
-  private:
-    State main_state;
-    std::string main_name;
+        inline std::string name() const {
 
-    /*Mapa não ordenado que vai armazenar todos os componentes do game object. A chave será definida pelo
-    tipo do componente, e o valor será uma lista de componentes daquele tipo (Sprites,audios,etc)*/
-    std::unordered_map <std::type_index, std::list<Component *> > main_components;
-  };
+            return main_name;
+
+        }
+
+        inline State state() const {
+
+            return main_state;
+
+        }
+
+        inline void set_size( int width, int height ) {
+
+            main_width = width;
+            main_height = height;
+
+        }
+
+        inline void set_layer( Layer layer ) {
+
+            m_layer = layer;
+
+        }
+
+        int main_positionX, main_positionY;
+        int main_width, main_height;
+        int main_rotation;
+
+        bool m_collision;
+
+        std::string type;
+
+        Layer m_layer;
+
+      private:
+          State main_state;
+          std::string main_name;
+
+        /*
+            Unordered map that will store all components of the game object. 
+            The key will be defined by the type of the component, and the value
+            will be a list of components of that type (Sprites, audios, etc.)
+        */
+        
+          std::unordered_map <std::type_index, std::list<Component *> > main_components;
+      };
 
 }
 
-#endif
+#endif  // __GAMEOBJECT_H__ 

@@ -1,40 +1,57 @@
-#ifndef __ENGINE_COMPONENTS_ANIMATION_CONTROLLER__
-#define __ENGINE_COMPONENTS_ANIMATION_CONTROLLER__
+/**
+  \file animation_controller.hpp
+  This file contains header declaration for AnimationControllerComponent Class
+*/
+
+#ifndef FOO_BAR_ENGINE_COMPONENTS_ANIMATION_CONTROLLER_H_
+#define FOO_BAR_ENGINE_COMPONENTS_ANIMATION_CONTROLLER_H_
 
 #include <string>
 #include <unordered_map>
 #include <utility>
 #include "sdl2core.hpp"
-
 #include "components/component.hpp"
 #include "components/animation.hpp"
 #include "gameobject.hpp"
 
 namespace engine {
-    class AnimationControllerComponent : public Component {
-        public:
-            AnimationControllerComponent(GameObject &main_game_object, std::string id)
-                : Component(main_game_object, id), current_animation(""), next_animation("") {}
 
-            ~AnimationControllerComponent(){};
+    /// Manages the exchange of animations
+    /**
+        \class AnimationControllerComponent
+        This class manages the current animations and the transition with other animations
+    */
+    class AnimationControllerComponent : public Component {
+
+        public:
+
+            AnimationControllerComponent(GameObject &main_game_object, std::string id) :
+            Component(main_game_object, id), current_animation(""), next_animation("") {}
+
+            ~AnimationControllerComponent() {
+
+            };
 
             bool init();
             bool shutdown();
             void update();
-
             void add_animation(std::string name, Animation &animation);
 
-            void play_animation(std::string name, bool wait_to_finish=false);
+            void play_animation(std::string name, bool wait_to_finish = false);
 
             void flipping(bool isFlip);
+
         private:
             bool flip;
+
             std::unordered_map<std::string, Animation *> m_animations_map;
             std::string current_animation;
             std::string next_animation;
 
             void change_animations();
+
     };
+
 }
 
-#endif
+#endif // FOO_BAR_ENGINE_COMPONENTS_ANIMATION_CONTROLLER_H_
