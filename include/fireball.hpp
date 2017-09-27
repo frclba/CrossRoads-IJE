@@ -41,13 +41,13 @@ private:
 
     const int GRAVITY = 1;
 
-    double dy;
+    double dy = 0.0;
 
-    GameObject *m_player;
+    GameObject *m_player = NULL;
 
-    int last_pos_player_x;
+    int last_pos_player_x = 0;
 
-    bool readyToFall;
+    bool readyToFall = false;
 };
 
 #endif  // _FIREBALL_HPP_

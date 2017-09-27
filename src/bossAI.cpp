@@ -32,13 +32,13 @@ void Boss::update() {
         _main_game_object->main_positionX +
         _main_game_object->main_width < 850 ) {
 
-        if ( fireball_attack ) {
-
-            // fireball_controller();
-
-        }
-        else if( dash_attack ) {
+        if( dash_attack ) {
             boss_move();
+        }
+        else {
+
+            // Do nothing
+
         }
 
         m_boss_animation->flipping(!side);
@@ -59,8 +59,18 @@ void Boss::update() {
 
             timestep = Game::instance.timer->getTicks() + 3000;
         }
+        else {
 
-            boss_damage();
+            // Do nothing
+
+        }
+
+        boss_damage();
+    }
+    else {
+
+        // Do nothing
+
     }
 
 }
@@ -83,13 +93,28 @@ void Boss::boss_damage() {
             life--;
             time_damage = Game::instance.timer->getTicks() + 1000;
         }
+        else {
+
+            // Do nothing
+
+        }
 
         if( life == 3 ) {
             boss_full_putasso_audio->play(0, -1);
         }
+        else {
+
+            // Do nothing
+
+        }
 
         if( life <= 0 ) {
             Game::instance.change_scene("Win Scene");
+        }
+        else {
+
+            // Do nothing
+
         }
     }
 
@@ -112,22 +137,38 @@ void Boss::boss_move() {
         // side = !side;
         move_time = Game::instance.timer->getTicks() + 900;
     }
+    else {
+
+        // Do nothing
+
+    }
 
     if( side ) {
         m_position->m_init_posX -=10;
     }
     else {
-      m_position->m_init_posX +=10;
+        m_position->m_init_posX +=10;
     }
 
     if( _main_game_object->main_positionX <=10 && side ) {
         side = !side;
         dash_attack = false;
     }
+    else {
+
+        // Do nothing
+
+    }
+
     if( _main_game_object->main_positionX +
         _main_game_object->main_width >= 800 && !side ) {
         side = !side;
         dash_attack = false;
+    }
+    else {
+
+        // Do nothing
+
     }
 
 }

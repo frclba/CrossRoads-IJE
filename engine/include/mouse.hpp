@@ -37,8 +37,8 @@ namespace engine {
 
         // Mouse position
 
-        int mouseX;
-        int mouseY;
+        int mouseX = 0;
+        int mouseY = 0;
 
     private:
 
