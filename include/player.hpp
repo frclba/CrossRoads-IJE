@@ -1,3 +1,9 @@
+/**
+  \file player.hpp
+  This file declares the Player class, his methods and attributes with their
+  encapsulation.
+*/
+
 #ifndef __PLAYER_HPP__
 #define __PLAYER_HPP__
 
@@ -13,6 +19,11 @@
 
 using namespace engine;
 
+/// This class represents the player, their characteristics and behavior
+/**
+    \class Player
+    Class responsable for all logic about the player.
+*/
 class Player : public Component {
 
 public:
@@ -41,39 +52,39 @@ public:
     void processPos();
     void gravityF();
 
-    GameObject *player;
-    GameObject *plataform;
-    GameObject *monster;
+    GameObject *player = NULL;
+    GameObject *plataform = NULL;
+    GameObject *monster = NULL;
 
-    bool side;
-    bool attack_meele;
-    bool attack_ranged;
+    bool side = false;
+    bool attack_meele = false;
+    bool attack_ranged = false;
 
-    int life_points;
+    int life_points = 5;
 
 private:
 
     const bool RIGHT = true;
     const bool LEFT = false;
 
-    AnimationControllerComponent *animCtrl;
-    AnimationControllerComponent *monster_controler;
+    AnimationControllerComponent *animCtrl = NULL;
+    AnimationControllerComponent *monster_controler = NULL;
 
-    unsigned int jumptime;
-    unsigned int time_attack;
+    unsigned int jumptime = 0;
+    unsigned int time_attack = 0;
 
-    bool stand;
-    bool jump;
-    bool walkR;
-    bool walkL;
-    bool damageBool;
+    bool stand = false;
+    bool jump = false;
+    bool walkR = false;
+    bool walkL = false;
+    bool damageBool = false;
 
-    GameObject *ground;
-    GameObject* m_attack_box;
+    GameObject *ground = NULL;
+    GameObject* m_attack_box = NULL;
 
-    float dy;
+    float dy = 0;
 
-    ImageComponent* m_background;
+    ImageComponent* m_background = NULL;
 
 };
 

@@ -1,3 +1,7 @@
+/**
+    \file monsterAI.cpp
+    This file implements the MonsterAI class
+*/
 #include "monsterAI.hpp"
 #include "game.hpp"
 #include <stdio.h>
@@ -8,6 +12,10 @@ unsigned int time_damage;
 const int PLAYER_DISTANCE = 850;
 const int PLAYER_ATTACK_DISTANCE = 150;
 
+/**
+    This method initiates the Class MonsterAI in the game
+    \return return a true value that make the MonsterAI active
+*/
 bool MonsterAI::init() {
 
     _main_game_object->main_positionY = ground - _main_game_object->main_height;
@@ -19,9 +27,12 @@ bool MonsterAI::init() {
 
 }
 
+/**
+    This method is responsible for updating the monster in walk and attack que monster in the game.
+*/
 void MonsterAI::update() {
 
-    m_monster_controler->play_animation("monster_walk", true);
+   
     gravityF();
 
     move_monster();
@@ -34,14 +45,24 @@ void MonsterAI::update() {
         _main_game_object->main_positionX +
         _main_game_object->main_width > 800 ) {
         _main_game_object->setState(GameObject::State::disabled);
+    }else{
+        // Do nothing
     }
+
+     m_monster_controler->play_animation("monster_walk", true);
 
     if( Game::instance.collision_manager->checkCollision(
         _main_game_object, "player") ) {
         m_monster_controler->play_animation("monster_attack");
+    }else{
+        // Do nothing
     }
 
 }
+/**
+    This method is responsible for possibility the monster to see player in the game
+    \return return true for prayer see and false see not player
+*/
 
 bool MonsterAI::see_player() {
 
@@ -55,6 +76,12 @@ bool MonsterAI::see_player() {
 
 }
 
+
+/**
+    This method is responsible for possibility the monster jump in the game
+    
+*/
+
 void MonsterAI::jump_monster() {
 
     // Monster jump
@@ -65,9 +92,16 @@ void MonsterAI::jump_monster() {
     if( see_player() && isOnGround &&
         _main_game_object->main_positionY > m_player->main_positionY ) {
         dy -= jumpF;
+    }else{
+        // Do nothing
     }
 
 }
+
+/**
+    This method is responsible for move monster in direction the player in the game
+    
+*/
 
 void MonsterAI::move_monster() {
 
@@ -78,14 +112,24 @@ void MonsterAI::move_monster() {
         m_monster_controler->flipping(true);
         _main_game_object->main_positionX += MONSTER_MOVE;
     }
+    else{
+        // Do nothing
+    }
 
     if( isSee && !has_damage &&
         m_player->main_positionX < _main_game_object->main_positionX ) {
         m_monster_controler->flipping(false);
         _main_game_object->main_positionX -= MONSTER_MOVE;
     }
+    else{
+        // Do nothing
+    }
 
 }
+
+/**
+    This method is responsible for incrementar the vertical position que monster im game
+*/
 
 void MonsterAI::processPos() {
 
@@ -94,6 +138,10 @@ void MonsterAI::processPos() {
     _main_game_object->main_positionY += dy; // Current velocity components.
 
 }
+
+/**
+    This method is responsible for increment the vertical position of the monster
+*/
 
 void MonsterAI::gravityF() {
 
@@ -114,23 +162,41 @@ void MonsterAI::gravityF() {
 
 }
 
+/**
+    This method is responsible for if you have floor to monster floor
+*/
+
 bool MonsterAI::has_ground() {
 
     ground_obj = Game::instance.collision_manager->checkCollision(
                  _main_game_object, "ground");
+
+    has_ground = false;
 
     if( ground_obj && dy >= 0 ) {
         if( dy > 0 ) {
             _main_game_object->main_positionY = ground_obj->main_positionY -
             _main_game_object->main_height;
         }
+        else{
+        // Do nothing
+        }
 
-        return true;
+        has_ground = true;
+    }
+    else{
+         // Do nothing
     }
 
-    return false;
+    return has_ground;
+   
 
 }
+
+
+/**
+    This method is responsible for damage monster in the game for 
+*/
 
 void MonsterAI::damage() {
 
@@ -143,30 +209,33 @@ void MonsterAI::damage() {
         m_monster_controler->play_animation("monster_damage");
 
         if( bullet ) {
+            
             bullet->setState(GameObject::State::disabled);
+        
+        }
+        else{
+         // Do nothing
         }
 
         has_damage = true;
-        if( side == RIGHT ) {
-
-            // _main_game_object->main_positionX -= 10;
-
-        }
-        if( side == LEFT ) {
-
-            // _main_game_object->main_positionX += 10;
-
-        }
+        
         if( Game::instance.timer->getTicks() > time_damage ) {
             life--;
             time_damage = Game::instance.timer->getTicks() + 1000;
         }
+        else{
+         // Do nothing
+        }
+
         if( life <= 0 ) {
             _main_game_object->setState(GameObject::State::disabled);
             life = 3;
 
             // Game::instance.change_scene("Win Scene");
 
+        }
+        else{
+         // Do nothing
         }
     }
     else {

@@ -1,3 +1,7 @@
+/**
+    \file Time.cpp
+    This file declares the Timer class
+*/
 #include "Timer.hpp"
 
 using namespace engine;
@@ -17,8 +21,10 @@ Timer::~Timer() {
 
 }
 
-// The various clock actions
-
+/**
+    This method is responsable
+    for start clock action
+*/
 void Timer::start() {
 
     // Start the timer
@@ -36,6 +42,10 @@ void Timer::start() {
 
 }
 
+/**
+    This method is responsable
+    for stop clock action
+*/
 void Timer::stop() {
 
     // Stop the timer
@@ -53,6 +63,10 @@ void Timer::stop() {
 
 }
 
+/**
+    This method is responsable
+    for pause clock action
+*/
 void Timer::pause() {
 
     // If the timer is running and isn't already paused
@@ -68,9 +82,16 @@ void Timer::pause() {
         mPausedTicks = SDL_GetTicks() - mStartTicks;
         mStartTicks = 0;
     }
+    else{
+        // Do nothing
+    }
 
 }
 
+/**
+    This method is responsable
+    for unpause clock action
+*/
 void Timer::unpause() {
 
     // If the timer is running and paused
@@ -88,6 +109,9 @@ void Timer::unpause() {
         // Reset the paused ticks
 
         mPausedTicks = 0;
+    }
+    else{
+        // Do nothing
     }
 
 }
@@ -119,13 +143,19 @@ Uint32 Timer::getTicks() {
             time = SDL_GetTicks() - mStartTicks;
         }
     }
+    else{
+        // Do nothing
+    }
 
     return time;
 
 }
 
-// Checks the status of the timer
-
+/**
+    This method is responsable
+    for checks the status of the timer
+    \return mStarted true
+*/
 bool Timer::isStarted() {
 
     // Timer is running and paused or unpaused
@@ -134,6 +164,11 @@ bool Timer::isStarted() {
 
 }
 
+/**
+    This method is responsable
+    for checks the status of the timer
+    \return mPaused and mStarted true
+*/
 bool Timer::isPaused() {
 
     // Timer is running and paused
@@ -142,6 +177,10 @@ bool Timer::isPaused() {
 
 }
 
+/**
+    This method is responsable
+    for defines the passing of time
+*/
 void Timer::set_TimeStep() {
 
     timeStep = getTicks();

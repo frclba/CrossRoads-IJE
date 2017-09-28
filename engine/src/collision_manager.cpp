@@ -1,3 +1,7 @@
+/**
+    \file collision_manager.cpp
+    This file declares the CollisionManager class
+*/
 #include "collision_manager.hpp"
 #include "game.hpp"
 
@@ -6,6 +10,13 @@ using namespace engine;
 CollisionManager::CollisionManager(){}
 CollisionManager::~CollisionManager(){}
 
+/**
+    This method is responsible for getting collisions from the game objects
+    \param *objects
+    \parblock
+        Is a input parameter that represents objects of the game(!=NULL)
+    \endparblock
+*/
 void CollisionManager::getCollisions( std::list <GameObject*> *objects ) {
     
     collision_list = objects;
@@ -20,12 +31,23 @@ GameObject* CollisionManager::checkCollision( GameObject* game_object,
         if( ( *obj )->type == type && collide( game_object, *obj ) ) {
             return (*obj);
         }
+        else{
+          // Do nothing
+        }
     }
 
     return NULL;
 
 }
 
+/**
+    This method is responsible for colliding objects and repositioning them
+    \param obj1, obj2
+    \parblock
+        Is a input parameter that represents objects of the game(!=NULL)
+    \endparblock
+    \return return a true value to result of objects intersection 
+*/
 bool CollisionManager::collide( GameObject* obj1, GameObject* obj2 ) {
   
   rect1.x = obj1->main_positionX; 

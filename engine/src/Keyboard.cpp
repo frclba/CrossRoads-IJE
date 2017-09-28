@@ -1,3 +1,7 @@
+/**
+    \file keyboard.cpp
+    This file use Keyboard functions
+*/
 #include "Keyboard.hpp"
 
 using namespace engine;
@@ -14,62 +18,104 @@ Keyboard::~Keyboard() {
 
 }
 
+/**
+    Set keys
+    \param evt
+    \parblock
+        This method evaluate what button was pressed with the variable evt
+        and then take decisions based on evt
+    \endparblock
+    \return anything because the method is void
+*/
 void Keyboard::setKeys( SDL_Event* evt ) {
 
     if( evt -> type == SDL_KEYDOWN ) {
         keycode_down.push_back( evt -> key.keysym.sym );
     }
-
     else if( evt -> type == SDL_KEYUP ) {
         keycode_up.push_back( evt -> key.keysym.sym );
     }
-
     else if( evt -> type == SDL_JOYBUTTONDOWN ) {
+
         if( ( ( int ) evt -> jbutton.button ) == 1 ) {
             keycode_down.push_back( SDLK_SPACE );
+        }
+        else {
+            // Do nothing
         }
 
         if( ( ( int ) evt -> jbutton.button ) == 2 ) {
             keycode_down.push_back( SDLK_w );
         }
+        else {
+            // Do nothing
+        }
+
         if( ( ( int ) evt -> jbutton.button ) == 0 ) {
             keycode_down.push_back( SDLK_f );
         }
+        else {
+            // Do nothing
+        }
+
         if( ( ( int ) evt -> jbutton.button ) == 9 ) {
             keycode_down.push_back( SDLK_RETURN );
         }
-        //std::cout<<((int)evt->jbutton.button)<<std::endl;
-    }
+        else {
+            // Do nothing
+        }
 
+    }
     else if( evt -> type == SDL_JOYBUTTONUP ) {
+
         if( ( ( int ) evt -> jbutton.button ) == 1 ) {
             keycode_up.push_back( SDLK_SPACE );
         }
+        else {
+            // Do nothing
+        }
+
         if( ( ( int ) evt -> jbutton.button ) == 2 ) {
             keycode_up.push_back( SDLK_w );
         }
+        else {
+            // Do nothing
+        }
+
         if( ( ( int ) evt -> jbutton.button ) == 0 ) {
             keycode_up.push_back( SDLK_f );
         }
+        else {
+            // Do nothing
+        }
+
         if( ( ( int ) evt -> jbutton.button ) == 9 ) {
             keycode_up.push_back( SDLK_RETURN );
         }
+        else {
+            // Do nothing
+        }
     }
-
     else if( evt -> type == SDL_JOYAXISMOTION ) {
+
         if( evt -> jaxis.axis == 0 ) {
+
             if( evt -> jaxis.value > 8000 ) {
                 keycode_down.push_back( SDLK_d );
             }
             else {
                 keycode_up.push_back( SDLK_d );
             }
+
             if( evt -> jaxis.value < -8000 ) {
                 keycode_down.push_back( SDLK_a );
             }
             else {
                 keycode_up.push_back( SDLK_a );
             }
+        }
+        else {
+            // Do nothing
         }
 
         if( evt -> jaxis.axis == 1 ) {
@@ -79,6 +125,7 @@ void Keyboard::setKeys( SDL_Event* evt ) {
             else {
                 keycode_up.push_back( SDLK_s );
             }
+
             if( evt -> jaxis.value < -8000 ) {
                 keycode_down.push_back( SDLK_w );
             }
@@ -86,27 +133,32 @@ void Keyboard::setKeys( SDL_Event* evt ) {
                 keycode_up.push_back( SDLK_w );
             }
         }
-        //std::cout<<evt->jaxis.value<<std::endl;
+        else {
+            // Do nothing
+        }
+    }
+    else {
+        // Do nothing
     }
 
 }
 
+/**
+    Verify key up
+    \param key
+    \parblock
+        This method verify if key pressed is up
+    \endparblock
+    \return returns bool to key up or not
+*/
 bool Keyboard::isKeyDown( std::string key ) {
 
     for( auto m_key : keycode_down ) {
         if( m_key == m_buttons[key] ) {
             return true;
         }
-    }
-
-    return false;
-
-}
-
-bool Keyboard::isKeyUp( std::string key ) {
-    for( auto m_key : keycode_up ) {
-        if( m_key == m_buttons[key] ) {
-            return true;
+        else {
+            // Do nothing
         }
     }
 
@@ -114,7 +166,31 @@ bool Keyboard::isKeyUp( std::string key ) {
 
 }
 
+/**
+    Verify key up
+    \param key
+    \parblock
+        This method verify if key pressed is up
+    \endparblock
+    \return returns bool to key up or not
+*/
+bool Keyboard::isKeyUp( std::string key ) {
+    for( auto m_key : keycode_up ) {
+        if( m_key == m_buttons[key] ) {
+            return true;
+        }
+        else {
+            // Do nothing
+        }
+    }
 
+    return false;
+
+}
+
+/**
+    This method clear key down and key up logic after pressed by the player
+*/
 void Keyboard::clearKeyboard() {
 
    keycode_up.clear();
@@ -122,7 +198,9 @@ void Keyboard::clearKeyboard() {
 
 }
 
-
+/**
+   This method map all enable and not enable buttons that can be used in game 
+*/
 void Keyboard::create_keyboard_mapping() {
 
     m_buttons["unknown"] = SDLK_UNKNOWN;

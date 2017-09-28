@@ -1,3 +1,8 @@
+/**
+    \file stage1_scene.hpp
+    This file declares the Stage1Scene class
+*/
+
 #ifndef __STAGE1_H__
 #define __STAGE1_H__
 
@@ -10,6 +15,11 @@
 
 using namespace engine;
 
+/// This class represents the Scene of the first stage
+/**
+    \class Stage1Scene
+    Class responsable for Scene definition of first stage in the game
+*/
 class Stage1Scene : public Scene {
 
 public:

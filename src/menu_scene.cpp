@@ -1,5 +1,13 @@
+/**
+    \file menu_scene.cpp
+    This file implements the MenuScene class
+*/
 #include "menu_scene.hpp"
 
+/**
+    This method is responsible for the logic of the game in the scene menu,
+    such as the control buttons and the position of the fire on the screen
+*/
 void MenuScene::game_logic() {
 
     // Get menuFire object
@@ -17,7 +25,20 @@ void MenuScene::game_logic() {
 
 }
 
+/**
+    This method is responsible for the button controls in the
+    scene menu, such as the new game button and load game button.
+*/
 void MenuScene::buttons_controller() {
+
+    // Mouse over effect
+
+    if( Game::instance.keyboard->isKeyDown("enter") ) {
+        Game::instance.change_scene("initial_story");
+    }
+    else {
+        // Do nothing
+    }
 
     // Get bNew gameobject
 
@@ -37,30 +58,20 @@ void MenuScene::buttons_controller() {
     bLoad->main_positionX = 800;
     bLoad->main_positionY = 820;
 
-    // Takes animation components of the new game button and the load button
-
     Animation *bnewAnimation = (dynamic_cast<Animation*> (
                                 bNew->get_component("imageBNew")));
-    Animation *bloadAnimation = (dynamic_cast<Animation*> (
-                                 bLoad->get_component("imageBLoad")));
-
-    AudioComponent *button_hover_sound = (dynamic_cast<AudioComponent*> (
-                                          bLoad->get_component(
-                                          "button_hover_sound")));
-
-    // Mouse over effect
-
-    if( Game::instance.keyboard->isKeyDown("enter") ) {
-        Game::instance.change_scene("initial_story");
-    }
 
     if( Game::instance.mouse->is_over(bNew) ) {
-        if ( Game::instance.mouse->is_right_button() ) {
-
-            // Game::instance.change_scene("Fase 1");
-
+        if( Game::instance.mouse->is_right_button() ) {
             Game::instance.change_scene("initial_story");
         }
+        else {
+            // Do nothing
+        }
+
+        AudioComponent *button_hover_sound = (dynamic_cast<AudioComponent*> (
+                                              bLoad->get_component(
+                                              "button_hover_sound")));
 
         bnewAnimation->useAnimation("normal");
         button_hover_sound->play(0,-1);
@@ -68,6 +79,9 @@ void MenuScene::buttons_controller() {
     else {
         bnewAnimation->useAnimation("mouseON");
     }
+
+    Animation *bloadAnimation = (dynamic_cast<Animation*> (
+                                 bLoad->get_component("imageBLoad")));
 
     if( Game::instance.mouse->is_over(bLoad) ) {
         bloadAnimation->useAnimation("normal");
