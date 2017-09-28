@@ -32,7 +32,7 @@ bool MonsterAI::init() {
 */
 void MonsterAI::update() {
 
-   
+    m_monster_controler->play_animation("monster_walk", true);
     gravityF();
 
     move_monster();
@@ -45,17 +45,11 @@ void MonsterAI::update() {
         _main_game_object->main_positionX +
         _main_game_object->main_width > 800 ) {
         _main_game_object->setState(GameObject::State::disabled);
-    }else{
-        // Do nothing
     }
-
-     m_monster_controler->play_animation("monster_walk", true);
 
     if( Game::instance.collision_manager->checkCollision(
         _main_game_object, "player") ) {
         m_monster_controler->play_animation("monster_attack");
-    }else{
-        // Do nothing
     }
 
 }
@@ -92,8 +86,6 @@ void MonsterAI::jump_monster() {
     if( see_player() && isOnGround &&
         _main_game_object->main_positionY > m_player->main_positionY ) {
         dy -= jumpF;
-    }else{
-        // Do nothing
     }
 
 }
@@ -112,17 +104,11 @@ void MonsterAI::move_monster() {
         m_monster_controler->flipping(true);
         _main_game_object->main_positionX += MONSTER_MOVE;
     }
-    else{
-        // Do nothing
-    }
 
     if( isSee && !has_damage &&
         m_player->main_positionX < _main_game_object->main_positionX ) {
         m_monster_controler->flipping(false);
         _main_game_object->main_positionX -= MONSTER_MOVE;
-    }
-    else{
-        // Do nothing
     }
 
 }
@@ -171,25 +157,16 @@ bool MonsterAI::has_ground() {
     ground_obj = Game::instance.collision_manager->checkCollision(
                  _main_game_object, "ground");
 
-    has_ground = false;
-
     if( ground_obj && dy >= 0 ) {
         if( dy > 0 ) {
             _main_game_object->main_positionY = ground_obj->main_positionY -
             _main_game_object->main_height;
         }
-        else{
-        // Do nothing
-        }
 
-        has_ground = true;
-    }
-    else{
-         // Do nothing
+        return true;
     }
 
-    return has_ground;
-   
+    return false;
 
 }
 
@@ -209,33 +186,30 @@ void MonsterAI::damage() {
         m_monster_controler->play_animation("monster_damage");
 
         if( bullet ) {
-            
             bullet->setState(GameObject::State::disabled);
-        
-        }
-        else{
-         // Do nothing
         }
 
         has_damage = true;
-        
+        if( side == RIGHT ) {
+
+            // _main_game_object->main_positionX -= 10;
+
+        }
+        if( side == LEFT ) {
+
+            // _main_game_object->main_positionX += 10;
+
+        }
         if( Game::instance.timer->getTicks() > time_damage ) {
             life--;
             time_damage = Game::instance.timer->getTicks() + 1000;
         }
-        else{
-         // Do nothing
-        }
-
         if( life <= 0 ) {
             _main_game_object->setState(GameObject::State::disabled);
             life = 3;
 
             // Game::instance.change_scene("Win Scene");
 
-        }
-        else{
-         // Do nothing
         }
     }
     else {

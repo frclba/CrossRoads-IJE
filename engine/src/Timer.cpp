@@ -82,9 +82,6 @@ void Timer::pause() {
         mPausedTicks = SDL_GetTicks() - mStartTicks;
         mStartTicks = 0;
     }
-    else{
-        // Do nothing
-    }
 
 }
 
@@ -109,9 +106,6 @@ void Timer::unpause() {
         // Reset the paused ticks
 
         mPausedTicks = 0;
-    }
-    else{
-        // Do nothing
     }
 
 }
@@ -142,9 +136,6 @@ Uint32 Timer::getTicks() {
 
             time = SDL_GetTicks() - mStartTicks;
         }
-    }
-    else{
-        // Do nothing
     }
 
     return time;
