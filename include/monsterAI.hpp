@@ -1,6 +1,6 @@
 /**
     \file porta.hpp
-    This file declares the porta class
+    This file declares the porta class 
 */
 #ifndef _MONSTER_H_
 #define _MONSTER_H_
@@ -44,22 +44,22 @@ private:
     void bullet_damage();
     bool has_ground();
 
-    int MONSTER_MOVE;
+    int MONSTER_MOVE = 0;
     const int ground = 552;
     const int gravity = 1;
     const float jumpF = 2;
-    float dy;
-    bool side;
+    float dy = 0;
+    bool side = false;
     const bool RIGHT = true;
     const bool LEFT = false;
     bool has_damage = false;
     int life = 3;
     bool is_first = false;
 
-    GameObject *m_player;
-    GameObject *bullet;
-    GameObject *ground_obj;
-    AnimationControllerComponent *m_monster_controler;
+    GameObject *m_player = NULL;
+    GameObject *bullet = NULL;
+    GameObject *ground_obj = NULL;
+    AnimationControllerComponent *m_monster_controler = NULL;
 
 };
 

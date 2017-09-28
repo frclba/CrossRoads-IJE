@@ -42,12 +42,12 @@ public:
 private:
     std::vector <GameObject*> m_monsters;
 
-    unsigned int timestep;
-    unsigned int interator;
-    unsigned int monster_number;
+    unsigned int timestep = 0;
+    unsigned int interator = 0;
+    unsigned int monster_number = 0;
 
-    ImageComponent *m_background;
-    CameraPosition *m_portal_pos;
+    ImageComponent *m_background = NULL;
+    CameraPosition *m_portal_pos = NULL;
   
 };
 

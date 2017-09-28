@@ -47,18 +47,18 @@ namespace engine {
 
             // The clock time when the timer started
 
-            Uint32 mStartTicks;
+            Uint32 mStartTicks = NULL;
 
             // The ticks stored when the timer was paused
 
-            Uint32 mPausedTicks;
+            Uint32 mPausedTicks = NULL;
 
-            Uint32 timeStep;
+            Uint32 timeStep = NULL;
 
             // The timer status
 
-            bool mPaused;
-            bool mStarted;
+            bool mPaused = false;
+            bool mStarted = false;
 
     };
 
