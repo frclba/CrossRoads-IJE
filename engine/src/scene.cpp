@@ -10,54 +10,50 @@ using namespace engine;
 
 GameObject INVALID_GAME_OBJECT;
 
-/**
-    This method adds a game object in the scene
-    \param &obj is a input parameter that represents an address of game object
-    \return returns a true value when a non-existent object to enter the scene
-*/
-bool Scene::add_game_object( GameObject &obj ) {
+bool Scene::add_game_object(GameObject &obj) {
 
     auto id = obj.name();
-    Log::instance.info( "Adding GameObject '" + id + "' to scene '" + scene_name + "'." );
+    Log::instance.info("Adding GameObject '" + id + "' to scene '" + scene_name + "'.");
 
-    // Iterating map to see if that game object already exists in it
 
     if( scene_objects.find( id ) != scene_objects.end() ) {
         Log::instance.warning( "Game object: '" + id + "' já existe!" );
         return false;
     }
-
-    scene_objects[id] = &obj;
-    return true;
+    else {
+        scene_objects[id] = &obj;
+        return true;
+    }
 
 }
 
-GameObject &Scene::get_game_object( const std::string &id ) {
+GameObject &Scene::get_game_object(const std::string &id) {
 
-    if( scene_objects.find( id ) == scene_objects.end() ) {
+    if( scene_objects.find(id) != scene_objects.end() ) {
+        return *scene_objects[id];
+    }
+    else {
         Log::instance.warning( "Não foi possível encontrar o GameObject '" + id +"'." );
         return INVALID_GAME_OBJECT;
     }
 
-    return *scene_objects[id];
-
 }
 
-bool Scene::remove_game_object( const std::string &id ) {
+bool Scene::remove_game_object(const std::string &id) {
 
-    Log::instance.info( "Removendo GameObject '" + id + "' da Scene." );
+    Log::instance.info("Removendo GameObject '" + id + "' da Scene.");
 
-    if( scene_objects.find(id) == scene_objects.end() ) {
-        Log::instance.warning(
-            "Não foi possível encontrar o GameObject '" + id + "'."
-        );
-
+    if( scene_objects.find(id) != scene_objects.end() ) {
+        scene_objects.erase( id );
+        return true;
+    }
+    else {
+        Log::instance.warning("Não foi possível encontrar o GameObject '" +
+                              id + "'.");
         return false;
     }
 
-    scene_objects.erase( id );
 
-    return true;
 
 }
 
@@ -67,14 +63,16 @@ bool Scene::remove_game_object( const std::string &id ) {
 */
 bool Scene::init() {
 
-    Log::instance.info( "Inicializando cena '" + scene_name + "'." );
+    Log::instance.info("Inicializando cena '" + scene_name + "'.");
 
-    // Iterating the map and initializing each of the game objects.
 
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
 
-        if( obj -> init() == false ) {
+        if( obj->init() == true ) {
+            // Do nothing
+        }
+        else {
             return false;
         }
     }
@@ -89,21 +87,24 @@ bool Scene::init() {
 */
 bool Scene::shutdown() {
 
-    Log::instance.info( "Destruindo cena '" + scene_name + "'." );
+    Log::instance.info("Destruindo cena '" + scene_name + "'.");
 
-    // Iterating the map and initializing each of the game objects.
 
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
 
-        if( obj -> state() == GameObject::State::enabled &&
-        obj -> shutdown() == false )
-
-        return false;
+        if( obj->state() != GameObject::State::enabled ||
+            obj->shutdown() != false ) {
+            // Do nothing
+        }
+        else {
+            return false;
+        }
 
     }
 
     return true;
+
 }
 
 /**
@@ -115,15 +116,18 @@ void Scene::update() {
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
 
-        if( obj -> state() == GameObject::State::enabled ) {
-            obj -> update();
+        if ( obj->state() == GameObject::State::enabled ) {
+            obj->update();
+        }
+        else {
+            // Do nothing
         }
     }
 
 }
 
 /**
-    This method is responsible for the background 
+    This method is responsible for the background
     and layers that make up the game design
     \return returns true when the scene is with layers and background.
 */
@@ -136,16 +140,18 @@ bool Scene::draw() {
         GameObject::Layer::layer3
     };
 
-    // Iterating the map and initializing each of the game objects.
 
     for( int cont = 0; cont < 4; cont++ ) {
 
         for( auto id_obj: scene_objects ) {
             auto obj = id_obj.second;
 
-            if( obj -> m_layer == layers[cont] &&
-                obj -> state() == GameObject::State::enabled &&
-                obj -> draw() == false ) {
+            if( obj -> m_layer != layers[cont] ||
+                obj -> state() != GameObject::State::enabled ||
+                obj -> draw() != false ) {
+                    // Do nothing
+            }
+            else {
                 return false;
             }
         }
@@ -157,13 +163,15 @@ bool Scene::draw() {
 
 std::list <GameObject *> * Scene::get_collide_objects() {
 
-    // Iterating the map and initializing each of the game objects.
 
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
 
-        if( obj -> state() == GameObject::State::enabled && obj -> m_collision == true ) {
-            collide_objects.push_back( obj );
+        if( obj -> state() == GameObject::State::enabled && obj->m_collision == true ) {
+            collide_objects.push_back(obj);
+        }
+        else {
+            // Do nothing
         }
 
     }
@@ -172,20 +180,12 @@ std::list <GameObject *> * Scene::get_collide_objects() {
 
 }
 
-/**
-    This method is reponsable for clear collide of objects 
-    in the scene
-*/
 void Scene::clear_collide_objects() {
 
     collide_objects.clear();
 
 }
 
-/**
-    This method is reponsable for game logic 
-    in the scene
-*/
 void Scene::game_logic() {
-    
+
 }
