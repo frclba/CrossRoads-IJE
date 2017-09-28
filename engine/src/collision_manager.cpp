@@ -31,9 +31,6 @@ GameObject* CollisionManager::checkCollision( GameObject* game_object,
         if( ( *obj )->type == type && collide( game_object, *obj ) ) {
             return (*obj);
         }
-        else{
-          // Do nothing
-        }
     }
 
     return NULL;
