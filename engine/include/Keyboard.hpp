@@ -2,6 +2,7 @@
     \file keyboard.hpp
     This file declares Keyboard class
 */
+
 #ifndef __KEYBOARD_H__
 #define __KEYBOARD_H__
 
@@ -30,18 +31,21 @@ namespace engine {
                 \return anything because the routine is void
             */
             void setKeys( SDL_Event* key );
+
             /**
                 Verify key down
                 \param key this parameter verify if key pressed is down
                 \return returns bool to key down or not
             */
             bool isKeyDown( std::string key );
+
             /**
                 Verify key up
                 \param key this parameter verify if key pressed is up
                 \return returns bool to key up or not
             */
             bool isKeyUp( std::string key );
+
             /**
                 Clear key down and key up pressed by the player    
             */
@@ -55,7 +59,7 @@ namespace engine {
             void create_keyboard_mapping();
             std::list <Uint8> keycode_down;
             std::list <Uint8> keycode_up;
-            Uint8 aux;
+            Uint8 aux = 0;
             std::unordered_map<std::string, int> m_buttons;
 
     };

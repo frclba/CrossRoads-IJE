@@ -17,23 +17,25 @@ using namespace engine;
     \class CameraPosition
     This class is responsible for the movement of the background scenario
 */
-class CameraPosition : public Component{
+class CameraPosition : public Component {
 
 public:
     CameraPosition( GameObject &main_game_object, std::string id,
-                    ImageComponent *background, int init_posX, int init_posY):
-        Component(main_game_object, id), m_init_posX(init_posX), m_init_posY(init_posY), m_background(background){}
+                    ImageComponent *background, int init_posX, int init_posY) :
+                    Component(main_game_object, id), m_init_posX(init_posX),
+                    m_init_posY(init_posY), m_background(background) {}
+
         ~CameraPosition();
 
         bool init();
 
         void update();
 
-        int m_init_posX;
-        int m_init_posY;
+        int m_init_posX = 0;
+        int m_init_posY = 0;
 
 private:
-  ImageComponent *m_background;
+  ImageComponent *m_background = NULL;
 };
 
 #endif  // _CAMERA_POSITION_HPP_

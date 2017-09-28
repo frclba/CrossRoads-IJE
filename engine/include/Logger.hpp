@@ -47,7 +47,7 @@ private:
     ~Log();
 
     std::ofstream logFile;
-    std::string fileName;
+    std::string fileName = "";
 
     //Open and close stream file to be written
 

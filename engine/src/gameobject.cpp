@@ -23,9 +23,14 @@ bool GameObject::init() {
 
     for( auto id_componentlist: main_components ) {
         for ( auto component: id_componentlist.second ) {
-            if( component->init() == false )
-            return false;
+            if( component->init() == true ) {
+                // Do nothing
+            }
+            else {
+                return false;
+            }
         }
+
 
     }
 
@@ -50,9 +55,13 @@ bool GameObject::shutdown() {
         // Iterating a list of components of the type found.
 
         for( auto component:id_componentList.second ) {
-            if( component->state() == Component::State::enabled &&
-               component->shutdown() == false )
+            if( component->state() != Component::State::enabled ||
+                component->shutdown() == true ) {
+                    // DO nothing
+                }
+            else {
                 return false;
+            }
         }
 
     }
@@ -71,41 +80,47 @@ bool GameObject::draw() {
     // Searching in the map the components of type ImageComponent
 
     for( auto component:
-         main_components[ std::type_index( typeid( ImageComponent ) ) ] ) {
+        main_components[ std::type_index( typeid( ImageComponent ) ) ] ) {
 
             /*
-                If the component found with the enabled state, converts it to a
-                component of the image and draws it on the screen.
+            If the component found with the enabled state, converts it to a
+            component of the image and draws it on the screen.
             */
 
-        if( component->state() == Component::State::enabled )
-            ( dynamic_cast<ImageComponent *>( component ) )->draw();
+            if( component->state() == Component::State::enabled )
+                ( dynamic_cast<ImageComponent *>( component ) )->draw();
+            else {
+                // Do nothing
+            }
 
-    }
+        }
 
-    for( auto component:
-         main_components[ std::type_index( typeid( Animation ) ) ] ) {
+        for( auto component:
+            main_components[ std::type_index( typeid( Animation ) ) ] ) {
 
-            /*
+                /*
                 If the component found with the state enabled, convert it to a
                 component of the image and draw on the screen.
-            */
+                */
 
-        if( component->state() == Component::State::enabled )
-            ( dynamic_cast<Animation *>( component ) )->draw();
+                if( component->state() == Component::State::enabled )
+                    ( dynamic_cast<Animation *>( component ) )->draw();
+                else {
+                    // Do nothing
+                }
 
-    }
+        }
 
-    /*
-        for(auto component: main_components[std::type_index(typeid(TextComponent))]){
+            /*
+            for(auto component: main_components[std::type_index(typeid(TextComponent))]){
 
-                    If the component found with the state enabled, convert it to a
-                    component of the image and draw on the screen.
+            If the component found with the state enabled, convert it to a
+            component of the image and draw on the screen.
 
             if(component->state() == Component::State::enabled)
-                (dynamic_cast<TextComponent *>(component))->draw();
+            (dynamic_cast<TextComponent *>(component))->draw();
         }
-    */
+        */
 
     return true;
 
@@ -142,6 +157,9 @@ void GameObject::update() {
 	        if( component->state() == Component::State::enabled) {
                 component->update();
 	        }
+            else {
+                // Do nothing
+            }
         }
     }
 
@@ -163,6 +181,9 @@ Component* GameObject::get_component( std::string name ) {
         for( auto component:id_componentList.second ) {
             if( component->component_id == name ) {
                 return component;
+            }
+            else {
+                // Do nothing
             }
         }
     }

@@ -31,8 +31,8 @@ public:
 
 private:
 
-  Player *m_player;
-  int m_life;
+  Player *m_player = NULL;
+  int m_life = 5;
 
 };
 

@@ -123,13 +123,15 @@ namespace engine {
 
         }
 
-        int main_positionX, main_positionY;
-        int main_width, main_height;
-        int main_rotation;
+        int main_positionX = 0;
+        int main_positionY = 0;
+        int main_width = 0;
+        int main_height = 0;
+        int main_rotation = 0;
 
-        bool m_collision;
+        bool m_collision = false;
 
-        std::string type;
+        std::string type = "";
 
         Layer m_layer;
 
