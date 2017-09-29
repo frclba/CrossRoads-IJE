@@ -6,8 +6,9 @@
 #ifndef FOO_BAR_ENGINE_COMPONENTS_IMAGE_H_
 #define FOO_BAR_ENGINE_COMPONENTS_IMAGE_H_
 
-#include<string>
-#include<utility>
+#include <string>
+#include <utility>
+
 #include "sdl2core.hpp"
 #include "components/component.hpp"
 #include "gameobject.hpp"
@@ -23,11 +24,15 @@ namespace engine{
 
         public:
             ImageComponent(GameObject &main_game_object, std::string id, std::string path)
-                : Component(main_game_object, id), main_path(path) {
+                           : Component(main_game_object, id), main_path(path) {
+
+                // Default function call.
 
             }
 
-            ~ImageComponent(){
+            ~ImageComponent() {
+
+                // Default function call.
 
             };
 
@@ -40,16 +45,14 @@ namespace engine{
 
             SDL_Rect* imagePart = NULL;
 
-            bool enable_camera;
+            bool enable_camera = false;
 
         protected:
             //Caminho da imagem.
-
-            std::string main_path;
+            std::string main_path = "";
 
             //Olhar nesse ponto para utilizar nossa pŕopria classe.
-
-            SDL_Texture *main_texture;
+            SDL_Texture *main_texture = NULL;
 
     };
 

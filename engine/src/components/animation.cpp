@@ -7,7 +7,11 @@
 
 using namespace engine;
 
-Animation::~Animation() {}
+Animation::~Animation() {
+
+    // Default method.
+
+}
 
 /**
     This method initiates the Animation in the game
@@ -28,6 +32,8 @@ bool Animation::init() {
     if(image == NULL) {
 
         // SDL_IMG_ERROR("Could not load image from path !" << main_path);
+
+        // Default if.
 
     }
 

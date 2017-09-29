@@ -43,6 +43,8 @@ namespace engine {
             */
             Component(): main_state(State::invalid), _main_game_object(NULL) {
 
+                // Default function call.
+
             }
 
             /**
@@ -53,9 +55,11 @@ namespace engine {
                 \result main_state set as enabled enum value
                 \result _main_game_object ponteir receive gameObject reference
             */
-            Component(GameObject &gameObject, std::string name)
-                : component_id(name), main_state(State::enabled),
-                _main_game_object(&gameObject) {
+            Component(GameObject &gameObject, std::string name) : 
+                      component_id(name), main_state(State::enabled),
+                      _main_game_object(&gameObject) {
+
+                // Default function call.
 
             }
 
@@ -63,6 +67,8 @@ namespace engine {
                 This method is an empty constructor
             */
             virtual ~Component() {
+
+                // Default function call.
 
             };
 
@@ -88,6 +94,8 @@ namespace engine {
                 This is an empty method
             */
             virtual void update() {
+
+                // Default function call.
 
             }
 
@@ -118,16 +126,16 @@ namespace engine {
 
             }
 
-            std::string component_id;
-            State main_state;
+            std::string component_id = "";
+
+            State main_state = NULL;
 
         protected:
-
             /*
                 The component keeps a reference of the game object which it
                 belongs
             */
-            GameObject *_main_game_object;
+            GameObject* _main_game_object = NULL;
 
     };
 
