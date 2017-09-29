@@ -128,14 +128,14 @@ namespace engine {
 
             std::string component_id = "";
 
-            State main_state = NULL;
+            State main_state;
 
         protected:
             /*
                 The component keeps a reference of the game object which it
                 belongs
             */
-            GameObject* _main_game_object = NULL;
+            GameObject* _main_game_object;
 
     };
 

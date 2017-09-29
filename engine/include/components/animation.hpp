@@ -98,9 +98,9 @@ namespace engine{
             unsigned int m_widthDiv = 0;
             unsigned int m_heightDiv = 0;
 
-            std::vector<SDL_Rect*> imageVector = NULL;
+            std::vector<SDL_Rect*> imageVector;
 
-            int main_animation[2] = 0;
+            int main_animation[2] = {0};
 
             std::unordered_map <std::string, int [2]> animationMap;
 

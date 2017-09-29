@@ -57,10 +57,10 @@ namespace engine {
             std::string m_path = "";
             bool m_is_music = false;
             bool m_play_on_start = false;
-            AudioState m_audio_state = NULL;
+            AudioState m_audio_state;
 
-            Mix_Music * m_music = NULL;
-            Mix_Chunk * m_sound = NULL;
+            Mix_Music * m_music;
+            Mix_Chunk * m_sound;
 
     };
 

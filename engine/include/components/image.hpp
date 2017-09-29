@@ -43,7 +43,7 @@ namespace engine{
             void set_back_rect(int width, int height);
             virtual void draw();
 
-            SDL_Rect* imagePart = NULL;
+            SDL_Rect* imagePart;
 
             bool enable_camera = false;
 
@@ -52,7 +52,7 @@ namespace engine{
             std::string main_path = "";
 
             //Olhar nesse ponto para utilizar nossa pŕopria classe.
-            SDL_Texture *main_texture = NULL;
+            SDL_Texture *main_texture;
 
     };
 
