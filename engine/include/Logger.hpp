@@ -46,8 +46,16 @@ private:
     Log();
     ~Log();
 
-    std::ofstream logFile;
-    std::string fileName = "";
+    /**
+      Filebuf that supports the input / output operations in the log file.
+    */
+    std::ofstream log_file;
+
+    /**
+      Log file name
+      \note If the log file already exists in the folder it will be overwritten
+    */
+    std::string file_name = "";
 
     //Open and close stream file to be written
 
