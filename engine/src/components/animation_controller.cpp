@@ -3,69 +3,87 @@
 
 using namespace engine;
 
-bool AnimationControllerComponent::init(){
-    // Log::instance.info("Init AnimationControllerComponent");
+bool AnimationControllerComponent::init() {
 
-    for(auto id_animation: m_animations_map) {
-      if (current_animation != id_animation.first)
+    for( auto id_animation: m_animations_map ) {
+        if( current_animation != id_animation.first ) {
             id_animation.second->disable();
-        else
+        }
+        else {
             id_animation.second->enable();
+        }
     }
 
     return true;
+
 }
 
-bool AnimationControllerComponent::shutdown(){
-    // Log::instance.info("Shutdown AnimationControllerComponent");
+bool AnimationControllerComponent::shutdown() {
+
     return true;
+
 }
 
-void AnimationControllerComponent::update(){
-  if (current_animation == ""){
-         Log::instance.warning("No animations to play!");
-    }else{
+void AnimationControllerComponent::update() {
+
+    if( current_animation == "" ) {
+        Log::instance.warning("No animations to play!");
+    }
+    else {
         auto animation = m_animations_map[current_animation];
-        if(next_animation != "" && animation->has_finished()){
-	   change_animations();
-	}
+
+        if( next_animation != "" && animation->has_finished() ) {
+	        change_animations();
+        }
     }
+
 }
 
 void AnimationControllerComponent::add_animation(std::string name,
-                                                 Animation & animation){
-    if (m_animations_map.find(name) != m_animations_map.end()){
+                                                 Animation & animation) {
+
+    if( m_animations_map.find(name) != m_animations_map.end() ) {
         Log::instance.warning("Animation " + name + " already exists!");
         return;
     }
 
     m_animations_map[name] = &animation;
 
-    if (m_animations_map.size() == 1)
+    if( m_animations_map.size() == 1 ) {
         current_animation = name;
+    }
+
 }
 
-void AnimationControllerComponent::play_animation(std::string name, bool wait_to_finish){
-    // Log::instance.info("Play animation " + name );
+void AnimationControllerComponent::play_animation(std::string name,
+                                                  bool wait_to_finish) {
+
     next_animation = name;
     m_animations_map[current_animation]->flipping(flip);
 
-    if (!wait_to_finish)
+    if( !wait_to_finish ) {
         change_animations();
+    }
+
 }
 
-void AnimationControllerComponent::change_animations(){
+void AnimationControllerComponent::change_animations() {
+
     auto animation = m_animations_map[current_animation];
     animation->disable();
 
     current_animation = next_animation;
+
     next_animation = "";
 
     animation = m_animations_map[current_animation];
     animation->enable();
     animation->setup();
+
 }
 
-void AnimationControllerComponent::flipping(bool isFlip){
-  flip = isFlip;
+void AnimationControllerComponent::flipping(bool isFlip) {
+
+    flip = isFlip;
+
 }

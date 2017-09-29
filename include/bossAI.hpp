@@ -1,3 +1,7 @@
+/**
+    \file bossAI.hpp
+    This file declares the Boss class
+*/
 #ifndef _BOSS_AI_H_
 #define _BOSS_AI_H_
 
@@ -10,20 +14,19 @@
 
 using namespace engine;
 
+/**
+    \class bossAI
+    This class is responsible for Boss movement and behavior
+*/
 class Boss : public Component {
 
 public:
 
-    Boss(GameObject &main_game_object,
-         std::string id,
-         AnimationControllerComponent* boss_animation,
-         GameObject* fireball,CameraPosition* positon,
-         GameObject* player):
-         Component(main_game_object, id),
-         m_boss_animation(boss_animation),
-         m_fireball(fireball),
-         m_position(positon),
-         m_player(player) {}
+    Boss(GameObject &main_game_object, std::string id,
+         AnimationControllerComponent *boss_animation, GameObject *fireball,
+         CameraPosition *positon, GameObject *player) :
+         Component(main_game_object, id), m_boss_animation(boss_animation),
+         m_fireball(fireball), m_position(positon), m_player(player) {}
 
     ~Boss();
 
