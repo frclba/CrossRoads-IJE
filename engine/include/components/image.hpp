@@ -1,3 +1,8 @@
+/**
+    \file image.hpp
+    This file contains header declaration for ImageComponent class
+*/
+
 #ifndef FOO_BAR_ENGINE_COMPONENTS_IMAGE_H_
 #define FOO_BAR_ENGINE_COMPONENTS_IMAGE_H_
 
@@ -10,6 +15,11 @@
 
 namespace engine{
 
+    /// Settings related to an image
+    /**
+        \class ImageComponent
+        This has the structure regarding the management of an image in the game
+    */
     class ImageComponent : public Component {
 
         public:

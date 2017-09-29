@@ -1,8 +1,18 @@
+/**
+    \file image.cpp
+    ImageComponent class implementation
+*/
+
 #include "components/image.hpp"
 #include "game.hpp"
 
 using namespace engine;
 
+/**
+    Load image file
+    \return true if music file loading is successful
+    \return false if music file loading fails
+*/
 bool ImageComponent::init() {
 
     Log::instance.info("Iniciando componente de imagem: " + main_path);
@@ -43,6 +53,9 @@ bool ImageComponent::init() {
 
 }
 
+/**
+    /param[int] value image displacement - in px
+*/
 void ImageComponent::set_back_rect(int width, int height) {
 
     imagePart = new SDL_Rect();
@@ -53,6 +66,10 @@ void ImageComponent::set_back_rect(int width, int height) {
 
 }
 
+/**
+    Change horizontal image position
+    /param[int] value image displacement - in px
+*/
 void ImageComponent::move_img_rect(int value) {
 
     if( imagePart->x+ imagePart->w + value < _main_game_object->main_width &&
@@ -62,6 +79,10 @@ void ImageComponent::move_img_rect(int value) {
 
 }
 
+/**
+    This method closes ImagesComponent
+    \return true
+*/
 bool ImageComponent::shutdown() {
 
     Log::instance.info("Shutdown ImageComponent : '" + component_id + "'.");
@@ -74,6 +95,9 @@ bool ImageComponent::shutdown() {
 
 }
 
+/**
+    Position image on the screen
+*/
 void ImageComponent::draw() {
 
     SDL_Rect *renderQuad = new SDL_Rect();

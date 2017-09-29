@@ -1,9 +1,18 @@
+/**
+    \file audio.cpp
+    AudioComponent class implemantation
+*/
 #include "components/audio.hpp"
 #include "game.hpp"
 #include "Logger.hpp"
 
 using namespace engine;
 
+/**
+    Load music file
+    \return true if music file loading is successful
+    \return false if music file loading fails
+*/
 bool AudioComponent::init() {
 
     Log::instance.info("Init audio component");
@@ -31,6 +40,10 @@ bool AudioComponent::init() {
 
 }
 
+/**
+    This method closes the AudioComponent in the game
+    \return true
+*/
 bool AudioComponent::shutdown() {
 
     Log::instance.info("Shutdown audio component");
@@ -39,6 +52,9 @@ bool AudioComponent::shutdown() {
 
 }
 
+/**
+    Play music if it has not already been started
+*/
 void AudioComponent::update() {
 
     if( m_play_on_start ) {
@@ -49,6 +65,11 @@ void AudioComponent::update() {
 
 }
 
+/**
+    Play music
+    \param[in] loops
+    \param[in] channel
+*/
 void AudioComponent::play(int loops, int channel) {
 
     if( m_is_music ) {
@@ -77,6 +98,10 @@ void AudioComponent::play(int loops, int channel) {
 
 }
 
+/**
+    Ends playback of a song on a particular output channel
+    \param channel
+*/
 void AudioComponent::stop(int channel) {
 
     if( m_is_music ) {
@@ -90,6 +115,10 @@ void AudioComponent::stop(int channel) {
 
 }
 
+/**
+    Pauses playback of a song on a particular output channel
+    \param channel
+*/
 void AudioComponent::pause(int channel) {
 
     if( m_is_music ) {

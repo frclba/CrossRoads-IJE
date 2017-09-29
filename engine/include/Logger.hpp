@@ -1,3 +1,8 @@
+/**
+  \file Logger.hpp
+  this file contains the class Log and its member functions
+*/
+
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
@@ -13,6 +18,13 @@
   TODO -> write function to write time into logfile.txt
   TODO -> Apply log on Iniciando componente de imagem, Iniciando componente de
   animacao, Init game object
+*/
+
+
+/// Log class
+/**
+  \class Log
+  The log class manages the logging system of the game
 */
 
 class Log {
@@ -35,7 +47,7 @@ private:
     ~Log();
 
     std::ofstream logFile;
-    std::string fileName;
+    std::string fileName = "";
 
     //Open and close stream file to be written
 

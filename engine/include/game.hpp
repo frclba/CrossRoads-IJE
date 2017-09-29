@@ -1,3 +1,8 @@
+/**
+  \file game.hpp
+  this file contain the namespace engine, who defines the game engine class
+*/
+
 #ifndef __GAME_H__
 #define __GAME_H__
 
@@ -24,9 +29,19 @@ enum class State{
     shutdown
 };
 
-namespace engine{
+namespace engine {
 
-    class Game{
+
+
+    /// Class for managing the game object properties
+    /**
+    \class Game
+    This class has features for managing some of game properties
+    such as SDL configuration  and scenes handling.
+    */
+
+    class Game {
+
     public:
         //Creating a single and unique game instance.
         static Game instance;

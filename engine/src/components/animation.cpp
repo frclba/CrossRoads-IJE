@@ -1,3 +1,8 @@
+/**
+  \file animation.cpp
+  Animation class implementatioin
+*/
+
 #include"components/animation.hpp"
 
 using namespace engine;
@@ -8,6 +13,11 @@ Animation::~Animation() {
 
 }
 
+/**
+    This method initiates the Animation in the game
+    \return false if path to file is blank or main_texture is NULL
+    \return true if the image was split and the sprites arranged in the correct position
+*/
 bool Animation::init() {
 
     Log::instance.info( "Iniciando componente de animacao" );
@@ -27,7 +37,8 @@ bool Animation::init() {
 
     }
 
-    main_texture = SDL_CreateTextureFromSurface( Game::instance.main_canvas, image );
+    main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas,
+                                                image);
 
     if( main_texture == NULL ) {
 
@@ -67,6 +78,12 @@ bool Animation::init() {
 
 }
 
+/**
+    Set initial sprite and end sprit for display certain image movement
+    \param[in] animationName existing identifier in animationMap
+    \param[in] begin should less imageVector size
+    \param[in] end should be less imageVector size and bigger or equal to begin param
+*/
 void Animation::setAnimation( std::string animationName, int begin, int end ) {
 
     (animationMap[animationName])[BEGIN] = begin;
@@ -74,6 +91,11 @@ void Animation::setAnimation( std::string animationName, int begin, int end ) {
 
 }
 
+/**
+    Starts running the animation
+    \param[in] animationName existing identifier in animationMap
+    \return true if started execution
+*/
 bool Animation::useAnimation( std::string animationName ) {
 
     main_animation[BEGIN] = (animationMap[animationName])[BEGIN];
@@ -87,12 +109,24 @@ bool Animation::useAnimation( std::string animationName ) {
 
 }
 
+/**
+    \param[in] toSetDelay time in ms
+    \result update delay value in animation
+*/
 void Animation::setDelay( int toSetDelay ) {
 
     this -> delay = toSetDelay;
 
 }
 
+/**
+    Define side to animation moviment
+    \param[in] isFlip represent moviment side
+    \parblock
+      true value refers to RIGHT
+      false value refers to LEFT
+    \endparblock
+*/
 void Animation::flipping( bool isFlip ) {
 
     if( isFlip ) {
@@ -104,6 +138,11 @@ void Animation::flipping( bool isFlip ) {
 
 }
 
+/**
+    Check if animation is on the last frame
+    \return true if is the end of the animation
+    \return false if still not the last frame
+*/
 bool Animation::has_finished() {
 
     if( main_frame == main_animation[END] ) {
@@ -114,12 +153,18 @@ bool Animation::has_finished() {
 
 }
 
+/**
+    Sets the GameObject size measures with the values set for the animation
+*/
 void Animation::setup() {
 
     _main_game_object -> set_size( m_widthDiv, m_heightDiv );
 
 }
 
+/**
+    Positions the element on the screen
+*/
 void Animation::draw() {
 
     SDL_Rect *renderQuad = new SDL_Rect();

@@ -1,8 +1,17 @@
+/**
+    \file animation_controller.cpp
+    AnimationControllerComponent implementation
+*/
+
 #include "components/animation_controller.hpp"
 #include "game.hpp"
 
 using namespace engine;
 
+/**
+     This method disabled all animations and enable current animation to startup
+     \return true value if active animation
+*/
 bool AnimationControllerComponent::init() {
 
     for( auto id_animation: m_animations_map ) {
@@ -18,12 +27,19 @@ bool AnimationControllerComponent::init() {
 
 }
 
+/**
+    This method closes the AnimationControllerComponent in the game
+    \return true value to disabled the component
+*/
 bool AnimationControllerComponent::shutdown() {
 
     return true;
 
 }
 
+/**
+    Method responsible for making the exchange between animations when the current animation ends the execution
+*/
 void AnimationControllerComponent::update() {
 
     if( current_animation == "" ) {
@@ -39,6 +55,11 @@ void AnimationControllerComponent::update() {
 
 }
 
+/**
+    Adds a new animation to the running queue of animations
+    \param name
+    \param animation referencess address to new animation
+*/
 void AnimationControllerComponent::add_animation(std::string name,
                                                  Animation & animation) {
 
@@ -55,6 +76,15 @@ void AnimationControllerComponent::add_animation(std::string name,
 
 }
 
+/**
+    Execute animation
+    \param[in] name
+    \param[in] wait_to_finish
+    \parblock
+        true if should be wait curretent animation finished
+        false if shloudn't be wait current animation finished
+    \endparblock
+*/
 void AnimationControllerComponent::play_animation(std::string name,
                                                   bool wait_to_finish) {
 
@@ -67,6 +97,9 @@ void AnimationControllerComponent::play_animation(std::string name,
 
 }
 
+/**
+    Change the current animation to the next one in the list
+*/
 void AnimationControllerComponent::change_animations() {
 
     auto animation = m_animations_map[current_animation];
@@ -82,6 +115,14 @@ void AnimationControllerComponent::change_animations() {
 
 }
 
+/**
+    Set filp side
+    \param isFlip side value
+    \parblock
+        true if RIGHT
+        false if LEFT
+    \endparblock
+*/
 void AnimationControllerComponent::flipping(bool isFlip) {
 
     flip = isFlip;

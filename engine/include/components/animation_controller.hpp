@@ -1,10 +1,14 @@
+/**
+  \file animation_controller.hpp
+  This file contains header declaration for AnimationControllerComponent Class
+*/
+
 #ifndef FOO_BAR_ENGINE_COMPONENTS_ANIMATION_CONTROLLER_H_
 #define FOO_BAR_ENGINE_COMPONENTS_ANIMATION_CONTROLLER_H_
 
 #include <string>
 #include <unordered_map>
 #include <utility>
-
 #include "sdl2core.hpp"
 #include "components/component.hpp"
 #include "components/animation.hpp"
@@ -12,6 +16,11 @@
 
 namespace engine {
 
+    /// Manages the exchange of animations
+    /**
+        \class AnimationControllerComponent
+        This class manages the current animations and the transition with other animations
+    */
     class AnimationControllerComponent : public Component {
 
         public:
