@@ -144,10 +144,10 @@ void Boss::boss_move() {
     }
 
     if( side ) {
-        m_position->m_init_posX -=10;
+        m_position->m_horizontal_starting_position -=10;
     }
     else {
-        m_position->m_init_posX +=10;
+        m_position->m_horizontal_starting_position +=10;
     }
 
     if( _main_game_object->main_positionX <=10 && side ) {
