@@ -35,6 +35,8 @@ namespace engine {
                            m_play_on_start(play_on_start), m_audio_state(AudioState::stopped),
                            m_music(NULL), m_sound(NULL) {
 
+                // Default function call.
+
             }
 
             bool init();
@@ -52,9 +54,9 @@ namespace engine {
             }
 
         private:
-            std::string m_path;
-            bool m_is_music;
-            bool m_play_on_start;
+            std::string m_path = "";
+            bool m_is_music = false;
+            bool m_play_on_start = false;
             AudioState m_audio_state;
 
             Mix_Music * m_music;

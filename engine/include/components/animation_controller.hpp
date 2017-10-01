@@ -26,7 +26,12 @@ namespace engine {
         public:
 
             AnimationControllerComponent(GameObject &main_game_object, std::string id) :
-            Component(main_game_object, id), current_animation(""), next_animation("") {}
+                                         Component(main_game_object, id),
+                                         current_animation(""), next_animation("") {
+
+                // Default function call.
+                    
+            }
 
             ~AnimationControllerComponent() {
 
@@ -42,11 +47,11 @@ namespace engine {
             void flipping(bool isFlip);
 
         private:
-            bool flip;
+            bool flip = false;
 
             std::unordered_map<std::string, Animation *> m_animations_map;
-            std::string current_animation;
-            std::string next_animation;
+            std::string current_animation = "";
+            std::string next_animation = "";
 
             void change_animations();
 
