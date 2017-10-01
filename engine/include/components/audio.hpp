@@ -54,11 +54,25 @@ namespace engine {
             }
 
         private:
+            /** 
+                Path of musics and sounds of the game. 
+            */
             std::string m_path = "";
+
+            /** 
+                Control time when music and sound will be played. 
+            */
             bool m_is_music = false;
             bool m_play_on_start = false;
+
+            /** 
+                Control state of musics and sound of the game. 
+            */
             AudioState m_audio_state;
 
+            /** 
+                Control music and sound of game. 
+            */
             Mix_Music * m_music;
             Mix_Chunk * m_sound;
 
