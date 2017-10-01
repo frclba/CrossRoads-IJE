@@ -30,18 +30,18 @@ namespace engine{
             //  param:
             //    main_game_object = referencia do objetoque a animation pertence.
             //    std::string id = identidade do component.
-            //    widthDiv = valor de largura que ira dividir a imagem.
-            //    heightDiv = valor de altura que sera dividida a imagem.
+            //    width_division = valor de largura que ira dividir a imagem.
+            //    height_division = valor de altura que sera dividida a imagem.
             //    num_image = numero de sprites contida na imagem
             Animation(GameObject &main_game_object, std::string id,
-                      std::string path, unsigned int widthDiv,
-                      unsigned int heightDiv, int num_image) :
+                      std::string path, unsigned int width_division,
+                      unsigned int height_division, int num_image) :
                       ImageComponent(main_game_object, id, path),
-                      m_widthDiv(widthDiv),
-                      m_heightDiv(heightDiv),
+                      m_width_division(width_division),
+                      m_height_division(height_division),
                       m_num_image(num_image),
                       main_frame(0),delay(0),
-                      timestep(0){
+                      time_step(0){
                         
                 // Default function call.
                         
@@ -83,34 +83,64 @@ namespace engine{
             //setDelat = seleciona o delay em ms que a animacao da ao passar de imagem
             void setDelay(int delay);
 
-            void flipping(bool isFlip);
+            void flipping(bool is_flip);
 
             bool has_finished();
 
             void setup();
 
+            /** 
+                Control flip state rendering of character, monsters and boss.
+            */
             SDL_RendererFlip flip = SDL_FLIP_NONE;
 
         private:
+            /** 
+                Initialize and finish game animations.
+            */
             const int BEGIN = 0;
             const int END = 1 ;
 
-            unsigned int m_widthDiv = 0;
-            unsigned int m_heightDiv = 0;
+            /** 
+                Control animations sizes.
+            */
+            unsigned int m_width_division = 0;
+            unsigned int m_height_division = 0;
 
-            std::vector<SDL_Rect*> imageVector;
+            /** 
+                Determine image in a vector.
+            */
+            std::vector<SDL_Rect*> image_vector;
 
+            /** 
+                Control game animation.  
+            */
             int main_animation[2] = {0};
 
-            std::unordered_map <std::string, int [2]> animationMap;
+            /** 
+                Determine map animations in 2D. 
+            */
+            std::unordered_map <std::string, int [2]> animation_map;
 
+            /** 
+                Number os images in screen. 
+            */
             int m_num_image = 0;
 
+            /** 
+                Control level frame. 
+            */
             int main_frame = 0;
 
+            /** 
+                Control delay beetwen actions.  
+            */
             int delay = 0;
 
-            int timestep = 0;
+            /** 
+                Control time of actions in game. 
+            */
+            int time_step = 0;
 
     };
 
