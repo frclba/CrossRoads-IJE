@@ -23,6 +23,9 @@ bool ImageComponent::init() {
         return false;
     }
 
+    /** 
+        Save and show image loaded.
+    */
     SDL_Surface *image = IMG_Load(main_path.c_str());
 
     if( image == NULL ) {
@@ -54,27 +57,27 @@ bool ImageComponent::init() {
 }
 
 /**
-    /param[int] value image displacement - in px
+    /param[int] image_value image displacement - in px
 */
-void ImageComponent::set_back_rect(int width, int height) {
+void ImageComponent::set_back_rect(int image_width, int image_height) {
 
     imagePart = new SDL_Rect();
     imagePart->x = 0;
     imagePart->y = 0;
-    imagePart->w = width;
-    imagePart->h = height;
+    imagePart->w = image_width;
+    imagePart->h = image_height;
 
 }
 
 /**
     Change horizontal image position
-    /param[int] value image displacement - in px
+    /param[int] image_value image displacement - in px
 */
-void ImageComponent::move_img_rect(int value) {
+void ImageComponent::move_img_rect(int image_value) {
 
-    if( imagePart->x+ imagePart->w + value < _main_game_object->main_width &&
-        imagePart->x + value > 0 && enable_camera ) {
-        imagePart->x = imagePart->x + value;
+    if( imagePart->x+ imagePart->w + image_value < _main_game_object->main_width &&
+        imagePart->x + image_value > 0 && enable_camera ) {
+        imagePart->x = imagePart->x + image_value;
     }
 
 }
@@ -100,20 +103,23 @@ bool ImageComponent::shutdown() {
 */
 void ImageComponent::draw() {
 
-    SDL_Rect *renderQuad = new SDL_Rect();
+    /** 
+        Render image components.
+    */
+    SDL_Rect *render_quad = new SDL_Rect();
 
-    renderQuad->x = _main_game_object->main_positionX;
-    renderQuad->y = _main_game_object->main_positionY;
-    renderQuad->w = _main_game_object->main_width;
-    renderQuad->h = _main_game_object->main_height;
+    render_quad->x = _main_game_object->main_positionX;
+    render_quad->y = _main_game_object->main_positionY;
+    render_quad->w = _main_game_object->main_width;
+    render_quad->h = _main_game_object->main_height;
 
 
     if( imagePart!=NULL ) {
-        renderQuad->w = imagePart->w;
-        renderQuad->h = imagePart->h;
+        render_quad->w = imagePart->w;
+        render_quad->h = imagePart->h;
     }
 
     SDL_RenderCopy(Game::instance.main_canvas, main_texture, imagePart,
-                    renderQuad);
+                    render_quad);
 
 }
