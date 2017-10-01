@@ -12,12 +12,12 @@ void MenuScene::game_logic() {
 
     // Get menuFire object
 
-    GameObject *fireMenu = &get_game_object("menuFire");
+    GameObject *menu_fire = &get_game_object("menuFire");
 
     // Defines the position of the fire on the screen
 
-    fireMenu->main_positionX = 690;
-    fireMenu->main_positionY = 470;
+    menu_fire->main_positionX = 690;
+    menu_fire->main_positionY = 470;
 
     // Managing buttons on the scene
 
@@ -40,14 +40,14 @@ void MenuScene::buttons_controller() {
         // Do nothing
     }
 
-    // Get bNew gameobject
+    // Get new_game_button gameobject
 
-    GameObject *bNew = &get_game_object("bNew");
+    GameObject *new_game_button = &get_game_object("bNew");
 
     // Sets the position of the new game button on the screen
 
-    bNew->main_positionX = 300;
-    bNew->main_positionY = 275;
+    new_game_button->main_positionX = 300;
+    new_game_button->main_positionY = 275;
 
     // Get bLoad gameobject
 
@@ -59,9 +59,9 @@ void MenuScene::buttons_controller() {
     bLoad->main_positionY = 820;
 
     Animation *bnewAnimation = (dynamic_cast<Animation*> (
-                                bNew->get_component("imageBNew")));
+                                new_game_button->get_component("imageBNew")));
 
-    if( Game::instance.mouse->is_over(bNew) ) {
+    if( Game::instance.mouse->is_over(new_game_button) ) {
         if( Game::instance.mouse->is_right_button() ) {
             Game::instance.change_scene("initial_story");
         }
