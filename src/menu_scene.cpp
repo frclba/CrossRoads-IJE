@@ -49,16 +49,16 @@ void MenuScene::buttons_controller() {
     new_game_button->main_positionX = 300;
     new_game_button->main_positionY = 275;
 
-    // Get bLoad gameobject
+    // Get load_button gameobject
 
-    GameObject *bLoad = &get_game_object("bLoad");
+    GameObject *load_button = &get_game_object("bLoad");
 
     // Sets the position of the load button on the screen
 
-    bLoad->main_positionX = 800;
-    bLoad->main_positionY = 820;
+    load_button->main_positionX = 800;
+    load_button->main_positionY = 820;
 
-    Animation *bnewAnimation = (dynamic_cast<Animation*> (
+    Animation *new_game_button_animation = (dynamic_cast<Animation*> (
                                 new_game_button->get_component("imageBNew")));
 
     if( Game::instance.mouse->is_over(new_game_button) ) {
@@ -70,24 +70,24 @@ void MenuScene::buttons_controller() {
         }
 
         AudioComponent *button_hover_sound = (dynamic_cast<AudioComponent*> (
-                                              bLoad->get_component(
+                                              load_button->get_component(
                                               "button_hover_sound")));
 
-        bnewAnimation->useAnimation("normal");
+        new_game_button_animation->useAnimation("normal");
         button_hover_sound->play(0,-1);
     }
     else {
-        bnewAnimation->useAnimation("mouseON");
+        new_game_button_animation->useAnimation("mouseON");
     }
 
-    Animation *bloadAnimation = (dynamic_cast<Animation*> (
-                                 bLoad->get_component("imageBLoad")));
+    Animation *load_button_animation = (dynamic_cast<Animation*> (
+                                 load_button->get_component("imageBLoad")));
 
-    if( Game::instance.mouse->is_over(bLoad) ) {
-        bloadAnimation->useAnimation("normal");
+    if( Game::instance.mouse->is_over(load_button) ) {
+        load_button_animation->useAnimation("normal");
     }
     else {
-        bloadAnimation->useAnimation("mouseON");
+        load_button_animation->useAnimation("mouseON");
     }
 
 }
