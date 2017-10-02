@@ -48,8 +48,7 @@ private:
     unsigned int time_between_monsters = 0;
 
     /**
-        This attribute is responsible for alterning between monsters
-        in the mosters array
+        This attribute is responsible for alterning between the monsters
     */
     unsigned int monster_number_iterator = 0;
 

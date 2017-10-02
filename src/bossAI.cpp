@@ -11,7 +11,7 @@
 bool Boss::init() {
 
     boss_life = 10;
-    time_step = 0;
+    boss_update_time = 0;
     boss_movement_time_gap = 0;
     fireball_time_gap = 0;
     is_in_corner = false;
@@ -43,7 +43,7 @@ void Boss::update() {
 
         m_boss_animation->flipping(!is_in_corner);
 
-        if( time_step < Game::instance.timer->getTicks() ) {
+        if( boss_update_time < Game::instance.timer->getTicks() ) {
 
             if( m_player->main_positionY > 300 ) {
                 is_dash_attacking = true;
@@ -57,7 +57,7 @@ void Boss::update() {
                 m_fireball->setState(GameObject::State::enabled);
             }
 
-            time_step = Game::instance.timer->getTicks() + 3000;
+            boss_update_time = Game::instance.timer->getTicks() + 3000;
         }
         else {
 
@@ -80,9 +80,9 @@ void Boss::update() {
 */
 void Boss::boss_damage() {
 
-    AudioComponent *boss_full_putasso_audio = (dynamic_cast<AudioComponent*> (
+    AudioComponent * boss_in_rage_audio = (dynamic_cast<AudioComponent*> (
                                                _main_game_object->get_component(
-                                               "boss_full_putasso_audio")));
+                                               "boss_in_rage_audio")));
 
     if( Game::instance.collision_manager->checkCollision(
         _main_game_object, "attack_box") ||
@@ -100,7 +100,7 @@ void Boss::boss_damage() {
         }
 
         if( boss_life == 3 ) {
-            boss_full_putasso_audio->play(0, -1);
+            boss_in_rage_audio->play(0, -1);
         }
         else {
 

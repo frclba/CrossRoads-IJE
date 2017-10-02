@@ -528,7 +528,7 @@ int main(int, char **){
 
     AudioComponent boss_dash_audio(boss, "boss_dash_audio",
                                    "assets/sounds/dash.wav", false, false);
-    AudioComponent boss_full_putasso_audio(boss, "boss_full_putasso_audio",
+    AudioComponent boss_in_rage_audio(boss, "boss_in_rage_audio",
                                            "assets/sounds/Ferimento.wav",
                                            false, false);
 
@@ -546,7 +546,7 @@ int main(int, char **){
     boss.add_component(boss_pos);
 
     boss.add_component(boss_dash_audio);
-    boss.add_component(boss_full_putasso_audio);
+    boss.add_component(boss_in_rage_audio);
 
     // Player life
 
