@@ -36,10 +36,24 @@ public:
 
         void update();
 
+        /**
+            Initial position in horizontal of the respective element
+            The range of accepted values refers to the extent of scenarios that 
+            have passed through the screen, ranging from 0 to 1600px.
+        */
         int m_horizontal_starting_position = 0;
+
+        /**
+            Initial position in vertical of the respective element
+            Values can range from 0 to 600px
+        */
         int m_vertical_starting_position = 0;
 
 private:
+
+  /**
+      ImageComponent referring to the element being positioned.
+  */
   ImageComponent *m_background = NULL;
 };
 
