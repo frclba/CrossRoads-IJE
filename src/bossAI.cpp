@@ -11,7 +11,7 @@
 bool Boss::init() {
 
     boss_life = 10;
-    timestep = 0;
+    time_step = 0;
     boss_movement_time_gap = 0;
     fireball_time_gap = 0;
     is_in_corner = false;
@@ -43,7 +43,7 @@ void Boss::update() {
 
         m_boss_animation->flipping(!is_in_corner);
 
-        if( timestep < Game::instance.timer->getTicks() ) {
+        if( time_step < Game::instance.timer->getTicks() ) {
 
             if( m_player->main_positionY > 300 ) {
                 is_dash_attacking = true;
@@ -57,7 +57,7 @@ void Boss::update() {
                 m_fireball->setState(GameObject::State::enabled);
             }
 
-            timestep = Game::instance.timer->getTicks() + 3000;
+            time_step = Game::instance.timer->getTicks() + 3000;
         }
         else {
 
