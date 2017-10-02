@@ -44,18 +44,31 @@ private:
     bool sees_player();
     bool has_ground();
 
+
+    /**
+        Sets the units which a monster can move. Ranges randomly from 1 to 2.
+    */
+
     int horizontal_motion_units = 0;
     const int GROUND = 552;
     const int GRAVITY = 1;
     const float JUMP_SIZE = 2;
+    /**
+        Ranges from 552 to 0.
+    */
     float vertical_position;
+    /**
+        True: means that monster is facing right. False: means that monster is facing left.
+    */
     bool side;
     const bool RIGHT = true;
     const bool LEFT = false;
+    /**
+        Indicates if monster is damaged.
+    */
     bool has_damage = false;
     int life_points = 3;
     bool is_first = false;
-
     GameObject *m_player;
     GameObject *bullet;
     GameObject *ground_obj;
