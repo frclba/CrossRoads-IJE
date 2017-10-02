@@ -23,8 +23,8 @@ namespace engine{
     class ImageComponent : public Component {
 
         public:
-            ImageComponent(GameObject &main_game_object, std::string id, std::string path)
-                           : Component(main_game_object, id), main_path(path) {
+            ImageComponent(GameObject &main_game_object, std::string image_id, std::string image_path)
+                           : Component(main_game_object, image_id), main_path(image_path) {
 
                 // Default function call.
 
@@ -39,19 +39,29 @@ namespace engine{
             bool init();
             bool shutdown();
 
-            void move_img_rect(int value);
-            void set_back_rect(int width, int height);
+            void move_img_rect(int image_value);
+            void set_back_rect(int image_width, int image_height);
             virtual void draw();
 
+            /** 
+                Control react of image. 
+            */
             SDL_Rect* imagePart;
 
+            /** 
+                Control camera enabling to move or not. 
+            */
             bool enable_camera = false;
 
         protected:
-            //Caminho da imagem.
+            /** 
+                Image image_path. 
+            */
             std::string main_path = "";
 
-            //Olhar nesse ponto para utilizar nossa pŕopria classe.
+            /** 
+                Image texture controlled by SDL.
+            */
             SDL_Texture *main_texture;
 
     };
