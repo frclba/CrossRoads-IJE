@@ -667,7 +667,7 @@ int main(int, char **){
     // =====================================Initial Story======================================//
 
     Scene initial_story("initial_story");
-    // Game::instance.add_scene(initial_story);
+    Game::instance.add_scene(initial_story);
 
     GameObject story("story");
     Animation story_anim1 (story, "story_anim1", "assets/sprites/st1.png",
