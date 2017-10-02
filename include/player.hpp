@@ -31,11 +31,11 @@ public:
     Player( GameObject &main_game_object, std::string id,
          AnimationControllerComponent *animC, GameObject &attack_box,
 	       ImageComponent *background ):
-         Component(main_game_object, id), side(false),
-         attack_meele(false), attack_ranged(false), animCtrl(animC),
-         stand(false), jump(false), walkR(false), walkL(false),
-         damageBool(false),  m_attack_box(&attack_box),
-         m_background(background){}
+         Component(main_game_object, id), direction_boby_side(false),
+         is_attacking_meele(false), is_attacking_ranged(false), animation_controller(animC),
+         stand(false), is_jumping(false), is_walking_right(false), is_walking_left(false),
+         is_taking_damage(false),  attack_box_dimensions(&attack_box),
+         image_background(background){}
 
     ~Player();
 
@@ -45,46 +45,80 @@ public:
     void update();
     void is_dead();
     void damage_player();
-    void attack_player();
-    void move_player();
-    void jump_player();
-    void damage();
-    void processPos();
-    void gravityF();
+    void detect_attack();
+    void detect_move();
+    void detect_jump();
+    void detect_damage();
+    void process_position();
+    void apply_gravity();
 
     GameObject *player = NULL;
     GameObject *plataform = NULL;
     GameObject *monster = NULL;
 
-    bool side = false;
-    bool attack_meele = false;
-    bool attack_ranged = false;
+    bool direction_boby_side = false;
+
+    bool is_attacking_meele = false;
+    bool is_attacking_ranged = false;
 
     int life_points = 5;
 
 private:
 
+    /**
+        Constant helps to detect if the player's body is to the right
+    */
     const bool RIGHT = true;
+
+    /**
+        Constant helps to detect if the player's body is to the left
+    */
     const bool LEFT = false;
 
-    AnimationControllerComponent *animCtrl = NULL;
-    AnimationControllerComponent *monster_controler = NULL;
+    AnimationControllerComponent* animation_controller = NULL;
+    AnimationControllerComponent* monster_controller = NULL;
 
-    unsigned int jumptime = 0;
+    unsigned int time_jump = 0;
+
+    /**
+        Auxiliary variable referring to the time a
+        player is attacking, if he exceeds the current time,
+        he will not apply his attack
+    */
     unsigned int time_attack = 0;
 
     bool stand = false;
-    bool jump = false;
-    bool walkR = false;
-    bool walkL = false;
-    bool damageBool = false;
+    bool is_jumping = false;
 
-    GameObject *ground = NULL;
-    GameObject* m_attack_box = NULL;
+    /**
+        Variable to detect if the player's movement is to the right
+    */
+    bool is_walking_right = false;
+    bool is_walking_left = false;
+    bool is_taking_damage = false;
 
-    float dy = 0;
+    /**
+        Object instance that helps to check if have terrain where the player is
+    */
+    GameObject* get_ground_collision = NULL;
 
-    ImageComponent* m_background = NULL;
+    /**
+        Object instance that defines player's attack dimensions, in height,
+        width and positions in coordinates x,y. y ranges from 522 to 0. x can
+        vary within scence boundaries.
+    */
+    GameObject* attack_box_dimensions = NULL;
+
+    /**
+        Current coordinate y of player position
+    */
+    float vertical_position = 0;
+
+    /**
+        Object instance to get the component of the image to verify that
+        the player has reached the bottom
+    */
+    ImageComponent* image_background = NULL;
 
 };
 

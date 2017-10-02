@@ -5,23 +5,26 @@
 
 #include "player.hpp"
 
+/**
+    Auxiliary variable referring to the time a
+    player is taking damage, if he exceeds the current time,
+    he will not take the damage
+ */
 unsigned int damage_time = 0;
 
-bool attacked = false;
-bool canJump = true;
-bool jump = false;
-bool isFalling = false;
-bool isRight = true;
-
-int maxHeight = 200;
+int max_height = 200;
 
 float DAMAGE_DELAY = 1000;
+
+/**
+    Auxiliary counter for player gravity
+*/
 float gravity = 1;
-float jumpF = 20;
-float moveForce = 7;
-float monster_move = 4;
-float prev_position_y = 0;
-float dy = 0;
+
+float jump_size = 20;
+float move_size = 7;
+
+float previous_position_y = 0;
 
 /**
     Initializes the player, defining their main attributes with inicial
@@ -33,7 +36,7 @@ bool Player::init() {
     _main_game_object->main_positionY = 502;
     _main_game_object->main_positionX = 0;
 
-    m_background->imagePart->x = 0;
+    image_background->imagePart->x = 0;
 
     life_points = 5;
     time_attack = 0;
@@ -48,42 +51,42 @@ bool Player::init() {
 */
 void Player::update() {
 
-    animCtrl->play_animation("player_idle");
+    animation_controller->play_animation("player_idle");
 
-    gravityF();
-    jump_player();
-    move_player();
-    attack_player();
-    damage();
-    processPos();
+    apply_gravity();
+    detect_jump();
+    detect_move();
+    detect_attack();
+    detect_damage();
+    process_position();
 
 }
 
 /**
-    Define and detect player attacks, in cases of side(left or right) and
+    Define and detect player attacks, in cases of direction boby side(left or right) and
     interface(buttons and their interactions). The attacks being meele or ranged
 */
-void Player::attack_player() {
+void Player::detect_attack() {
 
-    if( side == RIGHT ) {
-        m_attack_box->main_positionX = _main_game_object->main_positionX +
+    if( direction_boby_side == RIGHT ) {
+        attack_box_dimensions->main_positionX = _main_game_object->main_positionX +
                                        _main_game_object->main_width;
-        m_attack_box->main_positionY = _main_game_object->main_positionY;
+        attack_box_dimensions->main_positionY = _main_game_object->main_positionY;
 
-        m_attack_box->main_width = _main_game_object->main_width / 2;
-        m_attack_box->main_height = _main_game_object->main_height;
+        attack_box_dimensions->main_width = _main_game_object->main_width / 2;
+        attack_box_dimensions->main_height = _main_game_object->main_height;
     }
     else {
-        m_attack_box->main_positionX = _main_game_object->main_positionX;
-        m_attack_box->main_positionY = _main_game_object->main_positionY;
+        attack_box_dimensions->main_positionX = _main_game_object->main_positionX;
+        attack_box_dimensions->main_positionY = _main_game_object->main_positionY;
 
-        m_attack_box->main_width = _main_game_object->main_width / 2;
-        m_attack_box->main_height = _main_game_object->main_height;
+        attack_box_dimensions->main_width = _main_game_object->main_width / 2;
+        attack_box_dimensions->main_height = _main_game_object->main_height;
     }
 
 
     if( Game::instance.keyboard->isKeyDown("space") ){
-        attack_meele = true;
+        is_attacking_meele = true;
     }
     else {
         // Do nothing
@@ -93,11 +96,11 @@ void Player::attack_player() {
         // Do nothing
     }
     else {
-        attack_meele = false;
+        is_attacking_meele = false;
     }
 
     if( Game::instance.keyboard->isKeyDown("f") ) {
-        attack_ranged = true;
+        is_attacking_ranged = true;
     }
     else {
         // Do nothing
@@ -107,12 +110,16 @@ void Player::attack_player() {
         // Do nothing
     }
     else {
-        attack_ranged = false;
+        is_attacking_ranged = false;
     }
 
-    if( attack_meele || attack_ranged ) {
-      animCtrl->play_animation("player_attack");
-      if( attack_meele ) {
+    if( is_attacking_meele || is_attacking_ranged ) {
+      animation_controller->play_animation("player_attack");
+      if( is_attacking_meele ) {
+
+          /**
+              Audio when the player is attacking melee
+          */
           AudioComponent* player_attack_audio =
                           (dynamic_cast<AudioComponent*>(
                           _main_game_object->get_component(
@@ -120,20 +127,24 @@ void Player::attack_player() {
 
           player_attack_audio->play(0, -1);
           if( time_attack < Game::instance.timer->getTicks() ) {
-              m_attack_box->setState(GameObject::State::enabled);
+              attack_box_dimensions->setState(GameObject::State::enabled);
               time_attack = Game::instance.timer->getTicks() + 50;
           }
           else {
-              m_attack_box->setState(GameObject::State::disabled);
+              attack_box_dimensions->setState(GameObject::State::disabled);
           }
       }
       else {
+
+          /**
+              Audio when the player is attacking renged
+          */
           AudioComponent* player_arrow_sound =
                           (dynamic_cast<AudioComponent*>(
                           _main_game_object->get_component(
                           "player_arrow_sound")));
 
-          animCtrl->play_animation("player_ranged");
+          animation_controller->play_animation("player_ranged");
           player_arrow_sound->play(0, -1);
       }
     }
@@ -147,12 +158,12 @@ void Player::attack_player() {
     Define player drive, detecting right and left movement, making interface
     interactions of his walk
 */
-void Player::move_player() {
+void Player::detect_move() {
 
     // Detect move right
 
     if( Game::instance.keyboard->isKeyDown("d") ) {
-        walkR = true;
+        is_walking_right = true;
     }
     else {
         // Do nothing
@@ -162,13 +173,13 @@ void Player::move_player() {
         // Do nothing
     }
     else {
-        walkR = false;
+        is_walking_right = false;
     }
 
     // Detect move left
 
     if( Game::instance.keyboard->isKeyDown("a") ) {
-        walkL = true;
+        is_walking_left = true;
     }
     else {
         // Do nothing
@@ -178,55 +189,61 @@ void Player::move_player() {
         // Do nothing
     }
     else {
-        walkL = false;
+        is_walking_left = false;
     }
 
-    if( walkR && ( _main_game_object->main_positionX +
+    if( is_walking_right && ( _main_game_object->main_positionX +
                    _main_game_object->main_width) < 800 ) {
 
+        /**
+            Audio when the player is running right
+        */
         AudioComponent* player_running_audio =
                         (dynamic_cast<AudioComponent*>(
                         _main_game_object->get_component(
                         "player_running_audio")));
 
-        isRight = true;
+        is_walking_right = true;
 
-        animCtrl->play_animation("player_running");
+        animation_controller->play_animation("player_running");
         player_running_audio->play(0, -1);
 
-        side = RIGHT;
+        direction_boby_side = RIGHT;
 
-        animCtrl->flipping(side);
+        animation_controller->flipping(direction_boby_side);
 
-        _main_game_object->main_positionX += moveForce;
+        _main_game_object->main_positionX += move_size;
      }
-     else if( walkL && ( _main_game_object->main_positionX ) >= 0 ) {
+     else if( is_walking_left && ( _main_game_object->main_positionX ) >= 0 ) {
 
+        /**
+            Audio when the player is running left
+        */
         AudioComponent* player_running_audio2 =
                         (dynamic_cast<AudioComponent*>(
                         _main_game_object->get_component(
                         "player_running_audio2")));
 
-        isRight = false;
+        is_walking_right = false;
 
-        animCtrl->play_animation("player_running");
+        animation_controller->play_animation("player_running");
         player_running_audio2->play(0, -1);
 
-        side = LEFT;
+        direction_boby_side = LEFT;
 
-        animCtrl->flipping(side);
+        animation_controller->flipping(direction_boby_side);
 
-        _main_game_object->main_positionX -= moveForce;
+        _main_game_object->main_positionX -= move_size;
      }
      else {
         // Do nothing
      }
 
     if( _main_game_object->main_positionX > 200 &&
-        walkR &&
-        m_background->enable_camera ) {
-        _main_game_object->main_positionX -= moveForce;
-        m_background->move_img_rect(7);
+        is_walking_right &&
+        image_background->enable_camera ) {
+        _main_game_object->main_positionX -= move_size;
+        image_background->move_img_rect(7);
     }
     else {
         // Do nothing
@@ -237,19 +254,22 @@ void Player::move_player() {
 /**
     Define and detect interaction of the player jump
 */
-void Player::jump_player() {
+void Player::detect_jump() {
 
+    /**
+        Audio when the player is jumping
+    */
     AudioComponent* player_jump_audio = (dynamic_cast<AudioComponent*>(
                                         _main_game_object->get_component(
                                         "player_jump_audio")));
 
     //Player try jump and he can
 
-    if( Game::instance.keyboard->isKeyDown("w") && ( dy == 0 ) ) {
+    if( Game::instance.keyboard->isKeyDown("w") && ( vertical_position == 0 ) ) {
         player_jump_audio->play(0, -1);
 
-        jump = true;
-        dy -= jumpF;
+        is_jumping = true;
+        vertical_position -= jump_size;
     }
     else {
         // Do nothing
@@ -257,10 +277,13 @@ void Player::jump_player() {
 
 }
 
-void Player::processPos() {
+void Player::process_position() {
 
-    prev_position_y = _main_game_object->main_positionY;
-    _main_game_object->main_positionY += dy; // Current velocity components.
+    /**
+        Current velocity components.
+    */
+    previous_position_y = _main_game_object->main_positionY;
+    _main_game_object->main_positionY += vertical_position;
 
 }
 
@@ -268,13 +291,13 @@ void Player::processPos() {
     Apply the gravity on the player, depending where he is
     (platform or in the air)
 */
-void Player::gravityF() {
+void Player::apply_gravity() {
 
     if( !has_ground() ) { // If the player is not on the platform
-        dy += gravity;
+        vertical_position += gravity;
     }
     else {
-        dy = 0;
+        vertical_position = 0;
     }
 
 }
@@ -286,13 +309,13 @@ void Player::gravityF() {
 */
 bool Player::has_ground() {
 
-    ground = Game::instance.collision_manager->checkCollision(_main_game_object,
+    get_ground_collision = Game::instance.collision_manager->checkCollision(_main_game_object,
                                                               "ground");
 
-    if( ground && dy >= 0 ) {
+    if( get_ground_collision && vertical_position >= 0 ) {
 
-        if( dy > 5 ) {
-            _main_game_object->main_positionY = ground->main_positionY -
+        if( vertical_position > 5 ) {
+            _main_game_object->main_positionY = get_ground_collision->main_positionY -
                                                 _main_game_object->main_height;
         }
         else {
@@ -313,9 +336,9 @@ bool Player::has_ground() {
 /**
     Detect damage on the player and apply the changes
 */
-void Player::damage() {
+void Player::detect_damage() {
 
-    if( !attack_meele ) {
+    if( !is_attacking_meele ) {
 
         if( (
             Game::instance.collision_manager->checkCollision(_main_game_object,
@@ -333,6 +356,10 @@ void Player::damage() {
              }
 
              if( life_points == 2 ) {
+
+                /**
+                    Audio when the player taked damage and his life is low
+                */
                 AudioComponent* player_low_life_audio =
                                 (dynamic_cast<AudioComponent*>(
                                 _main_game_object->get_component(

@@ -70,10 +70,10 @@ void Stage1Scene::game_logic() {
 */
 void Stage1Scene::bullet() {
 
-    if( player_controller->attack_ranged &&
+    if( player_controller->is_attacking_ranged &&
         timestep < Game::instance.timer->getTicks() ) {
         if( bullet1->state() == GameObject::State::disabled ) {
-            bulletDir1 = player_controller->side;
+            bulletDir1 = player_controller->direction_boby_side;
             bullet1->main_positionX = player->main_positionX +
                                       player->main_width;
             bullet1->main_positionY = player->main_positionY;
@@ -104,7 +104,7 @@ void Stage1Scene::bullet() {
         Is a input parameter that represents an object of the game(!=NULL)
     \endparblock
     \return true is inside
-    \return false isn't inside 
+    \return false isn't inside
 */
 bool Stage1Scene::is_inside( GameObject* object ) {
 
