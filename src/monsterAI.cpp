@@ -18,7 +18,7 @@ const int PLAYER_ATTACK_DISTANCE = 150;
 */
 bool MonsterAI::init() {
 
-    _main_game_object->main_positionY = ground - _main_game_object->main_height;
+    _main_game_object->main_positionY = GROUND - _main_game_object->main_height;
     _main_game_object->main_positionX = 400;
     horizontal_motion_units = ( rand() % 3 ) + 1;
     life_points = 2;
@@ -80,12 +80,12 @@ void MonsterAI::jump_monster() {
 
     // Monster jump
 
-    bool isOnGround = Game::instance.collision_manager->checkCollision(m_player,
+    bool on_ground = Game::instance.collision_manager->checkCollision(m_player,
                       "ground");
 
-    if( sees_player() && isOnGround &&
+    if( sees_player() && on_ground &&
         _main_game_object->main_positionY > m_player->main_positionY ) {
-        vertical_position -= jump_size;
+        vertical_position -= JUMP_SIZE;
     }
 
 }
@@ -140,7 +140,7 @@ void MonsterAI::apply_gravity() {
     */
 
     if( !has_ground() ) {
-        vertical_position += gravity;
+        vertical_position += GRAVITY;
     }
     else {
         vertical_position = 0;

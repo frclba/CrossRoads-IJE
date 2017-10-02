@@ -45,9 +45,9 @@ private:
     bool has_ground();
 
     int horizontal_motion_units = 0;
-    const int ground = 552;
-    const int gravity = 1;
-    const float jump_size = 2;
+    const int GROUND = 552;
+    const int GRAVITY = 1;
+    const float JUMP_SIZE = 2;
     float vertical_position;
     bool side;
     const bool RIGHT = true;
