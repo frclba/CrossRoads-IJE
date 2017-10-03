@@ -39,23 +39,23 @@ GameObject* CollisionManager::checkCollision( GameObject* game_object,
 
 /**
     This method is responsible for colliding objects and repositioning them
-    \param obj1, obj2
+    \param object_1, object_2
     \parblock
         Is a input parameter that represents objects of the game(!=NULL)
     \endparblock
     \return return a true value to result of objects intersection 
 */
-bool CollisionManager::collide( GameObject* obj1, GameObject* obj2 ) {
+bool CollisionManager::collide( GameObject* object_1, GameObject* object_2 ) {
   
-  rect1.x = obj1->main_positionX; 
-  rect1.y = obj1->main_positionY;
-  rect1.h = obj1->main_height;
-  rect1.w = obj1->main_width;
-  rect2.x = obj2->main_positionX;
-  rect2.y = obj2->main_positionY;
-  rect2.h = obj2->main_height;
-  rect2.w = obj2->main_width;
+  rectangle_1.x = object_1->main_positionX; 
+  rectangle_1.y = object_1->main_positionY;
+  rectangle_1.h = object_1->main_height;
+  rectangle_1.w = object_1->main_width;
+  rectangle_2.x = object_2->main_positionX;
+  rectangle_2.y = object_2->main_positionY;
+  rectangle_2.h = object_2->main_height;
+  rectangle_2.w = object_2->main_width;
 
-  return SDL_IntersectRect(&rect1, &rect2, &result);
+  return SDL_IntersectRect(&rectangle_1, &rectangle_2, &result);
 
 }

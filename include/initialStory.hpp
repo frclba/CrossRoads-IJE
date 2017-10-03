@@ -36,11 +36,19 @@ public:
         void update();
 
 private:
+
+    //  Story that will start an animation
     AnimationControllerComponent *m_story;
 
-    unsigned int timestep;
-    unsigned int interator;
-  
+    
+    // Used to mark the time step
+    unsigned int time_step;
+
+    /**
+        Iterator used to choose an animation of the story
+        according to the time step
+    */
+    unsigned int iterator;
 };
 
 #endif  // _INITIAL_STORY_HPP_

@@ -25,10 +25,10 @@ public:
     FireballController( GameObject &main_game_object, std::string id,
                        double velocity, GameObject *player ):
           Component( main_game_object, id ),
-          dy( velocity ),
+          variation_position_y( velocity ),
           m_player( player ),
-          last_pos_player_x( 0 ),
-          readyToFall(false){}
+          last_position_player_x( 0 ),
+          ready_to_fall(false){}
 
     ~FireballController();
 
@@ -39,15 +39,20 @@ public:
 private:
     void processPos();
 
-    const int GRAVITY = 1;
+    // Gravity applied to fireball
+    const int gravity = 1;
 
-    double dy = 0.0;
+    // Variation of y positon of the object
+    double variation_position_y = 0.0;
 
+    // Player of current game
     GameObject *m_player = NULL;
 
-    int last_pos_player_x = 0;
-
-    bool readyToFall = false;
+    // Last position of Player on the x axis
+    int last_position_player_x = 0;
+    
+    // Boolean to enable fall action
+    bool ready_to_fall = false;
 };
 
 #endif  // _FIREBALL_HPP_

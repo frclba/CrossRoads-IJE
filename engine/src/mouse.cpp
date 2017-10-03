@@ -12,11 +12,14 @@ using namespace engine;
 */
 void Mouse::set_position() {
 
-    int x = 0; 
-    int y = 0;
-    SDL_GetMouseState(&x, &y);
-    mouseX = x;
-    mouseY = y;
+    // Receives the coordinate of the x axis
+    int x_axis = 0;
+
+    // Receives the coordinate of the y axis
+    int y_axis = 0;
+    SDL_GetMouseState(&x_axis, &y_axis);
+    mouse_position_x = x_axis;
+    mouse_position_y = y_axis;
 
 }
 
@@ -31,10 +34,12 @@ void Mouse::set_position() {
 */
 bool Mouse::is_over(engine::GameObject *gameObject) {
 
-    if( mouseX > gameObject->main_positionX &&
-        mouseY > gameObject->main_positionY &&
-        mouseX < (gameObject->main_width + gameObject->main_positionX) &&
-        mouseY < (gameObject->main_height + gameObject->main_positionY) ) {
+    if( mouse_position_x > gameObject->main_positionX &&
+        mouse_position_y > gameObject->main_positionY &&
+        mouse_position_x < (gameObject->main_width + 
+                            gameObject->main_positionX) &&
+        mouse_position_y < (gameObject->main_height + 
+                            gameObject->main_positionY) ) {
         return true;
     }
     else {
