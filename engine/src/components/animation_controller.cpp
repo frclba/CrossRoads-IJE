@@ -117,14 +117,14 @@ void AnimationControllerComponent::change_animations() {
 
 /**
     Set filp side
-    \param isFlip side value
+    \param is_flip side value
     \parblock
         true if RIGHT
         false if LEFT
     \endparblock
 */
-void AnimationControllerComponent::flipping(bool isFlip) {
+void AnimationControllerComponent::flipping(bool is_flip) {
 
-    flip = isFlip;
+    flip = is_flip;
 
 }

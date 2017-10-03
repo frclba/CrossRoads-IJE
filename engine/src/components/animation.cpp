@@ -29,7 +29,7 @@ bool Animation::init() {
 
     SDL_Surface *image = IMG_Load( main_path.c_str() );
 
-    if(image == NULL) {
+    if( image == NULL ) {
 
         // SDL_IMG_ERROR("Could not load image from path !" << main_path);
 
@@ -49,7 +49,7 @@ bool Animation::init() {
 
     //Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho desejado
 
-    _main_game_object -> set_size( m_widthDiv, m_heightDiv );
+    _main_game_object -> set_size( m_width_division, m_height_division );
 
     SDL_FreeSurface( image );
 
@@ -57,22 +57,25 @@ bool Animation::init() {
 
     //ler matriz de imagems em um arquivo
 
-    int cont = 0;
+    /** 
+        Count to render images sizes.
+    */
+    int count = 0;
 
-    for( int h = 0; h < image -> h && cont < m_num_image; h += m_heightDiv ) {
-        for( int w = 0; w < image -> w && cont < m_num_image; w += m_widthDiv ) {
+    for( int h = 0; h < image -> h && count < m_num_image; h += m_height_division ) {
+        for( int w = 0; w < image -> w && count < m_num_image; w += m_width_division ) {
             SDL_Rect *rect = new SDL_Rect();
             rect -> x = w;
             rect -> y = h;
-            rect -> w = m_widthDiv;
-            rect -> h = m_heightDiv;
-            imageVector.push_back( rect );
-            cont++;
+            rect -> w = m_width_division;
+            rect -> h = m_height_division;
+            image_vector.push_back( rect );
+            count++;
         }
     }
 
     main_animation[BEGIN] = 0;
-    main_animation[END] = imageVector.size() - 1;
+    main_animation[END] = image_vector.size() - 1;
 
     return true;
 
@@ -80,26 +83,26 @@ bool Animation::init() {
 
 /**
     Set initial sprite and end sprit for display certain image movement
-    \param[in] animationName existing identifier in animationMap
-    \param[in] begin should less imageVector size
-    \param[in] end should be less imageVector size and bigger or equal to begin param
+    \param[in] animation_name existing identifier in animation_map
+    \param[in] begin should less image_vector size
+    \param[in] end should be less image_vector size and bigger or equal to begin param
 */
-void Animation::setAnimation( std::string animationName, int begin, int end ) {
+void Animation::setAnimation( std::string animation_name, int begin, int end ) {
 
-    (animationMap[animationName])[BEGIN] = begin;
-    (animationMap[animationName])[END] = end;
+    (animation_map[animation_name])[BEGIN] = begin;
+    (animation_map[animation_name])[END] = end;
 
 }
 
 /**
     Starts running the animation
-    \param[in] animationName existing identifier in animationMap
+    \param[in] animation_name existing identifier in animation_map
     \return true if started execution
 */
-bool Animation::useAnimation( std::string animationName ) {
+bool Animation::useAnimation( std::string animation_name ) {
 
-    main_animation[BEGIN] = (animationMap[animationName])[BEGIN];
-    main_animation[END] = (animationMap[animationName])[END];
+    main_animation[BEGIN] = (animation_map[animation_name])[BEGIN];
+    main_animation[END] = (animation_map[animation_name])[END];
 
     if( main_frame < main_animation[BEGIN] || main_frame > main_animation[END] ) {
         main_frame = main_animation[BEGIN];
@@ -110,26 +113,26 @@ bool Animation::useAnimation( std::string animationName ) {
 }
 
 /**
-    \param[in] toSetDelay time in ms
+    \param[in] to_set_delay time in ms
     \result update delay value in animation
 */
-void Animation::setDelay( int toSetDelay ) {
+void Animation::setDelay( int to_set_delay ) {
 
-    this -> delay = toSetDelay;
+    this -> delay = to_set_delay;
 
 }
 
 /**
     Define side to animation moviment
-    \param[in] isFlip represent moviment side
+    \param[in] is_flip represent moviment side
     \parblock
       true value refers to RIGHT
       false value refers to LEFT
     \endparblock
 */
-void Animation::flipping( bool isFlip ) {
+void Animation::flipping( bool is_flip ) {
 
-    if( isFlip ) {
+    if( is_flip ) {
         flip = SDL_FLIP_HORIZONTAL;
     }
     else {
@@ -158,7 +161,7 @@ bool Animation::has_finished() {
 */
 void Animation::setup() {
 
-    _main_game_object -> set_size( m_widthDiv, m_heightDiv );
+    _main_game_object -> set_size( m_width_division, m_height_division );
 
 }
 
@@ -167,16 +170,19 @@ void Animation::setup() {
 */
 void Animation::draw() {
 
-    SDL_Rect *renderQuad = new SDL_Rect();
+    /**
+        Render 2D image.
+    */
+    SDL_Rect *render_quad = new SDL_Rect();
 
-    renderQuad -> x = _main_game_object -> main_positionX;
-    renderQuad -> y = _main_game_object -> main_positionY;
-    renderQuad -> w = imageVector[main_frame] -> w;
-    renderQuad -> h = imageVector[main_frame]-> h;
+    render_quad -> x = _main_game_object -> main_positionX;
+    render_quad -> y = _main_game_object -> main_positionY;
+    render_quad -> w = image_vector[main_frame] -> w;
+    render_quad -> h = image_vector[main_frame]-> h;
 
-    if( ( int ) ( Game::instance.timer -> getTicks() - timestep ) >= delay ) {
+    if( ( int ) ( Game::instance.timer -> getTicks() - time_step ) >= delay ) {
         main_frame++;
-        timestep = Game::instance.timer -> getTicks();
+        time_step = Game::instance.timer -> getTicks();
     }
 
     if( main_frame > main_animation[END] ) {
@@ -186,8 +192,8 @@ void Animation::draw() {
     SDL_RenderCopyEx(
         Game::instance.main_canvas,
         main_texture,
-        imageVector[main_frame],
-        renderQuad,
+        image_vector[main_frame],
+        render_quad,
         0,
         NULL,
         flip
