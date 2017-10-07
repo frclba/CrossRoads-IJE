@@ -29,9 +29,9 @@ namespace engine {
 
             };
 
-            AudioComponent(GameObject &main_game_object, std::string id, std::string path,
+            AudioComponent(GameObject &main_game_object, std::string audio_id, std::string audio_path,
                            bool is_music = false, bool play_on_start = true) :
-                           Component(main_game_object, id), m_path(path), m_is_music(is_music), 
+                           Component(main_game_object, audio_id), m_audio_path(audio_path), m_is_music(is_music), 
                            m_play_on_start(play_on_start), m_audio_state(AudioState::stopped),
                            m_music(NULL), m_sound(NULL) {
 
@@ -55,9 +55,9 @@ namespace engine {
 
         private:
             /** 
-                Path of musics and sounds of the game. 
+                audio_path of musics and sounds of the game. 
             */
-            std::string m_path = "";
+            std::string m_audio_path = "";
 
             /** 
                 Control time when music and sound will be played. 
