@@ -1,3 +1,7 @@
+/**
+    \file monsterAI.cpp
+    This file implements the MonsterAI class
+*/
 #include "monsterAI.hpp"
 #include "game.hpp"
 #include <stdio.h>
@@ -8,6 +12,10 @@ unsigned int time_damage;
 const int PLAYER_DISTANCE = 850;
 const int PLAYER_ATTACK_DISTANCE = 150;
 
+/**
+    This method initiates the Class MonsterAI in the game
+    \return return a true value that make the MonsterAI active
+*/
 bool MonsterAI::init() {
 
     _main_game_object->main_positionY = ground - _main_game_object->main_height;
@@ -19,6 +27,9 @@ bool MonsterAI::init() {
 
 }
 
+/**
+    This method is responsible for updating the monster in walk and attack que monster in the game.
+*/
 void MonsterAI::update() {
 
     m_monster_controler->play_animation("monster_walk", true);
@@ -37,16 +48,20 @@ void MonsterAI::update() {
     }
 
     if( Game::instance.collision_manager->checkCollision(
-        _main_game_object,"player") ) {
+        _main_game_object, "player") ) {
         m_monster_controler->play_animation("monster_attack");
     }
 
 }
+/**
+    This method is responsible for possibility the monster to see player in the game
+    \return return true for prayer see and false see not player
+*/
 
 bool MonsterAI::see_player() {
 
     if( fabs(_main_game_object->main_positionX - m_player->main_positionX) <=
-        PLAYER_DISTANCE-100 ) {
+        PLAYER_DISTANCE - 100 ) {
         return true;
     }
     else {
@@ -54,6 +69,12 @@ bool MonsterAI::see_player() {
     }
 
 }
+
+
+/**
+    This method is responsible for possibility the monster jump in the game
+    
+*/
 
 void MonsterAI::jump_monster() {
 
@@ -68,6 +89,11 @@ void MonsterAI::jump_monster() {
     }
 
 }
+
+/**
+    This method is responsible for move monster in direction the player in the game
+    
+*/
 
 void MonsterAI::move_monster() {
 
@@ -87,6 +113,10 @@ void MonsterAI::move_monster() {
 
 }
 
+/**
+    This method is responsible for incrementar the vertical position que monster im game
+*/
+
 void MonsterAI::processPos() {
 
      // std::cout<<dy<<std::endl;
@@ -94,6 +124,10 @@ void MonsterAI::processPos() {
     _main_game_object->main_positionY += dy; // Current velocity components.
 
 }
+
+/**
+    This method is responsible for increment the vertical position of the monster
+*/
 
 void MonsterAI::gravityF() {
 
@@ -114,6 +148,10 @@ void MonsterAI::gravityF() {
 
 }
 
+/**
+    This method is responsible for if you have floor to monster floor
+*/
+
 bool MonsterAI::has_ground() {
 
     ground_obj = Game::instance.collision_manager->checkCollision(
@@ -132,13 +170,18 @@ bool MonsterAI::has_ground() {
 
 }
 
+
+/**
+    This method is responsible for damage monster in the game for 
+*/
+
 void MonsterAI::damage() {
 
     bullet = Game::instance.collision_manager->checkCollision(
              _main_game_object, "bullet");
 
     if( Game::instance.collision_manager->checkCollision(
-        _main_game_object,"attack_box") || bullet ) {
+        _main_game_object, "attack_box") || bullet ) {
 
         m_monster_controler->play_animation("monster_damage");
 

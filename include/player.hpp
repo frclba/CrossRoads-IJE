@@ -1,5 +1,12 @@
+/**
+  \file player.hpp
+  This file declares the Player class, his methods and attributes with their
+  encapsulation.
+*/
+
 #ifndef __PLAYER_HPP__
 #define __PLAYER_HPP__
+
 #include <iostream>
 
 #include "components/component.hpp"
@@ -12,61 +19,73 @@
 
 using namespace engine;
 
-class Player : public Component{
+/// This class represents the player, their characteristics and behavior
+/**
+    \class Player
+    Class responsable for all logic about the player.
+*/
+class Player : public Component {
+
 public:
-  Player(GameObject &main_game_object, std::string id, AnimationControllerComponent *animC, GameObject &attack_box,
-	 ImageComponent *background):
-    Component(main_game_object, id), side(false), attack_meele(false),attack_ranged(false), animCtrl(animC), stand(false), jump(false),
-    walkR(false), walkL(false), damageBool(false),  m_attack_box(&attack_box),
-    m_background(background){}
+
+    Player( GameObject &main_game_object, std::string id,
+         AnimationControllerComponent *animC, GameObject &attack_box,
+	       ImageComponent *background ):
+         Component(main_game_object, id), side(false),
+         attack_meele(false), attack_ranged(false), animCtrl(animC),
+         stand(false), jump(false), walkR(false), walkL(false),
+         damageBool(false),  m_attack_box(&attack_box),
+         m_background(background){}
 
     ~Player();
 
     bool init();
-    void update();
+    bool has_ground();
 
+    void update();
     void is_dead();
     void damage_player();
     void attack_player();
     void move_player();
     void jump_player();
     void damage();
-
-
     void processPos();
     void gravityF();
-    bool has_ground();
-    //void monsterAI(GameObject *obj);
 
-    GameObject *player;
-    GameObject *plataform;
-    GameObject *monster;
+    GameObject *player = NULL;
+    GameObject *plataform = NULL;
+    GameObject *monster = NULL;
 
-    bool side;
-    bool attack_meele;
-    bool attack_ranged;
+    bool side = false;
+    bool attack_meele = false;
+    bool attack_ranged = false;
 
-    int life_points;
+    int life_points = 5;
 
 private:
+
     const bool RIGHT = true;
     const bool LEFT = false;
-    AnimationControllerComponent *animCtrl;
-    AnimationControllerComponent *monster_controler;
-    unsigned int jumptime;
-    unsigned int time_attack;
 
-    bool stand;
-    bool jump;
-    bool walkR;
-    bool walkL;
-    bool damageBool;
+    AnimationControllerComponent *animCtrl = NULL;
+    AnimationControllerComponent *monster_controler = NULL;
 
-    GameObject *ground;
-    GameObject* m_attack_box;
-    float dy;
-    ImageComponent* m_background;
+    unsigned int jumptime = 0;
+    unsigned int time_attack = 0;
+
+    bool stand = false;
+    bool jump = false;
+    bool walkR = false;
+    bool walkL = false;
+    bool damageBool = false;
+
+    GameObject *ground = NULL;
+    GameObject* m_attack_box = NULL;
+
+    float dy = 0;
+
+    ImageComponent* m_background = NULL;
 
 };
 
-#endif
+#endif // __PLAYER_HPP__

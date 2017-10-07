@@ -1,43 +1,144 @@
-#ifndef _ENGINE_COMPONENTS_COMPONENT
-#define _ENGINE_COMPONENTS_COMPONENT
+/**
+    \file component.hpp
+    This file declares GameObject and Component class
+*/
 
-namespace engine{
-  //Define a class gameobject como vazia aqui, para não ter problemas de importação cíclica.
-  class GameObject;
+#ifndef FOO_BAR_ENGINE_COMPONENTS_COMPONENT_H_
+#define FOO_BAR_ENGINE_COMPONENTS_COMPONENT_H_
 
-  class Component{
-  public:
-    enum class State{
-      enabled,
-      disabled,
-      invalid
+namespace engine {
+
+    /// Class to control game objects
+    /**
+        \class GameObject
+        This class is responsible to control game objects
+    */
+    class GameObject;
+
+    /// Class to control game objects
+    /**
+        \class GameObject
+        This class is responsible to control game objects, but in this file
+        this class is here empty just to not have problems of cyclic imports
+    */
+    class Component {
+
+        public:
+            /// Class to control states
+            /**
+                \class State
+                This class is responsible to control all states of game
+            */
+            enum class State{
+
+                enabled,
+                disabled,
+                invalid
+
+            };
+
+            /*
+                Overhead of build for created components without parameters
+                being invalid.
+            */
+            Component(): main_state(State::invalid), _main_game_object(NULL) {
+
+                // Default function call.
+
+            }
+
+            /**
+                Construct method for a GameObject already instantiated
+                \param[in] gameObject reference address to GameObject
+                \param[in] name string
+                \result component_id receive name as Component identifier
+                \result main_state set as enabled enum value
+                \result _main_game_object ponteir receive gameObject reference
+            */
+            Component(GameObject &gameObject, std::string name) : 
+                      component_id(name), main_state(State::enabled),
+                      _main_game_object(&gameObject) {
+
+                // Default function call.
+
+            }
+
+            /**
+                This method is an empty constructor
+            */
+            virtual ~Component() {
+
+                // Default function call.
+
+            };
+
+            /**
+                This method initialize components
+            */
+            virtual bool init() { 
+
+                return true;
+
+            }
+
+            /**
+                This method finish components
+            */
+            virtual bool shutdown() {
+
+                return true;
+
+            }
+
+            /**
+                This is an empty method
+            */
+            virtual void update() {
+
+                // Default function call.
+
+            }
+
+            /**
+                This method return actual state of game
+            */
+            inline State state() { 
+
+                return main_state;
+
+            }
+
+            /**
+                This method enable actual state
+            */
+            inline void enable() {
+
+                main_state = State::enabled;
+
+            }
+
+            /**
+                This method disable actual state
+            */
+            inline void disable() { 
+
+                main_state = State::disabled;
+
+            }
+
+            std::string component_id = "";
+
+            State main_state;
+
+        protected:
+            /*
+                The component keeps a reference of the game object which it
+                belongs
+            */
+            GameObject* _main_game_object;
+
     };
 
-    //Sobrecarga do construtor para  componentes criados sem parâmetros serem invalidados.
-    Component(): main_state(State::invalid), _main_game_object(NULL){}
-
-    Component(GameObject &gameObject, std::string name)
-    : component_id(name), main_state(State::enabled), _main_game_object(&gameObject){}
-
-    virtual ~Component() {};
-    virtual bool init(){ return true; }
-    virtual bool shutdown(){ return true; }
-
-    virtual void update()   { return; }
-
-    inline State state(){ return main_state; }
-
-    inline void enable() { main_state = State::enabled; }
-    inline void disable() { main_state = State::disabled; }
-
-    std::string component_id;
-
-    State main_state;
-    // State main_state;
-  protected:
-    //O componente guarda uma referência do game object ao qual pertence.
-    GameObject* _main_game_object;
-  };
 }
 
-#endif
+#endif // FOO_BAR_ENGINE_COMPONENTS_COMPONENT_H_
