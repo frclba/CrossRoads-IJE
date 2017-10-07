@@ -25,7 +25,7 @@ class MonsterAI : public Component {
 public:
     MonsterAI(GameObject &main_game_object, std::string id, GameObject *player,
               AnimationControllerComponent *monster_controler) :
-              Component(main_game_object, id), dy(0), side(false),
+              Component(main_game_object, id),vertical_position(0), side(false),
               m_player(player), m_monster_controler(monster_controler) {}
 
     ~MonsterAI();
@@ -35,27 +35,40 @@ public:
 
 private:
 
-    void gravityF();
-    void processPos();
-    void damage();
+    void apply_gravity();
+    void process_position();
+    void receive_damage();
     void move_monster();
     void jump_monster();
-    bool see_player();
     void bullet_damage();
+    bool sees_player();
     bool has_ground();
 
-    int MONSTER_MOVE;
-    const int ground = 552;
-    const int gravity = 1;
-    const float jumpF = 2;
-    float dy;
+
+    /**
+        Sets the units which a monster can move. Ranges randomly from 1 to 2.
+    */
+
+    int horizontal_motion_units = 0;
+    const int GROUND = 552;
+    const int GRAVITY = 1;
+    const float JUMP_SIZE = 2;
+    /**
+        Ranges from 552 to 0.
+    */
+    float vertical_position;
+    /**
+        True: means that monster is facing right. False: means that monster is facing left.
+    */
     bool side;
     const bool RIGHT = true;
     const bool LEFT = false;
+    /**
+        Indicates if monster is damaged.
+    */
     bool has_damage = false;
-    int life = 3;
+    int life_points = 3;
     bool is_first = false;
-
     GameObject *m_player;
     GameObject *bullet;
     GameObject *ground_obj;
