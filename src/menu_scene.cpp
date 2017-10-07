@@ -12,12 +12,12 @@ void MenuScene::game_logic() {
 
     // Get menuFire object
 
-    GameObject *fireMenu = &get_game_object("menuFire");
+    GameObject *menu_fire = &get_game_object("menuFire");
 
     // Defines the position of the fire on the screen
 
-    fireMenu->main_positionX = 690;
-    fireMenu->main_positionY = 470;
+    menu_fire->main_positionX = 690;
+    menu_fire->main_positionY = 470;
 
     // Managing buttons on the scene
 
@@ -40,28 +40,28 @@ void MenuScene::buttons_controller() {
         // Do nothing
     }
 
-    // Get bNew gameobject
+    // Get new_game_button gameobject
 
-    GameObject *bNew = &get_game_object("bNew");
+    GameObject *new_game_button = &get_game_object("bNew");
 
     // Sets the position of the new game button on the screen
 
-    bNew->main_positionX = 300;
-    bNew->main_positionY = 275;
+    new_game_button->main_positionX = 300;
+    new_game_button->main_positionY = 275;
 
-    // Get bLoad gameobject
+    // Get load_button gameobject
 
-    GameObject *bLoad = &get_game_object("bLoad");
+    GameObject *load_button = &get_game_object("bLoad");
 
     // Sets the position of the load button on the screen
 
-    bLoad->main_positionX = 800;
-    bLoad->main_positionY = 820;
+    load_button->main_positionX = 800;
+    load_button->main_positionY = 820;
 
-    Animation *bnewAnimation = (dynamic_cast<Animation*> (
-                                bNew->get_component("imageBNew")));
+    Animation *new_game_button_animation = (dynamic_cast<Animation*> (
+                                new_game_button->get_component("imageBNew")));
 
-    if( Game::instance.mouse->is_over(bNew) ) {
+    if( Game::instance.mouse->is_over(new_game_button) ) {
         if( Game::instance.mouse->is_right_button() ) {
             Game::instance.change_scene("initial_story");
         }
@@ -70,24 +70,24 @@ void MenuScene::buttons_controller() {
         }
 
         AudioComponent *button_hover_sound = (dynamic_cast<AudioComponent*> (
-                                              bLoad->get_component(
+                                              load_button->get_component(
                                               "button_hover_sound")));
 
-        bnewAnimation->useAnimation("normal");
+        new_game_button_animation->useAnimation("normal");
         button_hover_sound->play(0,-1);
     }
     else {
-        bnewAnimation->useAnimation("mouseON");
+        new_game_button_animation->useAnimation("mouseON");
     }
 
-    Animation *bloadAnimation = (dynamic_cast<Animation*> (
-                                 bLoad->get_component("imageBLoad")));
+    Animation *load_button_animation = (dynamic_cast<Animation*> (
+                                 load_button->get_component("imageBLoad")));
 
-    if( Game::instance.mouse->is_over(bLoad) ) {
-        bloadAnimation->useAnimation("normal");
+    if( Game::instance.mouse->is_over(load_button) ) {
+        load_button_animation->useAnimation("normal");
     }
     else {
-        bloadAnimation->useAnimation("mouseON");
+        load_button_animation->useAnimation("mouseON");
     }
 
 }
