@@ -31,6 +31,9 @@ class Log {
 
 public:
 
+    /**
+      Log instance to keep the log file while playing the game
+    */
     static Log instance;
 
     /* Functions to print on file according to type of message */

@@ -12,8 +12,8 @@ CameraPosition::~CameraPosition(){}
 */
 bool CameraPosition::init() {
 
-    _main_game_object->main_positionX = m_init_posX;
-    _main_game_object->main_positionY = m_init_posY;
+    _main_game_object->main_positionX = m_horizontal_starting_position;
+    _main_game_object->main_positionY = m_vertical_starting_position;
 
     return true;
 
@@ -24,7 +24,7 @@ bool CameraPosition::init() {
 */
 void CameraPosition::update() {
 
-    _main_game_object->main_positionY = m_init_posY;
-    _main_game_object->main_positionX = m_init_posX - m_background->imagePart->x;
+    _main_game_object->main_positionY = m_vertical_starting_position;
+    _main_game_object->main_positionX = m_horizontal_starting_position - m_background->imagePart->x;
 
 }

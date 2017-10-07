@@ -31,7 +31,16 @@ public:
 
 private:
 
+  /**
+    Player to whom the life belongs
+  */
   Player *m_player = NULL;
+
+  /**
+    Minimum limit to mantain life enable
+    \This value is a constant and directly interferes with the level of
+    difficulty of the game.
+  */
   int m_life = 5;
 
 };

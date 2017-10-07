@@ -21,9 +21,14 @@ class CameraPosition : public Component {
 
 public:
     CameraPosition( GameObject &main_game_object, std::string id,
-                    ImageComponent *background, int init_posX, int init_posY) :
-                    Component(main_game_object, id), m_init_posX(init_posX),
-                    m_init_posY(init_posY), m_background(background) {}
+                    ImageComponent *background,
+                    int horizontal_starting_position,
+                    int vertical_starting_position) :
+                    Component(main_game_object, id),
+                    m_horizontal_starting_position(
+                        horizontal_starting_position),
+                    m_vertical_starting_position(vertical_starting_position),
+                    m_background(background) {}
 
         ~CameraPosition();
 
@@ -31,10 +36,24 @@ public:
 
         void update();
 
-        int m_init_posX = 0;
-        int m_init_posY = 0;
+        /**
+            Initial position in horizontal of the respective element
+            The range of accepted values refers to the extent of scenarios that 
+            have passed through the screen, ranging from 0 to 1600px.
+        */
+        int m_horizontal_starting_position = 0;
+
+        /**
+            Initial position in vertical of the respective element
+            Values can range from 0 to 600px
+        */
+        int m_vertical_starting_position = 0;
 
 private:
+
+  /**
+      ImageComponent referring to the element being positioned.
+  */
   ImageComponent *m_background = NULL;
 };
 
