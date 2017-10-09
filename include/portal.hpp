@@ -25,30 +25,42 @@ using namespace engine;
 class Portal : public Component{
 
 public:
-    Portal( GameObject &main_game_object, std::string id, 
+    Portal( GameObject &main_game_object, std::string id,
             ImageComponent *background, CameraPosition *portal_pos):
-        
-        Component( main_game_object, id), 
-        interator( 0 ), 
-        m_background( background ), 
+
+        Component( main_game_object, id),
+        monster_number_iterator( 0 ),
+        m_background( background ),
         m_portal_pos( portal_pos ){}
         ~Portal();
 
         bool init();
-    
+
         void update();
         void add_monster(GameObject* monster);
 
 private:
     std::vector <GameObject*> m_monsters;
 
-    unsigned int timestep;
-    unsigned int interator;
-    unsigned int monster_number;
+    /**
+        This attribute is responsible for the time delay between monsters birth
+    */
+    unsigned int time_between_monsters = 0;
 
-    ImageComponent *m_background;
-    CameraPosition *m_portal_pos;
-  
+    /**
+        This attribute is responsible for alterning between the monsters
+    */
+    unsigned int monster_number_iterator = 0;
+
+    /**
+        This attribute is responsible for counting how many mosters
+        has come out the portal
+    */
+    unsigned int monsters_out_of_portal = 0;
+
+    ImageComponent *m_background = NULL;
+    CameraPosition *m_portal_pos = NULL;
+
 };
 
 #endif  // _PORTAL_HPP_

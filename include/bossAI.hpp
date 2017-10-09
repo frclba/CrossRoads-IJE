@@ -44,16 +44,46 @@ private:
     CameraPosition *m_position = NULL;
     GameObject *m_player = NULL;
 
-    unsigned int timestep = 0;
-    unsigned int fireball_time = 0;
-    unsigned int move_time = 0;
-    unsigned int time_damage = 0;
+    /**
+        This attribute counts the delay between boss status updating
+    */
+    unsigned int boss_update_time = 0;
 
-    bool side = false;
-    bool dash_attack = false;
-    bool fireball_attack = false;
+    /**
+        This attribute represents the time delay btween fireball attacks
+    */
+    unsigned int fireball_time_gap = 0;
 
-    unsigned int life = 0;
+    /**
+        This attribute represents the time delay btween boss movements
+    */
+    unsigned int boss_movement_time_gap = 0;
+
+    /**
+        This attribute count the time to calculate how much damage the boss
+        is receiving
+    */
+    unsigned int damage_time = 0;
+
+    /**
+        This attribute signals if the boss animation needs to change direction
+    */
+    bool is_in_corner = false;
+
+    /**
+        This attribute signals the boss state
+    */
+    bool is_dash_attacking = false;
+
+    /**
+        This attribute signals the boss state
+    */
+    bool is_fireball_attacking = false;
+
+    /**
+        This attribute counts the boss life and goes from 10 to 0
+    */
+    unsigned int boss_life = 0;
 
 };
 

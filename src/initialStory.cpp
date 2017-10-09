@@ -29,9 +29,15 @@ void InitialStory::update() {
       iterator = iterator + 1;
       time_step = Game::instance.timer->getTicks() + 500*6;
   }
+  else {
+      // Do nothing
+  }
 
   if( Game::instance.keyboard->isKeyDown( "enter" ) ) {
 	    Game::instance.change_scene("Fase 1");
+  }
+  else {
+      // Do nothing
   }
 
   switch ( iterator ) {
@@ -58,5 +64,5 @@ void InitialStory::update() {
       default:
           break;
       }
-      
+
 }

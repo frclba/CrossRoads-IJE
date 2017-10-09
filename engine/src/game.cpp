@@ -42,6 +42,9 @@ bool Game::start_sdl() {
         Log::instance.error( "Error ao inicializar video ou audio ou joystick" );
         return false;
     }
+    else {
+        // Do nothing
+    }
 
     Log::instance.info("Iniciando Imagem");
 
@@ -49,14 +52,20 @@ bool Game::start_sdl() {
 
     int img_flags = IMG_INIT_PNG;
 
-    if( !(IMG_Init(img_flags) & img_flags) ) {
+    if( !(IMG_Init( img_flags ) & img_flags) ) {
         Log::instance.error( "Erro ao inicializar imagens !" );
         return false;
+    }
+    else {
+        // Do nothing
     }
 
     if( Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1 ) {
         Log::instance.error("Erro ao inicializar mixer");
         return false;
+    }
+    else {
+        // Do nothing
     }
 
     timer = new Timer();
@@ -64,24 +73,21 @@ bool Game::start_sdl() {
     keyboard = new Keyboard();
     collision_manager = new CollisionManager();
 
-    if( SDL_NumJoysticks() < 1 ) {
+    if( SDL_NumJoysticks() > 0 ) {
+        //Load joystick
 
-      //printf( "Warning: No joysticks connected!\n" );
+        g_game_controller = SDL_JoystickOpen( 0 );
 
+        if( g_game_controller == NULL ) {
+            //printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
+        }
+        else {
+            // Do nothing
+        }
     }
 
     else {
-
-      //Load joystick
-
-      g_game_controller = SDL_JoystickOpen(0);
-
-      if( g_game_controller == NULL ) {
-
-	  //printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
-
-      }
-
+        //printf( "Warning: No joysticks connected!\n" );
     }
 
     return true;
@@ -112,6 +118,9 @@ bool Game::create_window() {
         Log::instance.error("Falha ao criar janela");
         return false;
     }
+    else {
+        // Do noting
+    }
 
     main_canvas = SDL_CreateRenderer(
         main_window,
@@ -122,6 +131,9 @@ bool Game::create_window() {
     if( main_canvas == NULL ) {
         Log::instance.error("Falha ao criar renderizador");
         return false;
+    }
+    else {
+        // Do nothing
     }
 
     SDL_SetRenderDrawColor(
@@ -182,12 +194,20 @@ void Game::run() {
 
         timer -> start();
 
-        if( current_scene != NULL )
-        current_state = State::main_loop_change_scene;
+        if( current_scene != NULL ) {
+            current_state = State::main_loop_change_scene;
+        }
+        else {
+            // Do nothing
+        }
 
         while( current_state != State::exit_loop ) {
-            if( handle_scene_changes() == false )
-            break;
+            if( handle_scene_changes() == false ) {
+                break;
+            }
+            else {
+                // Do nothing
+            }
 
             SDL_Event evt;
 
@@ -197,6 +217,9 @@ void Game::run() {
             while( SDL_PollEvent(&evt) != 0 ) {
                 if( evt.type == SDL_QUIT ) {
                     current_state = State::exit_loop;
+                }
+                else {
+                    // Do nothing
                 }
 
                 keyboard -> setKeys(&evt);
@@ -211,6 +234,9 @@ void Game::run() {
 
                         break;
                     }
+                }
+                else {
+                    // Do nothing
                 }
             }
 
@@ -235,15 +261,22 @@ void Game::run() {
             if( frame_time > timer-> get_elapseTime() ) {
                 SDL_Delay(timer -> get_elapseTime());
             }
+            else {
+                // Do nothing
+            }
 
             keyboard -> clearKeyboard();
             current_scene -> clear_collide_objects();
             timer -> set_TimeStep();
         }
 
-        Log::instance.info("Cleaning scene...");
-        if( current_scene )
-        current_scene -> shutdown();
+        Log::instance.info( "Cleaning scene..." );
+        if( !current_scene ) {
+            // Do nothing
+        }
+        else {
+            current_scene -> shutdown();
+        }
     }
 
     Log::instance.info("Desligando tudo");
@@ -270,11 +303,18 @@ bool Game::add_scene(Scene &scene) {
       Log::instance.warning("The scene '"+ id +"' is already loaded!");
       return false;
     }
+    else {
+        // Do nothing
+    }
 
     scenes_list[id] = &scene;
 
-    if( current_scene == NULL )
-    change_scene(id);
+    if( current_scene == NULL ) {
+        change_scene(id);
+    }
+    else {
+        // Do nothing
+    }
 
     return true;
 }
@@ -289,19 +329,23 @@ bool Game::add_scene(Scene &scene) {
 
 bool Game::change_scene(const std::string &id) {
 
-    if( scenes_list.find(id) == scenes_list.end() ) {
-      return false;
+    if( scenes_list.find(id) != scenes_list.end() ) {
+        // Do nothing
+    }
+    else {
+        return false;
     }
 
     last_current_scene = current_scene;
 
     // current_scene = scenes_list[id];
-    if(next_scene == NULL){
-      //Quando for rodado a primeira vez.
-      current_scene = scenes_list[id];
-    }else{
-      printf("Pŕoxima cena que foi setada\n");
-      next_scene = scenes_list[id];
+    if(next_scene != NULL){
+        printf("Pŕoxima cena que foi setada\n");
+        next_scene = scenes_list[id];
+    }
+    else {
+        //Quando for rodado a primeira vez.
+        current_scene = scenes_list[id];
     }
 
     current_state = State::main_loop_change_scene;
@@ -331,8 +375,12 @@ bool Game::handle_scene_changes() {
               next_scene = current_scene;
             }
 
-        if(last_current_scene)
-        last_current_scene->shutdown();
+        if(last_current_scene) {
+            last_current_scene->shutdown();
+        }
+        else {
+            // Do nothing
+        }
 
         current_scene->init();
 
