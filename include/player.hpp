@@ -51,7 +51,12 @@ public:
     void detect_attack_ranged();
     void apply_attack_meele();
     void apply_attack_ranged();
-    void detect_move();
+    void update_move();
+    void detect_move_right();
+    void detect_move_left();
+    void apply_move_right();
+    void apply_move_left();
+    void detect_background();
     void detect_jump();
     void detect_damage();
     void process_position();

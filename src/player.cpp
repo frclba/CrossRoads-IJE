@@ -55,7 +55,7 @@ void Player::update() {
 
     apply_gravity();
     detect_jump();
-    detect_move();
+    update_move();
     update_attack();
     detect_damage();
     process_position();
@@ -67,8 +67,20 @@ void Player::update_attack(){
     detect_boby_side();
     detect_attack_meele();
     detect_attack_ranged();
+
     apply_attack_meele();
     apply_attack_ranged();
+
+}
+
+void Player::update_move(){
+
+    detect_move_left();
+    detect_move_right();
+
+    apply_move_right();
+    detect_background();
+    apply_move_left();
 
 }
 
@@ -189,7 +201,7 @@ void Player::detect_boby_side() {
     Define player drive, detecting right and left movement, making interface
     interactions of his walk
 */
-void Player::detect_move() {
+void Player::detect_move_right() {
 
     // Detect move right
 
@@ -207,6 +219,10 @@ void Player::detect_move() {
         is_walking_right = false;
     }
 
+}
+
+void Player::detect_move_left() {
+
     // Detect move left
 
     if( Game::instance.keyboard->isKeyDown("a") ) {
@@ -222,6 +238,10 @@ void Player::detect_move() {
     else {
         is_walking_left = false;
     }
+
+}
+
+void Player::apply_move_right() {
 
     if( is_walking_right && ( _main_game_object->main_positionX +
                    _main_game_object->main_width) < 800 ) {
@@ -245,36 +265,48 @@ void Player::detect_move() {
 
         _main_game_object->main_positionX += move_size;
      }
-     else if( is_walking_left && ( _main_game_object->main_positionX ) >= 0 ) {
-
-        /**
-            Audio when the player is running left
-        */
-        AudioComponent* player_running_audio2 =
-                        (dynamic_cast<AudioComponent*>(
-                        _main_game_object->get_component(
-                        "player_running_audio2")));
-
-        is_walking_right = false;
-
-        animation_controller->play_animation("player_running");
-        player_running_audio2->play(0, -1);
-
-        direction_boby_side = LEFT;
-
-        animation_controller->flipping(direction_boby_side);
-
-        _main_game_object->main_positionX -= move_size;
-     }
      else {
         // Do nothing
      }
+
+}
+
+void Player::detect_background() {
 
     if( _main_game_object->main_positionX > 200 &&
         is_walking_right &&
         image_background->enable_camera ) {
         _main_game_object->main_positionX -= move_size;
         image_background->move_img_rect(7);
+    }
+    else {
+        // Do nothing
+    }
+
+}
+
+void Player::apply_move_left() {
+
+    if( is_walking_left && ( _main_game_object->main_positionX ) >= 0 ) {
+
+       /**
+           Audio when the player is running left
+       */
+       AudioComponent* player_running_audio2 =
+                       (dynamic_cast<AudioComponent*>(
+                       _main_game_object->get_component(
+                       "player_running_audio2")));
+
+       is_walking_right = false;
+
+       animation_controller->play_animation("player_running");
+       player_running_audio2->play(0, -1);
+
+       direction_boby_side = LEFT;
+
+       animation_controller->flipping(direction_boby_side);
+
+       _main_game_object->main_positionX -= move_size;
     }
     else {
         // Do nothing
