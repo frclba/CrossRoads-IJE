@@ -56,34 +56,27 @@ void Player::update() {
     apply_gravity();
     detect_jump();
     detect_move();
-    detect_attack();
+    update_attack();
     detect_damage();
     process_position();
 
 }
 
+void Player::update_attack(){
+
+    detect_boby_side();
+    detect_attack_meele();
+    detect_attack_ranged();
+    apply_attack_meele();
+    apply_attack_ranged();
+
+}
+
 /**
-    Define and detect player attacks, in cases of direction boby side(left or right) and
+    Detect player attack meele, in cases of direction boby side(left or right) and
     interface(buttons and their interactions). The attacks being meele or ranged
 */
-void Player::detect_attack() {
-
-    if( direction_boby_side == RIGHT ) {
-        attack_box_dimensions->main_positionX = _main_game_object->main_positionX +
-                                       _main_game_object->main_width;
-        attack_box_dimensions->main_positionY = _main_game_object->main_positionY;
-
-        attack_box_dimensions->main_width = _main_game_object->main_width / 2;
-        attack_box_dimensions->main_height = _main_game_object->main_height;
-    }
-    else {
-        attack_box_dimensions->main_positionX = _main_game_object->main_positionX;
-        attack_box_dimensions->main_positionY = _main_game_object->main_positionY;
-
-        attack_box_dimensions->main_width = _main_game_object->main_width / 2;
-        attack_box_dimensions->main_height = _main_game_object->main_height;
-    }
-
+void Player::detect_attack_meele() {
 
     if( Game::instance.keyboard->isKeyDown("space") ){
         is_attacking_meele = true;
@@ -99,6 +92,14 @@ void Player::detect_attack() {
         is_attacking_meele = false;
     }
 
+}
+
+/**
+    Detect player attack ranged, in cases of direction boby side(left or right) and
+    interface(buttons and their interactions). The attacks being meele or ranged
+*/
+void Player::detect_attack_ranged() {
+
     if( Game::instance.keyboard->isKeyDown("f") ) {
         is_attacking_ranged = true;
     }
@@ -113,43 +114,73 @@ void Player::detect_attack() {
         is_attacking_ranged = false;
     }
 
-    if( is_attacking_meele || is_attacking_ranged ) {
-      animation_controller->play_animation("player_attack");
-      if( is_attacking_meele ) {
+}
 
-          /**
-              Audio when the player is attacking melee
-          */
-          AudioComponent* player_attack_audio =
-                          (dynamic_cast<AudioComponent*>(
-                          _main_game_object->get_component(
-                          "player_attack_audio")));
+void Player::apply_attack_meele() {
 
-          player_attack_audio->play(0, -1);
-          if( time_attack < Game::instance.timer->getTicks() ) {
-              attack_box_dimensions->setState(GameObject::State::enabled);
-              time_attack = Game::instance.timer->getTicks() + 50;
-          }
-          else {
-              attack_box_dimensions->setState(GameObject::State::disabled);
-          }
+    if( is_attacking_meele ) {
+        animation_controller->play_animation("player_attack");
+        /**
+          Audio when the player is attacking melee
+        */
+        AudioComponent* player_attack_audio =
+                      (dynamic_cast<AudioComponent*>(
+                      _main_game_object->get_component(
+                      "player_attack_audio")));
+
+        player_attack_audio->play(0, -1);
+      if( time_attack < Game::instance.timer->getTicks() ) {
+          attack_box_dimensions->setState(GameObject::State::enabled);
+          time_attack = Game::instance.timer->getTicks() + 50;
       }
       else {
-
-          /**
-              Audio when the player is attacking renged
-          */
-          AudioComponent* player_arrow_sound =
-                          (dynamic_cast<AudioComponent*>(
-                          _main_game_object->get_component(
-                          "player_arrow_sound")));
-
-          animation_controller->play_animation("player_ranged");
-          player_arrow_sound->play(0, -1);
+          attack_box_dimensions->setState(GameObject::State::disabled);
       }
     }
     else {
         // do nothing
+    }
+
+}
+
+void Player::apply_attack_ranged() {
+
+    if( is_attacking_ranged ) {
+      animation_controller->play_animation("player_attack");
+
+      /**
+          Audio when the player is attacking renged
+      */
+      AudioComponent* player_arrow_sound =
+                      (dynamic_cast<AudioComponent*>(
+                      _main_game_object->get_component(
+                      "player_arrow_sound")));
+
+      animation_controller->play_animation("player_ranged");
+      player_arrow_sound->play(0, -1);
+    }
+    else {
+        // do nothing
+    }
+
+}
+
+void Player::detect_boby_side() {
+
+    if( direction_boby_side == RIGHT ) {
+        attack_box_dimensions->main_positionX = _main_game_object->main_positionX +
+                                       _main_game_object->main_width;
+        attack_box_dimensions->main_positionY = _main_game_object->main_positionY;
+
+        attack_box_dimensions->main_width = _main_game_object->main_width / 2;
+        attack_box_dimensions->main_height = _main_game_object->main_height;
+    }
+    else {
+        attack_box_dimensions->main_positionX = _main_game_object->main_positionX;
+        attack_box_dimensions->main_positionY = _main_game_object->main_positionY;
+
+        attack_box_dimensions->main_width = _main_game_object->main_width / 2;
+        attack_box_dimensions->main_height = _main_game_object->main_height;
     }
 
 }

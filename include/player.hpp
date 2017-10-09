@@ -45,7 +45,12 @@ public:
     void update();
     void is_dead();
     void damage_player();
-    void detect_attack();
+    void update_attack();
+    void detect_boby_side();
+    void detect_attack_meele();
+    void detect_attack_ranged();
+    void apply_attack_meele();
+    void apply_attack_ranged();
     void detect_move();
     void detect_jump();
     void detect_damage();
