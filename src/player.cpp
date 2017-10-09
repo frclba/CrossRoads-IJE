@@ -78,8 +78,8 @@ void Player::update_attack() {
 
 void Player::update_move() {
 
-    detect_move_left();
     detect_move_right();
+    detect_move_left();
 
     apply_move_right();
     detect_background();
@@ -300,7 +300,7 @@ void Player::apply_move_left() {
                        _main_game_object->get_component(
                        "player_running_audio2")));
 
-       is_walking_right = false;
+       is_walking_left = true;
 
        animation_controller->play_animation("player_running");
        player_running_audio2->play(0, -1);

@@ -24,8 +24,6 @@ public:
     void new_game_button_controller();
     void load_button_controller();
     void detect_scene_pass();
-
-
     void init_sounds();
 
 private:
