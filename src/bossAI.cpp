@@ -144,7 +144,7 @@ void Boss::boss_move() {
     }
 
     if( is_in_corner ) {
-        m_position->m_init_posX -=10;
+        m_position->m_horizontal_starting_position -=10;
     }
     else {
         m_position->m_horizontal_starting_position +=10;

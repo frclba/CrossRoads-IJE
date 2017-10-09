@@ -50,15 +50,15 @@ void Portal::update() {
 
     monster_number_iterator = (monster_number_iterator + 1) % m_monsters.size();
 
-    if( monster_number <= 5 && m_background->imagePart->x == 0 ) {
+    if( monster_number_iterator <= 5 && m_background->imagePart->x == 0 ) {
         m_portal_pos->m_horizontal_starting_position = 650;
     }
 
-    if( monster_number < 10 && monster_number > 5 ) {
+    if( monster_number_iterator < 10 && monster_number_iterator > 5 ) {
         m_portal_pos->m_horizontal_starting_position = 1200;
     }
 
-    if( monster_number < 20 && monster_number > 10 ) {
+    if( monster_number_iterator < 20 && monster_number_iterator > 10 ) {
         m_portal_pos->m_horizontal_starting_position = 1600;
     }
 
