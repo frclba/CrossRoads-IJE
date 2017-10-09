@@ -61,6 +61,9 @@ private:
     unsigned int timestep = 0;
 
     bool is_inside( GameObject* object );
+    void bulletAttack();
+    void increaseBulletPosition();
+    void disableBullet();
 
 };
 
