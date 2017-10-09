@@ -40,7 +40,7 @@ void Stage1Scene::game_logic() {
 
     fire_ball = &get_game_object("fireball");
 
-    if( back_img->imagePart->x > 2170 ) {
+    if( back_img->image_measures->x > 2170 ) {
         back_img->enable_camera = false;
     }
     else {
@@ -50,7 +50,7 @@ void Stage1Scene::game_logic() {
 
     if( ( portal->state() == GameObject::State::enabled &&
         portal->main_positionX + portal->main_width < 800 ) ||
-        back_img->imagePart->x > 2190 ||
+        back_img->image_measures->x > 2190 ||
         is_inside(monster1) ||
         is_inside(monster2) ||
         is_inside(monster3) ||

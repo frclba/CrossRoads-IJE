@@ -17,43 +17,39 @@ bool ImageComponent::init() {
 
     Log::instance.info("Iniciando componente de imagem: " + main_path);
 
-    if( main_path == "" ) {
-        Log::instance.error("Caminho inválido!");
+    if( valid_main_path() ) {
 
+        /**
+            Save and show image loaded.
+        */
+        SDL_Surface *image = IMG_Load(main_path.c_str());
+
+        valid_image(image);
+
+        main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas,
+                                                    image);
+
+        if( valid_main_texture() ) {
+
+             /*
+                Pegando os sizes padrões da imagem, por isso precisa ser
+                desenhada no tamanho desejado.
+            */
+            _main_game_object->set_size(image->w, image->h);
+
+            SDL_FreeSurface(image);
+
+            enable_camera = false;
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
         return false;
     }
-
-    /** 
-        Save and show image loaded.
-    */
-    SDL_Surface *image = IMG_Load(main_path.c_str());
-
-    if( image == NULL ) {
-        Log::instance.error("Could not load image from path: " + main_path);
-    }
-
-    main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas,
-                                                image);
-
-    if( main_texture == NULL ) {
-        Log::instance.error("Could not create texture from image");
-
-        return false;
-    }
-
-    /*
-        Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho
-        desejado.
-    */
-
-    _main_game_object->set_size(image->w, image->h);
-
-    SDL_FreeSurface(image);
-
-    enable_camera = false;
-
-    return true;
-
 }
 
 /**
@@ -61,11 +57,11 @@ bool ImageComponent::init() {
 */
 void ImageComponent::set_back_rect(int image_width, int image_height) {
 
-    imagePart = new SDL_Rect();
-    imagePart->x = 0;
-    imagePart->y = 0;
-    imagePart->w = image_width;
-    imagePart->h = image_height;
+    image_measures = new SDL_Rect();
+    image_measures->x = 0;
+    image_measures->y = 0;
+    image_measures->w = image_width;
+    image_measures->h = image_height;
 
 }
 
@@ -73,11 +69,10 @@ void ImageComponent::set_back_rect(int image_width, int image_height) {
     Change horizontal image position
     /param[int] image_value image displacement - in px
 */
-void ImageComponent::move_img_rect(int image_value) {
+void ImageComponent::move_img_rect(int displacement) {
 
-    if( imagePart->x+ imagePart->w + image_value < _main_game_object->main_width &&
-        imagePart->x + image_value > 0 && enable_camera ) {
-        imagePart->x = imagePart->x + image_value;
+    if( valid_image_position(displacement) && enable_camera ) {
+        image_measures->x = image_measures->x + displacement;
     }
 
 }
@@ -114,12 +109,92 @@ void ImageComponent::draw() {
     render_quad->h = _main_game_object->main_height;
 
 
-    if( imagePart!=NULL ) {
-        render_quad->w = imagePart->w;
-        render_quad->h = imagePart->h;
+    if( valid_image_measures() ) {
+        render_quad->w = image_measures->w;
+        render_quad->h = image_measures->h;
     }
 
-    SDL_RenderCopy(Game::instance.main_canvas, main_texture, imagePart,
+    SDL_RenderCopy(Game::instance.main_canvas, main_texture, image_measures,
                     render_quad);
+
+}
+
+/**
+    Valid if image path isn't null
+    \return true if image path is valid
+*/
+bool ImageComponent::valid_main_path() {
+
+    if( main_path != "" ) {
+        return true;
+    }
+    else {
+        Log::instance.error("Caminho inválido!");
+        return false;
+    }
+
+}
+
+/**
+    Valid if image isn't null
+    \return true if image is valid
+*/
+bool ImageComponent::valid_image(SDL_Surface *image) {
+
+    if( image != NULL ) {
+        return true;
+    }
+    else {
+        Log::instance.error("Could not load image from path: " + main_path);
+        return false;
+    }
+
+}
+
+/**
+    Valid if texture isn't null
+    \return true if texture is valid
+*/
+bool ImageComponent::valid_main_texture() {
+
+    if( main_texture != NULL ) {
+        return true;
+    }
+    else {
+        Log::instance.error("Could not create texture from image");
+        return false;
+    }
+
+}
+
+/**
+    Valid if object with the image measurements isn't null
+    \return true if object is valid
+*/
+bool ImageComponent::valid_image_measures() {
+
+    if( image_measures != NULL ) {
+        return true;
+    }
+    else {
+        return false;
+    }
+
+}
+
+/**
+    Valid if new image position is valid
+    \return true if new image position is valid
+*/
+bool ImageComponent::valid_image_position(int displacement) {
+
+    if ( image_measures->x + image_measures->w + displacement <
+         _main_game_object->main_width && image_measures->x +
+         displacement > 0 ) {
+        return true;
+    }
+    else {
+        return false;
+    }
 
 }

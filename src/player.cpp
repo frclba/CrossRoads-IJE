@@ -36,7 +36,7 @@ bool Player::init() {
     _main_game_object->main_positionY = 502;
     _main_game_object->main_positionX = 0;
 
-    image_background->imagePart->x = 0;
+    image_background->image_measures->x = 0;
 
     life_points = 5;
     time_attack = 0;
