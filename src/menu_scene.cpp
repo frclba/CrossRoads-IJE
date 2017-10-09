@@ -21,15 +21,13 @@ void MenuScene::game_logic() {
 
     // Managing buttons on the scene
 
-    buttons_controller();
+    detect_scene_pass();
+    load_button_controller();
+    new_game_button_controller();
 
 }
 
-/**
-    This method is responsible for the button controls in the
-    scene menu, such as the new game button and load game button.
-*/
-void MenuScene::buttons_controller() {
+void MenuScene::detect_scene_pass() {
 
     // Mouse over effect
 
@@ -40,6 +38,14 @@ void MenuScene::buttons_controller() {
         // Do nothing
     }
 
+}
+
+/**
+    This method is responsible for the "new game" button control in the
+    scene menu.
+*/
+void MenuScene::new_game_button_controller() {
+
     // Get new_game_button gameobject
 
     GameObject *new_game_button = &get_game_object("bNew");
@@ -48,15 +54,6 @@ void MenuScene::buttons_controller() {
 
     new_game_button->main_positionX = 300;
     new_game_button->main_positionY = 275;
-
-    // Get load_button gameobject
-
-    GameObject *load_button = &get_game_object("bLoad");
-
-    // Sets the position of the load button on the screen
-
-    load_button->main_positionX = 800;
-    load_button->main_positionY = 820;
 
     Animation *new_game_button_animation = (dynamic_cast<Animation*> (
                                 new_game_button->get_component("imageBNew")));
@@ -69,22 +66,42 @@ void MenuScene::buttons_controller() {
             // Do nothing
         }
 
-        AudioComponent *button_hover_sound = (dynamic_cast<AudioComponent*> (
-                                              load_button->get_component(
-                                              "button_hover_sound")));
+        button_hover_in_Sound->play(0,-1);
 
         new_game_button_animation->useAnimation("normal");
-        button_hover_sound->play(0,-1);
     }
     else {
         new_game_button_animation->useAnimation("mouseON");
     }
 
+}
+
+/**
+    This method is responsible for the "load" button control in the
+    scene menu.
+*/
+void MenuScene::load_button_controller() {
+
+    // Get load_button gameobject
+
+    GameObject *load_button = &get_game_object("bLoad");
+
+    // Sets the position of the load button on the screen
+
+    load_button->main_positionX = 300;
+    load_button->main_positionY = 400;
+
     Animation *load_button_animation = (dynamic_cast<Animation*> (
                                  load_button->get_component("imageBLoad")));
 
+     button_hover_in_Sound = (dynamic_cast<AudioComponent*> (
+                          load_button->get_component(
+                          "button_hover_sound")));
+
     if( Game::instance.mouse->is_over(load_button) ) {
         load_button_animation->useAnimation("normal");
+
+        button_hover_in_Sound->play(0,-1);
     }
     else {
         load_button_animation->useAnimation("mouseON");
