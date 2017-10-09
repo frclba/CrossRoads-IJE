@@ -12,19 +12,32 @@
  */
 unsigned int damage_time = 0;
 
-int max_height = 200;
+int MAXIMUM_SCREEN_WIDTH = 200;
 
-float DAMAGE_DELAY = 1000;
+float previous_position_y = 0;
 
 /**
     Auxiliary counter for player gravity
 */
-float gravity = 1;
+const float GRAVITY = 1;
 
-float jump_size = 20;
-float move_size = 7;
+const float JUMP_SIZE = 20;
+const float MOVE_SIZE = 7;
 
-float previous_position_y = 0;
+const int FULL_LIFE = 5;
+const int FORTY_PERCENT_LIFE = 2;
+const int EMPTY_LIFE = 0;
+
+const int MAXIMUM_COORDINATION_Y = 502;
+const int MINIMUM_COORDINATION_Y = 0;
+
+const int MAXIMUM_COORDINATION_X = 800;
+const int MINIMUM_COORDINATION_X = 0;
+
+const int MINIMUM_ATTACK_TIME = 0;
+
+const int ATTACK_DELAY = 50;
+const int DAMAGE_DELAY = 1000;
 
 /**
     Initializes the player, defining their main attributes with inicial
@@ -33,13 +46,13 @@ float previous_position_y = 0;
 */
 bool Player::init() {
 
-    _main_game_object->main_positionY = 502;
-    _main_game_object->main_positionX = 0;
+    _main_game_object->main_positionY = MAXIMUM_COORDINATION_Y;
+    _main_game_object->main_positionX = MINIMUM_COORDINATION_X;
 
     image_background->imagePart->x = 0;
 
-    life_points = 5;
-    time_attack = 0;
+    life_points = FULL_LIFE;
+    time_attack = MINIMUM_ATTACK_TIME;
 
     return true;
 
@@ -146,7 +159,7 @@ void Player::apply_attack_meele() {
         player_attack_audio->play(0, -1);
       if( time_attack < Game::instance.timer->getTicks() ) {
           attack_box_dimensions->setState(GameObject::State::enabled);
-          time_attack = Game::instance.timer->getTicks() + 50;
+          time_attack = Game::instance.timer->getTicks() + ATTACK_DELAY;
       }
       else {
           attack_box_dimensions->setState(GameObject::State::disabled);
@@ -247,7 +260,7 @@ void Player::detect_move_left() {
 void Player::apply_move_right() {
 
     if( is_walking_right && ( _main_game_object->main_positionX +
-                   _main_game_object->main_width) < 800 ) {
+                   _main_game_object->main_width) < MAXIMUM_COORDINATION_X ) {
 
         /**
             Audio when the player is running right
@@ -266,7 +279,7 @@ void Player::apply_move_right() {
 
         animation_controller->flipping(direction_boby_side);
 
-        _main_game_object->main_positionX += move_size;
+        _main_game_object->main_positionX += MOVE_SIZE;
      }
      else {
         // Do nothing
@@ -276,10 +289,10 @@ void Player::apply_move_right() {
 
 void Player::detect_background() {
 
-    if( _main_game_object->main_positionX > 200 &&
+    if( _main_game_object->main_positionX > MAXIMUM_SCREEN_WIDTH &&
         is_walking_right &&
         image_background->enable_camera ) {
-        _main_game_object->main_positionX -= move_size;
+        _main_game_object->main_positionX -= MOVE_SIZE;
         image_background->move_img_rect(7);
     }
     else {
@@ -290,7 +303,7 @@ void Player::detect_background() {
 
 void Player::apply_move_left() {
 
-    if( is_walking_left && ( _main_game_object->main_positionX ) >= 0 ) {
+    if( is_walking_left && ( _main_game_object->main_positionX ) >= MINIMUM_COORDINATION_X ) {
 
        /**
            Audio when the player is running left
@@ -309,7 +322,7 @@ void Player::apply_move_left() {
 
        animation_controller->flipping(direction_boby_side);
 
-       _main_game_object->main_positionX -= move_size;
+       _main_game_object->main_positionX -= MOVE_SIZE;
     }
     else {
         // Do nothing
@@ -331,11 +344,11 @@ void Player::detect_jump() {
 
     //Player try jump and he can
 
-    if( Game::instance.keyboard->isKeyDown("w") && ( vertical_position == 0 ) ) {
+    if( Game::instance.keyboard->isKeyDown("w") && ( vertical_position == MINIMUM_COORDINATION_Y ) ) {
         player_jump_audio->play(0, -1);
 
         is_jumping = true;
-        vertical_position -= jump_size;
+        vertical_position -= JUMP_SIZE;
     }
     else {
         // Do nothing
@@ -360,10 +373,10 @@ void Player::process_position() {
 void Player::apply_gravity() {
 
     if( !has_ground() ) { // If the player is not on the platform
-        vertical_position += gravity;
+        vertical_position += GRAVITY;
     }
     else {
-        vertical_position = 0;
+        vertical_position = MINIMUM_COORDINATION_Y;
     }
 
 }
@@ -378,7 +391,7 @@ bool Player::has_ground() {
     get_ground_collision = Game::instance.collision_manager->checkCollision(_main_game_object,
                                                               "ground");
 
-    if( get_ground_collision && vertical_position >= 0 ) {
+    if( get_ground_collision && vertical_position >= MINIMUM_COORDINATION_Y ) {
 
         if( vertical_position > 5 ) {
             _main_game_object->main_positionY = get_ground_collision->main_positionY -
@@ -403,7 +416,7 @@ void Player::apply_damage() {
 
     if( Game::instance.timer->getTicks() > damage_time ) {
         life_points--;
-        damage_time = Game::instance.timer->getTicks() + 1000;
+        damage_time = Game::instance.timer->getTicks() + DAMAGE_DELAY;
     }
     else {
         // Do nothing
@@ -413,7 +426,7 @@ void Player::apply_damage() {
 
 void Player::detect_low_life() {
 
-    if( life_points == 2 ) {
+    if( life_points == FORTY_PERCENT_LIFE ) {
 
        /**
            Audio when the player taked damage and his life is low
@@ -463,8 +476,8 @@ void Player::detect_damage() {
 */
 void Player::is_dead() {
 
-    if( life_points <= 0 ){
-        life_points = 5;
+    if( life_points <= EMPTY_LIFE ){
+        life_points = FULL_LIFE;
         Game::instance.change_scene("Lose Scene");
         printf("Player dead\n");
         Log::instance.info("Player dead");
