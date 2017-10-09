@@ -46,6 +46,12 @@ namespace engine {
         //Creating a single and unique game instance.
         static Game instance;
 
+        bool initialize_sdl_components();
+
+        bool initialize_imgs();
+
+        bool initialize_mixer();
+
         //Define some class variables like name and window_size
         void set_properties(std::string name, std::pair<int,int> window_size);
 
