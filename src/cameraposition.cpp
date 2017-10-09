@@ -25,6 +25,7 @@ bool CameraPosition::init() {
 void CameraPosition::update() {
 
     _main_game_object->main_positionY = m_vertical_starting_position;
-    _main_game_object->main_positionX = m_horizontal_starting_position - m_background->imagePart->x;
+    _main_game_object->main_positionX = m_horizontal_starting_position -
+    m_background->image_measures->x;
 
 }

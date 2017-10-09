@@ -46,7 +46,7 @@ void Stage1Scene::game_logic() {
 
     fire_ball = &get_game_object("fireball");
 
-    if( back_img->imagePart->x > BACKGROUND_IMAGE_MAX ) {
+    if( back_img->image_measures->x > BACKGROUND_IMAGE_MAX ) {
         back_img->enable_camera = false;
     }
     else {
@@ -56,7 +56,7 @@ void Stage1Scene::game_logic() {
 
     if( ( portal->state() == GameObject::State::enabled &&
         portal->main_positionX + portal->main_width < MAX_SCREEN_WIDTH ) ||
-        back_img->imagePart->x > BACKGROUND_IMAGE_MAX ||
+        back_img->image_measures->x > BACKGROUND_IMAGE_MAX ||
         is_inside(monster1) ||
         is_inside(monster2) ||
         is_inside(monster3) ||
