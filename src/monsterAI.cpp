@@ -11,6 +11,9 @@ unsigned int time_damage;
 
 const int PLAYER_DISTANCE = 850;
 const int PLAYER_ATTACK_DISTANCE = 150;
+const int MAX_SCREEN_WIDTH = 800;
+const int PLAYER_DISTANCE_ITERATOR = 100;
+const int TIME_STEP_ITERATOR = 1000;
 
 /**
     This method initiates the Class MonsterAI in the game
@@ -43,7 +46,7 @@ void MonsterAI::update() {
 
     if( _main_game_object->main_positionX < 0 ||
         _main_game_object->main_positionX +
-        _main_game_object->main_width > 800 ) {
+        _main_game_object->main_width > MAX_SCREEN_WIDTH ) {
         _main_game_object->setState(GameObject::State::disabled);
     }
 
@@ -61,7 +64,7 @@ void MonsterAI::update() {
 bool MonsterAI::sees_player() {
 
     if( fabs(_main_game_object->main_positionX - m_player->main_positionX) <=
-        PLAYER_DISTANCE - 100 ) {
+        PLAYER_DISTANCE - PLAYER_DISTANCE_ITERATOR ) {
         return true;
     }
     else {
@@ -202,7 +205,8 @@ void MonsterAI::receive_damage() {
         }
         if( Game::instance.timer->getTicks() > time_damage ) {
             life_points--;
-            time_damage = Game::instance.timer->getTicks() + 1000;
+            time_damage = Game::instance.timer->getTicks() +
+                          TIME_STEP_ITERATOR;
         }
         if( life_points <= 0 ) {
             _main_game_object->setState(GameObject::State::disabled);
