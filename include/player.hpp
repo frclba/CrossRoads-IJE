@@ -59,6 +59,8 @@ public:
     void detect_background();
     void detect_jump();
     void detect_damage();
+    void apply_damage();
+    void detect_low_life();
     void process_position();
     void apply_gravity();
 

@@ -55,14 +55,17 @@ void Player::update() {
 
     apply_gravity();
     detect_jump();
+
     update_move();
     update_attack();
+
     detect_damage();
+    is_dead();
     process_position();
 
 }
 
-void Player::update_attack(){
+void Player::update_attack() {
 
     detect_boby_side();
     detect_attack_meele();
@@ -73,7 +76,7 @@ void Player::update_attack(){
 
 }
 
-void Player::update_move(){
+void Player::update_move() {
 
     detect_move_left();
     detect_move_right();
@@ -396,6 +399,37 @@ bool Player::has_ground() {
 
 }
 
+void Player::apply_damage() {
+
+    if( Game::instance.timer->getTicks() > damage_time ) {
+        life_points--;
+        damage_time = Game::instance.timer->getTicks() + 1000;
+    }
+    else {
+        // Do nothing
+    }
+
+}
+
+void Player::detect_low_life() {
+
+    if( life_points == 2 ) {
+
+       /**
+           Audio when the player taked damage and his life is low
+       */
+       AudioComponent* player_low_life_audio =
+                       (dynamic_cast<AudioComponent*>(
+                       _main_game_object->get_component(
+                       "player_low_life_audio")));
+       player_low_life_audio->play(0, -1);
+    }
+    else {
+       // Do nothing
+    }
+
+}
+
 /**
     Detect damage on the player and apply the changes
 */
@@ -410,36 +444,9 @@ void Player::detect_damage() {
                                                              "fireball") ||
             Game::instance.collision_manager->checkCollision(_main_game_object,
                                                              "boss") ) ) {
-             if( Game::instance.timer->getTicks() > damage_time ) {
-                 life_points--;
-                 damage_time = Game::instance.timer->getTicks() + 1000;
-             }
-             else {
-                 // Do nothing
-             }
+             apply_damage();
 
-             if( life_points == 2 ) {
-
-                /**
-                    Audio when the player taked damage and his life is low
-                */
-                AudioComponent* player_low_life_audio =
-                                (dynamic_cast<AudioComponent*>(
-                                _main_game_object->get_component(
-                                "player_low_life_audio")));
-                player_low_life_audio->play(0, -1);
-             }
-             else {
-                // Do nothing
-             }
-
-             if( life_points > 0) {
-                 // Do nothing
-             }
-             else {
-                 life_points = 5;
-                 Game::instance.change_scene("Lose Scene");
-             }
+             detect_low_life();
         }
         else {
             // Do nothing
@@ -447,14 +454,6 @@ void Player::detect_damage() {
     }
     else {
         // Do nothing
-    }
-
-    if( life_points > 0 ) {
-        // Do nothing
-    }
-    else {
-        life_points = 5;
-        Game::instance.change_scene("Lose Scene");
     }
 
 }
@@ -465,6 +464,8 @@ void Player::detect_damage() {
 void Player::is_dead() {
 
     if( life_points <= 0 ){
+        life_points = 5;
+        Game::instance.change_scene("Lose Scene");
         printf("Player dead\n");
         Log::instance.info("Player dead");
     }
