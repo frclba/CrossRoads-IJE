@@ -18,7 +18,7 @@ bool AudioComponent::init() {
     Log::instance.info("Init audio component");
 
     if( m_is_music ) {
-        m_music = Mix_LoadMUS(m_path.c_str());
+        m_music = Mix_LoadMUS(m_audio_path.c_str());
 
         if( m_music == NULL ) {
             Log::instance.error("Music not found!");
@@ -27,10 +27,10 @@ bool AudioComponent::init() {
         }
     }
     else {
-        m_sound = Mix_LoadWAV(m_path.c_str());
+        m_sound = Mix_LoadWAV(m_audio_path.c_str());
 
         if ( m_sound == NULL ){
-            Log::instance.error("Sound not found: " + m_path);
+            Log::instance.error("Sound not found: " + m_audio_path);
 
             return false;
         }

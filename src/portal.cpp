@@ -50,16 +50,16 @@ void Portal::update() {
 
     monster_number_iterator = (monster_number_iterator + 1) % m_monsters.size();
 
-    if( monsters_out_of_portal <= 5 && m_background->imagePart->x == 0 ) {
-        m_portal_pos->m_init_posX = 650;
+    if( monster_number <= 5 && m_background->imagePart->x == 0 ) {
+        m_portal_pos->m_horizontal_starting_position = 650;
     }
 
-    if( monsters_out_of_portal < 10 && monsters_out_of_portal > 5 ) {
-        m_portal_pos->m_init_posX = 1200;
+    if( monster_number < 10 && monster_number > 5 ) {
+        m_portal_pos->m_horizontal_starting_position = 1200;
     }
 
-    if( monsters_out_of_portal < 20 && monsters_out_of_portal > 10 ) {
-        m_portal_pos->m_init_posX = 1600;
+    if( monster_number < 20 && monster_number > 10 ) {
+        m_portal_pos->m_horizontal_starting_position = 1600;
     }
 
     if( monsters_out_of_portal > 20 ) {

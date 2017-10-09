@@ -30,12 +30,23 @@ namespace engine {
         GameObject* checkCollision( GameObject* game_object, std::string type );
 
     private:
-        bool collide( GameObject* obj1, GameObject* obj2 );
+        bool collide( GameObject* object_1, GameObject* object_2 );
 
         std::list <GameObject*>* collision_list;
 
-        SDL_Rect rect1;
-        SDL_Rect rect2;
+        /* 
+            A structure that will contains the area of rectangle_1,
+            with the origin at the upper left.
+        */
+        SDL_Rect rectangle_1;
+
+        /* 
+            A structure that will contains the are of rectangle_2,
+            with the origin at the upper left.
+        */
+        SDL_Rect rectangle_2;
+
+        // The result of the collision of the rectangle_1 and the rectangle_2
         SDL_Rect result;
 
     };

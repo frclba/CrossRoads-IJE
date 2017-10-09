@@ -10,11 +10,11 @@ InitialStory::~InitialStory(){}
 
 /**
     This method initiates the class InitialStory
-    initiates que interation in 0.
+    initiates que iteration in 0.
 */
 
 bool InitialStory::init() {
-    interator = 0;
+    iterator = 0;
 }
 
 /**
@@ -25,9 +25,9 @@ void InitialStory::update() {
 
   m_story->flipping( false );
 
-  if( timestep < Game::instance.timer->getTicks() ) {
-      interator = interator + 1;
-      timestep = Game::instance.timer->getTicks() + 500*6;
+  if( time_step < Game::instance.timer->getTicks() ) {
+      iterator = iterator + 1;
+      time_step = Game::instance.timer->getTicks() + 500*6;
   }
   else {
       // Do nothing
@@ -40,7 +40,7 @@ void InitialStory::update() {
       // Do nothing
   }
 
-  switch ( interator ) {
+  switch ( iterator ) {
       case 1: {
           m_story->play_animation( "story1" );
           break;

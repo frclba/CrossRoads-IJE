@@ -57,10 +57,21 @@ namespace engine {
                 what they do in game
             */
             void create_keyboard_mapping();
-            std::list <Uint8> keycode_down;
-            std::list <Uint8> keycode_up;
-            Uint8 aux = 0;
-            std::unordered_map<std::string, int> m_buttons;
+
+            /**
+                List of keyboard keys pressed by the player
+            */
+            std::list <Uint8> keycodes_down;
+
+            /**
+                List of keyboard keys released by the player
+            */
+            std::list <Uint8> keycodes_up;
+
+            /**
+              Hash to map keyboard key names to SDL_Keycode
+            */
+            std::unordered_map<std::string, int> m_button_code;
 
     };
 
