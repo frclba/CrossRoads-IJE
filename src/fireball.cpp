@@ -29,7 +29,8 @@ bool FireballController::init() {
 void FireballController::update() {
 
     if(ready_to_fall == true) {
-        processPos();
+        fall_process();
+        initial_position_process();
     }
     else {
         last_position_player_x = m_player->main_positionX;
@@ -40,12 +41,12 @@ void FireballController::update() {
 }
 
 // Initial position of fireball
-const int initial_position = -600;
+const int INITIAL_POSITION = -600;
 
 /**
     This method is reponsable for the fireball dropping
 */
-void FireballController::processPos() {
+void FireballController::fall_process() {
 
     AudioComponent* fireball_droping_audio = ( dynamic_cast<AudioComponent*>
             ( _main_game_object->get_component( "fireball_droping_audio" ) ) );
@@ -62,14 +63,22 @@ void FireballController::processPos() {
         // Do nothing
 
     }
+}
 
-    if( _main_game_object->main_positionY < 850 ) {
+const int MAXIMUM_COORDINATION_Y = 850;
+
+/**
+    This method is reponsable for going from the fireball to initial position
+*/
+void FireballController::initial_position_process() {
+
+    if( _main_game_object->main_positionY < MAXIMUM_COORDINATION_Y ) {
 
         // Do nothing
         
     }
     else {
-        _main_game_object->main_positionY = initial_position;
+        _main_game_object->main_positionY = INITIAL_POSITION;
         ready_to_fall = false; 
     }
 
