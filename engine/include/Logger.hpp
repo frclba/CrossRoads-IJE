@@ -49,13 +49,18 @@ private:
     Log();
     ~Log();
 
-    std::ofstream logFile;
-    std::string fileName = "";
+    std::ofstream log_file;
+    std::string file_name = "";
 
     //Open and close stream file to be written
 
     void openFile();
     void closeFile();
+    void print_border();
+    void terminal_border();
+    void terminal_message(std::string message);
+    void border_message(std::string message);
+    void log_message(std::string kind, std::string message);
 
 };
 
