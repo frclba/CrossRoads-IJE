@@ -13,6 +13,7 @@
 //Set 1 for debug messages, 0 to no show
 
 #define DEBUG 1
+#define LINE_LIMIT 80
 
 /*
   TODO -> write function to write time into logfile.txt

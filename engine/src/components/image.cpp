@@ -58,8 +58,8 @@ bool ImageComponent::init() {
 void ImageComponent::set_back_rect(int image_width, int image_height) {
 
     image_measures = new SDL_Rect();
-    image_measures->x = 0;
-    image_measures->y = 0;
+    image_measures->x = INITIAL_SCREEN_POSITION;
+    image_measures->y = INITIAL_SCREEN_POSITION;
     image_measures->w = image_width;
     image_measures->h = image_height;
 
@@ -190,7 +190,7 @@ bool ImageComponent::valid_image_position(int displacement) {
 
     if ( image_measures->x + image_measures->w + displacement <
          _main_game_object->main_width && image_measures->x +
-         displacement > 0 ) {
+         displacement > INITIAL_SCREEN_POSITION ) {
         return true;
     }
     else {
