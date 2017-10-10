@@ -76,6 +76,11 @@ namespace engine {
             Mix_Music * m_music;
             Mix_Chunk * m_sound;
 
+            bool valid_sound();
+            bool valid_music();
+            void play_music(int loops);
+            void play_sound(int loops, int channel);
+
     };
 
 }
