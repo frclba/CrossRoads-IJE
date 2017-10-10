@@ -22,63 +22,47 @@ bool Animation::init() {
 
     Log::instance.info( "Iniciando componente de animacao" );
 
-    if( main_path == "" ) {
-        Log::instance.error( "Caminho inválido!" );
-        return false;
-    }
+    if( valid_main_path() ) {
 
-    SDL_Surface *image = IMG_Load( main_path.c_str() );
+        SDL_Surface *image = IMG_Load( main_path.c_str() );
 
-    if( image == NULL ) {
+        if( !valid_image(image) ) {
 
-        // SDL_IMG_ERROR("Could not load image from path !" << main_path);
+            // SDL_IMG_ERROR("Could not load image from path !" << main_path);
 
-        // Default if.
+            // Default if.
 
-    }
+        }
+        else {
+            // Do nothing
 
-    main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas,
-                                                image);
+        }
 
-    if( main_texture == NULL ) {
+        main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas,
+                                                    image);
 
-        // SDL_ERROR("Could not create texture from image");
+        if( valid_main_texture() ) {
 
-        return false;
-    }
+            //Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho desejado
+            _main_game_object->set_size( m_width_division, m_height_division );
 
-    //Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho desejado
+            SDL_FreeSurface( image );
 
-    _main_game_object -> set_size( m_width_division, m_height_division );
+            build_animation(image);
 
-    SDL_FreeSurface( image );
+            main_animation[BEGIN] = 0;
+            main_animation[END] = image_vector.size() - 1;
 
-    //divide imagem
-
-    //ler matriz de imagems em um arquivo
-
-    /** 
-        Count to render images sizes.
-    */
-    int count = 0;
-
-    for( int h = 0; h < image -> h && count < m_num_image; h += m_height_division ) {
-        for( int w = 0; w < image -> w && count < m_num_image; w += m_width_division ) {
-            SDL_Rect *rect = new SDL_Rect();
-            rect -> x = w;
-            rect -> y = h;
-            rect -> w = m_width_division;
-            rect -> h = m_height_division;
-            image_vector.push_back( rect );
-            count++;
+            return true;
+        }
+        else {
+            // SDL_ERROR("Could not create texture from image");
+            return false;
         }
     }
-
-    main_animation[BEGIN] = 0;
-    main_animation[END] = image_vector.size() - 1;
-
-    return true;
-
+    else {
+        return false;
+    }
 }
 
 /**
@@ -118,7 +102,7 @@ bool Animation::useAnimation( std::string animation_name ) {
 */
 void Animation::setDelay( int to_set_delay ) {
 
-    this -> delay = to_set_delay;
+    this->delay = to_set_delay;
 
 }
 
@@ -161,7 +145,7 @@ bool Animation::has_finished() {
 */
 void Animation::setup() {
 
-    _main_game_object -> set_size( m_width_division, m_height_division );
+    _main_game_object->set_size( m_width_division, m_height_division );
 
 }
 
@@ -175,14 +159,14 @@ void Animation::draw() {
     */
     SDL_Rect *render_quad = new SDL_Rect();
 
-    render_quad -> x = _main_game_object -> main_positionX;
-    render_quad -> y = _main_game_object -> main_positionY;
-    render_quad -> w = image_vector[main_frame] -> w;
-    render_quad -> h = image_vector[main_frame]-> h;
+    render_quad->x = _main_game_object->main_positionX;
+    render_quad->y = _main_game_object->main_positionY;
+    render_quad->w = image_vector[main_frame]->w;
+    render_quad->h = image_vector[main_frame]->h;
 
-    if( ( int ) ( Game::instance.timer -> getTicks() - time_step ) >= delay ) {
+    if( ( int ) ( Game::instance.timer->getTicks() - time_step ) >= delay ) {
         main_frame++;
-        time_step = Game::instance.timer -> getTicks();
+        time_step = Game::instance.timer->getTicks();
     }
 
     if( main_frame > main_animation[END] ) {
@@ -198,5 +182,36 @@ void Animation::draw() {
         NULL,
         flip
     );
+
+}
+
+/**
+    Reads the matrix of images
+    \par[in] image object
+    \par[out] image_vector
+*/
+void Animation::build_animation(SDL_Surface *image) {
+    //divide imagem
+
+    //ler matriz de imagems em um arquivo
+
+    /**
+        Count to render images sizes.
+    */
+    int count = 0;
+
+    for( int height = 0; height < image->h && count < m_num_image;
+         height += m_height_division ) {
+        for( int width = 0; width < image->w && count < m_num_image;
+             width += m_width_division ) {
+            SDL_Rect *rect = new SDL_Rect();
+            rect->x = width;
+            rect->y = height;
+            rect->w = m_width_division;
+            rect->h = m_height_division;
+            image_vector.push_back( rect );
+            count++;
+        }
+    }
 
 }
