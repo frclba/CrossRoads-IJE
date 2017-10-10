@@ -162,7 +162,7 @@ void Log::border_message(std::string message) {
 */
 void Log::print_border() {
 
-    for(int index = 0; index < 80; index++) {
+    for(int index = 0; index < LINE_LIMIT; index++) {
         log_file << "=";
     }
     log_file << std::endl;
@@ -174,7 +174,7 @@ void Log::print_border() {
 */
 void Log::terminal_border() {
 
-    for(int index = 0; index < 80; index++) {
+    for(int index = 0; index < LINE_LIMIT; index++) {
         std::cout << "_";
     }
     std::cout << std::endl;

@@ -13,6 +13,8 @@
 #include "components/component.hpp"
 #include "gameobject.hpp"
 
+#define INITIAL_SCREEN_POSITION 0
+
 namespace engine{
 
     /// Settings related to an image
