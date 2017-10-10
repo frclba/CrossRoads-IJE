@@ -37,6 +37,8 @@ public:
         bool init();
 
         void update();
+        void apparition_of_monsters();
+        void horizontal_starting_position();
         void add_monster(GameObject* monster);
 
 private:
