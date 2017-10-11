@@ -24,7 +24,13 @@ bool Animation::init() {
 
     if( main_path == PATH_ERROR ) {
         Log::instance.error( "Caminho inválido!" );
+
         return false;
+    }
+    else{
+
+        // Default else.
+
     }
 
     SDL_Surface *image = IMG_Load( main_path.c_str() );
@@ -34,6 +40,12 @@ bool Animation::init() {
         // SDL_IMG_ERROR("Could not load image from path !" << main_path);
 
         // Default if.
+
+        return false;
+    }
+    else{
+
+        // Default else.
 
     }
 
@@ -45,6 +57,11 @@ bool Animation::init() {
         // SDL_ERROR("Could not create texture from image");
 
         return false;
+    }
+    else{
+
+        // Default else.
+
     }
 
     //Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho desejado
@@ -107,6 +124,11 @@ bool Animation::useAnimation( std::string animation_name ) {
     if( main_frame < main_animation[BEGIN] || main_frame > main_animation[END] ) {
         main_frame = main_animation[BEGIN];
     }
+    else{
+
+        // Default else.
+
+    }
 
     return true;
 
@@ -151,6 +173,11 @@ bool Animation::has_finished() {
     if( main_frame == main_animation[END] ) {
         return true;
     }
+    else{
+
+        // Default else.
+
+    }
 
     return false;
 
@@ -184,9 +211,19 @@ void Animation::draw() {
         main_frame++;
         time_step = Game::instance.timer -> getTicks();
     }
+    else{
+
+        // Default else.
+
+    }
 
     if( main_frame > main_animation[END] ) {
             main_frame = main_animation[BEGIN];
+    }
+    else{
+
+        // Default else.
+        
     }
 
     SDL_RenderCopyEx(

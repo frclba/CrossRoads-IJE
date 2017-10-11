@@ -22,6 +22,11 @@ bool ImageComponent::init() {
 
         return false;
     }
+    else{
+
+        // Default else.
+
+    }
 
     /** 
         Save and show image loaded.
@@ -31,6 +36,11 @@ bool ImageComponent::init() {
     if( image == NULL ) {
         Log::instance.error("Could not load image from path: " + main_path);
     }
+    else{
+
+        // Default else.
+
+    }
 
     main_texture = SDL_CreateTextureFromSurface(Game::instance.main_canvas,
                                                 image);
@@ -39,6 +49,11 @@ bool ImageComponent::init() {
         Log::instance.error("Could not create texture from image");
 
         return false;
+    }
+    else{
+
+        // Default else.
+
     }
 
     /*
@@ -79,6 +94,11 @@ void ImageComponent::move_img_rect(int image_value) {
         imagePart->x + image_value > 0 && enable_camera ) {
         imagePart->x = imagePart->x + image_value;
     }
+    else{
+
+        // Default else.
+
+    }
 
 }
 
@@ -117,6 +137,11 @@ void ImageComponent::draw() {
     if( imagePart!=NULL ) {
         render_quad->w = imagePart->w;
         render_quad->h = imagePart->h;
+    }
+    else{
+
+        // Default else.
+        
     }
 
     SDL_RenderCopy(Game::instance.main_canvas, main_texture, imagePart,

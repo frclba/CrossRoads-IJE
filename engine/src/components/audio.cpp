@@ -25,6 +25,11 @@ bool AudioComponent::init() {
 
             return false;
         }
+        else{
+
+            // Default else.
+
+        }
     }
     else {
         m_sound = Mix_LoadWAV(m_audio_path.c_str());
@@ -33,6 +38,11 @@ bool AudioComponent::init() {
             Log::instance.error("Sound not found: " + m_audio_path);
 
             return false;
+        }
+        else{
+
+            // Default else.
+
         }
     }
 
@@ -62,6 +72,11 @@ void AudioComponent::update() {
 
         m_play_on_start = false;
     }
+    else{
+
+        // Default else.
+
+    }
 
 }
 
@@ -80,6 +95,11 @@ void AudioComponent::play(int loops, int channel) {
             Mix_ResumeMusic();
 
         }
+        else{
+
+            // Default else.
+
+        }
     }
     else {
         if( m_audio_state == AudioState::stopped ) {
@@ -88,12 +108,22 @@ void AudioComponent::play(int loops, int channel) {
         else if( m_audio_state == AudioState::paused ) {
             Mix_Resume(channel);
         }
+        else{
+
+            // Default else.
+
+        }
     }
 
     m_audio_state = AudioState::playing;
 
     if( !m_is_music ) {
         m_audio_state = AudioState::stopped;
+    }
+    else{
+
+        // Default else.
+        
     }
 
 }
