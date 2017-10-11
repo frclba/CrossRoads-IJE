@@ -22,7 +22,7 @@ bool Animation::init() {
 
     Log::instance.info( "Iniciando componente de animacao" );
 
-    if( main_path == "" ) {
+    if( main_path == PATH_ERROR ) {
         Log::instance.error( "Caminho inválido!" );
         return false;
     }

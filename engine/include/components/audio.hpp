@@ -6,6 +6,9 @@
 #ifndef FOO_BAR_ENGINE_COMPONENTS_AUDIO_H_
 #define FOO_BAR_ENGINE_COMPONENTS_AUDIO_H_
 
+#define NO_MUSIC 0
+#define NO_SOUND 0
+
 #include <iostream>
 #include "sdl2core.hpp"
 #include "components/component.hpp"

@@ -6,6 +6,8 @@
 #ifndef ANIMATION_H_
 #define ANIMATION_H_
 
+#define PATH_ERROR ""
+
 #include <iostream>
 #include <vector>
 #include <unordered_map>
