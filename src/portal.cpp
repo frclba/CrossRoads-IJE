@@ -71,7 +71,7 @@ const int MINIMUM_HORIZONTAL_POSITION = 650;
 */
 void Portal::horizontal_starting_position() {
 
-    if( monster_number_iterator <= 5 && m_background->imagePart->x == 0 ) {
+    if( monster_number_iterator <= 5 && m_background->image_measures->x == 0 ) {
         m_portal_pos->m_horizontal_starting_position = MINIMUM_HORIZONTAL_POSITION;
     }
     else {
