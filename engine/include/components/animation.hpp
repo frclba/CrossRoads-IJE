@@ -1,32 +1,51 @@
-#ifndef ANIMATION_HPP_
-#define ANIMATION_HPP_
+/**
+    \file animation.hpp
+    This file contains header declaretion for Animation class
+*/
+
+#ifndef ANIMATION_H_
+#define ANIMATION_H_
 
 #include <iostream>
 #include <vector>
-
+#include <unordered_map>
 #include "sdl2core.hpp"
 #include "components/image.hpp"
 #include "game.hpp"
 #include "Timer.hpp"
 
-#include <unordered_map>
-#include <vector>
 
 namespace engine{
-    class Animation : public ImageComponent {
-        public:
 
-        //construtor animation
-        //  param:
-        //    main_game_object = referencia do objetoque a animation pertence.
-        //    std::string id = identidade do component.
-        //    widthDiv = valor de largura que ira dividir a imagem.
-        //    heightDiv = valor de altura que sera dividida a imagem.
-        //    num_image = numero de sprites contida na imagem
-            Animation(GameObject &main_game_object, std::string id, std::string path, unsigned int widthDiv, unsigned int heightDiv, int num_image):
-                ImageComponent(main_game_object, id, path), m_widthDiv(widthDiv),
-                m_heightDiv(heightDiv), m_num_image(num_image),
-                main_frame(0),delay(0), timestep(0){}
+    /// Class responsible for rendering an animated image
+    /**
+        \class Animation
+        Class responsible for picking up an image(png) and building the
+        animation related to that image.
+    */
+    class Animation : public ImageComponent {
+
+        public:
+            //construtor animation
+            //  param:
+            //    main_game_object = referencia do objetoque a animation pertence.
+            //    std::string id = identidade do component.
+            //    width_division = valor de largura que ira dividir a imagem.
+            //    height_division = valor de altura que sera dividida a imagem.
+            //    num_image = numero de sprites contida na imagem
+            Animation(GameObject &main_game_object, std::string id,
+                      std::string path, unsigned int width_division,
+                      unsigned int height_division, int num_image) :
+                      ImageComponent(main_game_object, id, path),
+                      m_width_division(width_division),
+                      m_height_division(height_division),
+                      m_num_image(num_image),
+                      main_frame(0),delay(0),
+                      time_step(0){
+                        
+                // Default function call.
+                        
+            }
 
             //destrutor
             ~Animation();
@@ -53,7 +72,6 @@ namespace engine{
             //      |            |            |           |           |
             //      |##################################################
             //
-
             void setAnimation(std::string name,int begin, int end);
 
 
@@ -65,35 +83,69 @@ namespace engine{
             //setDelat = seleciona o delay em ms que a animacao da ao passar de imagem
             void setDelay(int delay);
 
-            void flipping(bool isFlip);
+            void flipping(bool is_flip);
 
             bool has_finished();
 
             void setup();
 
+            /** 
+                Control flip state rendering of character, monsters and boss.
+            */
             SDL_RendererFlip flip = SDL_FLIP_NONE;
-        private:
 
+        private:
+            /** 
+                Initialize and finish game animations.
+            */
             const int BEGIN = 0;
             const int END = 1 ;
 
-            unsigned int m_widthDiv;
-            unsigned int m_heightDiv;
+            /** 
+                Control animations sizes.
+            */
+            unsigned int m_width_division = 0;
+            unsigned int m_height_division = 0;
 
-            std::vector<SDL_Rect*> imageVector;
+            /** 
+                Determine image in a vector.
+            */
+            std::vector<SDL_Rect*> image_vector;
 
-            int main_animation[2];
+            /** 
+                Control game animation.  
+            */
+            int main_animation[2] = {0};
 
-            std::unordered_map <std::string, int [2]> animationMap;
+            /** 
+                Determine map animations in 2D. 
+            */
+            std::unordered_map <std::string, int [2]> animation_map;
 
-            int m_num_image;
+            /** 
+                Number os images in screen. 
+            */
+            int m_num_image = 0;
 
-            int main_frame;
+            /** 
+                Control level frame. 
+            */
+            int main_frame = 0;
 
-            int delay;
+            /** 
+                Control delay beetwen actions.  
+            */
+            int delay = 0;
 
-            int timestep;
+            /** 
+                Control time of actions in game. 
+            */
+            int time_step = 0;
+
+            void build_animation(SDL_Surface *image);
 
     };
+
 }
-#endif
+
+#endif // ANIMATION_H

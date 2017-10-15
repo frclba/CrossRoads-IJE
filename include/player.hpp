@@ -1,5 +1,12 @@
+/**
+  \file player.hpp
+  This file declares the Player class, his methods and attributes with their
+  encapsulation.
+*/
+
 #ifndef __PLAYER_HPP__
 #define __PLAYER_HPP__
+
 #include <iostream>
 
 #include "components/component.hpp"
@@ -12,61 +19,107 @@
 
 using namespace engine;
 
-class Player : public Component{
+/// This class represents the player, their characteristics and behavior
+/**
+    \class Player
+    Class responsable for all logic about the player.
+*/
+class Player : public Component {
+
 public:
-  Player(GameObject &main_game_object, std::string id, AnimationControllerComponent *animC, GameObject &attack_box,
-	 ImageComponent *background):
-    Component(main_game_object, id), side(false), attack_meele(false),attack_ranged(false), animCtrl(animC), stand(false), jump(false),
-    walkR(false), walkL(false), damageBool(false),  m_attack_box(&attack_box),
-    m_background(background){}
+
+    Player( GameObject &main_game_object, std::string id,
+         AnimationControllerComponent *animC, GameObject &attack_box,
+	       ImageComponent *background ):
+         Component(main_game_object, id), direction_boby_side(false),
+         is_attacking_meele(false), is_attacking_ranged(false), animation_controller(animC),
+         stand(false), is_jumping(false), is_walking_right(false), is_walking_left(false),
+         is_taking_damage(false),  attack_box_dimensions(&attack_box),
+         image_background(background){}
 
     ~Player();
 
     bool init();
-    void update();
+    bool has_ground();
 
+    void update();
     void is_dead();
     void damage_player();
-    void attack_player();
-    void move_player();
-    void jump_player();
-    void damage();
+    void detect_attack();
+    void detect_move();
+    void detect_jump();
+    void detect_damage();
+    void process_position();
+    void apply_gravity();
 
+    GameObject *player = NULL;
+    GameObject *plataform = NULL;
+    GameObject *monster = NULL;
 
-    void processPos();
-    void gravityF();
-    bool has_ground();
-    //void monsterAI(GameObject *obj);
+    bool direction_boby_side = false;
 
-    GameObject *player;
-    GameObject *plataform;
-    GameObject *monster;
+    bool is_attacking_meele = false;
+    bool is_attacking_ranged = false;
 
-    bool side;
-    bool attack_meele;
-    bool attack_ranged;
-
-    int life_points;
+    int life_points = 5;
 
 private:
+
+    /**
+        Constant helps to detect if the player's body is to the right
+    */
     const bool RIGHT = true;
+
+    /**
+        Constant helps to detect if the player's body is to the left
+    */
     const bool LEFT = false;
-    AnimationControllerComponent *animCtrl;
-    AnimationControllerComponent *monster_controler;
-    unsigned int jumptime;
-    unsigned int time_attack;
 
-    bool stand;
-    bool jump;
-    bool walkR;
-    bool walkL;
-    bool damageBool;
+    AnimationControllerComponent* animation_controller = NULL;
+    AnimationControllerComponent* monster_controller = NULL;
 
-    GameObject *ground;
-    GameObject* m_attack_box;
-    float dy;
-    ImageComponent* m_background;
+    unsigned int time_jump = 0;
+
+    /**
+        Auxiliary variable referring to the time a
+        player is attacking, if he exceeds the current time,
+        he will not apply his attack
+    */
+    unsigned int time_attack = 0;
+
+    bool stand = false;
+    bool is_jumping = false;
+
+    /**
+        Variable to detect if the player's movement is to the right
+    */
+    bool is_walking_right = false;
+    bool is_walking_left = false;
+    bool is_taking_damage = false;
+
+    /**
+        Object instance that helps to check if have terrain where the player is
+    */
+    GameObject* get_ground_collision = NULL;
+
+    /**
+        Object instance that defines player's attack dimensions, in height,
+        width and positions in coordinates x,y. y ranges from 522 to 0. x can
+        vary within scence boundaries.
+    */
+    GameObject* attack_box_dimensions = NULL;
+
+    /**
+        Current coordinate y of player position
+    */
+    float vertical_position = 0;
+
+    /**
+        Object instance to get the component of the image to verify that
+        the player has reached the bottom
+    */
+    ImageComponent* image_background = NULL;
 
 };
 
-#endif
+#endif // __PLAYER_HPP__

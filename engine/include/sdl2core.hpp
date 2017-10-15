@@ -1,11 +1,17 @@
-#ifndef __ENGINE_SDL2_CORE__
-#define __ENGINE_SDL2_CORE__
+/**
+    \file sdl2core.hpp
+    This file include SDL2 libraries
+*/
+#ifndef FOO_BAR_ENGINE_SDL2_CORE_H_
+#define FOO_BAR_ENGINE_SDL2_CORE_H_
 
 //Include of most commom used SDL libraries
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
+
 #include "Logger.hpp"
 
-#endif
+#endif // FOO_BAR_ENGINE_SDL2_CORE_H_
