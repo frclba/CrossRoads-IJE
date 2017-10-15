@@ -34,39 +34,63 @@ void Game::set_properties(std::string name, std::pair<int, int> window_size) {
   \return false if something went wrong on sdl inialization
 */
 
-bool Game::start_sdl() {
 
-    Log::instance.info("Iniciando video e audio");
+bool Game::initialize_sdl_components() {
 
-    if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) < 0 ) {
+    Log::instance.info("Inicializando componentes SDL");
+
+    if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) == 0 ) {
+        return true;
+    }
+    else {
         Log::instance.error( "Error ao inicializar video ou audio ou joystick" );
         return false;
     }
-    else {
-        // Do nothing
-    }
+
+}
+
+bool Game::initialize_imgs() {
 
     Log::instance.info("Iniciando Imagem");
 
-    //Caso forem ser usados outros tipos de imagem, inserir as flags aqui
-
     int img_flags = IMG_INIT_PNG;
 
-    if( !(IMG_Init( img_flags ) & img_flags) ) {
+    if( (IMG_Init( img_flags ) & img_flags) ) {
+        return true;
+    }
+    else {
         Log::instance.error( "Erro ao inicializar imagens !" );
         return false;
     }
-    else {
-        // Do nothing
-    }
 
-    if( Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1 ) {
+}
+
+
+bool Game::initialize_mixer() {
+
+    Log::instance.info("Iniciando Mixer");
+
+    if( Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) != -1 ) {
+        return true;
+    }
+    else {
         Log::instance.error("Erro ao inicializar mixer");
         return false;
     }
-    else {
-        // Do nothing
+
+}
+
+bool Game::start_sdl() {
+
+    if( initialize_sdl_components() &&
+        initialize_imgs() &&
+        initialize_mixer() ) {
+            // Do nothing
     }
+    else {
+            return false;
+    }
+
 
     timer = new Timer();
     mouse = new Mouse();
