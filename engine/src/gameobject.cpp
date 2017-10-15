@@ -76,9 +76,13 @@ bool GameObject::shutdown() {
 */
 
 bool GameObject::draw() {
+    draw_image_component();
+    draw_animation();
 
+    return true;
+}
     // Searching in the map the components of type ImageComponent
-
+void GameObject::draw_image_component() {
     for( auto component:
         main_components[ std::type_index( typeid( ImageComponent ) ) ] ) {
 
@@ -93,38 +97,37 @@ bool GameObject::draw() {
                 // Do nothing
             }
 
-        }
+    }
+}
 
-        for( auto component:
-            main_components[ std::type_index( typeid( Animation ) ) ] ) {
-
-                /*
-                If the component found with the state enabled, convert it to a
-                component of the image and draw on the screen.
-                */
-
-                if( component->state() == Component::State::enabled )
-                    ( dynamic_cast<Animation *>( component ) )->draw();
-                else {
-                    // Do nothing
-                }
-
-        }
+void GameObject::draw_animation() {
+    for( auto component:
+        main_components[ std::type_index( typeid( Animation ) ) ] ) {
 
             /*
-            for(auto component: main_components[std::type_index(typeid(TextComponent))]){
-
             If the component found with the state enabled, convert it to a
             component of the image and draw on the screen.
+            */
 
-            if(component->state() == Component::State::enabled)
-            (dynamic_cast<TextComponent *>(component))->draw();
-        }
-        */
+            if( component->state() == Component::State::enabled )
+                ( dynamic_cast<Animation *>( component ) )->draw();
+            else {
+                // Do nothing
+            }
 
-    return true;
-
+    }
 }
+
+    /*
+        for(auto component: main_components[std::type_index(typeid(TextComponent))]){
+
+        If the component found with the state enabled, convert it to a
+        component of the image and draw on the screen.
+
+        if(component->state() == Component::State::enabled)
+        (dynamic_cast<TextComponent *>(component))->draw();
+    }
+    */
 
 /**
   Adds a new component for the game object

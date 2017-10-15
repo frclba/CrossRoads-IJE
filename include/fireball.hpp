@@ -37,7 +37,9 @@ public:
     void update();
 
 private:
-    void processPos();
+
+    void fall_process();
+    void initial_position_process();
 
     // Gravity applied to fireball
     const int gravity = 1;

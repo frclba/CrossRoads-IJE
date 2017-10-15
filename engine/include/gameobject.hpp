@@ -76,6 +76,10 @@ namespace engine {
 
         virtual bool draw();
 
+        void draw_image_component();
+        
+        void draw_animation();
+
         void update();
 
         // Add the component on the end of a list of its type.
@@ -135,7 +139,7 @@ namespace engine {
 
         Layer m_layer;
 
-      private:
+    private:
           State main_state;
           std::string main_name;
 

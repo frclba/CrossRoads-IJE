@@ -13,14 +13,14 @@ using namespace engine;
 void Mouse::set_position() {
 
     // Receives the coordinate of the x axis
-    int x_axis = 0;
+    int X_AXIS = 0;
 
     // Receives the coordinate of the y axis
-    int y_axis = 0;
-    SDL_GetMouseState(&x_axis, &y_axis);
-    mouse_position_x = x_axis;
-    mouse_position_y = y_axis;
+    int Y_AXIS = 0;
 
+    SDL_GetMouseState(&X_AXIS, &Y_AXIS);
+    mouse_position_x = X_AXIS;
+    mouse_position_y = Y_AXIS;
 }
 
 /**
