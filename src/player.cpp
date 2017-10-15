@@ -49,7 +49,7 @@ bool Player::init() {
     _main_game_object->main_positionY = MAXIMUM_COORDINATION_Y;
     _main_game_object->main_positionX = MINIMUM_COORDINATION_X;
 
-    image_background->imagePart->x = 0;
+    image_background->image_measures->x = 0;
 
     life_points = FULL_LIFE;
     time_attack = MINIMUM_ATTACK_TIME;

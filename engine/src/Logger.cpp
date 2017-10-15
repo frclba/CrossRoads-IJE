@@ -25,19 +25,16 @@ Log::~Log() {
 
 void Log::openFile() {
 
-    fileName = "log.txt";
-    std::cout << "__________________________________________________\n" <<
-        "\n[ Starting GAME ]\n" <<
-        "--> Arquivo de Log: " << fileName << std::endl << std::endl;
+    file_name = "log.txt";
+    terminal_border();
+    terminal_message("[ Starting GAME ]");
+    terminal_message("--> Arquivo de Log: " + file_name + "\n");
 
-    logFile.open(fileName);
+    log_file.open(file_name);
 
-    std::string border =
-    "==============================================================\n";
-    std::string logMessage = "Begin Logging\n";
+    border_message("Begin Logging");
 
-    logFile << border << logMessage << border;
-    logFile.flush();
+    log_file.flush();
 }
 
 /**
@@ -46,19 +43,16 @@ void Log::openFile() {
 
 void Log::closeFile() {
 
-    if( logFile.is_open() ) {
-        std::cout << "[ Encerrando GAME ]\n" <<
-        "<-- Para eventuais mensagens de sistema,\nconferir arquivo: " <<
-        fileName << std::endl <<
-        "__________________________________________________\n" << std::endl;
+    if( log_file.is_open() ) {
+        terminal_message("[ Encerrando GAME ]");
+        terminal_message("<-- Para eventuais mensagens de sistema, " +
+                          std::string("conferir arquivo: ") + file_name);
+        terminal_border();
 
-        std::string border =
-        "==============================================================\n";
-        std::string logMessage = "End Logging\n";
+        border_message("End Logging");
 
-        logFile << border << logMessage << border;
-        logFile.flush();
-        logFile.close();
+        log_file.flush();
+        log_file.close();
     }
     else {
         // Do nothing
@@ -71,12 +65,11 @@ void Log::closeFile() {
   \param msg the message to be added to the log file
 */
 
-void Log::debug(std::string msg) {
+void Log::debug(std::string message) {
 
     if( DEBUG ) {
-        logFile << "[DEBUG] ";
-        logFile << msg << std::endl;
-        logFile.flush();
+        log_message("DEBUG", message);
+        log_file.flush();
     }
     else {
         // Do nothing
@@ -89,11 +82,10 @@ void Log::debug(std::string msg) {
   \param msg the warning message to be added
 */
 
-void Log::warning(std::string msg) {
+void Log::warning(std::string message) {
 
-    logFile << "[WARN] ";
-    logFile << msg << std::endl;
-    logFile.flush();
+    log_message("WARN", message);
+    log_file.flush();
 
 }
 
@@ -102,11 +94,10 @@ void Log::warning(std::string msg) {
   \param msg the message to be added
 */
 
-void Log::error(std::string msg) {
+void Log::error(std::string message) {
 
-    logFile << "[ERROR] ";
-    logFile << msg << std::endl;
-    logFile.flush();
+    log_message("ERROR", message);
+    log_file.flush();
 
 }
 
@@ -116,11 +107,10 @@ void Log::error(std::string msg) {
   \param msg the message to the added
 */
 
-void Log::info(std::string msg) {
+void Log::info(std::string message) {
 
-    logFile << "[INFO] ";
-    logFile << msg << std::endl;
-    logFile.flush();
+    log_message("INFO", message);
+    log_file.flush();
 
 }
 
@@ -129,10 +119,74 @@ void Log::info(std::string msg) {
   Adds a new jumpline to the current log file
   \param msg the message to be added after the jumpline
 */
-void Log::jumpLine(std::string msg) {
+void Log::jumpLine(std::string message) {
 
-  logFile << "\n[->]";
-  logFile << msg << std::endl;
-  logFile.flush();
+  log_file << std::endl;
+  log_message("->", message);
+  log_file.flush();
+
+}
+
+/**
+    Prints log message in standard format
+*/
+void Log::log_message(std::string kind, std::string message) {
+
+    if( log_file.is_open() ) {
+        log_file << "[ " << kind << " ] " << message << "\n";
+    }
+    else {
+        // Do nothing
+    }
+
+}
+
+/**
+    Prints border in the log file to mark the start or end of a new section
+*/
+void Log::border_message(std::string message) {
+
+    if( log_file.is_open() ) {
+        print_border();
+        log_file << message << std::endl;
+        print_border();
+    }
+    else {
+        // Do nothing
+    }
+
+}
+
+/**
+    Print border
+*/
+void Log::print_border() {
+
+    for(int index = 0; index < LINE_LIMIT; index++) {
+        log_file << "=";
+    }
+    log_file << std::endl;
+
+}
+
+/**
+    Print border in the terminal to mark the start or end of a new section
+*/
+void Log::terminal_border() {
+
+    for(int index = 0; index < LINE_LIMIT; index++) {
+        std::cout << "_";
+    }
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+}
+
+/**
+    Print message in the terminal
+*/
+void Log::terminal_message(std::string message) {
+
+    std::cout << message << std::endl;
 
 }

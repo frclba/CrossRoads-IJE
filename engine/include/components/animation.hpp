@@ -142,6 +142,8 @@ namespace engine{
             */
             int time_step = 0;
 
+            void build_animation(SDL_Surface *image);
+
     };
 
 }

@@ -13,6 +13,16 @@
 
 #include "sdl2core.hpp"
 
+#define F_JBUTTON 0
+#define SPACE_JBUTTON 1
+#define W_JBUTTON 2
+#define RETURN_JBUTTON 9
+
+#define HORIZONTAL_JAXIS 0
+#define VERTICAL_JAXIS 1
+#define POSITIVE_JAXIS 8000
+#define NEGATIVE_JAXIS -8000
+
 namespace engine {
 
     /// Class for keyboard control
