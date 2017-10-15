@@ -8,7 +8,7 @@
 
 using namespace engine;
 
-/// Class to control of menu scene 
+/// Class to control of menu scene
 /**
     \class MenuScene
     This class is responsible for managing the game scene.
@@ -21,8 +21,9 @@ public:
     ~MenuScene();
 
     void game_logic();
-    void buttons_controller();
-
+    void new_game_button_controller();
+    void load_button_controller();
+    void detect_scene_pass();
     void init_sounds();
 
 private:

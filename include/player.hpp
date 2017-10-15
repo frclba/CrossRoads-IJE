@@ -45,10 +45,22 @@ public:
     void update();
     void is_dead();
     void damage_player();
-    void detect_attack();
-    void detect_move();
+    void update_attack();
+    void detect_boby_side();
+    void detect_attack_meele();
+    void detect_attack_ranged();
+    void apply_attack_meele();
+    void apply_attack_ranged();
+    void update_move();
+    void detect_move_right();
+    void detect_move_left();
+    void apply_move_right();
+    void apply_move_left();
+    void detect_background();
     void detect_jump();
     void detect_damage();
+    void apply_damage();
+    void detect_low_life();
     void process_position();
     void apply_gravity();
 
