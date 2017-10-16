@@ -4,6 +4,7 @@
 */
 
 #include "stage1_scene.hpp"
+#include "assert.h"
 
 /// Initializes and keeps the scene of the first stage
 
@@ -11,6 +12,14 @@ const int MAX_SCREEN_WIDTH = 800;
 const int BULLET_PSOTION_ITERATOR = 20;
 const int TIME_STEP_ITERATOR = 500;
 const int BACKGROUND_IMAGE_MAX = 2190;
+
+void Stage1Scene::setTimeStep(unsigned int timeStep) {
+    timestep = timeStep;
+}
+
+unsigned int Stage1Scene::getTimeStep() {
+    return timestep;
+}
 
 /**
     Initializes the scene of the first stage and assigns behavior in his
@@ -39,12 +48,18 @@ void Stage1Scene::game_logic() {
     monster3 = &get_game_object("monster3");
     monster4 = &get_game_object("monster4");
 
+    assert(ground_stage1 != NULL);
+
     ground_stage1->main_positionY = 552;
     ground_stage1->main_positionX = 0;
     ground_stage1->main_width = 800;
     ground_stage1->main_height = 200;
 
     fire_ball = &get_game_object("fireball");
+
+    assert(back_img != NULL);
+    assert(fire_ball != NULL);
+
 
     if( back_img->imagePart->x > BACKGROUND_IMAGE_MAX ) {
         back_img->enable_camera = false;
@@ -53,6 +68,8 @@ void Stage1Scene::game_logic() {
         fire_ball->setState(GameObject::State::disabled);
     }
 
+    assert(portal != NULL);
+    assert(go_arrow != NULL);
 
     if( ( portal->state() == GameObject::State::enabled &&
         portal->main_positionX + portal->main_width < MAX_SCREEN_WIDTH ) ||
@@ -77,6 +94,7 @@ void Stage1Scene::game_logic() {
     Is responsible for starting the bullet attack
 */
 void Stage1Scene::bulletAttack() {
+
     if( bullet1->state() == GameObject::State::disabled ) {
         bulletDir1 = player_controller->direction_boby_side;
         bullet1->main_positionX = player->main_positionX +
@@ -87,7 +105,7 @@ void Stage1Scene::bulletAttack() {
         // Do nothing
     }
 
-    timestep = Game::instance.timer->getTicks() + TIME_STEP_ITERATOR;
+    setTimeStep(Game::instance.timer->getTicks() + TIME_STEP_ITERATOR);
     bullet1->setState(GameObject::State::enabled);
 }
 
@@ -127,8 +145,10 @@ void Stage1Scene::disableBullet() {
 */
 void Stage1Scene::bullet() {
 
+    assert(player_controller != NULL);
+
     if( player_controller->is_attacking_ranged &&
-        timestep < Game::instance.timer->getTicks() ) {
+        getTimeStep() < Game::instance.timer->getTicks() ) {
 
         bulletAttack();
     }
@@ -152,6 +172,8 @@ void Stage1Scene::bullet() {
     \return false isn't inside
 */
 bool Stage1Scene::is_inside( GameObject* object ) {
+
+    assert(object != NULL);
 
     if( object->state() == GameObject::State::enabled &&
       ( object->main_positionX > 0 || object->main_positionX +
