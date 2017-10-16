@@ -67,6 +67,8 @@ void Log::closeFile() {
 
 void Log::debug(std::string message) {
 
+    assert(message != "");
+
     if( DEBUG ) {
         log_message("DEBUG", message);
         log_file.flush();
@@ -84,6 +86,8 @@ void Log::debug(std::string message) {
 
 void Log::warning(std::string message) {
 
+    assert(message != "");
+
     log_message("WARN", message);
     log_file.flush();
 
@@ -95,6 +99,8 @@ void Log::warning(std::string message) {
 */
 
 void Log::error(std::string message) {
+
+    assert(message != "");
 
     log_message("ERROR", message);
     log_file.flush();
@@ -109,6 +115,8 @@ void Log::error(std::string message) {
 
 void Log::info(std::string message) {
 
+    assert(message != "");
+
     log_message("INFO", message);
     log_file.flush();
 
@@ -121,9 +129,11 @@ void Log::info(std::string message) {
 */
 void Log::jumpLine(std::string message) {
 
-  log_file << std::endl;
-  log_message("->", message);
-  log_file.flush();
+    assert(message != "");
+
+    log_file << std::endl;
+    log_message("->", message);
+    log_file.flush();
 
 }
 
@@ -131,6 +141,9 @@ void Log::jumpLine(std::string message) {
     Prints log message in standard format
 */
 void Log::log_message(std::string kind, std::string message) {
+
+    assert(kind != "");
+    assert(message != "");
 
     if( log_file.is_open() ) {
         log_file << "[ " << kind << " ] " << message << "\n";
@@ -186,6 +199,8 @@ void Log::terminal_border() {
     Print message in the terminal
 */
 void Log::terminal_message(std::string message) {
+
+    assert(message != "");
 
     std::cout << message << std::endl;
 
