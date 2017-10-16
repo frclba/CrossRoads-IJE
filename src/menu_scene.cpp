@@ -5,6 +5,13 @@
 #include "menu_scene.hpp"
 #include <assert.h>
 
+const int INICIAL_POSITION_X_MENU_FIRE = 690;
+const int INICIAL_POSITION_Y_MENU_FIRE = 470;
+const int INICIAL_POSITION_X_NEW_GAME_BUTTON = 300;
+const int INICIAL_POSITION_Y_NEW_GAME_BUTTON = 275;
+const int INICIAL_POSITION_X_LOAD_BUTTON = 300;
+const int INICIAL_POSITION_Y_LOAD_BUTTON = 400;
+
 /**
     This method is responsible for the logic of the game in the scene menu,
     such as the control buttons and the position of the fire on the screen
@@ -18,8 +25,8 @@ void MenuScene::game_logic() {
 
     // Defines the position of the fire on the screen
 
-    menu_fire->main_positionX = 690;
-    menu_fire->main_positionY = 470;
+    menu_fire->main_positionX = INICIAL_POSITION_X_MENU_FIRE;
+    menu_fire->main_positionY = INICIAL_POSITION_Y_MENU_FIRE;
 
     // Managing buttons on the scene
 
@@ -57,8 +64,8 @@ void MenuScene::new_game_button_controller() {
 
     // Sets the position of the new game button on the screen
 
-    new_game_button->main_positionX = 300;
-    new_game_button->main_positionY = 275;
+    new_game_button->main_positionX = INICIAL_POSITION_X_NEW_GAME_BUTTON;
+    new_game_button->main_positionY = INICIAL_POSITION_Y_NEW_GAME_BUTTON;
 
     Animation *new_game_button_animation = (dynamic_cast<Animation*> (
                                 new_game_button->get_component("imageBNew")));
@@ -99,8 +106,8 @@ void MenuScene::load_button_controller() {
 
     // Sets the position of the load button on the screen
 
-    load_button->main_positionX = 300;
-    load_button->main_positionY = 400;
+    load_button->main_positionX = INICIAL_POSITION_X_LOAD_BUTTON;
+    load_button->main_positionY = INICIAL_POSITION_Y_LOAD_BUTTON;
 
     Animation *load_button_animation = (dynamic_cast<Animation*> (
                                  load_button->get_component("imageBLoad")));

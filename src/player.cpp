@@ -6,16 +6,7 @@
 #include "player.hpp"
 #include <assert.h>
 
-/**
-    Auxiliary variable referring to the time a
-    player is taking damage, if he exceeds the current time,
-    he will not take the damage
- */
-unsigned int damage_time = 0;
-
-int MAXIMUM_SCREEN_WIDTH = 200;
-
-float previous_position_y = 0;
+const int MAXIMUM_SCREEN_WIDTH = 200;
 
 /**
     Auxiliary counter for player gravity
@@ -221,7 +212,7 @@ void Player::detect_boby_side() {
 
     if( direction_boby_side == RIGHT ) {
         attack_box_dimensions->main_positionX = _main_game_object->main_positionX +
-                                       _main_game_object->main_width;
+                                                _main_game_object->main_width;
         attack_box_dimensions->main_positionY = _main_game_object->main_positionY;
 
         attack_box_dimensions->main_width = _main_game_object->main_width / 2;
@@ -390,7 +381,6 @@ void Player::detect_jump() {
     if( Game::instance.keyboard->isKeyDown("w") && ( vertical_position == MINIMUM_COORDINATION_Y ) ) {
         player_jump_audio->play(0, -1);
 
-        is_jumping = true;
         vertical_position -= JUMP_SIZE;
     }
     else {
@@ -403,10 +393,6 @@ void Player::process_position() {
 
     assert(_main_game_object != NULL);
 
-    /**
-        Current velocity components.
-    */
-    previous_position_y = _main_game_object->main_positionY;
     _main_game_object->main_positionY += vertical_position;
     assert(vertical_position >= -JUMP_SIZE && vertical_position <= MAXIMUM_COORDINATION_Y);
 }
@@ -437,7 +423,10 @@ bool Player::has_ground() {
     assert(_main_game_object != NULL);
     assert(Game::instance.collision_manager != NULL);
 
-    get_ground_collision = Game::instance.collision_manager->checkCollision(_main_game_object,
+    /**
+        Object instance that helps to check if have terrain where the player is
+    */
+    GameObject* get_ground_collision = Game::instance.collision_manager->checkCollision(_main_game_object,
                                                               "ground");
 
     if( get_ground_collision && vertical_position >= MINIMUM_COORDINATION_Y ) {
@@ -543,6 +532,25 @@ void Player::is_dead() {
     }
 
 }
+
+int Player::get_life_points() {
+
+    return life_points;
+
+}
+
+bool Player::get_is_attacking_ranged() {
+
+    return is_attacking_ranged;
+
+}
+
+bool Player::get_direction_boby_side() {
+
+    return direction_boby_side;
+
+}
+
 
 Player::~Player() {
 

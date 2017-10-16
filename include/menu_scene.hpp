@@ -17,8 +17,11 @@ class MenuScene : public Scene {
 
 public:
 
-    MenuScene(std::string name) : Scene(name), enter(false) {}
+    MenuScene(std::string name) : Scene(name) {}
     ~MenuScene();
+
+
+private:
 
     void game_logic();
     void new_game_button_controller();
@@ -26,11 +29,6 @@ public:
     void detect_scene_pass();
     void init_sounds();
 
-private:
-
-    bool enter;
     AudioComponent *button_hover_in_Sound;
-
-    // Mix_Chunk* button_hover_in_Sound;
 
 };
