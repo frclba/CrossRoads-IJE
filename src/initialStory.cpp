@@ -15,6 +15,8 @@ InitialStory::~InitialStory(){}
 
 bool InitialStory::init() {
     interator = 0;
+
+    return true;
 }
 
 /**
