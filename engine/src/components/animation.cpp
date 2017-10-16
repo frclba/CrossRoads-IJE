@@ -68,10 +68,14 @@ bool Animation::init() {
 /**
     Set initial sprite and end sprit for display certain image movement
     \param[in] animation_name existing identifier in animation_map
-    \param[in] begin should less image_vector size
-    \param[in] end should be less image_vector size and bigger or equal to begin param
+    \param[in] begin should be bigger or equal to 0 (initial image sprit)
+    \param[in] end should be bigger or equal to 0 (initial image sprit)
 */
 void Animation::setAnimation( std::string animation_name, int begin, int end ) {
+
+    assert(animation_name != "");
+    assert(begin >= 0);
+    assert(end >= 0);
 
     (animation_map[animation_name])[BEGIN] = begin;
     (animation_map[animation_name])[END] = end;
@@ -84,6 +88,8 @@ void Animation::setAnimation( std::string animation_name, int begin, int end ) {
     \return true if started execution
 */
 bool Animation::useAnimation( std::string animation_name ) {
+
+    assert(animation_name != "");
 
     main_animation[BEGIN] = (animation_map[animation_name])[BEGIN];
     main_animation[END] = (animation_map[animation_name])[END];
@@ -106,6 +112,8 @@ bool Animation::useAnimation( std::string animation_name ) {
     \result update delay value in animation
 */
 void Animation::setDelay( int to_set_delay ) {
+
+    assert(to_set_delay >= 0);
 
     this->delay = to_set_delay;
 
@@ -190,7 +198,7 @@ void Animation::draw() {
     else{
 
         // Default else.
-        
+
     }
 
     SDL_RenderCopyEx(
@@ -211,6 +219,8 @@ void Animation::draw() {
     \par[out] image_vector
 */
 void Animation::build_animation(SDL_Surface *image) {
+
+    assert(image != NULL);
     //divide imagem
 
     //ler matriz de imagems em um arquivo
