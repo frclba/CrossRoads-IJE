@@ -25,10 +25,8 @@ bool AudioComponent::init() {
         } else {
             // Do nothing
         }
-        else{
-
-            // Default else.
-
+        else {
+            // Do nothing
         }
     }
     else {
@@ -38,11 +36,6 @@ bool AudioComponent::init() {
             return false;
         } else {
             // Do nothing
-        }
-        else{
-
-            // Default else.
-
         }
     }
 
