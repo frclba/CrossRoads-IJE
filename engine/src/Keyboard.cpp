@@ -29,6 +29,8 @@ Keyboard::~Keyboard() {
 */
 void Keyboard::setKeys( SDL_Event* evt ) {
 
+    assert(evt != NULL);
+
     if( evt -> type == SDL_KEYDOWN ) {
         keycodes_down.push_back( evt -> key.keysym.sym );
     }
@@ -153,6 +155,8 @@ void Keyboard::setKeys( SDL_Event* evt ) {
 */
 bool Keyboard::isKeyDown( std::string key ) {
 
+    assert(m_button_code.count(key) != 0);
+
     for( auto m_key : keycodes_down ) {
         if( m_key == m_button_code[key] ) {
             return true;
@@ -175,6 +179,9 @@ bool Keyboard::isKeyDown( std::string key ) {
     \return returns bool to key up or not
 */
 bool Keyboard::isKeyUp( std::string key ) {
+
+    assert(m_button_code.count(key) != 0);
+
     for( auto m_key : keycodes_up ) {
         if( m_key == m_button_code[key] ) {
             return true;
