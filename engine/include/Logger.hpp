@@ -9,6 +9,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <assert.h>
 
 //Set 1 for debug messages, 0 to no show
 
