@@ -37,12 +37,14 @@ public:
 
     ~Boss();
 
-    bool init();
-    void update();
-    void boss_move();
+
+
 
 private:
 
+    bool init();
+    void update();
+    void boss_move();
     void boss_damage();
 
     AnimationControllerComponent *m_boss_animation = NULL;
