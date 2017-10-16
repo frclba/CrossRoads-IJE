@@ -22,7 +22,8 @@ bool AudioComponent::init() {
 
         if( !valid_music() ) {
             return false;
-        } else {
+        } 
+        else {
             // Do nothing
         }
     }
@@ -31,7 +32,8 @@ bool AudioComponent::init() {
 
         if ( !valid_sound() ){
             return false;
-        } else {
+        }
+        else {
             // Do nothing
         }
     }
@@ -62,6 +64,11 @@ void AudioComponent::update() {
 
         m_play_on_start = false;
     }
+    else{
+
+        // Default else.
+
+    }
 
 }
 
@@ -81,6 +88,11 @@ void AudioComponent::play(int loops, int channel) {
 
     if( !m_is_music ) {
         m_audio_state = AudioState::stopped;
+    }
+    else{
+
+        // Default else.
+        
     }
 
 }

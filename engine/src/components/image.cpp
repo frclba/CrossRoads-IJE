@@ -74,6 +74,11 @@ void ImageComponent::move_img_rect(int displacement) {
     if( valid_image_position(displacement) && enable_camera ) {
         image_measures->x = image_measures->x + displacement;
     }
+    else{
+
+        // Default else.
+
+    }
 
 }
 
@@ -112,6 +117,11 @@ void ImageComponent::draw() {
     if( valid_image_measures() ) {
         render_quad->w = image_measures->w;
         render_quad->h = image_measures->h;
+    }
+    else{
+
+        // Default else.
+        
     }
 
     SDL_RenderCopy(Game::instance.main_canvas, main_texture, image_measures,
