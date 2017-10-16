@@ -25,10 +25,8 @@ bool AudioComponent::init() {
 
             return false;
         }
-        else{
-
-            // Default else.
-
+        else {
+            // Do nothing
         }
     }
     else {
@@ -38,11 +36,6 @@ bool AudioComponent::init() {
             Log::instance.error("Sound not found: " + m_audio_path);
 
             return false;
-        }
-        else{
-
-            // Default else.
-
         }
     }
 
