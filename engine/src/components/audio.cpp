@@ -22,9 +22,7 @@ bool AudioComponent::init() {
 
         if( !valid_music() ) {
             return false;
-        } else {
-            // Do nothing
-        }
+        } 
         else {
             // Do nothing
         }
@@ -34,7 +32,8 @@ bool AudioComponent::init() {
 
         if ( !valid_sound() ){
             return false;
-        } else {
+        }
+        else {
             // Do nothing
         }
     }
