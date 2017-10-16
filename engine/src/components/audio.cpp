@@ -25,6 +25,11 @@ bool AudioComponent::init() {
         } else {
             // Do nothing
         }
+        else{
+
+            // Default else.
+
+        }
     }
     else {
         m_sound = Mix_LoadWAV(m_audio_path.c_str());
@@ -33,6 +38,11 @@ bool AudioComponent::init() {
             return false;
         } else {
             // Do nothing
+        }
+        else{
+
+            // Default else.
+
         }
     }
 
@@ -62,6 +72,11 @@ void AudioComponent::update() {
 
         m_play_on_start = false;
     }
+    else{
+
+        // Default else.
+
+    }
 
 }
 
@@ -81,6 +96,11 @@ void AudioComponent::play(int loops, int channel) {
 
     if( !m_is_music ) {
         m_audio_state = AudioState::stopped;
+    }
+    else{
+
+        // Default else.
+        
     }
 
 }

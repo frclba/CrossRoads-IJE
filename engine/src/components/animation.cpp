@@ -91,6 +91,11 @@ bool Animation::useAnimation( std::string animation_name ) {
     if( main_frame < main_animation[BEGIN] || main_frame > main_animation[END] ) {
         main_frame = main_animation[BEGIN];
     }
+    else{
+
+        // Default else.
+
+    }
 
     return true;
 
@@ -135,6 +140,11 @@ bool Animation::has_finished() {
     if( main_frame == main_animation[END] ) {
         return true;
     }
+    else{
+
+        // Default else.
+
+    }
 
     return false;
 
@@ -168,9 +178,19 @@ void Animation::draw() {
         main_frame++;
         time_step = Game::instance.timer->getTicks();
     }
+    else{
+
+        // Default else.
+
+    }
 
     if( main_frame > main_animation[END] ) {
             main_frame = main_animation[BEGIN];
+    }
+    else{
+
+        // Default else.
+        
     }
 
     SDL_RenderCopyEx(
