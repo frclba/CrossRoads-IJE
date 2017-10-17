@@ -4,6 +4,7 @@
 */
 
 #include "mouse.hpp"
+#include <assert.h>
 
 using namespace engine;
 
@@ -33,6 +34,8 @@ void Mouse::set_position() {
     \return false isn't over
 */
 bool Mouse::is_over(engine::GameObject *gameObject) {
+
+    assert( gameObject != NULL );
 
     if( mouse_position_x > gameObject->main_positionX &&
         mouse_position_y > gameObject->main_positionY &&
