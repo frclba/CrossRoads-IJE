@@ -34,14 +34,17 @@ public:
         m_portal_pos( portal_pos ){}
         ~Portal();
 
-        bool init();
 
         void update();
-        void apparition_of_monsters();
-        void horizontal_starting_position();
         void add_monster(GameObject* monster);
 
 private:
+
+    bool init();
+
+    void apparition_of_monsters();
+    void horizontal_starting_position();
+
     std::vector <GameObject*> m_monsters;
 
     /**
