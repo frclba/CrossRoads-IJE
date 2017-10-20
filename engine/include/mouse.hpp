@@ -32,7 +32,11 @@ namespace engine {
         // Function to check if the mouse is over of a gameobject
 
         bool is_over(GameObject *game_object);
+
         bool is_right_button();
+
+    private:
+
         bool is_left_button();
 
         // Mouse position x axis
@@ -40,8 +44,6 @@ namespace engine {
 
         // Mouse position y axis
         int mouse_position_y = 0;
-
-    private:
 
     };
 

@@ -32,12 +32,12 @@ public:
 
     ~FireballController();
 
-    bool init();
-
     void update();
 
 private:
 
+    bool init();
+    
     void fall_process();
     void initial_position_process();
 
