@@ -1,3 +1,8 @@
+/**
+    \file mouse.hpp
+    This file declares the Mouse class
+*/
+
 #ifndef MOUSE_H_
 #define MOUSE_H_
 
@@ -5,13 +10,19 @@
 #include "sdl2core.hpp"
 #include "gameobject.hpp"
 
+
 namespace engine {
 
+/// Class for mouse utilities
+/**
+    \class Mouse
+    This class controls all mouse interactions and features
+*/
     class Mouse {
 
     public:
 
-        Mouse():mouseX(0), mouseY(0) {};
+        Mouse() : mouse_position_x(0), mouse_position_y(0) {};
         ~Mouse();
 
         // Function to get mouse position
@@ -20,16 +31,19 @@ namespace engine {
 
         // Function to check if the mouse is over of a gameobject
 
-        bool is_over(GameObject *gameObject);
+        bool is_over(GameObject *game_object);
+
         bool is_right_button();
-        bool is_left_button();
-
-        // Mouse position
-
-        int mouseX;
-        int mouseY;
 
     private:
+
+        bool is_left_button();
+
+        // Mouse position x axis
+        int mouse_position_x = 0;
+
+        // Mouse position y axis
+        int mouse_position_y = 0;
 
     };
 

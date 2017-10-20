@@ -1,3 +1,8 @@
+/**
+  \file game.hpp
+  this file contain the namespace engine, who defines the game engine class
+*/
+
 #ifndef __GAME_H__
 #define __GAME_H__
 
@@ -24,12 +29,28 @@ enum class State{
     shutdown
 };
 
-namespace engine{
+namespace engine {
 
-    class Game{
+
+
+    /// Class for managing the game object properties
+    /**
+    \class Game
+    This class has features for managing some of game properties
+    such as SDL configuration  and scenes handling.
+    */
+
+    class Game {
+
     public:
         //Creating a single and unique game instance.
         static Game instance;
+
+        bool initialize_sdl_components();
+
+        bool initialize_imgs();
+
+        bool initialize_mixer();
 
         //Define some class variables like name and window_size
         void set_properties(std::string name, std::pair<int,int> window_size);
@@ -38,16 +59,16 @@ namespace engine{
         void run();
 
         //Inicializa SDL
-        bool startSDL();
+        bool start_sdl();
 
         //Cria janela
-        bool createWindow();
+        bool create_window();
 
         //Destroi janela
-        void destroyWindow();
+        void destroy_window();
 
         //Desliga SDL
-        void offSDL();
+        void off_sdl();
 
         //Adiciona nova cena na lista de cenas
         bool add_scene(Scene &scene);
@@ -77,7 +98,7 @@ namespace engine{
         SDL_Window* main_window;
         SDL_Color main_background_color;
         State current_state;
-        SDL_Joystick* gGameController =NULL;
+        SDL_Joystick* g_game_controller = NULL;
 
         Scene *last_current_scene;
         Scene *next_scene;
