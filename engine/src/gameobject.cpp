@@ -4,6 +4,7 @@
   This file contains the implementations of the gameobject member functions
 */
 
+#include <assert.h>
 #include "gameobject.hpp"
 #include "components/image.hpp"
 #include "components/animation.hpp"
@@ -23,6 +24,7 @@ bool GameObject::init() {
 
     for( auto id_componentlist: main_components ) {
         for ( auto component: id_componentlist.second ) {
+            assert(component != NULL);
             if( component->init() == true ) {
                 // Do nothing
             }
@@ -55,6 +57,7 @@ bool GameObject::shutdown() {
         // Iterating a list of components of the type found.
 
         for( auto component:id_componentList.second ) {
+            assert(component != NULL);
             if( component->state() != Component::State::enabled ||
                 component->shutdown() == true ) {
                     // DO nothing
@@ -76,6 +79,7 @@ bool GameObject::shutdown() {
 */
 
 bool GameObject::draw() {
+
     draw_image_component();
     draw_animation();
 
@@ -83,16 +87,17 @@ bool GameObject::draw() {
 }
     // Searching in the map the components of type ImageComponent
 void GameObject::draw_image_component() {
-    for( auto component:
-        main_components[ std::type_index( typeid( ImageComponent ) ) ] ) {
 
+    for( auto component:
+        main_components[std::type_index(typeid(ImageComponent))]) {
+            assert(component != NULL);
             /*
             If the component found with the enabled state, converts it to a
             component of the image and draws it on the screen.
             */
 
             if( component->state() == Component::State::enabled )
-                ( dynamic_cast<ImageComponent *>( component ) )->draw();
+                (dynamic_cast<ImageComponent *>(component))->draw();
             else {
                 // Do nothing
             }
@@ -102,15 +107,15 @@ void GameObject::draw_image_component() {
 
 void GameObject::draw_animation() {
     for( auto component:
-        main_components[ std::type_index( typeid( Animation ) ) ] ) {
-
+        main_components[std::type_index(typeid(Animation))]) {
+            assert(component != NULL);
             /*
             If the component found with the state enabled, convert it to a
             component of the image and draw on the screen.
             */
 
             if( component->state() == Component::State::enabled )
-                ( dynamic_cast<Animation *>( component ) )->draw();
+                (dynamic_cast<Animation *>(component))->draw();
             else {
                 // Do nothing
             }
@@ -134,7 +139,8 @@ void GameObject::draw_animation() {
   \param component the component object that will be added
 */
 
-void GameObject::add_component( Component &component ) {
+void GameObject::add_component(Component &component) {
+
 
     Log::instance.info("Adding component: '" +
                        component.component_id +
@@ -144,8 +150,8 @@ void GameObject::add_component( Component &component ) {
 
     // Adds the component to the end of the list for the type of it.
 
-    main_components[ std::type_index( typeid( component ) ) ]
-                   .push_back( &component );
+    main_components[std::type_index(typeid(component))]
+                   .push_back(&component);
 
 }
 
@@ -157,6 +163,7 @@ void GameObject::update() {
 
     for( auto id_componentlist: main_components ) {
         for( auto component: id_componentlist.second ) {
+            assert(component != NULL);
 	        if( component->state() == Component::State::enabled) {
                 component->update();
 	        }
@@ -176,6 +183,8 @@ void GameObject::update() {
 */
 
 Component* GameObject::get_component( std::string name ) {
+    assert(!name.empty());
+
 
     for( auto id_componentList: main_components ) {
 
@@ -183,6 +192,7 @@ Component* GameObject::get_component( std::string name ) {
 
         for( auto component:id_componentList.second ) {
             if( component->component_id == name ) {
+                assert(component != NULL);
                 return component;
             }
             else {
@@ -206,7 +216,8 @@ Component* GameObject::get_component( std::string name ) {
   \param state the state to be setted
 */
 
-void GameObject::setState( State state ) {
+void GameObject::setState(State state) {
+    assert(state >= GameObject::State::enabled && state <= GameObject::State::invalid);
 
     main_state = state;
 

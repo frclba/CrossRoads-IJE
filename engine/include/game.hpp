@@ -46,29 +46,11 @@ namespace engine {
         //Creating a single and unique game instance.
         static Game instance;
 
-        bool initialize_sdl_components();
-
-        bool initialize_imgs();
-
-        bool initialize_mixer();
-
         //Define some class variables like name and window_size
         void set_properties(std::string name, std::pair<int,int> window_size);
 
         //Game loop
         void run();
-
-        //Inicializa SDL
-        bool start_sdl();
-
-        //Cria janela
-        bool create_window();
-
-        //Destroi janela
-        void destroy_window();
-
-        //Desliga SDL
-        void off_sdl();
 
         //Adiciona nova cena na lista de cenas
         bool add_scene(Scene &scene);
@@ -76,7 +58,7 @@ namespace engine {
         //Muda a cena que está acontecendo
         bool change_scene(const std::string &id);
 
-        bool handle_scene_changes();
+
 
         SDL_Renderer* main_canvas;
 
@@ -92,6 +74,23 @@ namespace engine {
             main_window_size({0,0}), main_window(NULL),
             main_background_color({0xff, 0xff, 0xff, 0xff}),
             current_state(State::created), last_current_scene(NULL){};
+
+        bool initialize_imgs();
+
+        bool initialize_sdl_components();
+
+        bool initialize_mixer();
+
+        bool start_sdl();
+
+        bool create_window();
+
+        void destroy_window();
+
+        void off_sdl();
+
+        bool handle_scene_changes();
+
 
         std::string main_name;
         std::pair<int,int> main_window_size;
