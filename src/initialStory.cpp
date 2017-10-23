@@ -12,7 +12,6 @@ InitialStory::~InitialStory(){}
     This method initiates the class InitialStory
     initiates que iteration in 0.
 */
-
 bool InitialStory::init() {
     iterator = 0;
 
@@ -24,6 +23,9 @@ bool InitialStory::init() {
 */
 void switchStories(int iterator, AnimationControllerComponent *m_story) {
 
+    /**
+        /note This paragraph takes care of the transition between the stages
+    */
     switch ( iterator ) {
         case 1: {
             m_story->play_animation( "story1" );
@@ -54,6 +56,11 @@ void switchStories(int iterator, AnimationControllerComponent *m_story) {
     This method is responsible for starting the game by pressing the enter key
 */
 void startByEnter() {
+
+    /**
+        /note This paragraph verify if the enter key is pressed and
+        star the game
+    */
     if( Game::instance.keyboard->isKeyDown( "enter" ) ) {
   	    Game::instance.change_scene("Fase 1");
     }
@@ -69,6 +76,9 @@ void InitialStory::update() {
 
   m_story->flipping( false );
 
+  /**
+      /note This paragraph is responsible for counting the time in the stage
+  */
   if( time_step < Game::instance.timer->getTicks() ) {
       iterator = iterator + 1;
       time_step = Game::instance.timer->getTicks() + TIME_STEP_INCREASE;
