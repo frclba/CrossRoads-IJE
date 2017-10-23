@@ -37,28 +37,28 @@ void Keyboard::setKeys( SDL_Event* evt ) {
     }
     else if( evt -> type == SDL_JOYBUTTONDOWN ) {
 
-        if( ( ( int ) evt -> jbutton.button ) == 1 ) {
+       if( ( ( int ) evt -> jbutton.button ) == SPACE_JBUTTON ) {
             keycodes_down.push_back( SDLK_SPACE );
         }
         else {
             // Do nothing
        }
 
-        if( ( ( int ) evt -> jbutton.button ) == 2 ) {
+        if( ( ( int ) evt -> jbutton.button ) == W_JBUTTON ) {
             keycodes_down.push_back( SDLK_w );
         }
         else {
             // Do nothing
         }
 
-        if( ( ( int ) evt -> jbutton.button ) == 0 ) {
+        if( ( ( int ) evt -> jbutton.button ) == F_JBUTTON ) {
             keycodes_down.push_back( SDLK_f );
         }
         else {
             // Do nothing
         }
 
-        if( ( ( int ) evt -> jbutton.button ) == 9 ) {
+        if( ( ( int ) evt -> jbutton.button ) == RETURN_JBUTTON ) {
             keycodes_down.push_back( SDLK_RETURN );
         }
         else {
@@ -68,28 +68,28 @@ void Keyboard::setKeys( SDL_Event* evt ) {
     }
     else if( evt -> type == SDL_JOYBUTTONUP ) {
 
-        if( ( ( int ) evt -> jbutton.button ) == 1 ) {
+        if( ( ( int ) evt -> jbutton.button ) == SPACE_JBUTTON ) {
             keycodes_up.push_back( SDLK_SPACE );
         }
         else {
             // Do nothing
         }
 
-        if( ( ( int ) evt -> jbutton.button ) == 2 ) {
+        if( ( ( int ) evt -> jbutton.button ) == W_JBUTTON ) {
             keycodes_up.push_back( SDLK_w );
         }
         else {
             // Do nothing
         }
 
-        if( ( ( int ) evt -> jbutton.button ) == 0 ) {
+        if( ( ( int ) evt -> jbutton.button ) == F_JBUTTON ) {
             keycodes_up.push_back( SDLK_f );
         }
         else {
             // Do nothing
         }
 
-        if( ( ( int ) evt -> jbutton.button ) == 9 ) {
+        if( ( ( int ) evt -> jbutton.button ) == RETURN_JBUTTON ) {
             keycodes_up.push_back( SDLK_RETURN );
         }
         else {
@@ -98,16 +98,16 @@ void Keyboard::setKeys( SDL_Event* evt ) {
     }
     else if( evt -> type == SDL_JOYAXISMOTION ) {
 
-        if( evt -> jaxis.axis == 0 ) {
+        if( evt -> jaxis.axis == HORIZONTAL_JAXIS ) {
 
-            if( evt -> jaxis.value > 8000 ) {
+            if( evt -> jaxis.value > POSITIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_d );
             }
             else {
                 keycodes_up.push_back( SDLK_d );
             }
 
-            if( evt -> jaxis.value < -8000 ) {
+            if( evt -> jaxis.value < NEGATIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_a );
             }
             else {
@@ -118,15 +118,15 @@ void Keyboard::setKeys( SDL_Event* evt ) {
             // Do nothing
         }
 
-        if( evt -> jaxis.axis == 1 ) {
-            if( evt -> jaxis.value > 8000 ) {
+        if( evt -> jaxis.axis == VERTICAL_JAXIS ) {
+            if( evt -> jaxis.value > POSITIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_s );
             }
             else {
                 keycodes_up.push_back( SDLK_s );
             }
 
-            if( evt -> jaxis.value < -8000 ) {
+            if( evt -> jaxis.value < NEGATIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_w );
             }
             else {

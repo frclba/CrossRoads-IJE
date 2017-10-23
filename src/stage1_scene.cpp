@@ -73,7 +73,7 @@ void Stage1Scene::game_logic() {
 
     if( ( portal->state() == GameObject::State::enabled &&
         portal->main_positionX + portal->main_width < MAX_SCREEN_WIDTH ) ||
-        back_img->imagePart->x > BACKGROUND_IMAGE_MAX ||
+        back_img->image_measures->x > BACKGROUND_IMAGE_MAX ||
         is_inside(monster1) ||
         is_inside(monster2) ||
         is_inside(monster3) ||
@@ -96,7 +96,7 @@ void Stage1Scene::game_logic() {
 void Stage1Scene::bulletAttack() {
 
     if( bullet1->state() == GameObject::State::disabled ) {
-        bulletDir1 = player_controller->direction_boby_side;
+        bulletDir1 = player_controller->get_direction_boby_side();
         bullet1->main_positionX = player->main_positionX +
                                   player->main_width;
         bullet1->main_positionY = player->main_positionY;

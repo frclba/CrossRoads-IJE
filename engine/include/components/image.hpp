@@ -13,6 +13,8 @@
 #include "components/component.hpp"
 #include "gameobject.hpp"
 
+#define INITIAL_SCREEN_POSITION 0
+
 namespace engine{
 
     /// Settings related to an image
@@ -23,8 +25,11 @@ namespace engine{
     class ImageComponent : public Component {
 
         public:
-            ImageComponent(GameObject &main_game_object, std::string image_id, std::string image_path)
-                           : Component(main_game_object, image_id), main_path(image_path) {
+            ImageComponent(GameObject &main_game_object,
+                           std::string image_id,
+                           std::string image_path) :
+                           Component(main_game_object, image_id),
+                           main_path(image_path) {
 
                 // Default function call.
 
@@ -43,27 +48,32 @@ namespace engine{
             void set_back_rect(int image_width, int image_height);
             virtual void draw();
 
-            /** 
-                Control react of image. 
+            /**
+                Control over the measurements size and position of the image
             */
-            SDL_Rect* imagePart;
+            SDL_Rect *image_measures;
 
-            /** 
-                Control camera enabling to move or not. 
+            /**
+                Control camera enabling to move or not.
             */
             bool enable_camera = false;
 
         protected:
-            /** 
-                Image image_path. 
+            /**
+                Image image_path.
             */
             std::string main_path = "";
 
-            /** 
-                Image texture controlled by SDL.
+            /**
+                Image texture controlled by SDL
             */
             SDL_Texture *main_texture;
 
+            bool valid_main_path();
+            bool valid_image_measures();
+            bool valid_main_texture();
+            bool valid_image(SDL_Surface *image);
+            bool valid_image_position(int displacement);
     };
 
 }

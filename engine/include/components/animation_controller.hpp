@@ -6,6 +6,9 @@
 #ifndef FOO_BAR_ENGINE_COMPONENTS_ANIMATION_CONTROLLER_H_
 #define FOO_BAR_ENGINE_COMPONENTS_ANIMATION_CONTROLLER_H_
 
+#define NO_ANIMATION ""
+#define HAVE_ANIMATION 1
+
 #include <string>
 #include <unordered_map>
 #include <utility>

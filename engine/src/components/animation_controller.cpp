@@ -42,13 +42,13 @@ bool AnimationControllerComponent::shutdown() {
 */
 void AnimationControllerComponent::update() {
 
-    if( current_animation == "" ) {
+    if( current_animation == NO_ANIMATION ) {
         Log::instance.warning("No animations to play!");
     }
     else {
         auto animation = m_animations_map[current_animation];
 
-        if( next_animation != "" && animation->has_finished() ) {
+        if( next_animation != NO_ANIMATION && animation->has_finished() ) {
 	        change_animations();
         }
     }
@@ -65,13 +65,22 @@ void AnimationControllerComponent::add_animation(std::string name,
 
     if( m_animations_map.find(name) != m_animations_map.end() ) {
         Log::instance.warning("Animation " + name + " already exists!");
-        return;
+    }
+    else{
+
+        // Default else.
+
     }
 
     m_animations_map[name] = &animation;
 
-    if( m_animations_map.size() == 1 ) {
+    if( m_animations_map.size() == HAVE_ANIMATION ) {
         current_animation = name;
+    }
+    else{
+
+        // Default else.
+
     }
 
 }
@@ -93,6 +102,11 @@ void AnimationControllerComponent::play_animation(std::string name,
 
     if( !wait_to_finish ) {
         change_animations();
+    }
+    else{
+
+        // Default else.
+        
     }
 
 }

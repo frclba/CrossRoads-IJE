@@ -20,19 +20,21 @@ bool AudioComponent::init() {
     if( m_is_music ) {
         m_music = Mix_LoadMUS(m_audio_path.c_str());
 
-        if( m_music == NULL ) {
-            Log::instance.error("Music not found!");
-
+        if( !valid_music() ) {
             return false;
+        } 
+        else {
+            // Do nothing
         }
     }
     else {
         m_sound = Mix_LoadWAV(m_audio_path.c_str());
 
-        if ( m_sound == NULL ){
-            Log::instance.error("Sound not found: " + m_audio_path);
-
+        if ( !valid_sound() ){
             return false;
+        }
+        else {
+            // Do nothing
         }
     }
 
@@ -62,6 +64,11 @@ void AudioComponent::update() {
 
         m_play_on_start = false;
     }
+    else{
+
+        // Default else.
+
+    }
 
 }
 
@@ -73,27 +80,19 @@ void AudioComponent::update() {
 void AudioComponent::play(int loops, int channel) {
 
     if( m_is_music ) {
-        if( m_audio_state == AudioState::stopped ) {
-            Mix_PlayMusic(m_music, loops);
-        }
-        else if( m_audio_state == AudioState::paused ) {
-            Mix_ResumeMusic();
-
-        }
+        play_music(loops);
     }
     else {
-        if( m_audio_state == AudioState::stopped ) {
-            Mix_PlayChannel(channel, m_sound, loops);
-        }
-        else if( m_audio_state == AudioState::paused ) {
-            Mix_Resume(channel);
-        }
+        play_sound(loops, channel);
     }
-
-    m_audio_state = AudioState::playing;
 
     if( !m_is_music ) {
         m_audio_state = AudioState::stopped;
+    }
+    else{
+
+        // Default else.
+        
     }
 
 }
@@ -129,5 +128,61 @@ void AudioComponent::pause(int channel) {
     }
 
     m_audio_state = AudioState::paused;
+
+}
+
+bool AudioComponent::valid_music() {
+
+    if( m_music != NULL ) {
+        return true;
+    }
+    else {
+        Log::instance.error("Music not found!");
+        return false;
+    }
+
+}
+
+bool AudioComponent::valid_sound() {
+
+    if ( m_sound != NULL ){
+        return true;
+    }
+    else {
+        Log::instance.error("Sound not found: " + m_audio_path);
+        return false;
+    }
+
+}
+
+void AudioComponent::play_music(int loops) {
+
+    if( m_audio_state == AudioState::stopped ) {
+        Mix_PlayMusic(m_music, loops);
+    }
+    else if( m_audio_state == AudioState::paused ) {
+        Mix_ResumeMusic();
+    }
+    else {
+        // Do nothing
+    }
+
+    m_audio_state = AudioState::playing;
+
+}
+
+void AudioComponent::play_sound(int loops, int channel) {
+
+    if( m_audio_state == AudioState::stopped ) {
+        Mix_PlayChannel(channel, m_sound, loops);
+    }
+    else if( m_audio_state == AudioState::paused ) {
+        Mix_Resume(channel);
+    }
+    else {
+        // Do nothing
+    }
+
+    m_audio_state = AudioState::playing;
 
 }
