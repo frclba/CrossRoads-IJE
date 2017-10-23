@@ -105,6 +105,10 @@ void Player::detect_attack_meele() {
 
     assert(Game::instance.keyboard != NULL);
 
+    /**
+        \note check if the button is up and down is necessary to change the
+        \note movement based on 2 strands, based on the verification time.
+    */
     if( Game::instance.keyboard->isKeyDown("space") ){
         is_attacking_meele = true;
     }
@@ -129,6 +133,10 @@ void Player::detect_attack_ranged() {
 
     assert(Game::instance.keyboard != NULL);
 
+    /**
+        \note check if the button is up and down is necessary to change the
+        \note movement based on 2 strands, based on the verification time.
+    */
     if( Game::instance.keyboard->isKeyDown("f") ) {
         is_attacking_ranged = true;
     }
@@ -165,6 +173,11 @@ void Player::apply_attack_meele() {
         assert(player_attack_audio != NULL);
 
         player_attack_audio->play(0, -1);
+
+      /**
+          \note get the delay attack time, if exceeds
+          \note the current time, will not apply the attack
+      */
       if( time_attack < Game::instance.timer->getTicks() ) {
           attack_box_dimensions->setState(GameObject::State::enabled);
           time_attack = Game::instance.timer->getTicks() + ATTACK_DELAY;
@@ -209,7 +222,9 @@ void Player::detect_boby_side() {
 
     assert(_main_game_object != NULL);
     assert(attack_box_dimensions != NULL);
-
+    /**
+        \
+    */
     if( direction_boby_side == RIGHT ) {
         attack_box_dimensions->main_positionX = _main_game_object->main_positionX +
                                                 _main_game_object->main_width;
@@ -238,6 +253,10 @@ void Player::detect_move_right() {
 
     // Detect move right
 
+    /**
+        \note check if the button is up and down is necessary to change the
+        \note movement based on 2 strands, based on the verification time.
+    */
     if( Game::instance.keyboard->isKeyDown("d") ) {
         is_walking_right = true;
     }
@@ -260,6 +279,10 @@ void Player::detect_move_left() {
 
     // Detect move left
 
+    /**
+        \note check if the button is up and down is necessary to change the
+        \note movement based on 2 strands, based on the verification time.
+    */
     if( Game::instance.keyboard->isKeyDown("a") ) {
         is_walking_left = true;
     }
@@ -315,6 +338,10 @@ void Player::detect_background() {
     assert(_main_game_object != NULL);
     assert(image_background != NULL);
 
+    /**
+        \note Check if the player is at the end of the map and is able to move
+        \note forward in the phase, realising the rest of the map.
+    */
     if( _main_game_object->main_positionX > MAXIMUM_SCREEN_WIDTH &&
         is_walking_right &&
         image_background->enable_camera ) {
@@ -393,6 +420,10 @@ void Player::process_position() {
 
     assert(_main_game_object != NULL);
 
+    /**
+        \note get the sum of the player's movement relative to the jump and
+        \note the fall size, and determines his vertical position on the map.
+    */
     _main_game_object->main_positionY += vertical_position;
     assert(vertical_position >= -JUMP_SIZE && vertical_position <= MAXIMUM_COORDINATION_Y);
 }
@@ -403,6 +434,10 @@ void Player::process_position() {
 */
 void Player::apply_gravity() {
 
+    /**
+        \note while the player is in the air, without colliding with something,
+        \note will be applied +1 continuously on his vertical_position.
+    */
     if( !has_ground() ) { // If the player is not on the platform
         vertical_position += GRAVITY;
     }
@@ -453,6 +488,10 @@ void Player::apply_damage() {
 
     assert(Game::instance.timer != NULL);
 
+    /**
+        \note get the delay damage time, if exceeds
+        \note the current time, will not apply the damage
+    */
     if( Game::instance.timer->getTicks() > damage_time ) {
         assert(life_points >= 1);
         life_points--;
