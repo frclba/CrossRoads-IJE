@@ -43,6 +43,10 @@ void Boss::update() {
 
         m_boss_animation->flipping(!is_in_corner);
 
+        /**
+            /note This paragraph is responsible for counting the time btween
+            boss status updates
+        */
         if( boss_update_time < Game::instance.timer->getTicks() ) {
 
             if( m_player->main_positionY > 300 ) {
@@ -83,7 +87,10 @@ void Boss::boss_damage() {
     AudioComponent * boss_in_rage_audio = (dynamic_cast<AudioComponent*> (
                                                _main_game_object->get_component(
                                                "boss_in_rage_audio")));
-
+     /**
+        /note This paragraph is responsible for check the colision and calculate
+        damage
+     */
     if( Game::instance.collision_manager->checkCollision(
         _main_game_object, "attack_box") ||
         Game::instance.collision_manager->checkCollision(
@@ -133,6 +140,10 @@ void Boss::boss_move() {
 
     m_boss_animation->play_animation("boss_dash", true);
 
+    /**
+        /note This paragraph is responsible for increasing the tie between boss
+        moves
+    */
     if( boss_movement_time_gap < Game::instance.timer->getTicks() ) {
         // is_in_corner = !is_in_corner;
         boss_movement_time_gap = Game::instance.timer->getTicks() + 900;
