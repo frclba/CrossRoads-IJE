@@ -61,7 +61,7 @@ void Stage1Scene::game_logic() {
     assert(fire_ball != NULL);
 
 
-    if( back_img->imagePart->x > BACKGROUND_IMAGE_MAX ) {
+    if( back_img->image_measures->x > BACKGROUND_IMAGE_MAX ) {
         back_img->enable_camera = false;
     }
     else {
@@ -147,7 +147,7 @@ void Stage1Scene::bullet() {
 
     assert(player_controller != NULL);
 
-    if( player_controller->is_attacking_ranged &&
+    if( player_controller->get_is_attacking_ranged() &&
         getTimeStep() < Game::instance.timer->getTicks() ) {
 
         bulletAttack();

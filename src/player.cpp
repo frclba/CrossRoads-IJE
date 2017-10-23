@@ -184,7 +184,7 @@ void Player::apply_attack_ranged() {
     assert(animation_controller != NULL);
     assert(_main_game_object != NULL);
 
-    if( is_attacking_ranged ) {
+    if( get_is_attacking_ranged() ) {
       animation_controller->play_animation("player_attack");
 
       /**
