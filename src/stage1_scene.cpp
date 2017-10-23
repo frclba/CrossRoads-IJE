@@ -78,7 +78,7 @@ void Stage1Scene::game_logic() {
 */
 void Stage1Scene::bulletAttack() {
     if( bullet1->state() == GameObject::State::disabled ) {
-        bulletDir1 = player_controller->direction_boby_side;
+        bulletDir1 = player_controller->get_direction_boby_side();
         bullet1->main_positionX = player->main_positionX +
                                   player->main_width;
         bullet1->main_positionY = player->main_positionY;
@@ -127,7 +127,7 @@ void Stage1Scene::disableBullet() {
 */
 void Stage1Scene::bullet() {
 
-    if( player_controller->is_attacking_ranged &&
+    if( player_controller->get_is_attacking_ranged() &&
         timestep < Game::instance.timer->getTicks() ) {
 
         bulletAttack();

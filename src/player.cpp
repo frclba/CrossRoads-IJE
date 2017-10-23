@@ -4,17 +4,9 @@
 */
 
 #include "player.hpp"
+#include <assert.h>
 
-/**
-    Auxiliary variable referring to the time a
-    player is taking damage, if he exceeds the current time,
-    he will not take the damage
- */
-unsigned int damage_time = 0;
-
-int MAXIMUM_SCREEN_WIDTH = 200;
-
-float previous_position_y = 0;
+const int MAXIMUM_SCREEN_WIDTH = 200;
 
 /**
     Auxiliary counter for player gravity
@@ -46,6 +38,9 @@ const int DAMAGE_DELAY = 1000;
 */
 bool Player::init() {
 
+    assert(_main_game_object != NULL);
+    assert(image_background != NULL);
+
     _main_game_object->main_positionY = MAXIMUM_COORDINATION_Y;
     _main_game_object->main_positionX = MINIMUM_COORDINATION_X;
 
@@ -63,6 +58,8 @@ bool Player::init() {
     attributes, thats make the player can move, jump, take damage, fall etc
 */
 void Player::update() {
+
+    assert(animation_controller != NULL);
 
     animation_controller->play_animation("player_idle");
 
@@ -106,6 +103,8 @@ void Player::update_move() {
 */
 void Player::detect_attack_meele() {
 
+    assert(Game::instance.keyboard != NULL);
+
     if( Game::instance.keyboard->isKeyDown("space") ){
         is_attacking_meele = true;
     }
@@ -128,6 +127,8 @@ void Player::detect_attack_meele() {
 */
 void Player::detect_attack_ranged() {
 
+    assert(Game::instance.keyboard != NULL);
+
     if( Game::instance.keyboard->isKeyDown("f") ) {
         is_attacking_ranged = true;
     }
@@ -146,6 +147,12 @@ void Player::detect_attack_ranged() {
 
 void Player::apply_attack_meele() {
 
+    assert(animation_controller != NULL);
+    assert(_main_game_object != NULL);
+    assert(Game::instance.timer != NULL);
+    assert(attack_box_dimensions != NULL);
+
+
     if( is_attacking_meele ) {
         animation_controller->play_animation("player_attack");
         /**
@@ -155,6 +162,7 @@ void Player::apply_attack_meele() {
                       (dynamic_cast<AudioComponent*>(
                       _main_game_object->get_component(
                       "player_attack_audio")));
+        assert(player_attack_audio != NULL);
 
         player_attack_audio->play(0, -1);
       if( time_attack < Game::instance.timer->getTicks() ) {
@@ -173,6 +181,9 @@ void Player::apply_attack_meele() {
 
 void Player::apply_attack_ranged() {
 
+    assert(animation_controller != NULL);
+    assert(_main_game_object != NULL);
+
     if( is_attacking_ranged ) {
       animation_controller->play_animation("player_attack");
 
@@ -183,6 +194,7 @@ void Player::apply_attack_ranged() {
                       (dynamic_cast<AudioComponent*>(
                       _main_game_object->get_component(
                       "player_arrow_sound")));
+      assert(player_arrow_sound != NULL);
 
       animation_controller->play_animation("player_ranged");
       player_arrow_sound->play(0, -1);
@@ -195,9 +207,12 @@ void Player::apply_attack_ranged() {
 
 void Player::detect_boby_side() {
 
+    assert(_main_game_object != NULL);
+    assert(attack_box_dimensions != NULL);
+
     if( direction_boby_side == RIGHT ) {
         attack_box_dimensions->main_positionX = _main_game_object->main_positionX +
-                                       _main_game_object->main_width;
+                                                _main_game_object->main_width;
         attack_box_dimensions->main_positionY = _main_game_object->main_positionY;
 
         attack_box_dimensions->main_width = _main_game_object->main_width / 2;
@@ -219,6 +234,8 @@ void Player::detect_boby_side() {
 */
 void Player::detect_move_right() {
 
+    assert(Game::instance.keyboard != NULL);
+
     // Detect move right
 
     if( Game::instance.keyboard->isKeyDown("d") ) {
@@ -238,6 +255,8 @@ void Player::detect_move_right() {
 }
 
 void Player::detect_move_left() {
+
+    assert(Game::instance.keyboard != NULL);
 
     // Detect move left
 
@@ -259,6 +278,9 @@ void Player::detect_move_left() {
 
 void Player::apply_move_right() {
 
+    assert(_main_game_object != NULL);
+    assert(animation_controller != NULL);
+
     if( is_walking_right && ( _main_game_object->main_positionX +
                    _main_game_object->main_width) < MAXIMUM_COORDINATION_X ) {
 
@@ -269,6 +291,7 @@ void Player::apply_move_right() {
                         (dynamic_cast<AudioComponent*>(
                         _main_game_object->get_component(
                         "player_running_audio")));
+        assert(player_running_audio != NULL);
 
         is_walking_right = true;
 
@@ -289,6 +312,9 @@ void Player::apply_move_right() {
 
 void Player::detect_background() {
 
+    assert(_main_game_object != NULL);
+    assert(image_background != NULL);
+
     if( _main_game_object->main_positionX > MAXIMUM_SCREEN_WIDTH &&
         is_walking_right &&
         image_background->enable_camera ) {
@@ -303,6 +329,9 @@ void Player::detect_background() {
 
 void Player::apply_move_left() {
 
+    assert(_main_game_object != NULL);
+    assert(animation_controller != NULL);
+
     if( is_walking_left && ( _main_game_object->main_positionX ) >= MINIMUM_COORDINATION_X ) {
 
        /**
@@ -312,6 +341,7 @@ void Player::apply_move_left() {
                        (dynamic_cast<AudioComponent*>(
                        _main_game_object->get_component(
                        "player_running_audio2")));
+       assert(player_running_audio2 != NULL);
 
        is_walking_left = true;
 
@@ -335,19 +365,22 @@ void Player::apply_move_left() {
 */
 void Player::detect_jump() {
 
+    assert(_main_game_object != NULL);
+    assert(Game::instance.keyboard != NULL);
+
     /**
         Audio when the player is jumping
     */
     AudioComponent* player_jump_audio = (dynamic_cast<AudioComponent*>(
                                         _main_game_object->get_component(
                                         "player_jump_audio")));
+    assert(player_jump_audio != NULL);
 
     //Player try jump and he can
 
     if( Game::instance.keyboard->isKeyDown("w") && ( vertical_position == MINIMUM_COORDINATION_Y ) ) {
         player_jump_audio->play(0, -1);
 
-        is_jumping = true;
         vertical_position -= JUMP_SIZE;
     }
     else {
@@ -358,12 +391,10 @@ void Player::detect_jump() {
 
 void Player::process_position() {
 
-    /**
-        Current velocity components.
-    */
-    previous_position_y = _main_game_object->main_positionY;
-    _main_game_object->main_positionY += vertical_position;
+    assert(_main_game_object != NULL);
 
+    _main_game_object->main_positionY += vertical_position;
+    assert(vertical_position >= -JUMP_SIZE && vertical_position <= MAXIMUM_COORDINATION_Y);
 }
 
 /**
@@ -377,6 +408,7 @@ void Player::apply_gravity() {
     }
     else {
         vertical_position = MINIMUM_COORDINATION_Y;
+        assert(vertical_position == 0);
     }
 
 }
@@ -388,7 +420,13 @@ void Player::apply_gravity() {
 */
 bool Player::has_ground() {
 
-    get_ground_collision = Game::instance.collision_manager->checkCollision(_main_game_object,
+    assert(_main_game_object != NULL);
+    assert(Game::instance.collision_manager != NULL);
+
+    /**
+        Object instance that helps to check if have terrain where the player is
+    */
+    GameObject* get_ground_collision = Game::instance.collision_manager->checkCollision(_main_game_object,
                                                               "ground");
 
     if( get_ground_collision && vertical_position >= MINIMUM_COORDINATION_Y ) {
@@ -405,7 +443,6 @@ bool Player::has_ground() {
 
     }
     else {
-
         return false;
 
     }
@@ -414,7 +451,10 @@ bool Player::has_ground() {
 
 void Player::apply_damage() {
 
+    assert(Game::instance.timer != NULL);
+
     if( Game::instance.timer->getTicks() > damage_time ) {
+        assert(life_points >= 1);
         life_points--;
         damage_time = Game::instance.timer->getTicks() + DAMAGE_DELAY;
     }
@@ -425,6 +465,8 @@ void Player::apply_damage() {
 }
 
 void Player::detect_low_life() {
+
+    assert(_main_game_object != NULL);
 
     if( life_points == FORTY_PERCENT_LIFE ) {
 
@@ -447,6 +489,9 @@ void Player::detect_low_life() {
     Detect damage on the player and apply the changes
 */
 void Player::detect_damage() {
+
+    assert(_main_game_object != NULL);
+    assert(Game::instance.collision_manager != NULL);
 
     if( !is_attacking_meele ) {
 
@@ -487,6 +532,25 @@ void Player::is_dead() {
     }
 
 }
+
+int Player::get_life_points() {
+
+    return life_points;
+
+}
+
+bool Player::get_is_attacking_ranged() {
+
+    return is_attacking_ranged;
+
+}
+
+bool Player::get_direction_boby_side() {
+
+    return direction_boby_side;
+
+}
+
 
 Player::~Player() {
 
