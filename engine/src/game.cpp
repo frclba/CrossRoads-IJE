@@ -4,6 +4,8 @@
   this file contain methods related to the game object
 */
 
+#include <assert.h>
+
 #include "game.hpp"
 
 #define FRAME 60.0
@@ -20,6 +22,9 @@ Game Game::instance;
 */
 
 void Game::set_properties(std::string name, std::pair<int, int> window_size) {
+
+    assert ( name != NULL );
+    assert ( window_size != NULL );
 
     main_name = name;
     main_window_size = window_size;
@@ -318,6 +323,9 @@ void Game::run() {
 */
 
 bool Game::add_scene(Scene &scene) {
+
+    assert( scene != NULL );
+
     //Isso faz o id ser o name.
     auto id = scene.name();
     Log::instance.info("Adding Scene: '" + id + "' to Scenes List.");
@@ -352,6 +360,8 @@ bool Game::add_scene(Scene &scene) {
 */
 
 bool Game::change_scene(const std::string &id) {
+
+    assert( id != NULL );
 
     if( scenes_list.find(id) != scenes_list.end() ) {
         // Do nothing
