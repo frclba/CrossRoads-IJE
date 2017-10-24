@@ -18,12 +18,14 @@ using namespace engine;
 */
 class Heart : public Component {
 
-    public:
-        Heart(GameObject &main_game_object, std::string id, Player *player,
-            int life) :
-            Component(main_game_object, id), m_player(player), m_life(life) {}
-
-        ~Heart();
+public:
+    /** 
+        \note Declares the contructor, defining the initial values of the
+          members.
+    */ 
+    Heart(GameObject &main_game_object, std::string id, Player *player,
+          int life) :
+          Component(main_game_object, id), m_player(player), m_life(life) {}
 
         void update();
 
