@@ -43,7 +43,6 @@ bool Animation::init() {
 
         if( valid_main_texture() ) {
 
-            //Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho desejado
             _main_game_object->set_size( m_width_division, m_height_division );
 
             SDL_FreeSurface( image );
@@ -91,6 +90,9 @@ bool Animation::useAnimation( std::string animation_name ) {
 
     assert(animation_name != "");
 
+    /**
+      Get the default start and stop values for the respective animation
+    */
     main_animation[BEGIN] = (animation_map[animation_name])[BEGIN];
     main_animation[END] = (animation_map[animation_name])[END];
 
@@ -177,11 +179,17 @@ void Animation::draw() {
     */
     SDL_Rect *render_quad = new SDL_Rect();
 
+    /**
+        Get current _main_game_objetc values
+    */
     render_quad->x = _main_game_object->main_positionX;
     render_quad->y = _main_game_object->main_positionY;
     render_quad->w = image_vector[main_frame]->w;
     render_quad->h = image_vector[main_frame]->h;
 
+    /**
+      Validate if there is enough time to execute the animation with delay
+    */
     if( ( int ) ( Game::instance.timer->getTicks() - time_step ) >= delay ) {
         main_frame++;
         time_step = Game::instance.timer->getTicks();
@@ -192,6 +200,9 @@ void Animation::draw() {
 
     }
 
+    /**
+        Restart the animation if it has reached the end of the screen
+    */
     if( main_frame > main_animation[END] ) {
             main_frame = main_animation[BEGIN];
     }
@@ -201,6 +212,9 @@ void Animation::draw() {
 
     }
 
+    /**
+        Makes a smooth change between textures
+    */
     SDL_RenderCopyEx(
         Game::instance.main_canvas,
         main_texture,
@@ -221,15 +235,16 @@ void Animation::draw() {
 void Animation::build_animation(SDL_Surface *image) {
 
     assert(image != NULL);
-    //divide imagem
-
-    //ler matriz de imagems em um arquivo
 
     /**
         Count to render images sizes.
     */
     int count = 0;
 
+    /**
+        Read the image file and divide the image into the various
+        sprites of the animation.
+    */
     for( int height = 0; height < image->h && count < m_num_image;
          height += m_height_division ) {
         for( int width = 0; width < image->w && count < m_num_image;
