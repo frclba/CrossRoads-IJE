@@ -47,11 +47,15 @@ void Portal::apparition_of_monsters() {
     assert( m_monsters[monster_number_iterator] != NULL);
     assert( _main_game_object != NULL );
 
+    /**
+        /note This paragraph is responsible for counting
+            the time of appearance between each monster outside the portal.
+    */
     if (time_between_monsters < Game::instance.timer->getTicks() &&
         m_monsters[monster_number_iterator]->state() == GameObject::State::disabled &&
         _main_game_object->main_positionX > 0 &&
         _main_game_object->main_positionX + _main_game_object->main_width < 800)
-        {
+    {
 
         m_monsters[monster_number_iterator]->main_positionX = _main_game_object->main_positionX;
         m_monsters[monster_number_iterator]->main_positionY = _main_game_object->main_positionY;
@@ -79,7 +83,11 @@ void Portal::horizontal_starting_position() {
     assert( m_background != NULL );
     assert( m_portal_pos != NULL );
     assert( _main_game_object != NULL );
-    
+
+    /**
+        /note This paragraph is responsible for assigning a horizontal position
+            to the portal according to the monster number.
+    */
     if( monster_number_iterator <= 5 && m_background->image_measures->x == 0 ) {
         m_portal_pos->m_horizontal_starting_position = MINIMUM_HORIZONTAL_POSITION;
     }
