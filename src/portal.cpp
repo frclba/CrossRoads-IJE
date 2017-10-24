@@ -3,6 +3,7 @@
     This file implements the portal class
 */
 #include <portal.hpp>
+#include <assert.h>
 
 Portal::~Portal(){}
 
@@ -42,6 +43,10 @@ void Portal::update() {
 */
 void Portal::apparition_of_monsters() {
 
+    assert( Game::instance.timer != NULL );
+    assert( m_monsters[monster_number_iterator] != NULL);
+    assert( _main_game_object != NULL );
+
     if (time_between_monsters < Game::instance.timer->getTicks() &&
         m_monsters[monster_number_iterator]->state() == GameObject::State::disabled &&
         _main_game_object->main_positionX > 0 &&
@@ -71,6 +76,10 @@ const int MINIMUM_HORIZONTAL_POSITION = 650;
 */
 void Portal::horizontal_starting_position() {
 
+    assert( m_background != NULL );
+    assert( m_portal_pos != NULL );
+    assert( _main_game_object != NULL );
+    
     if( monster_number_iterator <= 5 && m_background->image_measures->x == 0 ) {
         m_portal_pos->m_horizontal_starting_position = MINIMUM_HORIZONTAL_POSITION;
     }
@@ -109,6 +118,8 @@ void Portal::horizontal_starting_position() {
     @param monster specifies the monster that enters the game
 */
 void Portal::add_monster( GameObject* monster ){
+
+    assert( monster != NULL );
 
     monster->setState( GameObject::State::disabled );
     m_monsters.push_back( monster );

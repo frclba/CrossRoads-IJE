@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 /**
     This method initiates the fireball in the game scene
@@ -28,6 +29,8 @@ bool FireballController::init() {
 */
 void FireballController::update() {
 
+    assert( _main_game_object != NULL );
+
     if(ready_to_fall == true) {
         fall_process();
         initial_position_process();
@@ -47,6 +50,8 @@ const int INITIAL_POSITION = -600;
     This method is reponsable for the fireball dropping
 */
 void FireballController::fall_process() {
+
+    assert( _main_game_object != NULL );
 
     AudioComponent* fireball_droping_audio = ( dynamic_cast<AudioComponent*>
             ( _main_game_object->get_component( "fireball_droping_audio" ) ) );
@@ -72,7 +77,9 @@ const int MAXIMUM_COORDINATION_Y = 850;
 */
 void FireballController::initial_position_process() {
 
-    if( _main_game_object->main_positionY < MAXIMUM_COORDINATION_Y ) {
+    assert( _main_game_object != NULL );
+
+    if (_main_game_object->main_positionY < MAXIMUM_COORDINATION_Y) {
 
         // Do nothing
         

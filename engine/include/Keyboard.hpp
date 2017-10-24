@@ -32,16 +32,10 @@ namespace engine {
         This class is responsible to map, listen and set keys pressed
     */
     class Keyboard {
+
         public:
             Keyboard();
             ~Keyboard();
-
-            /**
-                Set keys
-                \param key this parameter define new event in game
-                \return anything because the routine is void
-            */
-            void setKeys( SDL_Event* key );
 
             /**
                 Verify key down
@@ -56,6 +50,13 @@ namespace engine {
                 \return returns bool to key up or not
             */
             bool isKeyUp( std::string key );
+
+            /**
+                Set keys
+                \param key this parameter define new event in game
+                \return anything because the routine is void
+            */
+            void setKeys( SDL_Event* key );
 
             /**
                 Clear key down and key up pressed by the player    

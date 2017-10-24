@@ -1,7 +1,7 @@
 /**
-  \file player.hpp
-  This file declares the Player class, his methods and attributes with their
-  encapsulation.
+    \file player.hpp
+    This file declares the Player class, his methods and attributes with their
+    encapsulation.
 */
 
 #ifndef __PLAYER_HPP__
@@ -27,55 +27,85 @@ using namespace engine;
 class Player : public Component {
 
 public:
-
+    /** 
+        \note Declares the contructor, defining the initial values 
+        of the player.
+    */ 
     Player( GameObject &main_game_object, std::string id,
          AnimationControllerComponent *animC, GameObject &attack_box,
 	       ImageComponent *background ):
-         Component(main_game_object, id), direction_boby_side(false),
-         is_attacking_meele(false), is_attacking_ranged(false), animation_controller(animC),
-         stand(false), is_jumping(false), is_walking_right(false), is_walking_left(false),
-         is_taking_damage(false),  attack_box_dimensions(&attack_box),
+         Component(main_game_object, id), animation_controller(animC),
+         is_walking_right(false), is_walking_left(false),
+         attack_box_dimensions(&attack_box),
          image_background(background){}
 
     ~Player();
 
+    void update();
+
+    /// \note Initialize GameObjects with NULL. 
+    GameObject *player = NULL;
+    GameObject *plataform = NULL;
+    GameObject *monster = NULL;
+
+    /// \note Functions of player life, attack and body direction.
+    int get_life_points();
+    bool get_is_attacking_ranged();
+    bool get_direction_boby_side();
+
+private:
     bool init();
+
     bool has_ground();
 
-    void update();
     void is_dead();
-    void damage_player();
-    void update_attack();
+
     void detect_boby_side();
+
+    /**
+        \note This paragraph declare functions to update, detect and apply
+            player attack.
+    */
+    void update_attack();
     void detect_attack_meele();
     void detect_attack_ranged();
     void apply_attack_meele();
     void apply_attack_ranged();
+
+    /**
+        \note This paragraph declare functions to update, detect and apply
+            player movement.
+    */
     void update_move();
     void detect_move_right();
     void detect_move_left();
     void apply_move_right();
     void apply_move_left();
+
     void detect_background();
+
     void detect_jump();
+
+    /**
+        \note This paragraph declare functions to detect an apply damege in
+            player, detect low life of player and damage_player not used.
+    */
+    void damage_player();
     void detect_damage();
     void apply_damage();
     void detect_low_life();
+
     void process_position();
+
     void apply_gravity();
-
-    GameObject *player = NULL;
-    GameObject *plataform = NULL;
-    GameObject *monster = NULL;
-
-    bool direction_boby_side = false;
-
-    bool is_attacking_meele = false;
-    bool is_attacking_ranged = false;
 
     int life_points = 5;
 
-private:
+    /// \note Initialize types of attack variables with false.
+    bool is_attacking_meele = false;
+    bool is_attacking_ranged = false;
+
+    bool direction_boby_side = false;
 
     /**
         Constant helps to detect if the player's body is to the right
@@ -88,9 +118,6 @@ private:
     const bool LEFT = false;
 
     AnimationControllerComponent* animation_controller = NULL;
-    AnimationControllerComponent* monster_controller = NULL;
-
-    unsigned int time_jump = 0;
 
     /**
         Auxiliary variable referring to the time a
@@ -99,20 +126,18 @@ private:
     */
     unsigned int time_attack = 0;
 
-    bool stand = false;
-    bool is_jumping = false;
+    /**
+        Auxiliary variable referring to the time a
+        player is taking damage, if he exceeds the current time,
+        he will not take the damage
+     */
+    unsigned int damage_time = 0;
 
     /**
         Variable to detect if the player's movement is to the right
     */
     bool is_walking_right = false;
     bool is_walking_left = false;
-    bool is_taking_damage = false;
-
-    /**
-        Object instance that helps to check if have terrain where the player is
-    */
-    GameObject* get_ground_collision = NULL;
 
     /**
         Object instance that defines player's attack dimensions, in height,

@@ -32,6 +32,10 @@ public:
     void game_logic();
     void bullet();
 
+    void setTimeStep(unsigned int timeStep);
+
+    unsigned int getTimeStep();
+
 private:
 
     GameObject* ground_stage1 = NULL;

@@ -20,16 +20,17 @@ using namespace engine;
 */
 
 class Restart : public Component{
-public:
-    Restart( GameObject &main_game_object, std::string id ):
-        Component( main_game_object, id ){}
+	
+	public:
+    	Restart( GameObject &main_game_object, std::string id ):
+        	Component( main_game_object, id ){}
 
         ~Restart();
 
-        bool init();
         void update();
 
-private:
+	private:
+		bool init();
 
 };
 

@@ -4,6 +4,7 @@
 */
 #include "collision_manager.hpp"
 #include "game.hpp"
+#include <assert.h>
 
 using namespace engine;
 
@@ -20,12 +21,14 @@ CollisionManager::~CollisionManager(){}
 void CollisionManager::getCollisions( std::list <GameObject*> *objects ) {
     
     collision_list = objects;
+    assert( collision_list != NULL );
 
 }
 
 GameObject* CollisionManager::checkCollision( GameObject* game_object, 
                                              std::string type ) {
-  
+    assert( collision_list != NULL);
+
     for (std::list<GameObject*>::iterator obj = collision_list->begin(); 
          obj != collision_list->end(); ++obj){
         if( ( *obj )->type == type && collide( game_object, *obj ) ) {
@@ -47,14 +50,17 @@ GameObject* CollisionManager::checkCollision( GameObject* game_object,
 */
 bool CollisionManager::collide( GameObject* object_1, GameObject* object_2 ) {
   
-  rectangle_1.x = object_1->main_positionX; 
-  rectangle_1.y = object_1->main_positionY;
-  rectangle_1.h = object_1->main_height;
-  rectangle_1.w = object_1->main_width;
-  rectangle_2.x = object_2->main_positionX;
-  rectangle_2.y = object_2->main_positionY;
-  rectangle_2.h = object_2->main_height;
-  rectangle_2.w = object_2->main_width;
+    assert( object_1 != NULL);
+    assert( object_2 != NULL);
+
+    rectangle_1.x = object_1->main_positionX; 
+    rectangle_1.y = object_1->main_positionY;
+    rectangle_1.h = object_1->main_height;
+    rectangle_1.w = object_1->main_width;
+    rectangle_2.x = object_2->main_positionX;
+    rectangle_2.y = object_2->main_positionY;
+    rectangle_2.h = object_2->main_height;
+    rectangle_2.w = object_2->main_width;
 
   return SDL_IntersectRect(&rectangle_1, &rectangle_2, &result);
 

@@ -2,6 +2,7 @@
     \file scene.cpp
     This file declares the Scene class
 */
+
 #include "scene.hpp"
 
 using namespace engine;
@@ -52,8 +53,6 @@ bool Scene::remove_game_object(const std::string &id) {
                               id + "'.");
         return false;
     }
-
-
 
 }
 

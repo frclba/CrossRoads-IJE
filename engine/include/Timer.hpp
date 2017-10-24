@@ -19,7 +19,6 @@ namespace engine {
     class Timer {
 
         public:
-
             Timer();
 
             ~Timer();
@@ -35,15 +34,14 @@ namespace engine {
 
             Uint32 getTicks();
 
-            // Checks the status of the timer
-
-            bool isStarted();
-            bool isPaused();
-
             void set_TimeStep();
             Uint32 get_elapseTime();
 
         private:
+            // Checks the status of the timer
+
+            bool isStarted();
+            bool isPaused();
 
             // The clock time when the timer started
 
