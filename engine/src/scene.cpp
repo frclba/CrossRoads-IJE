@@ -3,8 +3,6 @@
     This file declares the Scene class
 */
 
-#include <assert.h>
-
 #include "scene.hpp"
 
 using namespace engine;
@@ -14,8 +12,6 @@ using namespace engine;
 GameObject INVALID_GAME_OBJECT;
 
 bool Scene::add_game_object(GameObject &obj) {
-
-    assert ( obj != NULL );
 
     auto id = obj.name();
     Log::instance.info("Adding GameObject '" + id + "' to scene '" + scene_name + "'.");
@@ -34,8 +30,6 @@ bool Scene::add_game_object(GameObject &obj) {
 
 GameObject &Scene::get_game_object(const std::string &id) {
 
-    assert ( id != NULL );
-
     if( scene_objects.find(id) != scene_objects.end() ) {
         return *scene_objects[id];
     }
@@ -47,8 +41,6 @@ GameObject &Scene::get_game_object(const std::string &id) {
 }
 
 bool Scene::remove_game_object(const std::string &id) {
-
-    assert ( id != NULL );
 
     Log::instance.info("Removendo GameObject '" + id + "' da Scene.");
 

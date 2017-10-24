@@ -3,7 +3,7 @@
     This file declares the Heart class
 */
 #ifndef _HEART_H_
-#define _HERAT_H_
+#define _HEART_H_
 
 #include <iostream>
 #include "game.hpp"
@@ -18,14 +18,16 @@ using namespace engine;
 */
 class Heart : public Component {
 
-public:
-    /** 
-        \note Declares the contructor, defining the initial values of the
-          members.
-    */ 
-    Heart(GameObject &main_game_object, std::string id, Player *player,
-          int life) :
-          Component(main_game_object, id), m_player(player), m_life(life) {}
+    public:
+        /** 
+            \note Declares the contructor, defining the initial values of the
+                members.
+        */ 
+        Heart(GameObject &main_game_object, std::string id, Player *player,
+              int life) :
+              Component(main_game_object, id), m_player(player), m_life(life) {}
+
+        ~Heart();
 
         void update();
 
