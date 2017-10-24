@@ -6,8 +6,9 @@
 #include "stage1_scene.hpp"
 #include "assert.h"
 
-/// Initializes and keeps the scene of the first stage
-
+/**
+    Initializes and keeps the scene of the first stage
+*/
 const int MAX_SCREEN_WIDTH = 800;
 const int BULLET_PSOTION_ITERATOR = 20;
 const int TIME_STEP_ITERATOR = 500;
@@ -28,21 +29,24 @@ unsigned int Stage1Scene::getTimeStep() {
 void Stage1Scene::game_logic() {
 
 
+    /**
+        Instances the game objects that make up the stage
+    */
     background = &get_game_object("backgroundForest");
-
     bullet1 = &get_game_object("bullet");
-
     player = &get_game_object("player");
     player_controller = (dynamic_cast<Player*>(
                          player->get_component("player_logic")));
-
-
     ground_stage1 = &get_game_object("ground");
     back_img = (dynamic_cast<ImageComponent*>(
         background->get_component("backgroundForest")));
     go_arrow = &get_game_object("go_arrow");
     portal = &get_game_object("portal");
+    fire_ball = &get_game_object("fireball");
 
+    /**
+        Instances the monster game objects that make up the stage
+    */
     monster1 = &get_game_object("monster1");
     monster2 = &get_game_object("monster2");
     monster3 = &get_game_object("monster3");
@@ -50,17 +54,21 @@ void Stage1Scene::game_logic() {
 
     assert(ground_stage1 != NULL);
 
+    /**
+        Sets screen values to the initial stage
+    */
     ground_stage1->main_positionY = 552;
     ground_stage1->main_positionX = 0;
     ground_stage1->main_width = 800;
     ground_stage1->main_height = 200;
 
-    fire_ball = &get_game_object("fireball");
-
     assert(back_img != NULL);
     assert(fire_ball != NULL);
 
-
+    /**
+        Checks if the position of the background image on the x-axis
+        has come to an end.
+    */
     if( back_img->image_measures->x > BACKGROUND_IMAGE_MAX ) {
         back_img->enable_camera = false;
     }
@@ -71,6 +79,10 @@ void Stage1Scene::game_logic() {
     assert(portal != NULL);
     assert(go_arrow != NULL);
 
+    /**
+        Disables back_img camera and go_arrow elements when the if conditionals
+        occur.
+    */
     if( ( portal->state() == GameObject::State::enabled &&
         portal->main_positionX + portal->main_width < MAX_SCREEN_WIDTH ) ||
         back_img->image_measures->x > BACKGROUND_IMAGE_MAX ||
@@ -147,6 +159,9 @@ void Stage1Scene::bullet() {
 
     assert(player_controller != NULL);
 
+    /**
+        Check is player attack is valid in time step.
+    */
     if( player_controller->get_is_attacking_ranged() &&
         getTimeStep() < Game::instance.timer->getTicks() ) {
 
