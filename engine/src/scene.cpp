@@ -11,12 +11,22 @@ using namespace engine;
 
 GameObject INVALID_GAME_OBJECT;
 
+
+/**
+    Add a new game objetc in scene.
+    \param obj new object to add
+    \return true if the game object was added
+    \retrun false if the game object already exists
+*/
 bool Scene::add_game_object(GameObject &obj) {
 
     auto id = obj.name();
     Log::instance.info("Adding GameObject '" + id + "' to scene '" + scene_name + "'.");
 
 
+    /**
+        Check if game_object exist and add to scene objects list.
+    */
     if( scene_objects.find( id ) != scene_objects.end() ) {
         Log::instance.warning( "Game object: '" + id + "' já existe!" );
         return false;
@@ -28,6 +38,12 @@ bool Scene::add_game_object(GameObject &obj) {
 
 }
 
+/**
+    Take an object from the scene by id
+    \param id required object identifier name
+    \return game object if exists
+    \return invalid game object is does not exists
+*/
 GameObject &Scene::get_game_object(const std::string &id) {
 
     if( scene_objects.find(id) != scene_objects.end() ) {
@@ -40,6 +56,12 @@ GameObject &Scene::get_game_object(const std::string &id) {
 
 }
 
+/**
+    Remove an object from the scene by id
+    \param id required object identifier name
+    \return true if game object exists and is removed
+    \return false if game object is does not exists
+*/
 bool Scene::remove_game_object(const std::string &id) {
 
     Log::instance.info("Removendo GameObject '" + id + "' da Scene.");
@@ -65,6 +87,9 @@ bool Scene::init() {
     Log::instance.info("Inicializando cena '" + scene_name + "'.");
 
 
+    /**
+        Initializes all objects in the scene.
+    */
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
 
@@ -88,7 +113,9 @@ bool Scene::shutdown() {
 
     Log::instance.info("Destruindo cena '" + scene_name + "'.");
 
-
+    /**
+        Disables all objects in the scene.
+    */
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
 
@@ -132,6 +159,9 @@ void Scene::update() {
 */
 bool Scene::draw() {
 
+    /**
+        Sets the scene layers.
+    */
     GameObject::Layer layers[] = {
         GameObject::Layer::background,
         GameObject::Layer::layer1,
@@ -139,7 +169,9 @@ bool Scene::draw() {
         GameObject::Layer::layer3
     };
 
-
+    /**
+        Draw the object for each layer.
+    */
     for( int cont = 0; cont < 4; cont++ ) {
 
         for( auto id_obj: scene_objects ) {
@@ -159,6 +191,11 @@ bool Scene::draw() {
     return true;
 
 }
+
+/**
+    Checks and lists the objects that will crash into the scene.
+    \return list of colliding objects
+*/
 
 std::list <GameObject *> * Scene::get_collide_objects() {
 
