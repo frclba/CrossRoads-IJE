@@ -40,8 +40,10 @@ void MenuScene::detect_scene_pass() {
 
     assert(Game::instance.keyboard != NULL);
 
-    // Mouse over effect
-
+    /**
+         \note This paragraph is responsible for checking if the enter button
+            on keyboard is press, then sets initial story.
+    */
     if( Game::instance.keyboard->isKeyDown("enter") ) {
         Game::instance.change_scene("initial_story");
     }
@@ -72,7 +74,11 @@ void MenuScene::new_game_button_controller() {
     assert(new_game_button_animation != NULL);
 
     assert(Game::instance.mouse != NULL);
-
+ 
+    /**
+         \note This paragraph is responsible for checking if the mouse 
+            right button is over of New game button, then sets initial story.
+    */
     if( Game::instance.mouse->is_over(new_game_button) ) {
         if( Game::instance.mouse->is_right_button() ) {
             Game::instance.change_scene("initial_story");
@@ -119,6 +125,10 @@ void MenuScene::load_button_controller() {
 
     assert(Game::instance.mouse != NULL);
 
+    /**
+         \note This paragraph is responsible for checking if the mouse is over
+            of Load button, then sets normal animation or 'mouseOn' animation.
+    */
     if( Game::instance.mouse->is_over(load_button) ) {
         load_button_animation->useAnimation("normal");
 
