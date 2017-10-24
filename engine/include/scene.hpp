@@ -28,61 +28,60 @@ namespace engine {
                 invalid
             };
 
-        // Overloading the constructor for creating scenes without parameters
+            // Overloading the constructor for creating scenes without parameters
 
-        Scene() : Scene( "", State::invalid ) {
+            Scene() : Scene( "", State::invalid ) {
 
-        }
+            }
 
-        Scene( std::string name, State _state = State::created )
-        :scene_name( name ), scene_state( _state ) {
+            Scene( std::string name, State _state = State::created )
+            :scene_name( name ), scene_state( _state ) {
 
-        }
+            }
 
-        virtual ~Scene() {
+            virtual ~Scene() {
 
-        }
+            }
 
-        // Add and check if it already exists. If success, return true
+            // Add and check if it already exists. If success, return true
 
-        virtual bool add_game_object( GameObject &obj );
+            virtual bool add_game_object( GameObject &obj );
 
-        // Search for a specific GameObject by ID
+            // Search for a specific GameObject by ID
 
-        GameObject &get_game_object( const std::string &id );
+            GameObject &get_game_object( const std::string &id );
 
-        // Erase GameObject, find it by ID and remove.
+            // Erase GameObject, find it by ID and remove.
 
-        virtual bool remove_game_object( const std::string &id );
+            virtual bool remove_game_object( const std::string &id );
 
-        // Initialization of scene
+            std::list<GameObject*> *get_collide_objects();
 
-        virtual bool init();
+            void clear_collide_objects();
 
-        // Shutdown of scene
+            // Initialization of scene
 
-        virtual bool shutdown();
+            virtual bool init();
 
-        // Check on map and initialize each game object. Return true if success
+            // Shutdown of scene
 
-        virtual bool draw();
+            virtual bool shutdown();
 
+            // Check on map and initialize each game object. Return true if success
 
-        std::list<GameObject*> *get_collide_objects();
+            virtual bool draw();
 
-        void clear_collide_objects();
+            // gamelogic
 
-        // gamelogic
+            virtual void game_logic();
 
-        virtual void game_logic();
+            inline std::string name() const {
 
-        inline std::string name() const {
+                return scene_name;
 
-            return scene_name;
+            }
 
-        }
-
-        void update();
+            void update();
 
         protected:
             std::string scene_name;
