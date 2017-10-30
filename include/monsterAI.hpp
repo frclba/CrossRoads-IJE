@@ -23,10 +23,21 @@ using namespace engine;
 class MonsterAI : public Component {
 
 public:
-    MonsterAI(GameObject &main_game_object, std::string id, GameObject *player,
+
+    /**
+        Declares the contructor, defining the initial values
+        of the members.
+    */
+
+    MonsterAI(GameObject &main_game_object,
+              std::string id,
+              GameObject *player,
               AnimationControllerComponent *monster_controler) :
-              Component(main_game_object, id),vertical_position(0), side(false),
-              m_player(player), m_monster_controler(monster_controler) {}
+              Component(main_game_object, id),
+              vertical_position(0),
+              side(false),
+              m_player(player),
+              m_monster_controler(monster_controler) {}
 
     ~MonsterAI();
 
@@ -38,6 +49,10 @@ public:
     int getLifePoints();
 
 private:
+
+    /**
+        Declares the prototype of the monster member functions
+    */
 
     void apply_gravity();
     void process_position();
@@ -60,14 +75,25 @@ private:
     /**
         Ranges from 552 to 0.
     */
+
     float vertical_position = 0;
 
     /**
         True: means that monster is facing right. False: means that monster is facing left.
     */
+
+    /**
+        Declares constants concerning which side the monster is facing.
+    */
+
     bool side = false;
     const bool RIGHT = true;
     const bool LEFT = false;
+
+
+    /**
+        Declares monster game objects.
+    */
 
     /**
         Indicates if monster is damaged.
