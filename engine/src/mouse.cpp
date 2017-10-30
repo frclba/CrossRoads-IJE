@@ -37,6 +37,10 @@ bool Mouse::is_over(engine::GameObject *gameObject) {
 
     assert( gameObject != NULL );
 
+    /**
+        /note This paragraph responsible for verifying that the mouse cursor
+            is over a defined object, then returns true.
+    */
     if( mouse_position_x > gameObject->main_positionX &&
         mouse_position_y > gameObject->main_positionY &&
         mouse_position_x < (gameObject->main_width + 
@@ -58,6 +62,10 @@ bool Mouse::is_over(engine::GameObject *gameObject) {
 */
 bool Mouse::is_right_button() {
 
+    /**
+        /note This paragraph is responsible for checking if the mouse
+            click is the right mouse button, by mouse state and returns true.
+    */
     if( SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT) ) {
         return true;
     }
@@ -74,6 +82,10 @@ bool Mouse::is_right_button() {
 */
 bool Mouse::is_left_button() {
 
+    /**
+        /note This paragraph is responsible for checking if the mouse
+            click is the left mouse button, by mouse state and returns true.
+    */
     if( SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT) ) {
         return true;
     }

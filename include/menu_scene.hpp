@@ -8,7 +8,6 @@
 
 using namespace engine;
 
-/// Class to control of menu scene
 /**
     \class MenuScene
     This class is responsible for managing the game scene.
@@ -17,12 +16,17 @@ class MenuScene : public Scene {
 
 public:
 
+    /**
+        Declares the contructor, defining the initial values
+        of the members.
+    */
     MenuScene(std::string name) : Scene(name) {}
     ~MenuScene();
 
 
 private:
 
+    // Declares the prototype of the menu scene functions
     void game_logic();
     void new_game_button_controller();
     void load_button_controller();

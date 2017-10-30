@@ -21,7 +21,11 @@ namespace engine {
     class Mouse {
 
     public:
-
+        
+        /**
+             Declares the contructor, defining the initial values
+             of the members.
+        */
         Mouse() : mouse_position_x(0), mouse_position_y(0) {};
         ~Mouse();
 
