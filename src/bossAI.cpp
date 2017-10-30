@@ -1,18 +1,33 @@
+/**
+    \file bossAI.cpp
+    This file implements the Boss class
+*/
+#include <assert.h>
 #include"bossAI.hpp"
 
+/**
+    This method initiates the boss in the game scene
+    \return return a true value that make the boss active
+*/
 bool Boss::init() {
 
-    life = 10;
-    timestep = 0;
-    move_time = 0;
-    fireball_time = 0;
-    side = false;
+    boss_life = 10;
+    boss_update_time = 0;
+    boss_movement_time_gap = 0;
+    fireball_time_gap = 0;
+    is_in_corner = false;
 
     return true;
 
 }
 
+/**
+    This method is reponsable for update Boss positions and life and controll
+    attacks
+*/
 void Boss::update() {
+
+    assert(m_boss_animation != NULL);
 
     m_boss_animation->play_animation("boss_idle", true);
 
@@ -20,96 +35,154 @@ void Boss::update() {
         _main_game_object->main_positionX +
         _main_game_object->main_width < 850 ) {
 
-        if ( fireball_attack ) {
-
-            // fireball_controller();
-
-        }
-        else if( dash_attack ) {
+        if( is_dash_attacking ) {
             boss_move();
         }
+        else {
 
-        m_boss_animation->flipping(!side);
+            // Do nothing
 
-        if( timestep < Game::instance.timer->getTicks() ) {
+        }
+
+        m_boss_animation->flipping(!is_in_corner);
+
+        if( boss_update_time < Game::instance.timer->getTicks() ) {
 
             if( m_player->main_positionY > 300 ) {
-                dash_attack = true;
-                fireball_attack = false;
+                is_dash_attacking = true;
+                is_fireball_attacking = false;
                 m_fireball->setState(GameObject::State::disabled);
             }
             else {
-                dash_attack = false;
-                fireball_attack = true;
+                is_dash_attacking = false;
+                is_fireball_attacking = true;
                 m_boss_animation->play_animation("boss_howl");
                 m_fireball->setState(GameObject::State::enabled);
             }
 
-            timestep = Game::instance.timer->getTicks() + 3000;
+            boss_update_time = Game::instance.timer->getTicks() + 3000;
+        }
+        else {
+
+            // Do nothing
+
         }
 
-            boss_damage();
+        boss_damage();
+    }
+    else {
+
+        // Do nothing
+
     }
 
 }
 
+/**
+    This method is responsible for dectecting the damage to the boss life
+*/
 void Boss::boss_damage() {
 
-    AudioComponent* boss_full_putasso_audio = (dynamic_cast<AudioComponent*> (
+    assert(_main_game_object != NULL);
+
+
+    AudioComponent * boss_in_rage_audio = (dynamic_cast<AudioComponent*> (
                                                _main_game_object->get_component(
-                                               "boss_full_putasso_audio")));
+                                               "boss_in_rage_audio")));
 
     if( Game::instance.collision_manager->checkCollision(
         _main_game_object, "attack_box") ||
         Game::instance.collision_manager->checkCollision(
         _main_game_object, "bullet") ) {
 
-        if( time_damage < Game::instance.timer->getTicks() ) {
-            life--;
-            time_damage = Game::instance.timer->getTicks() + 1000;
+        if( damage_time < Game::instance.timer->getTicks() ) {
+            boss_life--;
+            damage_time = Game::instance.timer->getTicks() + 1000;
+        }
+        else {
+
+            // Do nothing
+
         }
 
-        if( life == 3 ) {
-            boss_full_putasso_audio->play(0, -1);
+        if( boss_life == 3 ) {
+            boss_in_rage_audio->play(0, -1);
+        }
+        else {
+
+            // Do nothing
+
         }
 
-        if( life <= 0 ) {
+        if( boss_life <= 0 ) {
             Game::instance.change_scene("Win Scene");
+        }
+        else {
+
+            // Do nothing
+
         }
     }
 
 }
 
+/**
+    This method is responsible for changing the boss movement in the screen
+*/
 void Boss::boss_move() {
 
-    AudioComponent* boss_dash_audio = (dynamic_cast<AudioComponent*> (
+    assert(_main_game_object != NULL);
+    assert(m_boss_animation != NULL);
+
+
+    AudioComponent *boss_dash_audio = (dynamic_cast<AudioComponent*> (
                                        _main_game_object->get_component(
                                        "boss_dash_audio")));
+
+    assert(boss_dash_audio != NULL);
 
     boss_dash_audio->play(0, -1);
 
     m_boss_animation->play_animation("boss_dash", true);
 
-    if( move_time < Game::instance.timer->getTicks() ) {
-        // side = !side;
-        move_time = Game::instance.timer->getTicks() + 900;
-    }
-
-    if( side ) {
-        m_position->m_init_posX -=10;
+    if( boss_movement_time_gap < Game::instance.timer->getTicks() ) {
+        // is_in_corner = !is_in_corner;
+        boss_movement_time_gap = Game::instance.timer->getTicks() + 900;
     }
     else {
-      m_position->m_init_posX +=10;
+
+        // Do nothing
+
     }
 
-    if( _main_game_object->main_positionX <=10 && side ) {
-        side = !side;
-        dash_attack = false;
+    assert(m_position != NULL);
+
+    if( is_in_corner ) {
+        m_position->m_horizontal_starting_position -=10;
     }
+    else {
+        m_position->m_horizontal_starting_position +=10;
+    }
+
+    if( _main_game_object->main_positionX <=10 && is_in_corner ) {
+        is_in_corner = !is_in_corner;
+        is_dash_attacking = false;
+    }
+    else {
+
+        // Do nothing
+
+    }
+
     if( _main_game_object->main_positionX +
-        _main_game_object->main_width >= 800 && !side ) {
-        side = !side;
-        dash_attack = false;
+        _main_game_object->main_width >= 800 && !is_in_corner ) {
+        is_in_corner = !is_in_corner;
+        is_dash_attacking = false;
+    }
+    else {
+
+        // Do nothing
+
     }
 
 }

@@ -1,3 +1,7 @@
+/**
+    \file scene.hpp
+    This file declares the Scene class
+*/
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
@@ -7,58 +11,85 @@
 #include "sdl2core.hpp"
 #include "gameobject.hpp"
 
-namespace engine{
+namespace engine {
 
-    class Scene{
+    /// Class for control of game Scene
+    /**
+        \class Scene
+        This class is responsible for initializing the game scene
+    */
+    class Scene {
+
         public:
-            enum class State{
+            enum class State {
                 created,
                 loaded,
                 playing,
                 invalid
             };
 
-            //Sobrecarga do construtor para caso de criação de cenas sem parâmetros
-            Scene() : Scene("", State::invalid){}
+            // Overloading the constructor for creating scenes without parameters
 
-            Scene(std::string name, State _state = State::created)
-            :scene_name(name), scene_state(_state){}
+            Scene() : Scene( "", State::invalid ) {
 
-            virtual ~Scene(){}
+            }
 
-            //Add and check if it already exists. If success, return true
-           virtual bool add_game_object(GameObject &obj);
+            Scene( std::string name, State _state = State::created )
+            :scene_name( name ), scene_state( _state ) {
 
-            //Search for a specific GameObject by ID
-            GameObject &get_game_object(const std::string &id);
+            }
 
-            //Erase GameObject, find it by ID and remove.
-           virtual bool remove_game_object(const std::string &id);
+            virtual ~Scene() {
 
-            //Initialization of scene
+            }
+
+            // Add and check if it already exists. If success, return true
+
+            virtual bool add_game_object( GameObject &obj );
+
+            // Search for a specific GameObject by ID
+
+            GameObject &get_game_object( const std::string &id );
+
+            // Erase GameObject, find it by ID and remove.
+
+            virtual bool remove_game_object( const std::string &id );
+
+            std::list<GameObject*> *get_collide_objects();
+
+            void clear_collide_objects();
+
+            // Initialization of scene
+
             virtual bool init();
 
-            //Shutdown of scene
+            // Shutdown of scene
+
             virtual bool shutdown();
 
-            //Check on map and initialize each game object. Return true if success
+            // Check on map and initialize each game object. Return true if success
+
             virtual bool draw();
 
-           
-            std::list<GameObject*> *get_collide_objects();
-            void clear_collide_objects();
-   //gamelogic
+            // gamelogic
+
             virtual void game_logic();
 
-            inline std::string name() const { return scene_name; }
+            inline std::string name() const {
+
+                return scene_name;
+
+            }
 
             void update();
+
         protected:
             std::string scene_name;
             std::unordered_map <std::string, GameObject *> scene_objects;
             std::list <GameObject *> collide_objects;
 
             State scene_state;
+
     };
 
 }

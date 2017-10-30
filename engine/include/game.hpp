@@ -1,3 +1,8 @@
+/**
+  \file game.hpp
+  this file contain the namespace engine, who defines the game engine class
+*/
+
 #ifndef __GAME_H__
 #define __GAME_H__
 
@@ -24,9 +29,19 @@ enum class State{
     shutdown
 };
 
-namespace engine{
+namespace engine {
 
-    class Game{
+
+
+    /// Class for managing the game object properties
+    /**
+    \class Game
+    This class has features for managing some of game properties
+    such as SDL configuration  and scenes handling.
+    */
+
+    class Game {
+
     public:
         //Creating a single and unique game instance.
         static Game instance;
@@ -37,25 +52,13 @@ namespace engine{
         //Game loop
         void run();
 
-        //Inicializa SDL
-        bool startSDL();
-
-        //Cria janela
-        bool createWindow();
-
-        //Destroi janela
-        void destroyWindow();
-
-        //Desliga SDL
-        void offSDL();
-
         //Adiciona nova cena na lista de cenas
         bool add_scene(Scene &scene);
 
         //Muda a cena que está acontecendo
         bool change_scene(const std::string &id);
 
-        bool handle_scene_changes();
+
 
         SDL_Renderer* main_canvas;
 
@@ -72,12 +75,29 @@ namespace engine{
             main_background_color({0xff, 0xff, 0xff, 0xff}),
             current_state(State::created), last_current_scene(NULL){};
 
+        bool initialize_imgs();
+
+        bool initialize_sdl_components();
+
+        bool initialize_mixer();
+
+        bool start_sdl();
+
+        bool create_window();
+
+        void destroy_window();
+
+        void off_sdl();
+
+        bool handle_scene_changes();
+
+
         std::string main_name;
         std::pair<int,int> main_window_size;
         SDL_Window* main_window;
         SDL_Color main_background_color;
         State current_state;
-        SDL_Joystick* gGameController =NULL;
+        SDL_Joystick* g_game_controller = NULL;
 
         Scene *last_current_scene;
         Scene *next_scene;
