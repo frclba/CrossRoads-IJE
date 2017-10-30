@@ -44,6 +44,10 @@ void Boss::update() {
 
         }
 
+        /**
+            /note This line is responsible for flipping the boss animation when
+            he heachs the screen corner
+        */
         m_boss_animation->flipping(!is_in_corner);
 
         /**
@@ -89,7 +93,9 @@ void Boss::damage() {
 
     assert(_main_game_object != NULL);
 
-
+    /**
+        /note This line enables the boss rage audio
+    */
     AudioComponent * boss_in_rage_audio = (dynamic_cast<AudioComponent*> (
                                                _main_game_object->get_component(
                                                "boss_in_rage_audio")));
