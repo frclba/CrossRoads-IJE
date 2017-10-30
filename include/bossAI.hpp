@@ -44,8 +44,8 @@ private:
 
     bool init();
     void update();
-    void boss_move();
-    void boss_damage();
+    void move();
+    void damage();
 
     AnimationControllerComponent *m_boss_animation = NULL;
     GameObject *m_fireball = NULL;

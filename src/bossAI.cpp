@@ -36,7 +36,7 @@ void Boss::update() {
         _main_game_object->main_width < 850 ) {
 
         if( is_dash_attacking ) {
-            boss_move();
+            move();
         }
         else {
 
@@ -72,7 +72,7 @@ void Boss::update() {
 
         }
 
-        boss_damage();
+        damage();
     }
     else {
 
@@ -85,7 +85,7 @@ void Boss::update() {
 /**
     This method is responsible for dectecting the damage to the boss life
 */
-void Boss::boss_damage() {
+void Boss::damage() {
 
     assert(_main_game_object != NULL);
 
@@ -136,7 +136,7 @@ void Boss::boss_damage() {
 /**
     This method is responsible for changing the boss movement in the screen
 */
-void Boss::boss_move() {
+void Boss::move() {
 
     assert(_main_game_object != NULL);
     assert(m_boss_animation != NULL);
