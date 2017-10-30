@@ -81,6 +81,10 @@ void InitialStory::update() {
   */
   if( time_step < Game::instance.timer->getTicks() ) {
       story_iterator = story_iterator + 1;
+      /**
+          /note This line use function getTicks() to count time step and use
+          the variable TIME_STEP_INCREASE to make the time pass
+      */
       time_step = Game::instance.timer->getTicks() + TIME_STEP_INCREASE;
   }
   else {
