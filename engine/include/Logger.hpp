@@ -27,41 +27,38 @@
   \class Log
   The log class manages the logging system of the game
 */
-
 class Log {
 
-public:
+    public:
+        /**
+          Log instance to keep the log file while playing the game
+        */
+        static Log instance;
 
-    /**
-      Log instance to keep the log file while playing the game
-    */
-    static Log instance;
+        /* Functions to print on file according to type of message */
 
-    /* Functions to print on file according to type of message */
+        void debug(std::string message);
+        void warning(std::string message);
+        void error(std::string message);
+        void info(std::string message);
+        void jumpLine(std::string message);
 
-    void debug(std::string message);
-    void warning(std::string message);
-    void error(std::string message);
-    void info(std::string message);
-    void jumpLine(std::string message);
+    private:
+        Log();
+        ~Log();
 
-private:
+        std::ofstream log_file;
+        std::string file_name = "";
 
-    Log();
-    ~Log();
+        //Open and close stream file to be written
 
-    std::ofstream log_file;
-    std::string file_name = "";
-
-    //Open and close stream file to be written
-
-    void openFile();
-    void closeFile();
-    void print_border();
-    void terminal_border();
-    void terminal_message(std::string message);
-    void border_message(std::string message);
-    void log_message(std::string kind, std::string message);
+        void openFile();
+        void closeFile();
+        void print_border();
+        void terminal_border();
+        void terminal_message(std::string message);
+        void border_message(std::string message);
+        void log_message(std::string kind, std::string message);
 
 };
 

@@ -2,6 +2,7 @@
     \file bossAI.cpp
     This file implements the Boss class
 */
+#include <assert.h>
 #include"bossAI.hpp"
 
 /**
@@ -25,6 +26,8 @@ bool Boss::init() {
     attacks
 */
 void Boss::update() {
+
+    assert(m_boss_animation != NULL);
 
     m_boss_animation->play_animation("boss_idle", true);
 
@@ -84,6 +87,9 @@ void Boss::update() {
 */
 void Boss::boss_damage() {
 
+    assert(_main_game_object != NULL);
+
+
     AudioComponent * boss_in_rage_audio = (dynamic_cast<AudioComponent*> (
                                                _main_game_object->get_component(
                                                "boss_in_rage_audio")));
@@ -97,7 +103,7 @@ void Boss::boss_damage() {
         _main_game_object, "bullet") ) {
 
         if( damage_time < Game::instance.timer->getTicks() ) {
-            boss_life --;
+            boss_life--;
             damage_time = Game::instance.timer->getTicks() + 1000;
         }
         else {
@@ -132,9 +138,15 @@ void Boss::boss_damage() {
 */
 void Boss::boss_move() {
 
+    assert(_main_game_object != NULL);
+    assert(m_boss_animation != NULL);
+
+
     AudioComponent *boss_dash_audio = (dynamic_cast<AudioComponent*> (
                                        _main_game_object->get_component(
                                        "boss_dash_audio")));
+
+    assert(boss_dash_audio != NULL);
 
     boss_dash_audio->play(0, -1);
 
@@ -153,6 +165,8 @@ void Boss::boss_move() {
         // Do nothing
 
     }
+
+    assert(m_position != NULL);
 
     if( is_in_corner ) {
         m_position->m_horizontal_starting_position -=10;
