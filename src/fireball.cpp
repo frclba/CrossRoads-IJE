@@ -32,8 +32,8 @@ void FireballController::update() {
     assert( _main_game_object != NULL );
 
     if(ready_to_fall == true) {
-        fall_process();
-        initial_position_process();
+        process_fall();
+        process_initial_position();
     }
 
     /**
@@ -53,7 +53,7 @@ const int INITIAL_POSITION = -600;
 /**
     This method is reponsable for the fireball dropping
 */
-void FireballController::fall_process() {
+void FireballController::process_fall() {
 
     assert( _main_game_object != NULL );
 
@@ -82,7 +82,7 @@ const int MAXIMUM_COORDINATION_Y = 850;
 /**
     This method is reponsable for going from the fireball to initial position
 */
-void FireballController::initial_position_process() {
+void FireballController::process_initial_position() {
 
     assert( _main_game_object != NULL );
 
