@@ -57,6 +57,9 @@ void FireballController::process_fall() {
 
     assert( _main_game_object != NULL );
 
+    /**
+        /note This line enables the fireball audio
+    */
     AudioComponent* fireball_droping_audio = ( dynamic_cast<AudioComponent*>
             ( _main_game_object->get_component( "fireball_droping_audio" ) ) );
 
@@ -65,8 +68,10 @@ void FireballController::process_fall() {
     */
     if( ready_to_fall ) {
 
-        // Current velocity components.
-
+        /**
+            /note This line represents the current velocity component by
+            increasing the velocity
+        */
         _main_game_object->main_positionY += variation_position_y;
         fireball_droping_audio->play(0,-1);
     }
