@@ -24,7 +24,7 @@ namespace engine {
             ~Timer();
 
             // The various clock actions
-            
+
             void start();
             void stop();
             void pause();
@@ -40,8 +40,8 @@ namespace engine {
         private:
             // Checks the status of the timer
 
-            bool isStarted();
-            bool isPaused();
+            bool is_started();
+            bool is_paused();
 
             // The clock time when the timer started
 
