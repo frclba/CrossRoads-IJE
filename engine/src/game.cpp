@@ -318,6 +318,7 @@ void Game::run() {
 */
 
 bool Game::add_scene(Scene &scene) {
+
     //Isso faz o id ser o name.
     auto id = scene.name();
     Log::instance.info("Adding Scene: '" + id + "' to Scenes List.");

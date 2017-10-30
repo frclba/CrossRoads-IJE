@@ -23,32 +23,31 @@ using namespace engine;
 
 class InitialStory : public Component{
 
-public:
-    InitialStory( GameObject &main_game_object, std::string id, 
-                  AnimationControllerComponent* story ):
+    public:
+        InitialStory( GameObject &main_game_object, std::string id, 
+                    AnimationControllerComponent* story ):
 
         Component(main_game_object, id),m_story(story){}
 
         ~InitialStory();
 
-        bool init();
-
         void update();
 
-private:
+    private:
+        bool init();
 
-    //  Story that will start an animation
-    AnimationControllerComponent *m_story;
+        //  Story that will start an animation
+        AnimationControllerComponent *m_story;
 
-    
-    // Used to mark the time step
-    unsigned int time_step;
+        // Used to mark the time step
+        unsigned int time_step;
 
-    /**
-        Iterator used to choose an animation of the story
-        according to the time step
-    */
-    unsigned int iterator;
+        /**
+            Iterator used to choose an animation of the story
+            according to the time step
+        */
+        unsigned int iterator;
+
 };
 
 #endif  // _INITIAL_STORY_HPP_

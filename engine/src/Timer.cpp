@@ -69,8 +69,11 @@ void Timer::stop() {
 */
 void Timer::pause() {
 
-    // If the timer is running and isn't already paused
-
+    /**
+         \note This paragraph is responsible for checking if the timer is
+            running and isn't already paused, then pause the timer
+            and calculate the paused ticks
+    */
     if( mStarted && !mPaused ) {
 
         // Pause the timer
@@ -91,8 +94,11 @@ void Timer::pause() {
 */
 void Timer::unpause() {
 
-    // If the timer is running and paused
-
+    /**
+         \note This paragraph is responsible for checking if the timer
+            is running and paused, then reset the starting ticks 
+            and reset the paused ticks.
+    */
     if( mStarted && mPaused ) {
 
         // Unpause the timer
@@ -118,8 +124,12 @@ Uint32 Timer::getTicks() {
 
     Uint32 time = 0;
 
-    // If the timer is running
-
+    /**
+         \note This paragraph is responsible for checking if the timer
+            is running, then if the timer is paused, return the number 
+            of ticks when the timer was paused, if isn't, return 
+            the current time minus the start time. 
+    */
     if( mStarted ) {
 
         // If the timer is paused

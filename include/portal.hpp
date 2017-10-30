@@ -25,6 +25,11 @@ using namespace engine;
 class Portal : public Component{
 
 public:
+
+    /**
+        Declares the contructor, defining the initial values
+        of the members.
+    */    
     Portal( GameObject &main_game_object, std::string id,
             ImageComponent *background, CameraPosition *portal_pos):
 

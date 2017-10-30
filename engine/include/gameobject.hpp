@@ -76,9 +76,6 @@ namespace engine {
 
         virtual bool draw();
 
-        void draw_image_component();
-        
-        void draw_animation();
 
         void update();
 
@@ -140,8 +137,14 @@ namespace engine {
         Layer m_layer;
 
     private:
-          State main_state;
-          std::string main_name;
+
+        void draw_image_component();
+
+        void draw_animation();
+
+
+        State main_state;
+        std::string main_name;
 
         /*
             Unordered map that will store all components of the game object.

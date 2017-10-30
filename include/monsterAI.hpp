@@ -33,6 +33,10 @@ public:
     bool init();
     void update();
 
+    void setLifePoints(int lifePoints);
+
+    int getLifePoints();
+
 private:
 
     void apply_gravity();
@@ -40,7 +44,6 @@ private:
     void receive_damage();
     void move_monster();
     void jump_monster();
-    void bullet_damage();
     bool sees_player();
     bool has_ground();
 
@@ -53,22 +56,26 @@ private:
     const int GROUND = 552;
     const int GRAVITY = 1;
     const float JUMP_SIZE = 2;
+
     /**
         Ranges from 552 to 0.
     */
-    float vertical_position;
+    float vertical_position = 0;
+
     /**
         True: means that monster is facing right. False: means that monster is facing left.
     */
-    bool side;
+    bool side = false;
     const bool RIGHT = true;
     const bool LEFT = false;
+
     /**
         Indicates if monster is damaged.
     */
     bool has_damage = false;
     int life_points = 3;
     bool is_first = false;
+    unsigned int time_damage = 0;
     GameObject *m_player;
     GameObject *bullet;
     GameObject *ground_obj;

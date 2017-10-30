@@ -12,7 +12,9 @@ Heart::~Heart() {}
 */
 bool Heart::init() {
 
+    /// \note initialize life points.
     _main_game_object->setState(GameObject::State::enabled);
+
     return true;
 
 }
@@ -22,6 +24,10 @@ bool Heart::init() {
 */
 void Heart::update() {
 
+    /** 
+        \note This paragraph is responsible to update the actual points of
+            life of the player. 
+    */
     if( m_life > m_player->get_life_points() ) {
         _main_game_object->setState(GameObject::State::disabled);
     }

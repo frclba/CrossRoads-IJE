@@ -1,7 +1,7 @@
 /**
-  \file player.hpp
-  This file declares the Player class, his methods and attributes with their
-  encapsulation.
+    \file player.hpp
+    This file declares the Player class, his methods and attributes with their
+    encapsulation.
 */
 
 #ifndef __PLAYER_HPP__
@@ -27,7 +27,10 @@ using namespace engine;
 class Player : public Component {
 
 public:
-
+    /** 
+        \note Declares the contructor, defining the initial values 
+        of the player.
+    */ 
     Player( GameObject &main_game_object, std::string id,
          AnimationControllerComponent *animC, GameObject &attack_box,
 	       ImageComponent *background ):
@@ -40,16 +43,17 @@ public:
 
     void update();
 
+    /// \note Initialize GameObjects with NULL. 
     GameObject *player = NULL;
     GameObject *plataform = NULL;
     GameObject *monster = NULL;
 
+    /// \note Functions of player life, attack and body direction.
     int get_life_points();
     bool get_is_attacking_ranged();
     bool get_direction_boby_side();
 
 private:
-
     bool init();
 
     bool has_ground();
@@ -58,12 +62,20 @@ private:
 
     void detect_boby_side();
 
+    /**
+        \note This paragraph declare functions to update, detect and apply
+            player attack.
+    */
     void update_attack();
     void detect_attack_meele();
     void detect_attack_ranged();
     void apply_attack_meele();
     void apply_attack_ranged();
 
+    /**
+        \note This paragraph declare functions to update, detect and apply
+            player movement.
+    */
     void update_move();
     void detect_move_right();
     void detect_move_left();
@@ -74,6 +86,10 @@ private:
 
     void detect_jump();
 
+    /**
+        \note This paragraph declare functions to detect an apply damege in
+            player, detect low life of player and damage_player not used.
+    */
     void damage_player();
     void detect_damage();
     void apply_damage();
@@ -85,6 +101,7 @@ private:
 
     int life_points = 5;
 
+    /// \note Initialize types of attack variables with false.
     bool is_attacking_meele = false;
     bool is_attacking_ranged = false;
 

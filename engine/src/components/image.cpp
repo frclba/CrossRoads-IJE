@@ -32,8 +32,7 @@ bool ImageComponent::init() {
         if( valid_main_texture() ) {
 
              /*
-                Pegando os sizes padrões da imagem, por isso precisa ser
-                desenhada no tamanho desejado.
+                Take the default image size to draw it
             */
             _main_game_object->set_size(image->w, image->h);
 
@@ -58,6 +57,10 @@ bool ImageComponent::init() {
 void ImageComponent::set_back_rect(int image_width, int image_height) {
 
     image_measures = new SDL_Rect();
+
+    /*
+        Sets a new position for the image object
+    */
     image_measures->x = INITIAL_SCREEN_POSITION;
     image_measures->y = INITIAL_SCREEN_POSITION;
     image_measures->w = image_width;
@@ -108,20 +111,26 @@ void ImageComponent::draw() {
     */
     SDL_Rect *render_quad = new SDL_Rect();
 
+    /**
+        Get current _main_game_objetc values
+    */
     render_quad->x = _main_game_object->main_positionX;
     render_quad->y = _main_game_object->main_positionY;
     render_quad->w = _main_game_object->main_width;
     render_quad->h = _main_game_object->main_height;
 
 
+    /**
+        If image_measures is not null, it updates the value of the new
+        drawing with the measurements of the image.
+    */
     if( valid_image_measures() ) {
         render_quad->w = image_measures->w;
         render_quad->h = image_measures->h;
     }
-    else{
+    else {
 
         // Default else.
-        
     }
 
     SDL_RenderCopy(Game::instance.main_canvas, main_texture, image_measures,
