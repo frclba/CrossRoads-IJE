@@ -13,7 +13,7 @@ InitialStory::~InitialStory(){}
     initiates que iteration in 0.
 */
 bool InitialStory::init() {
-    iterator = 0;
+    story_iterator = 0;
 
     return true;
 }
@@ -21,12 +21,12 @@ bool InitialStory::init() {
 /**
     This method is responsible for switching between storys
 */
-void switchStories(int iterator, AnimationControllerComponent *m_story) {
+void switchStories(int story_iterator, AnimationControllerComponent *m_story) {
 
     /**
         /note This paragraph takes care of the transition between the stages
     */
-    switch ( iterator ) {
+    switch ( story_iterator ) {
         case 1: {
             m_story->play_animation( "story1" );
             break;
@@ -80,7 +80,7 @@ void InitialStory::update() {
       /note This paragraph is responsible for counting the time in the stage
   */
   if( time_step < Game::instance.timer->getTicks() ) {
-      iterator = iterator + 1;
+      story_iterator = story_iterator + 1;
       time_step = Game::instance.timer->getTicks() + TIME_STEP_INCREASE;
   }
   else {
@@ -89,6 +89,6 @@ void InitialStory::update() {
 
   startByEnter();
 
-  switchStories(iterator, m_story);
+  switchStories(story_iterator, m_story);
 
 }
