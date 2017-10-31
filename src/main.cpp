@@ -18,6 +18,21 @@
 #include "bossAI.hpp"
 #include "initialStory.hpp"
 
+const int HEART_COORDINATION_Y = 55; 
+ 
+const int HEART_1_COORDINATION_X = 1 * 40; 
+const int HEART_2_COORDINATION_X = 2 * 40; 
+const int HEART_3_COORDINATION_X = 3 * 40; 
+const int HEART_4_COORDINATION_X = 4 * 40; 
+const int HEART_5_COORDINATION_X = 5 * 40; 
+ 
+const int GO_ARROW_COORDINATION_X = 600; 
+const int GO_ARROW_COORDINATION_Y = 100; 
+ 
+const int FIRE_BALL_INITIAL_COORDINATION_X = 200; 
+ 
+const int INITIAL_BOSS_COORDINATION_X = 600; 
+const int INITIAL_BOSS_COORDINATION_Y = 300;
 
 using namespace engine;
 
@@ -314,8 +329,8 @@ int main(int, char **){
 
     // Index animation.
     GameObject go_arrow("go_arrow");
-    go_arrow.main_positionX = 600;
-    go_arrow.main_positionY = 100;
+    go_arrow.main_positionX = GO_ARROW_COORDINATION_X; 
+    go_arrow.main_positionY = GO_ARROW_COORDINATION_Y;
     Animation go_arrow_anim(go_arrow, "go_arrow_anim",
                             "assets/sprites/arrow.png", 200, 200, 10);
     go_arrow_anim.setDelay(200);
@@ -470,13 +485,9 @@ int main(int, char **){
 
     // Define game object fireball.
     GameObject fireball("fireball", true, "fireball");
-<<<<<<< Updated upstream
-    fireball.main_positionX = 200;
-=======
 
     // Fireball walks through coordinate x in cartesian plan.
     fireball.main_positionX = FIRE_BALL_INITIAL_COORDINATION_X;
->>>>>>> Stashed changes
 
     FireballController fireball_controller(fireball, "fireball", 15, &player);
     fireball.add_component(fireball_controller);
@@ -566,17 +577,17 @@ int main(int, char **){
     heart5.add_component(heart5_img);
     heart5.add_component(heart5_controller);
 
-    heart1.main_positionX = 1 * 40;
-    heart2.main_positionX = 2 * 40;
-    heart3.main_positionX = 3 * 40;
-    heart4.main_positionX = 4 * 40;
-    heart5.main_positionX = 5 * 40;
-
-    heart1.main_positionY = 55;
-    heart2.main_positionY = 55;
-    heart3.main_positionY = 55;
-    heart4.main_positionY = 55;
-    heart5.main_positionY = 55;
+    heart1.main_positionX = HEART_1_COORDINATION_X; 
+    heart2.main_positionX = HEART_2_COORDINATION_X; 
+    heart3.main_positionX = HEART_3_COORDINATION_X; 
+    heart4.main_positionX = HEART_4_COORDINATION_X; 
+    heart5.main_positionX = HEART_5_COORDINATION_X; 
+ 
+    heart1.main_positionY = HEART_COORDINATION_Y; 
+    heart2.main_positionY = HEART_COORDINATION_Y; 
+    heart3.main_positionY = HEART_COORDINATION_Y; 
+    heart4.main_positionY = HEART_COORDINATION_Y; 
+    heart5.main_positionY = HEART_COORDINATION_Y;
 
     // Player life
 
