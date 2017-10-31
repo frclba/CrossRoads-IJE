@@ -172,15 +172,17 @@ namespace engine {
         void draw_animation();
 
         State main_state;
-        
-        std::string main_name;
 
+        std::string main_name;
         /*
             Unordered map that will store all components of the game object.
             The key will be defined by the type of the component, and the value
             will be a list of components of that type (Sprites, audios, etc.)
         */
 
+          typedef std::unordered_map <std::type_index, std::list<Component *> >::
+                  value_type index_component_pair;
+                  
           std::unordered_map <std::type_index, std::list<Component *> > main_components;
       };
 
