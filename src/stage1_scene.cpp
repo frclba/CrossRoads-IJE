@@ -171,8 +171,14 @@ void Stage1Scene::bullet() {
         // Do nothing
     }
 
+    /**
+        \note this line goes into a function that is responsible for increase the vertical position of the bullet
+    */
     increaseBulletPosition();
 
+    /**
+        \note this line goes into a function that is responsible for changing the state of the bullet to 'disabled'
+    */
     disableBullet();
 
 }
@@ -190,6 +196,9 @@ bool Stage1Scene::is_inside( GameObject* object ) {
 
     assert(object != NULL);
 
+    /**
+        \note in the condition of this line the object is tested beyond the limits of the screen
+    */
     if( object->state() == GameObject::State::enabled &&
       ( object->main_positionX > 0 || object->main_positionX +
                                       object->main_width < MAX_SCREEN_WIDTH ) ) {

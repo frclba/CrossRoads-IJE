@@ -70,6 +70,11 @@ void Player::update() {
     update_attack();
 
     detect_damage();
+
+    /**
+        \note this line enters a function that will check if the player is dead
+        \note after the application of damage and before processing his position
+    */
     is_dead();
     process_position();
 
@@ -411,6 +416,9 @@ void Player::detect_jump() {
     if( Game::instance.keyboard->isKeyDown("w") && ( vertical_position == MINIMUM_COORDINATION_Y ) ) {
         player_jump_audio->play(0, -1);
 
+        /**
+            \note jump size decreases vertical_position due to the fact that y coordinate increases up to down
+        */
         vertical_position -= JUMP_SIZE;
     }
     else {
@@ -443,7 +451,11 @@ void Player::apply_gravity() {
         \note will be applied +1 continuously on his vertical_position.
     */
     if( !has_ground() ) { // If the player is not on the platform
-        vertical_position += GRAVITY;
+
+      /**
+          \note gravity increases vertical_position due to the fact that y coordinate increases up to down
+      */
+      vertical_position += GRAVITY;
     }
     else {
         vertical_position = MINIMUM_COORDINATION_Y;
@@ -503,6 +515,10 @@ void Player::apply_damage() {
     if( Game::instance.timer->getTicks() > damage_time ) {
         assert(life_points >= 1);
         life_points--;
+        /**
+            \note this line damage_time sum the delay damage plus the current time
+            \note to avoid incorrect applied damage
+        */
         damage_time = Game::instance.timer->getTicks() + DAMAGE_DELAY;
     }
     else {
@@ -540,6 +556,10 @@ void Player::detect_damage() {
     assert(_main_game_object != NULL);
     assert(Game::instance.collision_manager != NULL);
 
+    /**
+        \note the condition of this line is pertaining to rule,
+        \note when a player is attacking he can not receive damage
+    */
     if( !is_attacking_meele ) {
 
         if( (
@@ -551,6 +571,10 @@ void Player::detect_damage() {
                                                              "boss") ) ) {
              apply_damage();
 
+             /**
+                 \note this line enters a function that will check if the player
+                 \note is 40% of its life to apply the referring audio
+             */
              detect_low_life();
         }
         else {
