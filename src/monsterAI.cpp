@@ -168,8 +168,10 @@ bool MonsterAI::sees_player() {
         Checks if the monster is within range of the player.
     */
 
-    if( fabs(_main_game_object->main_positionX - m_player->main_positionX) <=
-        PLAYER_DISTANCE - PLAYER_DISTANCE_ITERATOR ) {
+    int distance_from_monster_to_player = fabs(_main_game_object->main_positionX -
+                                               m_player->main_positionX);
+
+    if( distance_from_monster_to_player  <= PLAYER_DISTANCE - PLAYER_DISTANCE_ITERATOR ) {
         return true;
     }
     else {
