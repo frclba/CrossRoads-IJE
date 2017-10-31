@@ -166,7 +166,7 @@ void GameObject::add_component(Component &component) {
     */
 
 
-    main_components[std::type_index(typeid(component))]
+    main_components[std::type_index(typeid(component))] // Inserts a given component inside the current components list.
                    .push_back(&component);
 
 }
@@ -184,7 +184,7 @@ void GameObject::update() {
     for( index_component_pair id_componentlist: main_components ) {
         for( Component * component: id_componentlist.second ) {
             assert(component != NULL);
-	        if( component->state() == Component::State::enabled) {
+	        if( component->state() == Component::State::enabled) { // Only updates components whose state are enabled
                 component->update();
 	        }
             else {
