@@ -67,9 +67,7 @@ void AnimationControllerComponent::add_animation(std::string name,
         Log::instance.warning("Animation " + name + " already exists!");
     }
     else{
-
         // Default else.
-
     }
 
     m_animations_map[name] = &animation;
@@ -78,9 +76,7 @@ void AnimationControllerComponent::add_animation(std::string name,
         current_animation = name;
     }
     else{
-
         // Default else.
-
     }
 
 }
@@ -106,7 +102,7 @@ void AnimationControllerComponent::play_animation(std::string name,
     else{
 
         // Default else.
-        
+
     }
 
 }
