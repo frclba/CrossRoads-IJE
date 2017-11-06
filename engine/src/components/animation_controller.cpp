@@ -93,8 +93,8 @@ void AnimationControllerComponent::add_animation(std::string name_animation,
 void AnimationControllerComponent::play_animation(std::string name_animation,
                                                   bool wait_to_finish) {
 
-    if (!name.empty()) {
-        next_animation = name;
+    if (!name_animation.empty()) {
+        next_animation = name_animation;
     }
     else {
         Log::instance.error("The name of the animation is empty");
