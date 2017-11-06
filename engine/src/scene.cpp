@@ -21,19 +21,25 @@ GameObject INVALID_GAME_OBJECT;
 bool Scene::add_game_object(GameObject &obj) {
 
     auto id = obj.name();
+
     Log::instance.info("Adding GameObject '" + id + "' to scene '" + scene_name + "'.");
 
+    if( id != "" ) {
 
-    /**
-        Check if game_object exist and add to scene objects list.
-    */
-    if( scene_objects.find( id ) != scene_objects.end() ) {
-        Log::instance.warning( "Game object: '" + id + "' já existe!" );
+        /**
+            Check if game_object exist and add to scene objects list.
+        */
+        if( scene_objects.find( id ) == scene_objects.end() ) {
+            scene_objects[id] = &obj;
+            return true;
+        }
+        else {
+            Log::instance.warning( "Game object: '" + id + "' já existe!" );
+            return false;
+        }
+    } else {
+        Log::instance.warning( "Could not add scene, Scene id is empty.");
         return false;
-    }
-    else {
-        scene_objects[id] = &obj;
-        return true;
     }
 
 }
@@ -46,11 +52,18 @@ bool Scene::add_game_object(GameObject &obj) {
 */
 GameObject &Scene::get_game_object(const std::string &id) {
 
-    if( scene_objects.find(id) != scene_objects.end() ) {
-        return *scene_objects[id];
-    }
-    else {
-        Log::instance.warning( "Não foi possível encontrar o GameObject '" + id +"'." );
+    Log::instance.info("Get GameObject '" + id + "' in Scene.");
+
+    if( id != "" ) {
+         if( scene_objects.find(id) != scene_objects.end() ) {
+             return *scene_objects[id];
+         }
+         else {
+             Log::instance.warning( "Não foi possível encontrar o GameObject '" + id +"'." );
+             return INVALID_GAME_OBJECT;
+         }
+    } else {
+        Log::instance.warning( "Could not find scene, Scene id is empty.");
         return INVALID_GAME_OBJECT;
     }
 
@@ -66,13 +79,18 @@ bool Scene::remove_game_object(const std::string &id) {
 
     Log::instance.info("Removendo GameObject '" + id + "' da Scene.");
 
-    if( scene_objects.find(id) != scene_objects.end() ) {
-        scene_objects.erase( id );
-        return true;
-    }
-    else {
-        Log::instance.warning("Não foi possível encontrar o GameObject '" +
-                              id + "'.");
+    if( id != "" ) {
+        if( scene_objects.find(id) != scene_objects.end() ) {
+            scene_objects.erase( id );
+            return true;
+        }
+        else {
+            Log::instance.warning("Não foi possível encontrar o GameObject '" +
+                                  id + "'.");
+            return false;
+        }
+    } else {
+        Log::instance.warning( "Could not remove scene, Scene id is empty.");
         return false;
     }
 
@@ -93,11 +111,11 @@ bool Scene::init() {
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
 
-        if( obj->init() == true ) {
-            // Do nothing
-        }
-        else {
+        if( !obj->init() ) {
+            Log::instance.error(obj->name() + "could not initialize");
             return false;
+        } else {
+            // Do nothing
         }
     }
 
@@ -124,6 +142,7 @@ bool Scene::shutdown() {
             // Do nothing
         }
         else {
+            Log::instance.error("Failed to shut down scene object:" + obj->name());
             return false;
         }
 
@@ -138,6 +157,8 @@ bool Scene::shutdown() {
     with objects
 */
 void Scene::update() {
+
+    Log::instance.info("Update scene objects");
 
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
@@ -158,6 +179,8 @@ void Scene::update() {
     \return returns true when the scene is with layers and background.
 */
 bool Scene::draw() {
+
+    Log::instance.info("Draw scene objects in each layer");
 
     /**
         Sets the scene layers.
@@ -183,6 +206,7 @@ bool Scene::draw() {
                     // Do nothing
             }
             else {
+                Log::instance.warning("ould not draw object: " + obj->name());
                 return false;
             }
         }
@@ -199,11 +223,14 @@ bool Scene::draw() {
 
 std::list <GameObject *> * Scene::get_collide_objects() {
 
+    Log::instance.info("List collided objects in " + scene_name);
+
 
     for( auto id_obj: scene_objects ) {
         auto obj = id_obj.second;
 
         if( obj -> state() == GameObject::State::enabled && obj->m_collision == true ) {
+            Log::instance.info("Colide object: " + obj->name());
             collide_objects.push_back(obj);
         }
         else {
