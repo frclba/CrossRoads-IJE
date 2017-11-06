@@ -27,10 +27,10 @@ using namespace engine;
 class Player : public Component {
 
 public:
-    /** 
-        \note Declares the contructor, defining the initial values 
+    /**
+        \note Declares the contructor, defining the initial values
         of the player.
-    */ 
+    */
     Player( GameObject &main_game_object, std::string id,
          AnimationControllerComponent *animC, GameObject &attack_box,
 	       ImageComponent *background ):
@@ -43,7 +43,7 @@ public:
 
     void update();
 
-    /// \note Initialize GameObjects with NULL. 
+    /// \note Initialize GameObjects with NULL.
     GameObject *player = NULL;
     GameObject *plataform = NULL;
     GameObject *monster = NULL;
@@ -52,6 +52,7 @@ public:
     int get_life_points();
     bool get_is_attacking_ranged();
     bool get_direction_boby_side();
+    void valid_life_points();
 
 private:
     bool init();
@@ -95,7 +96,14 @@ private:
     void apply_damage();
     void detect_low_life();
 
-    void process_position();
+    int process_position();
+
+    int get_vertical_position();
+
+    bool get_is_walking_right();
+    bool get_is_walking_left();
+
+    bool get_is_attacking_meele();
 
     void apply_gravity();
 

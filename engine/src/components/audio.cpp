@@ -8,6 +8,9 @@
 
 using namespace engine;
 
+const int LESS_THAN_ONE_NEGAVITE = -5;
+const int SUCCESS = 1;
+
 /**
     Load music file
     \return true if music file loading is successful
@@ -22,7 +25,7 @@ bool AudioComponent::init() {
 
         if( !valid_music() ) {
             return false;
-        } 
+        }
         else {
             // Do nothing
         }
@@ -86,7 +89,10 @@ void AudioComponent::play(int loops, int channel) {
         play_music(loops);
     }
     else {
-        play_sound(loops, channel);
+        if(play_sound(loops, channel) == LESS_THAN_ONE_NEGAVITE){
+            Log::instance.error("Fail in play sound, loops or channel with invalid value");
+            return;
+        }
     }
 
     if( !m_is_music ) {
@@ -117,6 +123,7 @@ void AudioComponent::stop(int channel) {
 
     m_audio_state = AudioState::stopped;
 
+    Log::instance.info("the audio was stopped");
 }
 
 /**
@@ -135,6 +142,8 @@ void AudioComponent::pause(int channel) {
     }
 
     m_audio_state = AudioState::paused;
+
+    Log::instance.info("music has been paused");
 
 }
 
@@ -177,24 +186,34 @@ void AudioComponent::play_music(int loops) {
     }
 
     m_audio_state = AudioState::playing;
-
+    Log::instance.info("music was started");
 }
 
-void AudioComponent::play_sound(int loops, int channel) {
 
-    assert(loops >= -1);
-    assert(channel >= -1);
+int AudioComponent::play_sound(int loops, int channel) {
 
-    if( m_audio_state == AudioState::stopped ) {
-        Mix_PlayChannel(channel, m_sound, loops);
+    if(loops >= -1 || channel >= -1){
+        return LESS_THAN_ONE_NEGAVITE;
+    }else{
+        if( m_audio_state == AudioState::stopped ) {
+            std::string error = Mix_GetError();
+
+            if(Mix_PlayChannel(channel, m_sound, loops) == -1){
+                Log::instance.error("Mix_PlayChannel:" + error);
+            }
+        }
+        else if( m_audio_state == AudioState::paused ) {
+            Mix_Resume(channel);
+        }
+        else {
+            // Do nothing
+        }
+
+        return SUCCESS;
     }
-    else if( m_audio_state == AudioState::paused ) {
-        Mix_Resume(channel);
-    }
-    else {
-        // Do nothing
-    }
+
+
 
     m_audio_state = AudioState::playing;
-
+    Log::instance.info("sound was started");
 }
