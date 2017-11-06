@@ -41,7 +41,7 @@ void MonsterAI::apply_gravity() {
     assert(vertical_position < 40 && vertical_position > -40);
 
     if( !has_ground() ) {
-        vertical_position += GRAVITY;
+        vertical_position += GRAVITY; // GRAVITY constant is added cause vertical_position increases upwards.
     }
     else {
         vertical_position = 0;
@@ -73,7 +73,7 @@ void MonsterAI::receive_damage() {
 
             m_monster_controler->play_animation("monster_damage");
 
-            if( bullet ) {
+            if( bullet ) { // If a collision between a monster and a bullet happened
                 bullet->setState(GameObject::State::disabled);
             }
 
@@ -154,7 +154,7 @@ void MonsterAI::jump_monster() {
 
     if( sees_player() && on_ground &&
         _main_game_object->main_positionY > m_player->main_positionY ) {
-        vertical_position -= JUMP_SIZE;
+        vertical_position -= JUMP_SIZE; // JUMP_SIZE decreases vertical_position cause vertical_position decreases upwards.
     }
 }
 
@@ -168,8 +168,10 @@ bool MonsterAI::sees_player() {
         Checks if the monster is within range of the player.
     */
 
-    if( fabs(_main_game_object->main_positionX - m_player->main_positionX) <=
-        PLAYER_DISTANCE - PLAYER_DISTANCE_ITERATOR ) {
+    int distance_from_monster_to_player = fabs(_main_game_object->main_positionX -
+                                               m_player->main_positionX);
+
+    if( distance_from_monster_to_player  <= PLAYER_DISTANCE - PLAYER_DISTANCE_ITERATOR ) {
         return true;
     }
     else {
@@ -217,9 +219,9 @@ bool MonsterAI::init() {
         Initializes the monster position, movement speed and life points.
     */
 
-    _main_game_object->main_positionY = GROUND - _main_game_object->main_height;
-    _main_game_object->main_positionX = 400;
-    horizontal_motion_units = ( rand() % 3 ) + 1;
+    _main_game_object->main_positionY = GROUND - _main_game_object->main_height; // Gets the current monster's y position.
+    _main_game_object->main_positionX = 400; // Monster is initialized at the right side of the scene.
+    horizontal_motion_units = ( rand() % 3 ) + 1; // Monster movement units varies from 1 to 3.
     setLifePoints(2);
 
     return true;
@@ -251,7 +253,7 @@ void MonsterAI::update() {
         on valid area.
     */
 
-    if( _main_game_object->main_positionX < 0 ||
+    if( _main_game_object->main_positionX < 0 || // If a monster is outter screen, its state is seted to disabled.
         _main_game_object->main_positionX +
         _main_game_object->main_width > MAX_SCREEN_WIDTH ) {
         _main_game_object->setState(GameObject::State::disabled);

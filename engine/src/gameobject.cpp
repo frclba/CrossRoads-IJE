@@ -24,8 +24,8 @@ bool GameObject::init() {
         Iterates over the main components by initializing them
     */
 
-    for( auto id_componentlist: main_components ) {
-        for ( auto component: id_componentlist.second ) {
+    for( index_component_pair id_componentlist: main_components ) {
+        for ( Component * component: id_componentlist.second ) {
             assert(component != NULL);
             if( component->init() == true ) {
                 // Do nothing
@@ -56,8 +56,8 @@ bool GameObject::shutdown() {
         Iterates over the main components by shut them down.
     */
 
-    for( auto id_componentList: main_components ) {
-        for( auto component:id_componentList.second ) {
+    for( index_component_pair id_componentList: main_components ) {
+        for( Component * component:id_componentList.second ) {
             assert(component != NULL);
             if( component->state() != Component::State::enabled ||
                 component->shutdown() == true ) {
@@ -97,9 +97,9 @@ void GameObject::draw_image_component() {
         Iterates over the main components by drawing their images
     */
 
-    for( auto component:
+    for( Component * component:
         main_components[std::type_index(typeid(ImageComponent))]) {
-            
+
             assert(component != NULL);
 
             /*
@@ -116,7 +116,7 @@ void GameObject::draw_image_component() {
 }
 
 void GameObject::draw_animation() {
-    for( auto component:
+    for( Component * component:
         main_components[std::type_index(typeid(Animation))]) {
             assert(component != NULL);
             /*
@@ -166,7 +166,7 @@ void GameObject::add_component(Component &component) {
     */
 
 
-    main_components[std::type_index(typeid(component))]
+    main_components[std::type_index(typeid(component))] // Inserts a given component inside the current components list.
                    .push_back(&component);
 
 }
@@ -181,10 +181,10 @@ void GameObject::update() {
         Iterates over main components by updating their state.
     */
 
-    for( auto id_componentlist: main_components ) {
-        for( auto component: id_componentlist.second ) {
+    for( index_component_pair id_componentlist: main_components ) {
+        for( Component * component: id_componentlist.second ) {
             assert(component != NULL);
-	        if( component->state() == Component::State::enabled) {
+	        if( component->state() == Component::State::enabled) { // Only updates components whose state are enabled
                 component->update();
 	        }
             else {
@@ -211,8 +211,8 @@ Component* GameObject::get_component(std::string name) {
         given its name.
     */
 
-    for( auto id_componentList: main_components ) {
-        for( auto component:id_componentList.second ) {
+    for( index_component_pair id_componentList: main_components ) {
+        for( Component * component:id_componentList.second ) {
             if( component->component_id == name ) {
                 assert(component != NULL);
                 return component;
