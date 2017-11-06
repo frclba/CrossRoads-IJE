@@ -41,7 +41,10 @@ int main(int, char **){
 
     // Configure name and size.
     std::pair<int, int> window_size(800, 600);
-    Game::instance.set_properties("Nome do Jogo",window_size);
+    if(Game::instance.set_properties("Nome do Jogo",window_size) == -2) {
+        Log::instance.error("Game name is empty");
+        exit(0);
+    }
 
     //  ================================================= MENU =======================================
 
