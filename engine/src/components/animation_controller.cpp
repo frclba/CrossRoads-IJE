@@ -93,7 +93,14 @@ void AnimationControllerComponent::add_animation(std::string name,
 void AnimationControllerComponent::play_animation(std::string name,
                                                   bool wait_to_finish) {
 
-    next_animation = name;
+    if (!name.empty()) {
+        next_animation = name;
+    }
+    else {
+        Log::instance.error("The name of the animation is empty");
+        next_animation = current_animation;    
+    }
+
     m_animations_map[current_animation]->flipping(flip);
 
     if( !wait_to_finish ) {
