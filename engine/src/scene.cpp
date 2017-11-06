@@ -14,13 +14,13 @@ GameObject INVALID_GAME_OBJECT;
 
 /**
     Add a new game objetc in scene.
-    \param obj new object to add
+    \param object new object to add
     \return true if the game object was added
     \retrun false if the game object already exists
 */
-bool Scene::add_game_object(GameObject &obj) {
+bool Scene::add_game_object(GameObject &object) {
 
-    auto id = obj.name();
+    auto id = object.name();
     Log::instance.info("Adding GameObject '" + id + "' to scene '" + scene_name + "'.");
 
 
@@ -32,7 +32,7 @@ bool Scene::add_game_object(GameObject &obj) {
         return false;
     }
     else {
-        scene_objects[id] = &obj;
+        scene_objects[id] = &object;
         return true;
     }
 
@@ -90,10 +90,10 @@ bool Scene::init() {
     /**
         Initializes all objects in the scene.
     */
-    for( auto id_obj: scene_objects ) {
-        auto obj = id_obj.second;
+    for( auto id_object: scene_objects ) {
+        auto object = id_object.second;
 
-        if( obj->init() == true ) {
+        if( object->init() == true ) {
             // Do nothing
         }
         else {
@@ -116,11 +116,11 @@ bool Scene::shutdown() {
     /**
         Disables all objects in the scene.
     */
-    for( auto id_obj: scene_objects ) {
-        auto obj = id_obj.second;
+    for( auto id_object: scene_objects ) {
+        auto object = id_object.second;
 
-        if( obj->state() != GameObject::State::enabled ||
-            obj->shutdown() != false ) {
+        if( object->state() != GameObject::State::enabled ||
+            object->shutdown() != false ) {
             // Do nothing
         }
         else {
@@ -139,11 +139,11 @@ bool Scene::shutdown() {
 */
 void Scene::update() {
 
-    for( auto id_obj: scene_objects ) {
-        auto obj = id_obj.second;
+    for( auto id_object: scene_objects ) {
+        auto object = id_object.second;
 
-        if ( obj->state() == GameObject::State::enabled ) {
-            obj->update();
+        if ( object->state() == GameObject::State::enabled ) {
+            object->update();
         }
         else {
             // Do nothing
@@ -174,12 +174,12 @@ bool Scene::draw() {
     */
     for( int cont = 0; cont < 4; cont++ ) {
 
-        for( auto id_obj: scene_objects ) {
-            auto obj = id_obj.second;
+        for( auto id_object: scene_objects ) {
+            auto object = id_object.second;
 
-            if( obj -> m_layer != layers[cont] ||
-                obj -> state() != GameObject::State::enabled ||
-                obj -> draw() != false ) {
+            if( object -> m_layer != layers[cont] ||
+                object -> state() != GameObject::State::enabled ||
+                object -> draw() != false ) {
                     // Do nothing
             }
             else {
@@ -200,11 +200,11 @@ bool Scene::draw() {
 std::list <GameObject *> * Scene::get_collide_objects() {
 
 
-    for( auto id_obj: scene_objects ) {
-        auto obj = id_obj.second;
+    for( auto id_object: scene_objects ) {
+        auto object = id_object.second;
 
-        if( obj -> state() == GameObject::State::enabled && obj->m_collision == true ) {
-            collide_objects.push_back(obj);
+        if( object -> state() == GameObject::State::enabled && object->m_collision == true ) {
+            collide_objects.push_back(object);
         }
         else {
             // Do nothing
