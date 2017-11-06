@@ -79,6 +79,9 @@ void AudioComponent::update() {
 */
 void AudioComponent::play(int loops, int channel) {
 
+    assert(loops >= -1);
+    assert(channel >= -1);
+
     if( m_is_music ) {
         play_music(loops);
     }
@@ -92,7 +95,7 @@ void AudioComponent::play(int loops, int channel) {
     else{
 
         // Default else.
-        
+
     }
 
 }
@@ -102,6 +105,8 @@ void AudioComponent::play(int loops, int channel) {
     \param channel
 */
 void AudioComponent::stop(int channel) {
+
+    assert(channel >= -1);
 
     if( m_is_music ) {
         Mix_HaltMusic();
@@ -119,6 +124,8 @@ void AudioComponent::stop(int channel) {
     \param channel
 */
 void AudioComponent::pause(int channel) {
+
+    assert(channel >= -1);
 
     if( m_is_music ) {
       Mix_PauseMusic();
@@ -157,6 +164,8 @@ bool AudioComponent::valid_sound() {
 
 void AudioComponent::play_music(int loops) {
 
+    assert(loops >= -1);
+
     if( m_audio_state == AudioState::stopped ) {
         Mix_PlayMusic(m_music, loops);
     }
@@ -172,6 +181,9 @@ void AudioComponent::play_music(int loops) {
 }
 
 void AudioComponent::play_sound(int loops, int channel) {
+
+    assert(loops >= -1);
+    assert(channel >= -1);
 
     if( m_audio_state == AudioState::stopped ) {
         Mix_PlayChannel(channel, m_sound, loops);

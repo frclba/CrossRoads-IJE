@@ -25,13 +25,18 @@ using namespace engine;
 class Portal : public Component{
 
 public:
+
+    /**
+        Declares the contructor, defining the initial values
+        of the members.
+    */    
     Portal( GameObject &main_game_object, std::string id,
-            ImageComponent *background, CameraPosition *portal_pos):
+            ImageComponent *background, CameraPosition *portal_position):
 
         Component( main_game_object, id),
         monster_number_iterator( 0 ),
         m_background( background ),
-        m_portal_pos( portal_pos ){}
+        m_portal_position( portal_position ){}
         ~Portal();
 
 
@@ -64,7 +69,7 @@ private:
     unsigned int monsters_out_of_portal = 0;
 
     ImageComponent *m_background = NULL;
-    CameraPosition *m_portal_pos = NULL;
+    CameraPosition *m_portal_position = NULL;
 
 };
 

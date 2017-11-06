@@ -20,45 +20,47 @@ Keyboard::~Keyboard() {
 
 /**
     Set keys
-    \param evt
+    \param event
     \parblock
-        This method evaluate what button was pressed with the variable evt
-        and then take decisions based on evt
+        This method evaluate what button was pressed with the variable event
+        and then take decisions based on event
     \endparblock
     \return anything because the method is void
 */
-void Keyboard::setKeys( SDL_Event* evt ) {
+void Keyboard::setKeys( SDL_Event* event ) {
 
-    if( evt -> type == SDL_KEYDOWN ) {
-        keycodes_down.push_back( evt -> key.keysym.sym );
-    }
-    else if( evt -> type == SDL_KEYUP ) {
-        keycodes_up.push_back( evt -> key.keysym.sym );
-    }
-    else if( evt -> type == SDL_JOYBUTTONDOWN ) {
+    assert(event != NULL);
 
-       if( ( ( int ) evt -> jbutton.button ) == SPACE_JBUTTON ) {
+    if( event -> type == SDL_KEYDOWN ) {
+        keycodes_down.push_back( event -> key.keysym.sym );
+    }
+    else if( event -> type == SDL_KEYUP ) {
+        keycodes_up.push_back( event -> key.keysym.sym );
+    }
+    else if( event -> type == SDL_JOYBUTTONDOWN ) {
+
+       if( ( ( int ) event -> jbutton.button ) == SPACE_JBUTTON ) {
             keycodes_down.push_back( SDLK_SPACE );
         }
         else {
             // Do nothing
        }
 
-        if( ( ( int ) evt -> jbutton.button ) == W_JBUTTON ) {
+        if( ( ( int ) event -> jbutton.button ) == W_JBUTTON ) {
             keycodes_down.push_back( SDLK_w );
         }
         else {
             // Do nothing
         }
 
-        if( ( ( int ) evt -> jbutton.button ) == F_JBUTTON ) {
+        if( ( ( int ) event -> jbutton.button ) == F_JBUTTON ) {
             keycodes_down.push_back( SDLK_f );
         }
         else {
             // Do nothing
         }
 
-        if( ( ( int ) evt -> jbutton.button ) == RETURN_JBUTTON ) {
+        if( ( ( int ) event -> jbutton.button ) == RETURN_JBUTTON ) {
             keycodes_down.push_back( SDLK_RETURN );
         }
         else {
@@ -66,48 +68,48 @@ void Keyboard::setKeys( SDL_Event* evt ) {
         }
 
     }
-    else if( evt -> type == SDL_JOYBUTTONUP ) {
+    else if( event -> type == SDL_JOYBUTTONUP ) {
 
-        if( ( ( int ) evt -> jbutton.button ) == SPACE_JBUTTON ) {
+        if( ( ( int ) event -> jbutton.button ) == SPACE_JBUTTON ) {
             keycodes_up.push_back( SDLK_SPACE );
         }
         else {
             // Do nothing
         }
 
-        if( ( ( int ) evt -> jbutton.button ) == W_JBUTTON ) {
+        if( ( ( int ) event -> jbutton.button ) == W_JBUTTON ) {
             keycodes_up.push_back( SDLK_w );
         }
         else {
             // Do nothing
         }
 
-        if( ( ( int ) evt -> jbutton.button ) == F_JBUTTON ) {
+        if( ( ( int ) event -> jbutton.button ) == F_JBUTTON ) {
             keycodes_up.push_back( SDLK_f );
         }
         else {
             // Do nothing
         }
 
-        if( ( ( int ) evt -> jbutton.button ) == RETURN_JBUTTON ) {
+        if( ( ( int ) event -> jbutton.button ) == RETURN_JBUTTON ) {
             keycodes_up.push_back( SDLK_RETURN );
         }
         else {
             // Do nothing
         }
     }
-    else if( evt -> type == SDL_JOYAXISMOTION ) {
+    else if( event -> type == SDL_JOYAXISMOTION ) {
 
-        if( evt -> jaxis.axis == HORIZONTAL_JAXIS ) {
+        if( event -> jaxis.axis == HORIZONTAL_JAXIS ) {
 
-            if( evt -> jaxis.value > POSITIVE_JAXIS ) {
+            if( event -> jaxis.value > POSITIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_d );
             }
             else {
                 keycodes_up.push_back( SDLK_d );
             }
 
-            if( evt -> jaxis.value < NEGATIVE_JAXIS ) {
+            if( event -> jaxis.value < NEGATIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_a );
             }
             else {
@@ -118,15 +120,15 @@ void Keyboard::setKeys( SDL_Event* evt ) {
             // Do nothing
         }
 
-        if( evt -> jaxis.axis == VERTICAL_JAXIS ) {
-            if( evt -> jaxis.value > POSITIVE_JAXIS ) {
+        if( event -> jaxis.axis == VERTICAL_JAXIS ) {
+            if( event -> jaxis.value > POSITIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_s );
             }
             else {
                 keycodes_up.push_back( SDLK_s );
             }
 
-            if( evt -> jaxis.value < NEGATIVE_JAXIS ) {
+            if( event -> jaxis.value < NEGATIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_w );
             }
             else {
@@ -153,13 +155,19 @@ void Keyboard::setKeys( SDL_Event* evt ) {
 */
 bool Keyboard::isKeyDown( std::string key ) {
 
-    for( auto m_key : keycodes_down ) {
-        if( m_key == m_button_code[key] ) {
+    assert(m_button_code.count(key) != 0);
+
+    std::list<Uint8>::iterator m_key;
+
+    for( m_key = keycodes_down.begin() ; m_key != keycodes_down.end() ; m_key++ ) {
+
+        if( *m_key == m_button_code[key] ) {
             return true;
         }
         else {
             // Do nothing
         }
+
     }
 
     return false;
@@ -175,8 +183,14 @@ bool Keyboard::isKeyDown( std::string key ) {
     \return returns bool to key up or not
 */
 bool Keyboard::isKeyUp( std::string key ) {
-    for( auto m_key : keycodes_up ) {
-        if( m_key == m_button_code[key] ) {
+
+    assert(m_button_code.count(key) != 0);
+
+    std::list<Uint8>::iterator m_key;
+
+    for( m_key = keycodes_up.begin() ; m_key != keycodes_up.end() ; m_key++ ) {
+
+        if( *m_key == m_button_code[key] ) {
             return true;
         }
         else {
@@ -199,7 +213,7 @@ void Keyboard::clearKeyboard() {
 }
 
 /**
-   This method map all enable and not enable buttons that can be used in game 
+   This method map all enable and not enable buttons that can be used in game
 */
 void Keyboard::create_keyboard_mapping() {
 

@@ -43,7 +43,6 @@ bool Animation::init() {
 
         if( valid_main_texture() ) {
 
-            //Pegando os sizes padrões da imagem, por isso precisa ser desenhada no tamanho desejado
             _main_game_object->set_size( m_width_division, m_height_division );
 
             SDL_FreeSurface( image );
@@ -68,10 +67,14 @@ bool Animation::init() {
 /**
     Set initial sprite and end sprit for display certain image movement
     \param[in] animation_name existing identifier in animation_map
-    \param[in] begin should less image_vector size
-    \param[in] end should be less image_vector size and bigger or equal to begin param
+    \param[in] begin should be bigger or equal to 0 (initial image sprit)
+    \param[in] end should be bigger or equal to 0 (initial image sprit)
 */
 void Animation::setAnimation( std::string animation_name, int begin, int end ) {
+
+    assert(animation_name != "");
+    assert(begin >= 0);
+    assert(end >= 0);
 
     (animation_map[animation_name])[BEGIN] = begin;
     (animation_map[animation_name])[END] = end;
@@ -85,6 +88,11 @@ void Animation::setAnimation( std::string animation_name, int begin, int end ) {
 */
 bool Animation::useAnimation( std::string animation_name ) {
 
+    assert(animation_name != "");
+
+    /**
+      Get the default start and stop values for the respective animation
+    */
     main_animation[BEGIN] = (animation_map[animation_name])[BEGIN];
     main_animation[END] = (animation_map[animation_name])[END];
 
@@ -106,6 +114,8 @@ bool Animation::useAnimation( std::string animation_name ) {
     \result update delay value in animation
 */
 void Animation::setDelay( int to_set_delay ) {
+
+    assert(to_set_delay >= 0);
 
     this->delay = to_set_delay;
 
@@ -169,11 +179,17 @@ void Animation::draw() {
     */
     SDL_Rect *render_quad = new SDL_Rect();
 
+    /**
+        Get current _main_game_objetc values
+    */
     render_quad->x = _main_game_object->main_positionX;
     render_quad->y = _main_game_object->main_positionY;
     render_quad->w = image_vector[main_frame]->w;
     render_quad->h = image_vector[main_frame]->h;
 
+    /**
+      Validate if there is enough time to execute the animation with delay
+    */
     if( ( int ) ( Game::instance.timer->getTicks() - time_step ) >= delay ) {
         main_frame++;
         time_step = Game::instance.timer->getTicks();
@@ -184,15 +200,21 @@ void Animation::draw() {
 
     }
 
+    /**
+        Restart the animation if it has reached the end of the screen
+    */
     if( main_frame > main_animation[END] ) {
             main_frame = main_animation[BEGIN];
     }
     else{
 
         // Default else.
-        
+
     }
 
+    /**
+        Makes a smooth change between textures
+    */
     SDL_RenderCopyEx(
         Game::instance.main_canvas,
         main_texture,
@@ -211,15 +233,18 @@ void Animation::draw() {
     \par[out] image_vector
 */
 void Animation::build_animation(SDL_Surface *image) {
-    //divide imagem
 
-    //ler matriz de imagems em um arquivo
+    assert(image != NULL);
 
     /**
         Count to render images sizes.
     */
     int count = 0;
 
+    /**
+        Read the image file and divide the image into the various
+        sprites of the animation.
+    */
     for( int height = 0; height < image->h && count < m_num_image;
          height += m_height_division ) {
         for( int width = 0; width < image->w && count < m_num_image;

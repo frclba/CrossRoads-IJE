@@ -20,10 +20,12 @@ using namespace engine;
 
 bool GameObject::init() {
 
-    // INFO("Init game object " << m_name);
+    /**
+        Iterates over the main components by initializing them
+    */
 
-    for( auto id_componentlist: main_components ) {
-        for ( auto component: id_componentlist.second ) {
+    for( index_component_pair id_componentlist: main_components ) {
+        for ( Component * component: id_componentlist.second ) {
             assert(component != NULL);
             if( component->init() == true ) {
                 // Do nothing
@@ -32,9 +34,9 @@ bool GameObject::init() {
                 return false;
             }
         }
-
-
     }
+
+
 
     return true;
 
@@ -50,23 +52,22 @@ bool GameObject::shutdown() {
 
     Log::instance.info("Shutdown game object");
 
-    // Iterating the component map, going through each type of component.
+    /**
+        Iterates over the main components by shut them down.
+    */
 
-    for( auto id_componentList: main_components ) {
-
-        // Iterating a list of components of the type found.
-
-        for( auto component:id_componentList.second ) {
+    for( index_component_pair id_componentList: main_components ) {
+        for( Component * component:id_componentList.second ) {
             assert(component != NULL);
             if( component->state() != Component::State::enabled ||
                 component->shutdown() == true ) {
-                    // DO nothing
-                }
+                    // Do nothing
+            }
+
             else {
                 return false;
             }
         }
-
     }
 
     return true;
@@ -80,17 +81,27 @@ bool GameObject::shutdown() {
 
 bool GameObject::draw() {
 
+    /**
+        Draws gameobject's image and animation.
+    */
+
     draw_image_component();
     draw_animation();
 
     return true;
 }
-    // Searching in the map the components of type ImageComponent
+
 void GameObject::draw_image_component() {
 
-    for( auto component:
+    /**
+        Iterates over the main components by drawing their images
+    */
+
+    for( Component * component:
         main_components[std::type_index(typeid(ImageComponent))]) {
+
             assert(component != NULL);
+
             /*
             If the component found with the enabled state, converts it to a
             component of the image and draws it on the screen.
@@ -101,12 +112,11 @@ void GameObject::draw_image_component() {
             else {
                 // Do nothing
             }
-
     }
 }
 
 void GameObject::draw_animation() {
-    for( auto component:
+    for( Component * component:
         main_components[std::type_index(typeid(Animation))]) {
             assert(component != NULL);
             /*
@@ -141,6 +151,9 @@ void GameObject::draw_animation() {
 
 void GameObject::add_component(Component &component) {
 
+    /**
+        Adds logs entries concerning the components adding.
+    */
 
     Log::instance.info("Adding component: '" +
                        component.component_id +
@@ -148,9 +161,12 @@ void GameObject::add_component(Component &component) {
                        main_name +
                        "'.");
 
-    // Adds the component to the end of the list for the type of it.
+    /**
+        Adds the component to the end of the list for the type of it.
+    */
 
-    main_components[std::type_index(typeid(component))]
+
+    main_components[std::type_index(typeid(component))] // Inserts a given component inside the current components list.
                    .push_back(&component);
 
 }
@@ -161,10 +177,14 @@ void GameObject::add_component(Component &component) {
 
 void GameObject::update() {
 
-    for( auto id_componentlist: main_components ) {
-        for( auto component: id_componentlist.second ) {
+    /**
+        Iterates over main components by updating their state.
+    */
+
+    for( index_component_pair id_componentlist: main_components ) {
+        for( Component * component: id_componentlist.second ) {
             assert(component != NULL);
-	        if( component->state() == Component::State::enabled) {
+	        if( component->state() == Component::State::enabled) { // Only updates components whose state are enabled
                 component->update();
 	        }
             else {
@@ -182,15 +202,17 @@ void GameObject::update() {
   \return returns NULL if no component was found
 */
 
-Component* GameObject::get_component( std::string name ) {
+Component* GameObject::get_component(std::string name) {
+
     assert(!name.empty());
 
+    /**
+        Searches the main components for the component
+        given its name.
+    */
 
-    for( auto id_componentList: main_components ) {
-
-        // Iterating the list of components of the type found.
-
-        for( auto component:id_componentList.second ) {
+    for( index_component_pair id_componentList: main_components ) {
+        for( Component * component:id_componentList.second ) {
             if( component->component_id == name ) {
                 assert(component != NULL);
                 return component;
@@ -200,6 +222,11 @@ Component* GameObject::get_component( std::string name ) {
             }
         }
     }
+
+    /**
+        Adds an entry to log telling you that the given component was not found
+        on the main game
+    */
 
     Log::instance.warning("Component '" +
                           name +
@@ -217,6 +244,7 @@ Component* GameObject::get_component( std::string name ) {
 */
 
 void GameObject::setState(State state) {
+
     assert(state >= GameObject::State::enabled && state <= GameObject::State::invalid);
 
     main_state = state;

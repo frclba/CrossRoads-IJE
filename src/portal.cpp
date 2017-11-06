@@ -47,18 +47,34 @@ void Portal::apparition_of_monsters() {
     assert( m_monsters[monster_number_iterator] != NULL);
     assert( _main_game_object != NULL );
 
+    /**
+         /note This paragraph is responsible for counting
+            the time of appearance between each monster outside the portal.
+    */
     if (time_between_monsters < Game::instance.timer->getTicks() &&
         m_monsters[monster_number_iterator]->state() == GameObject::State::disabled &&
         _main_game_object->main_positionX > 0 &&
-        _main_game_object->main_positionX + _main_game_object->main_width < 800)
-        {
+        _main_game_object->main_positionX + 
+        _main_game_object->main_width < 800) {
 
+        /**
+            /note This lines is responsible to set 
+                position horizontal and vertical of monsters.
+        */
+
+        // This line assigns horizontal position of monsters.
         m_monsters[monster_number_iterator]->main_positionX = _main_game_object->main_positionX;
+
+        // This line assigns vertical position of monsters.
         m_monsters[monster_number_iterator]->main_positionY = _main_game_object->main_positionY;
+
+        // This line enable monsters.
         m_monsters[monster_number_iterator]->setState(GameObject::State::enabled);
 
+        // This line increases the number of monsters outside the portal.
         monsters_out_of_portal++;
-
+        
+        // This line assigns the time between monsters.
         time_between_monsters = Game::instance.timer->getTicks() + 3000;
     }
     else {
@@ -67,8 +83,13 @@ void Portal::apparition_of_monsters() {
     }
 }
 
+// This line assigns a maximum value to the horizontal position value.
 const int MAXIMUM_HORIZONTAL_POSITION = 1600;
+
+// This line assigns a medium value to the horizontal position value.
 const int MEDIUM_HORIZONTAL_POSITION = 1200;
+
+// This line assigns a minimum value to the horizontal position value.
 const int MINIMUM_HORIZONTAL_POSITION = 650;
 
 /**
@@ -77,11 +98,15 @@ const int MINIMUM_HORIZONTAL_POSITION = 650;
 void Portal::horizontal_starting_position() {
 
     assert( m_background != NULL );
-    assert( m_portal_pos != NULL );
+    assert( m_portal_position != NULL );
     assert( _main_game_object != NULL );
-    
+
+    /**
+        /note This paragraph is responsible for assigning a horizontal position
+            to the portal according to the monster number.
+    */
     if( monster_number_iterator <= 5 && m_background->image_measures->x == 0 ) {
-        m_portal_pos->m_horizontal_starting_position = MINIMUM_HORIZONTAL_POSITION;
+        m_portal_position->m_horizontal_starting_position = MINIMUM_HORIZONTAL_POSITION;
     }
     else {
 
@@ -89,7 +114,7 @@ void Portal::horizontal_starting_position() {
     }
 
     if( monster_number_iterator < 10 && monster_number_iterator > 5 ) {
-        m_portal_pos->m_horizontal_starting_position = MEDIUM_HORIZONTAL_POSITION;
+        m_portal_position->m_horizontal_starting_position = MEDIUM_HORIZONTAL_POSITION;
     }
     else {
 
@@ -97,7 +122,7 @@ void Portal::horizontal_starting_position() {
     }
 
     if( monster_number_iterator < 20 && monster_number_iterator > 10 ) {
-        m_portal_pos->m_horizontal_starting_position = MAXIMUM_HORIZONTAL_POSITION;
+        m_portal_position->m_horizontal_starting_position = MAXIMUM_HORIZONTAL_POSITION;
     }
     else {
 
