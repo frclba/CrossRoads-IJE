@@ -47,10 +47,10 @@ namespace engine {
         static Game instance;
 
         //Define some class variables like name and window_size
-        void set_properties(std::string name, std::pair<int,int> window_size);
+        int set_properties(std::string name, std::pair<int,int> window_size);
 
         //Game loop
-        void run();
+        bool run();
 
         //Adiciona nova cena na lista de cenas
         bool add_scene(Scene &scene);
