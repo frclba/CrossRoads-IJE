@@ -46,9 +46,9 @@ void AnimationControllerComponent::update() {
         Log::instance.warning("No animations to play!");
     }
     else {
-        auto animation = m_animations_map[current_animation];
+        auto actual_animation = m_animations_map[current_animation];
 
-        if( next_animation != NO_ANIMATION && animation->has_finished() ) {
+        if( next_animation != NO_ANIMATION && actual_animation->has_finished() ) {
 	        change_animations();
         }
     }
@@ -60,20 +60,20 @@ void AnimationControllerComponent::update() {
     \param name
     \param animation referencess address to new animation
 */
-void AnimationControllerComponent::add_animation(std::string name,
-                                                 Animation & animation) {
+void AnimationControllerComponent::add_animation(std::string name_animation,
+                                                 Animation & actual_animation) {
 
-    if( m_animations_map.find(name) != m_animations_map.end() ) {
-        Log::instance.warning("Animation " + name + " already exists!");
+    if( m_animations_map.find(name_animation) != m_animations_map.end() ) {
+        Log::instance.warning("Animation " + name_animation + " already exists!");
     }
     else{
         // Default else.
     }
 
-    m_animations_map[name] = &animation;
+    m_animations_map[name_animation] = &actual_animation;
 
     if( m_animations_map.size() == HAVE_ANIMATION ) {
-        current_animation = name;
+        current_animation = name_animation;
     }
     else{
         // Default else.
@@ -90,7 +90,7 @@ void AnimationControllerComponent::add_animation(std::string name,
         false if shloudn't be wait current animation finished
     \endparblock
 */
-void AnimationControllerComponent::play_animation(std::string name,
+void AnimationControllerComponent::play_animation(std::string name_animation,
                                                   bool wait_to_finish) {
 
     if (!name.empty()) {
@@ -98,7 +98,7 @@ void AnimationControllerComponent::play_animation(std::string name,
     }
     else {
         Log::instance.error("The name of the animation is empty");
-        next_animation = current_animation;    
+        next_animation = current_animation;
     }
 
     m_animations_map[current_animation]->flipping(flip);
