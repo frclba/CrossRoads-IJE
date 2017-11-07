@@ -4,11 +4,13 @@
 */
 #include <assert.h>
 #include"bossAI.hpp"
- 
+
+// Numbers defined in a standard format during all code
 const int NULL_OBJECT = -3; 
 const int SUCCESS = 1;
 const int LIMITED_EXCEEDED = -7;
  
+// This method is reponsable to log attempts of changing boss attributes. 
 void valid_boss_animations(int validation_code, std::string method_name){ 
  
     if(validation_code == NULL_OBJECT){ 
@@ -20,7 +22,8 @@ void valid_boss_animations(int validation_code, std::string method_name){
             + method_name + "', because an attribute EXCEEDED a value LIMIT");
     }
     else if(validation_code == SUCCESS){ 
-        Log::instance.info("Boss attributes changed."); 
+        Log::instance.info("Boss attributes changed in method: ."
+            + method_name);
     }
  
 }
@@ -94,9 +97,7 @@ void Boss::update() {
         valid_boss_animations(SUCCESS, "Boss::update");
     }
     else {
-
         valid_boss_animations(LIMITED_EXCEEDED, "Boss::update");
-
     }
 
 }
@@ -112,6 +113,8 @@ void Boss::boss_damage() {
     AudioComponent * boss_in_rage_audio = (dynamic_cast<AudioComponent*> (
                                                _main_game_object->get_component(
                                                "boss_in_rage_audio")));
+
+    Log::instance.info("Adding boss closer audio to AudioComponent.");
 
     if( Game::instance.collision_manager->checkCollision(
         _main_game_object, "attack_box") ||
@@ -151,9 +154,7 @@ void Boss::boss_damage() {
 
     }
     else{
-        
         valid_boss_animations(NULL_OBJECT, "Boss::update");
-
     }
 
 }
@@ -175,7 +176,11 @@ void Boss::boss_move() {
 
     boss_dash_audio->play(0, -1);
 
+    Log::instance.info("Adding boss attack audio to AudioComponent.");
+
     m_boss_animation->play_animation("boss_dash", true);
+
+    Log::instance.info("Adding an animation to boss animation.");
 
     if( boss_movement_time_gap < Game::instance.timer->getTicks() ) {
         // is_in_corner = !is_in_corner;
