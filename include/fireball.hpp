@@ -38,8 +38,8 @@ private:
 
     bool init();
 
-    void process_fall();
-    void process_initial_position();
+    void fall_process();
+    void initial_position_process();
 
     // Gravity applied to fireball
     const int current_gravity = 1;

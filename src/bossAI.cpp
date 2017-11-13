@@ -5,6 +5,29 @@
 #include <assert.h>
 #include"bossAI.hpp"
 
+// Numbers defined in a standard format during all code
+const int NULL_OBJECT = -3; 
+const int SUCCESS = 1;
+const int LIMITED_EXCEEDED = -7;
+ 
+// This method is reponsable to log attempts of changing boss attributes. 
+void valid_boss_animations(int validation_code, std::string method_name){ 
+ 
+    if(validation_code == NULL_OBJECT){ 
+        Log::instance.error("Could not change a boss attribute in method: '"
+            + method_name + "', because an attribute was NULL"); 
+    }
+    else if(validation_code == LIMITED_EXCEEDED){ 
+        Log::instance.error("Could not change a boss attribute in method: '"
+            + method_name + "', because an attribute EXCEEDED a value LIMIT");
+    }
+    else if(validation_code == SUCCESS){ 
+        Log::instance.info("Boss attributes changed in method: ."
+            + method_name);
+    }
+ 
+}
+
 /**
     This method initiates the boss in the game scene
     \return return a true value that make the boss active
@@ -31,12 +54,15 @@ void Boss::update() {
 
     m_boss_animation->play_animation("boss_idle", true);
 
+    Log::instance.info("Adding an animation to boss animation.");
+
     if( _main_game_object->main_positionX > -10 &&
         _main_game_object->main_positionX +
         _main_game_object->main_width < 850 ) {
 
         if( is_dash_attacking ) {
-            move();
+            boss_move();
+            valid_boss_animations(SUCCESS, "Boss::update");
         }
         else {
 
@@ -75,13 +101,11 @@ void Boss::update() {
             // Do nothing
 
         }
-
-        damage();
+        boss_damage();
+        valid_boss_animations(SUCCESS, "Boss::update");
     }
     else {
-
-        // Do nothing
-
+        valid_boss_animations(LIMITED_EXCEEDED, "Boss::update");
     }
 
 }
@@ -89,7 +113,7 @@ void Boss::update() {
 /**
     This method is responsible for dectecting the damage to the boss life
 */
-void Boss::damage() {
+void Boss::boss_damage() {
 
     assert(_main_game_object != NULL);
 
@@ -99,6 +123,9 @@ void Boss::damage() {
     AudioComponent * boss_in_rage_audio = (dynamic_cast<AudioComponent*> (
                                                _main_game_object->get_component(
                                                "boss_in_rage_audio")));
+
+    Log::instance.info("Adding boss closer audio to AudioComponent.");
+
      /**
         /note This paragraph is responsible for check the colision and calculate
         damage
@@ -111,6 +138,7 @@ void Boss::damage() {
         if( damage_time < Game::instance.timer->getTicks() ) {
             boss_life--;
             damage_time = Game::instance.timer->getTicks() + 1000;
+            valid_boss_animations(SUCCESS, "Boss::boss_damage");
         }
         else {
 
@@ -120,6 +148,7 @@ void Boss::damage() {
 
         if( boss_life == 3 ) {
             boss_in_rage_audio->play(0, -1);
+            valid_boss_animations(SUCCESS, "Boss::update");
         }
         else {
 
@@ -129,12 +158,17 @@ void Boss::damage() {
 
         if( boss_life <= 0 ) {
             Game::instance.change_scene("Win Scene");
+            valid_boss_animations(SUCCESS, "Boss::update");
         }
         else {
 
             // Do nothing
 
         }
+
+    }
+    else{
+        valid_boss_animations(NULL_OBJECT, "Boss::update");
     }
 
 }
@@ -142,7 +176,7 @@ void Boss::damage() {
 /**
     This method is responsible for changing the boss movement in the screen
 */
-void Boss::move() {
+void Boss::boss_move() {
 
     assert(_main_game_object != NULL);
     assert(m_boss_animation != NULL);
@@ -156,15 +190,20 @@ void Boss::move() {
 
     boss_dash_audio->play(0, -1);
 
+    Log::instance.info("Adding boss attack audio to AudioComponent.");
+
     m_boss_animation->play_animation("boss_dash", true);
 
     /**
         /note This paragraph is responsible for increasing the tie between boss
         moves
     */
+    Log::instance.info("Adding an animation to boss animation.");
+
     if( boss_movement_time_gap < Game::instance.timer->getTicks() ) {
         // is_in_corner = !is_in_corner;
         boss_movement_time_gap = Game::instance.timer->getTicks() + 900;
+        valid_boss_animations(SUCCESS, "Boss::boss_move");
     }
     else {
 
@@ -184,6 +223,7 @@ void Boss::move() {
     if( _main_game_object->main_positionX <=10 && is_in_corner ) {
         is_in_corner = !is_in_corner;
         is_dash_attacking = false;
+        valid_boss_animations(SUCCESS, "Boss::boss_move");
     }
     else {
 
@@ -195,13 +235,13 @@ void Boss::move() {
         _main_game_object->main_width >= 800 && !is_in_corner ) {
         is_in_corner = !is_in_corner;
         is_dash_attacking = false;
+        valid_boss_animations(SUCCESS, "Boss::boss_move");
     }
     else {
 
         // Do nothing
 
     }
-
 }
 
 Boss::~Boss() {}
