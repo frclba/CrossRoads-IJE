@@ -125,21 +125,9 @@ int AnimationControllerComponent::add_animation(std::string name,
 int AnimationControllerComponent::play_animation(std::string name,
                                                   bool wait_to_finish) {
 
-<<<<<<< HEAD
-    if (!name_animation.empty()) {
-        next_animation = name_animation;
-    }
-    else {
-        Log::instance.error("The name of the animation is empty");
-        next_animation = current_animation;
-    }
-
-    m_animations_map[current_animation]->flipping(flip);
-=======
     if( name != "" ){
       next_animation = name;
       m_animations_map[current_animation]->flipping(flip);
->>>>>>> 5f9295624d40983262a47181c97f2000ad255547
 
       if( !wait_to_finish ) {
           valid_change_animations(change_animations(), "AnimationControllerComponent::play_animation");
@@ -152,13 +140,7 @@ int AnimationControllerComponent::play_animation(std::string name,
       return SUCCESS;
     }
     else{
-<<<<<<< HEAD
-
-        // Default else.
-
-=======
       return EMPTY_STRING;
->>>>>>> 5f9295624d40983262a47181c97f2000ad255547
     }
 
 }
