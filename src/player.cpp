@@ -31,6 +31,22 @@ const int MINIMUM_ATTACK_TIME = 0;
 const int ATTACK_DELAY = 50;
 const int DAMAGE_DELAY = 1000;
 
+
+const int EXCEED_LIMIT_MAP = -7;
+const int EMPTY_STRING = -2;
+const int SUCCESS = 1;
+
+void valid_play_animation(int code, std::string method) {
+
+  if(code == EMPTY_STRING){
+      Log::instance.error("Fail to play animation ... parameter ""name"" is empty , method:" + method);
+      return;
+  }else if(code == SUCCESS){
+      Log::instance.info("Success in play animation");
+  }
+
+}
+
 /**
     Initializes the player, defining their main attributes with inicial
     values
@@ -53,6 +69,21 @@ bool Player::init() {
 
 }
 
+int Player::get_life_points() {
+
+    return life_points;
+
+}
+
+void Player::valid_life_points(){
+
+  if(get_life_points() < 0){
+      Log::instance.error("Player's life point is negative");
+      exit(0);
+  }
+
+}
+
 /**
     Call methods that update player characteristics, changing values of their
     attributes, thats make the player can move, jump, take damage, fall etc
@@ -61,7 +92,9 @@ void Player::update() {
 
     assert(animation_controller != NULL);
 
-    animation_controller->play_animation("player_idle");
+    valid_play_animation(animation_controller->
+                                   play_animation("player_idle"),
+                                   "Player::update");
 
     apply_gravity();
     detect_jump();
@@ -76,7 +109,15 @@ void Player::update() {
         \note after the application of damage and before processing his position
     */
     is_dead();
-    process_position();
+
+    if(process_position() == EXCEED_LIMIT_MAP){
+        Log::instance.error("player has crossed the border of the map");
+        if(get_vertical_position() > MAXIMUM_COORDINATION_Y){
+            vertical_position = MAXIMUM_COORDINATION_Y;
+        }else if(get_vertical_position() < -JUMP_SIZE){
+            vertical_position = -JUMP_SIZE;
+        }
+    }
 
 }
 
@@ -123,6 +164,10 @@ void Player::detect_attack_meele() {
         \note movement based on 2 strands, based on the verification time.
     */
     if( Game::instance.keyboard->isKeyDown("space") ){
+        if(get_is_attacking_ranged() == true){
+            Log::instance.error(" ""is_attacking_renged"" can not be true if ""Game::instance.keyboard->isKeyDown(""space"")"" is true");
+            is_attacking_ranged = false;
+        }
         is_attacking_meele = true;
     }
     else {
@@ -152,6 +197,11 @@ void Player::detect_attack_ranged() {
         \note movement based on 2 strands, based on the verification time.
     */
     if( Game::instance.keyboard->isKeyDown("f") ) {
+
+        if(get_is_attacking_meele() == true){
+            Log::instance.error(" ""is_attacking_meele"" can not be true if ""Game::instance.keyboard->isKeyDown(""f"")"" is true");
+            is_attacking_meele = false;
+        }
         is_attacking_ranged = true;
     }
     else {
@@ -175,7 +225,10 @@ void Player::apply_attack_meele() {
     assert(attack_box_dimensions != NULL);
 
     if( is_attacking_meele ) {
-        animation_controller->play_animation("player_attack");
+        valid_play_animation(animation_controller->
+                                       play_animation("player_attack"),
+                                       "Player::apply_attack_meele");
+
         /**
           Audio when the player is attacking melee
         */
@@ -211,7 +264,10 @@ void Player::apply_attack_ranged() {
     assert(_main_game_object != NULL);
 
     if( get_is_attacking_ranged() ) {
-      animation_controller->play_animation("player_attack");
+
+      valid_play_animation(animation_controller->
+                                     play_animation("player_attack"),
+                                     "Player::apply_attack_ranged");
 
       /**
           Audio when the player is attacking renged
@@ -222,7 +278,10 @@ void Player::apply_attack_ranged() {
                       "player_arrow_sound")));
       assert(player_arrow_sound != NULL);
 
-      animation_controller->play_animation("player_ranged");
+      valid_play_animation(animation_controller->
+                                     play_animation("player_ranged"),
+                                     "Player::apply_attack_ranged");
+
       player_arrow_sound->play(0, -1);
     }
     else {
@@ -269,6 +328,10 @@ void Player::detect_move_right() {
         \note movement based on 2 strands, based on the verification time.
     */
     if( Game::instance.keyboard->isKeyDown("d") ) {
+        if(get_is_walking_left() == true){
+            Log::instance.error(" ""is_walking_left"" can not be true if ""Game::instance.keyboard->isKeyDown(""d"")"" is true");
+            is_walking_left = false;
+        }
         is_walking_right = true;
     }
     else {
@@ -293,6 +356,10 @@ void Player::detect_move_left() {
         \note movement based on 2 strands, based on the verification time.
     */
     if( Game::instance.keyboard->isKeyDown("a") ) {
+        if(get_is_walking_right() == true){
+            Log::instance.error(" ""is_walking_right"" can not be true if ""Game::instance.keyboard->isKeyDown(""d"")"" is true");
+            is_walking_right = false;
+        }
         is_walking_left = true;
     }
     else {
@@ -327,7 +394,9 @@ void Player::apply_move_right() {
 
         is_walking_right = true;
 
-        animation_controller->play_animation("player_running");
+        valid_play_animation(animation_controller->
+                                       play_animation("player_running"),
+                                       "Player::apply_move_right");
         player_running_audio->play(0, -1);
 
         direction_boby_side = RIGHT;
@@ -382,7 +451,10 @@ void Player::apply_move_left() {
 
        is_walking_left = true;
 
-       animation_controller->play_animation("player_running");
+       valid_play_animation(animation_controller->
+                                      play_animation("player_running"),
+                                      "Player::apply_move_left");
+
        player_running_audio2->play(0, -1);
 
        direction_boby_side = LEFT;
@@ -427,16 +499,25 @@ void Player::detect_jump() {
 
 }
 
-void Player::process_position() {
+
+
+int Player::process_position() {
 
     assert(_main_game_object != NULL);
 
-    /**
-        \note get the sum of the player's movement relative to the jump and
-        \note the fall size, and determines his vertical position on the map.
-    */
-    _main_game_object->main_positionY += vertical_position;
-    assert(vertical_position >= -JUMP_SIZE && vertical_position <= MAXIMUM_COORDINATION_Y);
+    if(get_vertical_position() >= -JUMP_SIZE && vertical_position <= MAXIMUM_COORDINATION_Y){
+
+        /**
+            \note get the sum of the player's movement relative to the jump and
+            \note the fall size, and determines his vertical position on the map.
+        */
+        _main_game_object->main_positionY += vertical_position;
+
+        return SUCCESS;
+    }else{
+        return EXCEED_LIMIT_MAP;
+    }
+
 }
 
 /**
@@ -508,6 +589,8 @@ void Player::apply_damage() {
 
     assert(Game::instance.timer != NULL);
 
+    valid_life_points();
+
     /**
         \note get the delay damage time, if exceeds
         \note the current time, will not apply the damage
@@ -530,6 +613,8 @@ void Player::apply_damage() {
 void Player::detect_low_life() {
 
     assert(_main_game_object != NULL);
+
+    valid_life_points();
 
     if( life_points == FORTY_PERCENT_LIFE ) {
 
@@ -592,11 +677,13 @@ void Player::detect_damage() {
 */
 void Player::is_dead() {
 
+    valid_life_points();
+
     /**
          \note When player is dead change for game over scene and restore points
             of life for the next game.
     */
-    if( life_points <= EMPTY_LIFE ){
+    if( get_life_points() <= EMPTY_LIFE ){
         life_points = FULL_LIFE;
         Game::instance.change_scene("Lose Scene");
         printf("Player dead\n");
@@ -608,15 +695,15 @@ void Player::is_dead() {
 
 }
 
-int Player::get_life_points() {
-
-    return life_points;
-
-}
-
 bool Player::get_is_attacking_ranged() {
 
     return is_attacking_ranged;
+
+}
+
+bool Player::get_is_attacking_meele() {
+
+    return is_attacking_meele;
 
 }
 
@@ -626,6 +713,23 @@ bool Player::get_direction_boby_side() {
 
 }
 
+int Player::get_vertical_position() {
+
+    return vertical_position;
+
+}
+
+bool Player::get_is_walking_right() {
+
+    return is_walking_right;
+
+}
+
+bool Player::get_is_walking_left() {
+
+    return is_walking_left;
+
+}
 
 Player::~Player() {
 
