@@ -64,7 +64,7 @@ void AnimationControllerComponent::update() {
     else {
         auto actual_animation = m_animations_map[current_animation];
 
-        if( next_animation != NO_ANIMATION && animation->has_finished() ) {
+        if( next_animation != NO_ANIMATION && actual_animation->has_finished() ) {
 	        valid_change_animations(change_animations(), "AnimationControllerComponent::update");
         }
     }
