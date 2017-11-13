@@ -31,7 +31,8 @@ bool GameObject::init() {
                 // Do nothing
             }
             else {
-                return false;
+		Log::instance.error("The object with id: "+component->component_id+" has failed to initialize.");
+                exit(-1);
             }
         }
     }
@@ -65,6 +66,7 @@ bool GameObject::shutdown() {
             }
 
             else {
+		Log::instance.error("The component " +component->component_id + " has failed to shutting down.");
                 return false;
             }
         }
@@ -79,17 +81,6 @@ bool GameObject::shutdown() {
   \return true
 */
 
-bool GameObject::draw() {
-
-    /**
-        Draws gameobject's image and animation.
-    */
-
-    draw_image_component();
-    draw_animation();
-
-    return true;
-}
 
 void GameObject::draw_image_component() {
 
@@ -97,8 +88,9 @@ void GameObject::draw_image_component() {
         Iterates over the main components by drawing their images
     */
 
+
     for( Component * component:
-        main_components[std::type_index(typeid(ImageComponent))]) {
+         main_components[std::type_index(typeid(ImageComponent))]) {
 
             assert(component != NULL);
 
@@ -107,15 +99,24 @@ void GameObject::draw_image_component() {
             component of the image and draws it on the screen.
             */
 
-            if( component->state() == Component::State::enabled )
-                (dynamic_cast<ImageComponent *>(component))->draw();
-            else {
-                // Do nothing
-            }
+           if( component->state() == Component::State::enabled ) {
+
+               (dynamic_cast<ImageComponent *>(component))->draw();
+
+               Log::instance.info(component->component_id+" had it image been drawed");
+
+	         
+           }
+           else {
+	       Log::instance.warning(component->component_id + " has not been drawed");
+           }
+
     }
+
 }
 
 void GameObject::draw_animation() {
+
     for( Component * component:
         main_components[std::type_index(typeid(Animation))]) {
             assert(component != NULL);
@@ -124,14 +125,34 @@ void GameObject::draw_animation() {
             component of the image and draw on the screen.
             */
 
-            if( component->state() == Component::State::enabled )
+            if( component->state() == Component::State::enabled ) {
                 (dynamic_cast<Animation *>(component))->draw();
+		Log::instance.info(component->component_id+" had it animation been drawed");
+	    }
             else {
-                // Do nothing
+		Log::instance.warning(component->component_id + " has not been drawed");
             }
 
     }
+
 }
+
+
+bool GameObject::draw() {
+
+    /**
+        Draws gameobject's image and animation.
+    */
+
+    draw_animation();
+    draw_image_component();
+
+    return true;
+}
+
+
+
+
 
     /*
         for(auto component: main_components[std::type_index(typeid(TextComponent))]){
@@ -150,6 +171,9 @@ void GameObject::draw_animation() {
 */
 
 void GameObject::add_component(Component &component) {
+    
+
+
 
     /**
         Adds logs entries concerning the components adding.
@@ -168,6 +192,9 @@ void GameObject::add_component(Component &component) {
 
     main_components[std::type_index(typeid(component))] // Inserts a given component inside the current components list.
                    .push_back(&component);
+
+    Log::instance.info(component.component_id + "has been added to list succesfuly");
+
 
 }
 
@@ -188,7 +215,7 @@ void GameObject::update() {
                 component->update();
 	        }
             else {
-                // Do nothing
+		    Log::instance.warning(component->component_id + "has not been updated");
             }
         }
     }
@@ -204,6 +231,8 @@ void GameObject::update() {
 
 Component* GameObject::get_component(std::string name) {
 
+
+
     assert(!name.empty());
 
     /**
@@ -211,10 +240,25 @@ Component* GameObject::get_component(std::string name) {
         given its name.
     */
 
+    if( name != "" ) {
+
+	   // Do nothing
+	   
+    }
+    else {
+	
+	   Log::instance.error("String name is empty!");
+
+	   return NULL;
+
+    } 
+
+
     for( index_component_pair id_componentList: main_components ) {
         for( Component * component:id_componentList.second ) {
             if( component->component_id == name ) {
                 assert(component != NULL);
+		Log::instance.info("Component whose name is " + name + " has been found");
                 return component;
             }
             else {
