@@ -32,9 +32,13 @@ void FireballController::update() {
     assert( _main_game_object != NULL );
 
     if(ready_to_fall == true) {
-        fall_process();
-        initial_position_process();
+        process_fall();
+        process_initial_position();
     }
+
+    /**
+        /note This paragraph checks if the player is in the fireball drop area
+    */
     else {
         last_position_player_x = m_player->main_positionX;
         _main_game_object->main_positionX = last_position_player_x;
@@ -49,17 +53,25 @@ const int INITIAL_POSITION = -600;
 /**
     This method is reponsable for the fireball dropping
 */
-void FireballController::fall_process() {
+void FireballController::process_fall() {
 
     assert( _main_game_object != NULL );
 
+    /**
+        /note This line enables the fireball audio
+    */
     AudioComponent* fireball_droping_audio = ( dynamic_cast<AudioComponent*>
             ( _main_game_object->get_component( "fireball_droping_audio" ) ) );
 
+    /**
+        /note This paragraph makes the fireball go down in the screen
+    */
     if( ready_to_fall ) {
 
-        // Current velocity components.
-
+        /**
+            /note This line represents the current velocity component by
+            increasing the velocity
+        */
         _main_game_object->main_positionY += variation_position_y;
         fireball_droping_audio->play(0,-1);
     }
@@ -75,18 +87,18 @@ const int MAXIMUM_COORDINATION_Y = 850;
 /**
     This method is reponsable for going from the fireball to initial position
 */
-void FireballController::initial_position_process() {
+void FireballController::process_initial_position() {
 
     assert( _main_game_object != NULL );
 
     if (_main_game_object->main_positionY < MAXIMUM_COORDINATION_Y) {
 
         // Do nothing
-        
+
     }
     else {
         _main_game_object->main_positionY = INITIAL_POSITION;
-        ready_to_fall = false; 
+        ready_to_fall = false;
     }
 
 }
