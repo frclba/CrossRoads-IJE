@@ -62,7 +62,7 @@ void AnimationControllerComponent::update() {
         Log::instance.warning("No animations to play!");
     }
     else {
-        auto animation = m_animations_map[current_animation];
+        auto actual_animation = m_animations_map[current_animation];
 
         if( next_animation != NO_ANIMATION && animation->has_finished() ) {
 	        valid_change_animations(change_animations(), "AnimationControllerComponent::update");
@@ -79,7 +79,6 @@ void AnimationControllerComponent::update() {
 int AnimationControllerComponent::add_animation(std::string name,
                                                  Animation & animation) {
 
-
     Animation *validates;
     validates = &animation;
 
@@ -88,9 +87,7 @@ int AnimationControllerComponent::add_animation(std::string name,
           Log::instance.warning("Animation " + name + " already exists!");
       }
       else{
-
           // Default else.
-
       }
 
       m_animations_map[name] = &animation;

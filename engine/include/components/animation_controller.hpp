@@ -28,8 +28,8 @@ namespace engine {
 
         public:
 
-            AnimationControllerComponent(GameObject &main_game_object, std::string id) :
-                                         Component(main_game_object, id),
+            AnimationControllerComponent(GameObject &main_game_object, std::string id_animation) :
+                                         Component(main_game_object, id_animation),
                                          current_animation(""), next_animation("") {
 
                 // Default function call.
