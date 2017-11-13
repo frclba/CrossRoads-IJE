@@ -14,6 +14,18 @@ const int BULLET_POSITION_ITERATOR = 20;
 const int TIME_STEP_ITERATOR = 500;
 const int BACKGROUND_IMAGE_MAXIMUM = 2190;
 
+// Number defined in a standard format during all code
+const int SUCCESS = 1;
+
+// This method is reponsable to log attempts of changing Stage1Scene attributes.
+void valid_stage1_scene_animations(int validation_code, std::string method_name) {
+
+    if (validation_code == SUCCESS) {
+        Log::instance.info("Stage1 Scene attributes changed in method: ." 
+        + method_name);
+    }
+}
+
 void Stage1Scene::setTimeStep(unsigned int timeStep) {
     timestep = timeStep;
 }
@@ -44,6 +56,8 @@ void Stage1Scene::game_logic() {
     portal = &get_game_object("portal");
     fire_ball = &get_game_object("fireball");
 
+    Log::instance.info("Instanced game objects of stage.");
+
     /**
         Instances the monster game objects that make up the stage
     */
@@ -51,6 +65,8 @@ void Stage1Scene::game_logic() {
     monster2 = &get_game_object("monster2");
     monster3 = &get_game_object("monster3");
     monster4 = &get_game_object("monster4");
+
+    Log::instance.info("Instanced monsters of stage.");
 
     assert(ground_stage1 != NULL);
 
@@ -61,6 +77,8 @@ void Stage1Scene::game_logic() {
     ground_stage1->main_positionX = 0;
     ground_stage1->main_width = 800;
     ground_stage1->main_height = 200;
+
+    Log::instance.info("Setted screen values.");
 
     assert(background_image != NULL);
     assert(fire_ball != NULL);
@@ -73,6 +91,8 @@ void Stage1Scene::game_logic() {
 
         // This line disable the background image camera.
         background_image->enable_camera = false;
+
+        valid_stage1_scene_animations(SUCCESS, "Stage1Scene::game_logic");
     }
     else {
         fire_ball->setState(GameObject::State::disabled);
@@ -96,6 +116,8 @@ void Stage1Scene::game_logic() {
         // This line disable the background image camera. 
         background_image->enable_camera = false;
         go_arrow->setState(GameObject::State::disabled);
+
+        valid_stage1_scene_animations(SUCCESS, "Stage1Scene::game_logic");        
     }
     else {
 
@@ -123,6 +145,8 @@ void Stage1Scene::bulletAttack() {
 
         // This line assigns vertical position to bullet.
         bullet1->main_positionY = player->main_positionY;
+
+        valid_stage1_scene_animations(SUCCESS, "Stage1Scene::bulletAttack");
     }
     else {
         // Do nothing
@@ -147,9 +171,11 @@ void Stage1Scene::increaseBulletPosition() {
             // This line decrements the bullet position
             bullet1->main_positionX -= BULLET_POSITION_ITERATOR;
         }
+
+        valid_stage1_scene_animations(SUCCESS, "Stage1Scene::increaseBulletPosition");
     }
     else {
-        // Do nothing
+        Log::instance.info("bullet1 is disable.");
     }
 
 }
@@ -160,6 +186,8 @@ void Stage1Scene::increaseBulletPosition() {
 void Stage1Scene::disableBullet() {
     if( bullet1->main_positionX > MAXIMUM_SCREEN_WIDTH || bullet1->main_positionX < 0 ) {
         bullet1->setState(GameObject::State::disabled);
+
+        valid_stage1_scene_animations(SUCCESS, "Stage1Scene::disableBullet");
     }
     else {
         // Do nothing
@@ -181,6 +209,8 @@ void Stage1Scene::bullet() {
         getTimeStep() < Game::instance.timer->getTicks() ) {
 
         bulletAttack();
+
+        valid_stage1_scene_animations(SUCCESS, "Stage1Scene::bullet");
     }
     else {
         // Do nothing

@@ -8,6 +8,22 @@
 
 using namespace engine;
 
+const int EMPTY_STRING = -2;
+const int NULL_OBJECT = -3;
+const int SUCCESS = 1;
+
+void valid_change_animations(int code, std::string method){
+
+  if(code == EMPTY_STRING){
+      Log::instance.error("can not change animation, if next_animation is empty, method:" + method);
+      exit(0);
+  }else if(code == SUCCESS){
+      Log::instance.info("animation changed");
+  }
+
+}
+
+
 /**
      This method disabled all animations and enable current animation to startup
      \return true value if active animation
@@ -48,8 +64,8 @@ void AnimationControllerComponent::update() {
     else {
         auto actual_animation = m_animations_map[current_animation];
 
-        if( next_animation != NO_ANIMATION && actual_animation->has_finished() ) {
-	        change_animations();
+        if( next_animation != NO_ANIMATION && animation->has_finished() ) {
+	        valid_change_animations(change_animations(), "AnimationControllerComponent::update");
         }
     }
 
@@ -60,26 +76,42 @@ void AnimationControllerComponent::update() {
     \param name
     \param animation referencess address to new animation
 */
-void AnimationControllerComponent::add_animation(std::string name_animation,
-                                                 Animation & actual_animation) {
+int AnimationControllerComponent::add_animation(std::string name,
+                                                 Animation & animation) {
 
-    if( m_animations_map.find(name_animation) != m_animations_map.end() ) {
-        Log::instance.warning("Animation " + name_animation + " already exists!");
+    Animation *validates;
+    validates = &animation;
+
+    if(name != "" && validates){
+      if( m_animations_map.find(name) != m_animations_map.end() ) {
+          Log::instance.warning("Animation " + name + " already exists!");
+      }
+      else{
+          // Default else.
+      }
+
+      m_animations_map[name] = &animation;
+
+      if( m_animations_map.size() == HAVE_ANIMATION ) {
+          current_animation = name;
+      }
+      else{
+
+          // Default else.
+
+      }
+      return SUCCESS;
+
+    }
+    else if(!validates){
+      return NULL_OBJECT;
     }
     else{
-        // Default else.
-    }
-
-    m_animations_map[name_animation] = &actual_animation;
-
-    if( m_animations_map.size() == HAVE_ANIMATION ) {
-        current_animation = name_animation;
-    }
-    else{
-        // Default else.
+      return EMPTY_STRING;
     }
 
 }
+
 
 /**
     Execute animation
@@ -90,9 +122,10 @@ void AnimationControllerComponent::add_animation(std::string name_animation,
         false if shloudn't be wait current animation finished
     \endparblock
 */
-void AnimationControllerComponent::play_animation(std::string name_animation,
+int AnimationControllerComponent::play_animation(std::string name,
                                                   bool wait_to_finish) {
 
+<<<<<<< HEAD
     if (!name_animation.empty()) {
         next_animation = name_animation;
     }
@@ -102,14 +135,30 @@ void AnimationControllerComponent::play_animation(std::string name_animation,
     }
 
     m_animations_map[current_animation]->flipping(flip);
+=======
+    if( name != "" ){
+      next_animation = name;
+      m_animations_map[current_animation]->flipping(flip);
+>>>>>>> 5f9295624d40983262a47181c97f2000ad255547
 
-    if( !wait_to_finish ) {
-        change_animations();
+      if( !wait_to_finish ) {
+          valid_change_animations(change_animations(), "AnimationControllerComponent::play_animation");
+      }
+      else{
+
+          // Default else.
+
+      }
+      return SUCCESS;
     }
     else{
+<<<<<<< HEAD
 
         // Default else.
 
+=======
+      return EMPTY_STRING;
+>>>>>>> 5f9295624d40983262a47181c97f2000ad255547
     }
 
 }
@@ -117,18 +166,23 @@ void AnimationControllerComponent::play_animation(std::string name_animation,
 /**
     Change the current animation to the next one in the list
 */
-void AnimationControllerComponent::change_animations() {
+int AnimationControllerComponent::change_animations() {
 
-    auto animation = m_animations_map[current_animation];
-    animation->disable();
+    if(next_animation != ""){
+        auto animation = m_animations_map[current_animation];
+        animation->disable();
 
-    current_animation = next_animation;
+        current_animation = next_animation;
 
-    next_animation = "";
+        next_animation = "";
 
-    animation = m_animations_map[current_animation];
-    animation->enable();
-    animation->setup();
+        animation = m_animations_map[current_animation];
+        animation->enable();
+        animation->setup();
+        return SUCCESS;
+    }else{
+        return EMPTY_STRING;
+    }
 
 }
 

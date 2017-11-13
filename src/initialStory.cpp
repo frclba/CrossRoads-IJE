@@ -6,6 +6,19 @@
 
 const int TIME_STEP_INCREASE = 500 * 6;
 
+// Number defined in a standard format during all code
+const int SUCCESS = 1;
+
+// This method is reponsable to log attempts of changing initialStory attributes.
+void valid_initial_story_animations(int validation_code, std::string method_name)
+{
+
+    if (validation_code == SUCCESS)
+    {
+        Log::instance.info("Initial story attributes changed in method: ." + method_name);
+    }
+}
+
 InitialStory::~InitialStory(){}
 
 /**
@@ -62,7 +75,9 @@ void startByEnter() {
         star the game
     */
     if( Game::instance.keyboard->isKeyDown( "enter" ) ) {
-  	    Game::instance.change_scene("Fase 1");
+        Game::instance.change_scene("Fase 1");
+
+        valid_initial_story_animations(SUCCESS, "startByEnter");
     }
     else {
         // Do nothing
@@ -86,6 +101,8 @@ void InitialStory::update() {
           the variable TIME_STEP_INCREASE to make the time pass
       */
       time_step = Game::instance.timer->getTicks() + TIME_STEP_INCREASE;
+
+      valid_initial_story_animations(SUCCESS, "InitialStory::update");
   }
   else {
       // Do nothing

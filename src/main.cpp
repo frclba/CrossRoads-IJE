@@ -37,11 +37,31 @@ const int INITIAL_BOSS_COORDINATION_Y = 300;
 
 using namespace engine;
 
+const int EMPTY_STRING = -2;
+const int NULL_OBJECT = -3;
+const int SUCCESS = 1;
+
+void valid_add_animation(int code){
+    if(code == EMPTY_STRING){
+        Log::instance.error("Fail to add a animation, param ""name"" is empty");
+        exit(0);
+    }else if(code == NULL_OBJECT){
+        Log::instance.error("Fail to add a animation, param ""animation"" is NULL");
+        exit(0);
+    }else if(code == SUCCESS){
+        Log::instance.info("Success to add a animation");
+    }
+}
+
+
 int main(int, char **){
 
     // Configure name and size.
     std::pair<int, int> window_size(800, 600);
-    Game::instance.set_properties("Nome do Jogo",window_size);
+    if(Game::instance.set_properties("Nome do Jogo",window_size) == -2) {
+        Log::instance.error("Game name is empty");
+        exit(0);
+    }
 
     //  ================================================= MENU =======================================
 
@@ -214,9 +234,9 @@ int main(int, char **){
     // Monster artificial intelligence controller
     AnimationControllerComponent monster_anim_ctrl(player, "monster_controler");
 
-    monster_anim_ctrl.add_animation("monster_walk", monster_walk1);
-    monster_anim_ctrl.add_animation("monster_damage", monster_damage1);
-    monster_anim_ctrl.add_animation("monster_attack", monster_attack1);
+    valid_add_animation(monster_anim_ctrl.add_animation("monster_walk", monster_walk1));
+    valid_add_animation(monster_anim_ctrl.add_animation("monster_damage", monster_damage1));
+    valid_add_animation(monster_anim_ctrl.add_animation("monster_attack", monster_attack1));
     monster1.add_component(monster_walk1);
     monster1.add_component(monster_damage1);
     monster1.add_component(monster_attack1);
@@ -246,9 +266,9 @@ int main(int, char **){
     MonsterAI monster_ai2(monster2, "monster_ai2", &player,
                           &monster_anim_ctrl2);
 
-    monster_anim_ctrl2.add_animation("monster_walk", monster_walk2);
-    monster_anim_ctrl2.add_animation("monster_damage", monster_damage2);
-    monster_anim_ctrl2.add_animation("monster_attack", monster_attack2);
+    valid_add_animation(monster_anim_ctrl2.add_animation("monster_walk", monster_walk2));
+    valid_add_animation(monster_anim_ctrl2.add_animation("monster_damage", monster_damage2));
+    valid_add_animation(monster_anim_ctrl2.add_animation("monster_attack", monster_attack2));
     monster2.add_component(monster_walk2);
     monster2.add_component(monster_damage2);
     monster2.add_component(monster_anim_ctrl2);
@@ -275,9 +295,11 @@ int main(int, char **){
     monster_attack3.setDelay(100);
 
     // Monster artificial intelligence controller
-    monster_anim_ctrl3.add_animation("monster_walk", monster_walk3);
-    monster_anim_ctrl3.add_animation("monster_damage", monster_damage3);
-    monster_anim_ctrl3.add_animation("monster_attack", monster_attack3);
+
+    valid_add_animation(monster_anim_ctrl3.add_animation("monster_walk", monster_walk3));
+    valid_add_animation(monster_anim_ctrl3.add_animation("monster_damage", monster_damage3));
+    valid_add_animation(monster_anim_ctrl3.add_animation("monster_attack", monster_attack3));
+
     monster3.add_component(monster_walk3);
     monster3.add_component(monster_damage3);
     monster3.add_component(monster_attack3);
@@ -305,9 +327,11 @@ int main(int, char **){
     monster_attack4.setDelay(100);
 
     // Monster artificial intelligence controller
-    monster_anim_ctrl4.add_animation("monster_walk", monster_walk4);
-    monster_anim_ctrl4.add_animation("monster_damage", monster_damage4);
-    monster_anim_ctrl4.add_animation("monster_attack", monster_attack4);
+
+    valid_add_animation(monster_anim_ctrl4.add_animation("monster_walk", monster_walk4));
+    valid_add_animation(monster_anim_ctrl4.add_animation("monster_damage", monster_damage4));
+    valid_add_animation(monster_anim_ctrl4.add_animation("monster_attack", monster_attack4));
+
     monster4.add_component(monster_walk4);
     monster4.add_component(monster_damage4);
     monster4.add_component(monster_anim_ctrl4);
@@ -365,11 +389,12 @@ int main(int, char **){
                         &backgroundForest);
 
     // Adding animation to animation mananger
-    player_anim_ctrl.add_animation("player_idle", player_idle);
-    player_anim_ctrl.add_animation("player_running", player_running);
-    player_anim_ctrl.add_animation("player_attack", player_attack);
-    player_anim_ctrl.add_animation("player_ranged", player_ranged);
-    player_anim_ctrl.add_animation("player_damage", player_damage);
+
+    valid_add_animation(player_anim_ctrl.add_animation("player_idle", player_idle));
+    valid_add_animation(player_anim_ctrl.add_animation("player_running", player_running));
+    valid_add_animation(player_anim_ctrl.add_animation("player_attack", player_attack));
+    valid_add_animation(player_anim_ctrl.add_animation("player_ranged", player_ranged));
+    valid_add_animation(player_anim_ctrl.add_animation("player_damage", player_damage));
 
     // Adding componentes to player
     player.add_component(player_idle);
@@ -525,9 +550,9 @@ int main(int, char **){
 
 
     AnimationControllerComponent boss_anim_ctrl(boss, "boss_controler");
-    boss_anim_ctrl.add_animation("boss_idle", boss_idle);
-    boss_anim_ctrl.add_animation("boss_dash", boss_dash);
-    boss_anim_ctrl.add_animation("boss_howl", boss_howl);
+    valid_add_animation(boss_anim_ctrl.add_animation("boss_idle", boss_idle));
+    valid_add_animation(boss_anim_ctrl.add_animation("boss_dash", boss_dash));
+    valid_add_animation(boss_anim_ctrl.add_animation("boss_howl", boss_howl));
 
 
     AudioComponent boss_dash_audio(boss, "boss_dash_audio",
@@ -686,10 +711,10 @@ int main(int, char **){
     AnimationControllerComponent story_anim_controller(story,
                                                        "stary_controller");
 
-    story_anim_controller.add_animation("story1", story_anim1);
-    story_anim_controller.add_animation("story2", story_anim2);
-    story_anim_controller.add_animation("story3", story_anim3);
-    story_anim_controller.add_animation("story4", story_anim4);
+    valid_add_animation(story_anim_controller.add_animation("story1", story_anim1));
+    valid_add_animation(story_anim_controller.add_animation("story2", story_anim2));
+    valid_add_animation(story_anim_controller.add_animation("story3", story_anim3));
+    valid_add_animation(story_anim_controller.add_animation("story4", story_anim4));
     story_anim2.setDelay(500);
     story_anim4.setDelay(500);
 

@@ -5,13 +5,32 @@
 #include <portal.hpp>
 #include <assert.h>
 
+// Numbers defined in a standard format during all code
+const int SUCCESS = 1;
+const int LIMITED_EXCEEDED = -7;
+
+// This method is reponsable to log attempts of changing fireball attributes.
+void valid_portal_animations(int validation_code, std::string method_name)
+{
+
+    if (validation_code == LIMITED_EXCEEDED){
+
+        Log::instance.error("Could not change a portal attribute in method: '" 
+        + method_name + "', because an attribute EXCEEDED a value LIMIT");
+    }
+    else if (validation_code == SUCCESS)
+    {
+        Log::instance.info("Portal attributes changed in method: ." 
+        + method_name);
+    }
+}
+
 Portal::~Portal(){}
 
 /**
     This method initiates the portal in the game scene
     \return return a true value that make the portal active
 */
-
 bool Portal::init() {
 
     /*
@@ -47,6 +66,8 @@ void Portal::apparition_of_monsters() {
     assert( m_monsters[monster_number_iterator] != NULL);
     assert( _main_game_object != NULL );
 
+    Log::instance.info("Adding monsters through portal.");
+
     /**
          /note This paragraph is responsible for counting
             the time of appearance between each monster outside the portal.
@@ -76,6 +97,8 @@ void Portal::apparition_of_monsters() {
         
         // This line assigns the time between monsters.
         time_between_monsters = Game::instance.timer->getTicks() + 3000;
+
+        valid_portal_animations(SUCCESS, "Portal::apparition_of_monsters");
     }
     else {
 
@@ -107,6 +130,8 @@ void Portal::horizontal_starting_position() {
     */
     if( monster_number_iterator <= 5 && m_background->image_measures->x == 0 ) {
         m_portal_position->m_horizontal_starting_position = MINIMUM_HORIZONTAL_POSITION;
+
+        valid_portal_animations(SUCCESS, "Portal::horizontal_starting_position");
     }
     else {
 
@@ -115,6 +140,8 @@ void Portal::horizontal_starting_position() {
 
     if( monster_number_iterator < 10 && monster_number_iterator > 5 ) {
         m_portal_position->m_horizontal_starting_position = MEDIUM_HORIZONTAL_POSITION;
+
+        valid_portal_animations(SUCCESS, "Portal::horizontal_starting_position");        
     }
     else {
 
@@ -123,6 +150,8 @@ void Portal::horizontal_starting_position() {
 
     if( monster_number_iterator < 20 && monster_number_iterator > 10 ) {
         m_portal_position->m_horizontal_starting_position = MAXIMUM_HORIZONTAL_POSITION;
+
+        valid_portal_animations(SUCCESS, "Portal::horizontal_starting_position");
     }
     else {
 
@@ -131,6 +160,8 @@ void Portal::horizontal_starting_position() {
 
     if( monsters_out_of_portal > 20 ) {
         _main_game_object->setState(GameObject::State::disabled);
+
+        valid_portal_animations(LIMITED_EXCEEDED, "Portal::horizontal_starting_position");
     }
     else {
 
@@ -149,4 +180,5 @@ void Portal::add_monster( GameObject* monster ){
     monster->setState( GameObject::State::disabled );
     m_monsters.push_back( monster );
 
+    valid_portal_animations(SUCCESS, "Portal::add_monster");
 }
