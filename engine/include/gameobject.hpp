@@ -27,12 +27,21 @@ namespace engine {
     class GameObject {
 
     public:
+
+        /**
+            Declares the layer enum.
+        */
+
         enum class Layer {
             background,
             layer1,
             layer2,
             layer3
         };
+
+        /**
+            Declares the state enum.
+        */
 
         enum class State {
             enabled,
@@ -47,14 +56,25 @@ namespace engine {
 
         GameObject(): GameObject( "", false, "", State::invalid ){}
 
-        // Constructor
+        /**
+            Declares the contructor, defining the initial values
+            of the members.
+        */
 
-        GameObject( std::string name, bool collision = false,
-                    std::string m_type = "", State state = State::enabled )
-        : main_positionX( 0 ), main_positionY( 0 ), main_width( 0 ),
-          main_height( 0 ), main_rotation( 0 ), m_collision( collision ),
-        type( m_type ), m_layer( Layer::layer2 ), main_state( state ),
-        main_name( name ){}
+        GameObject(std::string name,
+                   bool collision = false,
+                   std::string m_type = "",
+                   State state = State::enabled):
+                   main_positionX(0),
+                   main_positionY(0),
+                   main_width(0),
+                   main_height(0),
+                   main_rotation(0),
+                   m_collision(collision),
+                   type(m_type),
+                   m_layer(Layer::layer2),
+                   main_state(state),
+                   main_name(name){}
 
         virtual ~GameObject(){};
 
@@ -111,18 +131,27 @@ namespace engine {
 
         }
 
-        inline void set_size( int width, int height ) {
+        inline void set_size(int width, int height) {
+
+            /**
+                Sets the value of main_width and main_height
+            */
 
             main_width = width;
             main_height = height;
 
         }
 
-        inline void set_layer( Layer layer ) {
+        inline void set_layer(Layer layer) {
 
             m_layer = layer;
 
         }
+
+        /**
+            Sets all positional parameters of the game object
+            to 0.
+        */
 
         int main_positionX = 0;
         int main_positionY = 0;
@@ -142,16 +171,18 @@ namespace engine {
 
         void draw_animation();
 
-
         State main_state;
-        std::string main_name;
 
+        std::string main_name;
         /*
             Unordered map that will store all components of the game object.
             The key will be defined by the type of the component, and the value
             will be a list of components of that type (Sprites, audios, etc.)
         */
 
+          typedef std::unordered_map <std::type_index, std::list<Component *> >::
+                  value_type index_component_pair;
+                  
           std::unordered_map <std::type_index, std::list<Component *> > main_components;
       };
 

@@ -20,127 +20,86 @@ Keyboard::~Keyboard() {
 
 /**
     Set keys
-    \param evt
+    \param event
     \parblock
-        This method evaluate what button was pressed with the variable evt
-        and then take decisions based on evt
+        This method evaluate what button was pressed with the variable event
+        and then take decisions based on event
     \endparblock
     \return anything because the method is void
 */
-void Keyboard::setKeys( SDL_Event* evt ) {
+void Keyboard::setKeys( SDL_Event* event ) {
 
-    assert(evt != NULL);
+    assert(event != NULL);
 
-    if( evt -> type == SDL_KEYDOWN ) {
-        keycodes_down.push_back( evt -> key.keysym.sym );
+    if( event -> type == SDL_KEYDOWN ) {
+        keycodes_down.push_back( event -> key.keysym.sym );
     }
-    else if( evt -> type == SDL_KEYUP ) {
-        keycodes_up.push_back( evt -> key.keysym.sym );
+    else if( event -> type == SDL_KEYUP ) {
+        keycodes_up.push_back( event -> key.keysym.sym );
     }
-    else if( evt -> type == SDL_JOYBUTTONDOWN ) {
+    else if( event -> type == SDL_JOYBUTTONDOWN ) {
 
-       if( ( ( int ) evt -> jbutton.button ) == SPACE_JBUTTON ) {
-            keycodes_down.push_back( SDLK_SPACE );
-        }
-        else {
-            // Do nothing
-       }
-
-        if( ( ( int ) evt -> jbutton.button ) == W_JBUTTON ) {
+        if( ( ( int ) event -> jbutton.button ) == SPACE_JBUTTON ) {
+             keycodes_down.push_back( SDLK_SPACE );
+         } else if( ( ( int ) event -> jbutton.button ) == W_JBUTTON ) {
             keycodes_down.push_back( SDLK_w );
-        }
-        else {
-            // Do nothing
-        }
-
-        if( ( ( int ) evt -> jbutton.button ) == F_JBUTTON ) {
+        } else if( ( ( int ) event -> jbutton.button ) == F_JBUTTON ) {
             keycodes_down.push_back( SDLK_f );
-        }
-        else {
-            // Do nothing
-        }
-
-        if( ( ( int ) evt -> jbutton.button ) == RETURN_JBUTTON ) {
+        } else if( ( ( int ) event -> jbutton.button ) == RETURN_JBUTTON ) {
             keycodes_down.push_back( SDLK_RETURN );
-        }
-        else {
-            // Do nothing
+        } else {
+            Log::instance.error("Failed to identify joystick down action");
         }
 
     }
-    else if( evt -> type == SDL_JOYBUTTONUP ) {
+    else if( event -> type == SDL_JOYBUTTONUP ) {
 
-        if( ( ( int ) evt -> jbutton.button ) == SPACE_JBUTTON ) {
+        if( ( ( int ) event -> jbutton.button ) == SPACE_JBUTTON ) {
             keycodes_up.push_back( SDLK_SPACE );
-        }
-        else {
-            // Do nothing
-        }
-
-        if( ( ( int ) evt -> jbutton.button ) == W_JBUTTON ) {
+        } else if( ( ( int ) event -> jbutton.button ) == W_JBUTTON ) {
             keycodes_up.push_back( SDLK_w );
-        }
-        else {
-            // Do nothing
-        }
-
-        if( ( ( int ) evt -> jbutton.button ) == F_JBUTTON ) {
+        } else if( ( ( int ) event -> jbutton.button ) == F_JBUTTON ) {
             keycodes_up.push_back( SDLK_f );
-        }
-        else {
-            // Do nothing
-        }
-
-        if( ( ( int ) evt -> jbutton.button ) == RETURN_JBUTTON ) {
+        } else if( ( ( int ) event -> jbutton.button ) == RETURN_JBUTTON ) {
             keycodes_up.push_back( SDLK_RETURN );
-        }
-        else {
-            // Do nothing
+        } else {
+            Log::instance.error("Failed to identify joystick up action");
         }
     }
-    else if( evt -> type == SDL_JOYAXISMOTION ) {
+    else if( event -> type == SDL_JOYAXISMOTION ) {
 
-        if( evt -> jaxis.axis == HORIZONTAL_JAXIS ) {
+        if( event -> jaxis.axis == HORIZONTAL_JAXIS ) {
 
-            if( evt -> jaxis.value > POSITIVE_JAXIS ) {
+            if( event -> jaxis.value > POSITIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_d );
-            }
-            else {
+            } else {
                 keycodes_up.push_back( SDLK_d );
             }
 
-            if( evt -> jaxis.value < NEGATIVE_JAXIS ) {
+            if( event -> jaxis.value < NEGATIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_a );
-            }
-            else {
+            } else {
                 keycodes_up.push_back( SDLK_a );
             }
-        }
-        else {
-            // Do nothing
-        }
 
-        if( evt -> jaxis.axis == VERTICAL_JAXIS ) {
-            if( evt -> jaxis.value > POSITIVE_JAXIS ) {
+        } else if( event -> jaxis.axis == VERTICAL_JAXIS ) {
+            if( event -> jaxis.value > POSITIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_s );
-            }
-            else {
+            } else {
                 keycodes_up.push_back( SDLK_s );
             }
 
-            if( evt -> jaxis.value < NEGATIVE_JAXIS ) {
+            if( event -> jaxis.value < NEGATIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_w );
-            }
-            else {
+            } else {
                 keycodes_up.push_back( SDLK_w );
             }
-        }
-        else {
-            // Do nothing
+        } else {
+            Log::instance.error("Failed to identify joystick axis action");
         }
     }
     else {
-        // Do nothing
+        Log::instance.error("Failed to identify control actions");
     }
 
 }
@@ -155,19 +114,26 @@ void Keyboard::setKeys( SDL_Event* evt ) {
 */
 bool Keyboard::isKeyDown( std::string key ) {
 
-    assert(m_button_code.count(key) != 0);
+    if(m_button_code.count(key) != 0) {
 
-    for( auto m_key : keycodes_down ) {
-        if( m_key == m_button_code[key] ) {
-            return true;
+        std::list<Uint8>::iterator m_key;
+
+        for( m_key = keycodes_down.begin() ; m_key != keycodes_down.end() ; m_key++ ) {
+
+            if( *m_key == m_button_code[key] ) {
+                return true;
+            }
+            else {
+                // Do nothing
+            }
+
         }
-        else {
-            // Do nothing
-        }
+        return false;
+
+    } else {
+        Log::instance.error("The '" + key + "' was not mapped");
+        return false;
     }
-
-    return false;
-
 }
 
 /**
@@ -180,19 +146,24 @@ bool Keyboard::isKeyDown( std::string key ) {
 */
 bool Keyboard::isKeyUp( std::string key ) {
 
-    assert(m_button_code.count(key) != 0);
+    if(m_button_code.count(key) != 0) {
 
-    for( auto m_key : keycodes_up ) {
-        if( m_key == m_button_code[key] ) {
-            return true;
+        std::list<Uint8>::iterator m_key;
+
+        for( m_key = keycodes_up.begin() ; m_key != keycodes_up.end() ; m_key++ ) {
+            if( *m_key == m_button_code[key] ) {
+                return true;
+            }
+            else {
+                // Do nothing
+            }
         }
-        else {
-            // Do nothing
-        }
+
+        return false;
+    } else {
+        Log::instance.error("The '" + key + "' was not mapped");
+        return false;
     }
-
-    return false;
-
 }
 
 /**
@@ -206,7 +177,7 @@ void Keyboard::clearKeyboard() {
 }
 
 /**
-   This method map all enable and not enable buttons that can be used in game 
+   This method map all enable and not enable buttons that can be used in game
 */
 void Keyboard::create_keyboard_mapping() {
 

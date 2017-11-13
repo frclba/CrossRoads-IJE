@@ -5,8 +5,7 @@
 
 #include "player.hpp"
 #include <assert.h>
- 
-/// \note Declares player constants.  
+
 const int MAXIMUM_SCREEN_WIDTH = 200;
 
 /**
@@ -32,6 +31,22 @@ const int MINIMUM_ATTACK_TIME = 0;
 const int ATTACK_DELAY = 50;
 const int DAMAGE_DELAY = 1000;
 
+
+const int EXCEED_LIMIT_MAP = -7;
+const int EMPTY_STRING = -2;
+const int SUCCESS = 1;
+
+void valid_play_animation(int code, std::string method) {
+
+  if(code == EMPTY_STRING){
+      Log::instance.error("Fail to play animation ... parameter ""name"" is empty , method:" + method);
+      return;
+  }else if(code == SUCCESS){
+      Log::instance.info("Success in play animation");
+  }
+
+}
+
 /**
     Initializes the player, defining their main attributes with inicial
     values
@@ -42,7 +57,6 @@ bool Player::init() {
     assert(_main_game_object != NULL);
     assert(image_background != NULL);
 
-    /// \note Initialize player initial position and status.
     _main_game_object->main_positionY = MAXIMUM_COORDINATION_Y;
     _main_game_object->main_positionX = MINIMUM_COORDINATION_X;
 
@@ -55,6 +69,21 @@ bool Player::init() {
 
 }
 
+int Player::get_life_points() {
+
+    return life_points;
+
+}
+
+void Player::valid_life_points(){
+
+  if(get_life_points() < 0){
+      Log::instance.error("Player's life point is negative");
+      exit(0);
+  }
+
+}
+
 /**
     Call methods that update player characteristics, changing values of their
     attributes, thats make the player can move, jump, take damage, fall etc
@@ -63,8 +92,9 @@ void Player::update() {
 
     assert(animation_controller != NULL);
 
-    /// \note Update player status, position, and actions. 
-    animation_controller->play_animation("player_idle");
+    valid_play_animation(animation_controller->
+                                   play_animation("player_idle"),
+                                   "Player::update");
 
     apply_gravity();
     detect_jump();
@@ -73,13 +103,26 @@ void Player::update() {
     update_attack();
 
     detect_damage();
+
+    /**
+        \note this line enters a function that will check if the player is dead
+        \note after the application of damage and before processing his position
+    */
     is_dead();
-    process_position();
+
+    if(process_position() == EXCEED_LIMIT_MAP){
+        Log::instance.error("player has crossed the border of the map");
+        if(get_vertical_position() > MAXIMUM_COORDINATION_Y){
+            vertical_position = MAXIMUM_COORDINATION_Y;
+        }else if(get_vertical_position() < -JUMP_SIZE){
+            vertical_position = -JUMP_SIZE;
+        }
+    }
 
 }
 
 void Player::update_attack() {
-    
+
     /**
         \note Update player body side and type of attack detection and
             activation.
@@ -116,15 +159,21 @@ void Player::detect_attack_meele() {
 
     assert(Game::instance.keyboard != NULL);
 
-    /// \note Detect if player attack is meele. 
+    /**
+        \note check if the button is up and down is necessary to change the
+        \note movement based on 2 strands, based on the verification time.
+    */
     if( Game::instance.keyboard->isKeyDown("space") ){
+        if(get_is_attacking_ranged() == true){
+            Log::instance.error(" ""is_attacking_renged"" can not be true if ""Game::instance.keyboard->isKeyDown(""space"")"" is true");
+            is_attacking_ranged = false;
+        }
         is_attacking_meele = true;
     }
     else {
         // Do nothing
     }
 
-    /// \note Detect if player attack isn't meele. 
     if( !Game::instance.keyboard->isKeyUp("space") ) {
         // Do nothing
     }
@@ -142,15 +191,23 @@ void Player::detect_attack_ranged() {
 
     assert(Game::instance.keyboard != NULL);
 
-    /// \note Detect if player attack is ranged. 
+
+    /**
+        \note check if the button is up and down is necessary to change the
+        \note movement based on 2 strands, based on the verification time.
+    */
     if( Game::instance.keyboard->isKeyDown("f") ) {
+
+        if(get_is_attacking_meele() == true){
+            Log::instance.error(" ""is_attacking_meele"" can not be true if ""Game::instance.keyboard->isKeyDown(""f"")"" is true");
+            is_attacking_meele = false;
+        }
         is_attacking_ranged = true;
     }
     else {
         // Do nothing
     }
 
-    /// \note Detect if player attack isn't ranged.
     if( !Game::instance.keyboard->isKeyUp("f") ) {
         // Do nothing
     }
@@ -167,9 +224,11 @@ void Player::apply_attack_meele() {
     assert(Game::instance.timer != NULL);
     assert(attack_box_dimensions != NULL);
 
-    /// \note Apply audio of meele attack of the player.  
     if( is_attacking_meele ) {
-        animation_controller->play_animation("player_attack");
+        valid_play_animation(animation_controller->
+                                       play_animation("player_attack"),
+                                       "Player::apply_attack_meele");
+
         /**
           Audio when the player is attacking melee
         */
@@ -180,7 +239,11 @@ void Player::apply_attack_meele() {
         assert(player_attack_audio != NULL);
 
         player_attack_audio->play(0, -1);
-      /// \note Apply delay and position of meele attack of the player.
+
+      /**
+          \note get the delay attack time, if exceeds
+          \note the current time, will not apply the attack
+      */
       if( time_attack < Game::instance.timer->getTicks() ) {
           attack_box_dimensions->setState(GameObject::State::enabled);
           time_attack = Game::instance.timer->getTicks() + ATTACK_DELAY;
@@ -200,9 +263,11 @@ void Player::apply_attack_ranged() {
     assert(animation_controller != NULL);
     assert(_main_game_object != NULL);
 
-    /// \note Apply audio of ranged attack of the player.
     if( get_is_attacking_ranged() ) {
-      animation_controller->play_animation("player_attack");
+
+      valid_play_animation(animation_controller->
+                                     play_animation("player_attack"),
+                                     "Player::apply_attack_ranged");
 
       /**
           Audio when the player is attacking renged
@@ -213,7 +278,10 @@ void Player::apply_attack_ranged() {
                       "player_arrow_sound")));
       assert(player_arrow_sound != NULL);
 
-      animation_controller->play_animation("player_ranged");
+      valid_play_animation(animation_controller->
+                                     play_animation("player_ranged"),
+                                     "Player::apply_attack_ranged");
+
       player_arrow_sound->play(0, -1);
     }
     else {
@@ -227,7 +295,6 @@ void Player::detect_boby_side() {
     assert(_main_game_object != NULL);
     assert(attack_box_dimensions != NULL);
 
-    /// \note Detect if player body direction is right or left.
     if( direction_boby_side == RIGHT ) {
         attack_box_dimensions->main_positionX = _main_game_object->main_positionX +
                                                 _main_game_object->main_width;
@@ -254,15 +321,23 @@ void Player::detect_move_right() {
 
     assert(Game::instance.keyboard != NULL);
 
-    /// \note Detect if player move is right.
+    // Detect move right
+
+    /**
+        \note check if the button is up and down is necessary to change the
+        \note movement based on 2 strands, based on the verification time.
+    */
     if( Game::instance.keyboard->isKeyDown("d") ) {
+        if(get_is_walking_left() == true){
+            Log::instance.error(" ""is_walking_left"" can not be true if ""Game::instance.keyboard->isKeyDown(""d"")"" is true");
+            is_walking_left = false;
+        }
         is_walking_right = true;
     }
     else {
         // Do nothing
     }
 
-    /// \note Detect if player move isn't right.
     if( !Game::instance.keyboard->isKeyUp("d") ) {
         // Do nothing
     }
@@ -276,15 +351,21 @@ void Player::detect_move_left() {
 
     assert(Game::instance.keyboard != NULL);
 
-    /// \note Detect if player move is left.
+    /**
+        \note check if the button is up and down is necessary to change the
+        \note movement based on 2 strands, based on the verification time.
+    */
     if( Game::instance.keyboard->isKeyDown("a") ) {
+        if(get_is_walking_right() == true){
+            Log::instance.error(" ""is_walking_right"" can not be true if ""Game::instance.keyboard->isKeyDown(""d"")"" is true");
+            is_walking_right = false;
+        }
         is_walking_left = true;
     }
     else {
         // Do nothing
     }
 
-    /// \note Detect if player move isn't left.
     if( !Game::instance.keyboard->isKeyUp("a") ) {
         // Do nothing
     }
@@ -299,7 +380,6 @@ void Player::apply_move_right() {
     assert(_main_game_object != NULL);
     assert(animation_controller != NULL);
 
-    /// \note Apply direction to the right and running audio of the player.
     if( is_walking_right && ( _main_game_object->main_positionX +
                    _main_game_object->main_width) < MAXIMUM_COORDINATION_X ) {
 
@@ -314,7 +394,9 @@ void Player::apply_move_right() {
 
         is_walking_right = true;
 
-        animation_controller->play_animation("player_running");
+        valid_play_animation(animation_controller->
+                                       play_animation("player_running"),
+                                       "Player::apply_move_right");
         player_running_audio->play(0, -1);
 
         direction_boby_side = RIGHT;
@@ -334,7 +416,11 @@ void Player::detect_background() {
     assert(_main_game_object != NULL);
     assert(image_background != NULL);
 
-    /// \note Detect background when player is walking to the right.
+
+    /**
+        \note Check if the player is at the end of the map and is able to move
+        \note forward in the phase, realising the rest of the map.
+    */
     if( _main_game_object->main_positionX > MAXIMUM_SCREEN_WIDTH &&
         is_walking_right &&
         image_background->enable_camera ) {
@@ -352,7 +438,6 @@ void Player::apply_move_left() {
     assert(_main_game_object != NULL);
     assert(animation_controller != NULL);
 
-    /// \note Apply direction to the left and running audio of the player.
     if( is_walking_left && ( _main_game_object->main_positionX ) >= MINIMUM_COORDINATION_X ) {
 
        /**
@@ -366,7 +451,10 @@ void Player::apply_move_left() {
 
        is_walking_left = true;
 
-       animation_controller->play_animation("player_running");
+       valid_play_animation(animation_controller->
+                                      play_animation("player_running"),
+                                      "Player::apply_move_left");
+
        player_running_audio2->play(0, -1);
 
        direction_boby_side = LEFT;
@@ -397,10 +485,12 @@ void Player::detect_jump() {
                                         "player_jump_audio")));
     assert(player_jump_audio != NULL);
 
-    /// \note Detect if player jump and play jump audio if he jump is detected.
     if( Game::instance.keyboard->isKeyDown("w") && ( vertical_position == MINIMUM_COORDINATION_Y ) ) {
         player_jump_audio->play(0, -1);
 
+        /**
+            \note jump size decreases vertical_position due to the fact that y coordinate increases up to down
+        */
         vertical_position -= JUMP_SIZE;
     }
     else {
@@ -409,12 +499,25 @@ void Player::detect_jump() {
 
 }
 
-void Player::process_position() {
+
+
+int Player::process_position() {
 
     assert(_main_game_object != NULL);
 
-    _main_game_object->main_positionY += vertical_position;
-    assert(vertical_position >= -JUMP_SIZE && vertical_position <= MAXIMUM_COORDINATION_Y);
+    if(get_vertical_position() >= -JUMP_SIZE && vertical_position <= MAXIMUM_COORDINATION_Y){
+
+        /**
+            \note get the sum of the player's movement relative to the jump and
+            \note the fall size, and determines his vertical position on the map.
+        */
+        _main_game_object->main_positionY += vertical_position;
+
+        return SUCCESS;
+    }else{
+        return EXCEED_LIMIT_MAP;
+    }
+
 }
 
 /**
@@ -423,9 +526,17 @@ void Player::process_position() {
 */
 void Player::apply_gravity() {
 
-    /// \note Apply gravity when player and monsters jump.
+
+    /**
+        \note while the player is in the air, without colliding with something,
+        \note will be applied +1 continuously on his vertical_position.
+    */
     if( !has_ground() ) { // If the player is not on the platform
-        vertical_position += GRAVITY;
+
+      /**
+          \note gravity increases vertical_position due to the fact that y coordinate increases up to down
+      */
+      vertical_position += GRAVITY;
     }
     else {
         vertical_position = MINIMUM_COORDINATION_Y;
@@ -478,13 +589,19 @@ void Player::apply_damage() {
 
     assert(Game::instance.timer != NULL);
 
+    valid_life_points();
+
     /**
-        \note Apply player and monster damage with delay of damage inflicting
-            in 1 point life.
+        \note get the delay damage time, if exceeds
+        \note the current time, will not apply the damage
     */
     if( Game::instance.timer->getTicks() > damage_time ) {
         assert(life_points >= 1);
         life_points--;
+        /**
+            \note this line damage_time sum the delay damage plus the current time
+            \note to avoid incorrect applied damage
+        */
         damage_time = Game::instance.timer->getTicks() + DAMAGE_DELAY;
     }
     else {
@@ -497,7 +614,8 @@ void Player::detect_low_life() {
 
     assert(_main_game_object != NULL);
 
-    /// \note Detect and play audio when player is with low life.
+    valid_life_points();
+
     if( life_points == FORTY_PERCENT_LIFE ) {
 
        /**
@@ -523,7 +641,10 @@ void Player::detect_damage() {
     assert(_main_game_object != NULL);
     assert(Game::instance.collision_manager != NULL);
 
-    /// \note Detect when boss, monsters or player give damage.
+    /**
+        \note the condition of this line is pertaining to rule,
+        \note when a player is attacking he can not receive damage
+    */
     if( !is_attacking_meele ) {
 
         if( (
@@ -535,6 +656,10 @@ void Player::detect_damage() {
                                                              "boss") ) ) {
              apply_damage();
 
+             /**
+                 \note this line enters a function that will check if the player
+                 \note is 40% of its life to apply the referring audio
+             */
              detect_low_life();
         }
         else {
@@ -552,11 +677,13 @@ void Player::detect_damage() {
 */
 void Player::is_dead() {
 
+    valid_life_points();
+
     /**
          \note When player is dead change for game over scene and restore points
             of life for the next game.
     */
-    if( life_points <= EMPTY_LIFE ){
+    if( get_life_points() <= EMPTY_LIFE ){
         life_points = FULL_LIFE;
         Game::instance.change_scene("Lose Scene");
         printf("Player dead\n");
@@ -568,15 +695,15 @@ void Player::is_dead() {
 
 }
 
-int Player::get_life_points() {
-
-    return life_points;
-
-}
-
 bool Player::get_is_attacking_ranged() {
 
     return is_attacking_ranged;
+
+}
+
+bool Player::get_is_attacking_meele() {
+
+    return is_attacking_meele;
 
 }
 
@@ -586,6 +713,23 @@ bool Player::get_direction_boby_side() {
 
 }
 
+int Player::get_vertical_position() {
+
+    return vertical_position;
+
+}
+
+bool Player::get_is_walking_right() {
+
+    return is_walking_right;
+
+}
+
+bool Player::get_is_walking_left() {
+
+    return is_walking_left;
+
+}
 
 Player::~Player() {
 

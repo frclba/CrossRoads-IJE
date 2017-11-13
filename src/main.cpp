@@ -18,15 +18,50 @@
 #include "bossAI.hpp"
 #include "initialStory.hpp"
 
+const int HEART_COORDINATION_Y = 55;
+
+const int HEART_1_COORDINATION_X = 1 * 40;
+const int HEART_2_COORDINATION_X = 2 * 40;
+const int HEART_3_COORDINATION_X = 3 * 40;
+const int HEART_4_COORDINATION_X = 4 * 40;
+const int HEART_5_COORDINATION_X = 5 * 40;
+
+const int GO_ARROW_COORDINATION_X = 600;
+const int GO_ARROW_COORDINATION_Y = 100;
+
+const int FIRE_BALL_INITIAL_COORDINATION_X = 200;
+
+const int INITIAL_BOSS_COORDINATION_X = 600;
+const int INITIAL_BOSS_COORDINATION_Y = 300;
+
 
 using namespace engine;
 
+const int EMPTY_STRING = -2;
+const int NULL_OBJECT = -3;
+const int SUCCESS = 1;
+
+void valid_add_animation(int code){
+    if(code == EMPTY_STRING){
+        Log::instance.error("Fail to add a animation, param ""name"" is empty");
+        exit(0);
+    }else if(code == NULL_OBJECT){
+        Log::instance.error("Fail to add a animation, param ""animation"" is NULL");
+        exit(0);
+    }else if(code == SUCCESS){
+        Log::instance.info("Success to add a animation");
+    }
+}
+
+
 int main(int, char **){
 
-    // Configurando nome e tamanho
-
+    // Configure name and size.
     std::pair<int, int> window_size(800, 600);
-    Game::instance.set_properties("Nome do Jogo",window_size);
+    if(Game::instance.set_properties("Nome do Jogo",window_size) == -2) {
+        Log::instance.error("Game name is empty");
+        exit(0);
+    }
 
     //  ================================================= MENU =======================================
 
@@ -38,9 +73,10 @@ int main(int, char **){
                                "assets/sprites/menu_title.png");
     title.add_component(image_title);
 
-    // Cadastrando dois tipos de animação, a do butao normal que pega
-    // a imagem de 0 a 0 e a mouseON que pega a imagem de 1 a 1
-
+    /** 
+        Sign in two types of animation, one of normal button that catch an
+        image of 0 to 0 and a mouseON that catch an image of 1 to 1.
+    */
     GameObject bNew("bNew");
     Animation image_bNew(bNew,"imageBNew", "assets/sprites/bNew.png",
                          448/2, 100, 2);
@@ -55,17 +91,14 @@ int main(int, char **){
     image_bLoad.setAnimation("mouseON", 1, 1);
     bLoad.add_component(image_bLoad);
 
-    // Coloca o tempo que a nimacao do fogo percorre
-
+    // Put time that animation of fire walks through screen.
     GameObject menuFire("menuFire");
     Animation animationFire(menuFire, "imageFire",
                             "assets/sprites/menuFire.png", 348/6, 76, 6);
     animationFire.setDelay(100);
     menuFire.add_component(animationFire);
 
-
-    // Adiciona components aos gameobjects
-
+    // Add components to gameobjects.
     GameObject background("background");
     ImageComponent backgroundImage(background, "imageBackground",
                                    "assets/sprites/menu.png");
@@ -82,8 +115,7 @@ int main(int, char **){
                                       false, false);
     bLoad.add_component(button_hover_sound);
 
-    // Adiciona game objects ao menu
-
+    // Add game objects to menu.
     menu.add_game_object(menuFire);
     menu.add_game_object(bNew);
     menu.add_game_object(bLoad);
@@ -92,10 +124,10 @@ int main(int, char **){
 
     // =================================== STAGE 1 =======================================
 
+    // This line jump a line in log file and set this message in it.
     Log::instance.jumpLine("Starting configurations && Instantiations\n");
 
-    // Criando cena da fase
-
+    //Create scene level.
     Stage1Scene stage1("Fase 1");
     Game::instance.add_scene(stage1);
 
@@ -152,6 +184,10 @@ int main(int, char **){
                                     "assets/sprites/backgroundFloresta.png");
     backgroundForest.set_back_rect(800, 600);
 
+    /** 
+        This line set forest background in Game Object. All stages an boss
+        level are with forest background. 
+    */
     background_stage1.set_layer(GameObject::Layer::background);
 
     GameObject ground_stage1("ground", true, "ground");
@@ -161,8 +197,6 @@ int main(int, char **){
     ImageComponent tile4(ground_stage1, "tile4", "assets/sprites/ChãoMap4.png");
 
     // Player Animations
-
-
     Animation player_idle(player, "playerIdle", "assets/sprites/hero.png",
                           480/8, 49, 8);
     player_idle.setDelay(100);
@@ -184,7 +218,6 @@ int main(int, char **){
     player_damage.setDelay(100);
 
     // Monsters
-
     GameObject monster1("monster1", true, "monster");
     Animation monster_walk1(monster1, "monster_walk1",
                             "assets/sprites/monster_walk.png", 153/4, 38, 4);
@@ -199,13 +232,11 @@ int main(int, char **){
     monster_attack1.setDelay(100);
 
     // Monster artificial intelligence controller
-
-
     AnimationControllerComponent monster_anim_ctrl(player, "monster_controler");
 
-    monster_anim_ctrl.add_animation("monster_walk", monster_walk1);
-    monster_anim_ctrl.add_animation("monster_damage", monster_damage1);
-    monster_anim_ctrl.add_animation("monster_attack", monster_attack1);
+    valid_add_animation(monster_anim_ctrl.add_animation("monster_walk", monster_walk1));
+    valid_add_animation(monster_anim_ctrl.add_animation("monster_damage", monster_damage1));
+    valid_add_animation(monster_anim_ctrl.add_animation("monster_attack", monster_attack1));
     monster1.add_component(monster_walk1);
     monster1.add_component(monster_damage1);
     monster1.add_component(monster_attack1);
@@ -231,20 +262,20 @@ int main(int, char **){
     monster_attack2.setDelay(100);
 
     // Monster artificial intelligence controller
-
     AnimationControllerComponent monster_anim_ctrl2(player, "monster_controler");
     MonsterAI monster_ai2(monster2, "monster_ai2", &player,
                           &monster_anim_ctrl2);
 
-    monster_anim_ctrl2.add_animation("monster_walk", monster_walk2);
-    monster_anim_ctrl2.add_animation("monster_damage", monster_damage2);
-    monster_anim_ctrl2.add_animation("monster_attack", monster_attack2);
+    valid_add_animation(monster_anim_ctrl2.add_animation("monster_walk", monster_walk2));
+    valid_add_animation(monster_anim_ctrl2.add_animation("monster_damage", monster_damage2));
+    valid_add_animation(monster_anim_ctrl2.add_animation("monster_attack", monster_attack2));
     monster2.add_component(monster_walk2);
     monster2.add_component(monster_damage2);
     monster2.add_component(monster_anim_ctrl2);
     monster2.add_component(monster_attack2);
     monster2.add_component(monster_ai2);
 
+    // Monster artificial intelligence controller.
     AnimationControllerComponent monster_anim_ctrl3(player,
                                                     "monster_controler");
 
@@ -265,9 +296,10 @@ int main(int, char **){
 
     // Monster artificial intelligence controller
 
-    monster_anim_ctrl3.add_animation("monster_walk", monster_walk3);
-    monster_anim_ctrl3.add_animation("monster_damage", monster_damage3);
-    monster_anim_ctrl3.add_animation("monster_attack", monster_attack3);
+    valid_add_animation(monster_anim_ctrl3.add_animation("monster_walk", monster_walk3));
+    valid_add_animation(monster_anim_ctrl3.add_animation("monster_damage", monster_damage3));
+    valid_add_animation(monster_anim_ctrl3.add_animation("monster_attack", monster_attack3));
+
     monster3.add_component(monster_walk3);
     monster3.add_component(monster_damage3);
     monster3.add_component(monster_attack3);
@@ -276,6 +308,7 @@ int main(int, char **){
     MonsterAI monster_ai3(monster3, "monster_ai", &player, &monster_anim_ctrl);
     monster3.add_component(monster_ai3);
 
+    // Monster artificial intelligence controller.
     AnimationControllerComponent monster_anim_ctrl4(player, "monster_controler");
 
     GameObject monster4("monster4", true, "monster");
@@ -295,9 +328,10 @@ int main(int, char **){
 
     // Monster artificial intelligence controller
 
-    monster_anim_ctrl4.add_animation("monster_walk", monster_walk4);
-    monster_anim_ctrl4.add_animation("monster_damage", monster_damage4);
-    monster_anim_ctrl4.add_animation("monster_attack", monster_attack4);
+    valid_add_animation(monster_anim_ctrl4.add_animation("monster_walk", monster_walk4));
+    valid_add_animation(monster_anim_ctrl4.add_animation("monster_damage", monster_damage4));
+    valid_add_animation(monster_anim_ctrl4.add_animation("monster_attack", monster_attack4));
+
     monster4.add_component(monster_walk4);
     monster4.add_component(monster_damage4);
     monster4.add_component(monster_anim_ctrl4);
@@ -308,7 +342,6 @@ int main(int, char **){
     monster4.add_component(monster_ai4);
 
     // .monsters
-
     AudioComponent goblin_spawn_audio(monster1, "goblin_spawn_audio",
                                       "assets/sounds/vocalizacoes.goblin.wav",
                                       false, false);
@@ -317,21 +350,18 @@ int main(int, char **){
     AudioComponent goblin_aggro_audio(monster1, "goblin_aggro_audio",
                                       "assets/sounds/vocalizacoes.goblin.3.wav",
                                       false, false);
-
     monster1.add_component(goblin_aggro_audio);
 
-    // Animação da setinha
-
+    // Index animation.
     GameObject go_arrow("go_arrow");
-    go_arrow.main_positionX = 600;
-    go_arrow.main_positionY = 100;
+    go_arrow.main_positionX = GO_ARROW_COORDINATION_X;
+    go_arrow.main_positionY = GO_ARROW_COORDINATION_Y;
     Animation go_arrow_anim(go_arrow, "go_arrow_anim",
                             "assets/sprites/arrow.png", 200, 200, 10);
     go_arrow_anim.setDelay(200);
     go_arrow.add_component(go_arrow_anim);
 
     //Portal
-
     GameObject portal("portal");
     portal.set_layer(GameObject::Layer::layer1);
     Animation portal_img(portal, "portal", "assets/sprites/portal.png",
@@ -360,14 +390,13 @@ int main(int, char **){
 
     // Adding animation to animation mananger
 
-    player_anim_ctrl.add_animation("player_idle", player_idle);
-    player_anim_ctrl.add_animation("player_running", player_running);
-    player_anim_ctrl.add_animation("player_attack", player_attack);
-    player_anim_ctrl.add_animation("player_ranged", player_ranged);
-    player_anim_ctrl.add_animation("player_damage", player_damage);
+    valid_add_animation(player_anim_ctrl.add_animation("player_idle", player_idle));
+    valid_add_animation(player_anim_ctrl.add_animation("player_running", player_running));
+    valid_add_animation(player_anim_ctrl.add_animation("player_attack", player_attack));
+    valid_add_animation(player_anim_ctrl.add_animation("player_ranged", player_ranged));
+    valid_add_animation(player_anim_ctrl.add_animation("player_damage", player_damage));
 
     // Adding componentes to player
-
     player.add_component(player_idle);
     player.add_component(player_running);
     player.add_component(player_attack);
@@ -376,12 +405,11 @@ int main(int, char **){
     player.add_component(player_anim_ctrl);
     player.add_component(player_logic);
 
+    // Adding forest background to brackground stage 1.
     background_stage1.add_component(backgroundForest);
-
 
     // Plataforms
     // Part1
-
     GameObject plataform("plataform", true, "ground");
     ImageComponent img_plataform(plataform, "plataform",
                                  "assets/sprites/plataform.png");
@@ -456,9 +484,7 @@ int main(int, char **){
     plataform9.add_component(plataform_ai9);
     plataform9.add_component(img_plataform9 );
 
-
     // Boss plataforms
-
     GameObject plataform10("plataform10", true, "ground");
     ImageComponent img_plataform10(plataform10, "plataform10",
                                    "assets/sprites/plataform.png");
@@ -483,12 +509,13 @@ int main(int, char **){
     plataform12.add_component(plataform_ai12);
     plataform12.add_component(img_plataform12);
 
+    // Define game object fireball.
+    GameObject fireball("fireball", true, "fireball");
 
+    // Fireball walks through coordinate x in cartesian plan.
+    fireball.main_positionX = FIRE_BALL_INITIAL_COORDINATION_X;
 
     // .plataforms
-
-    GameObject fireball("fireball", true, "fireball");
-    fireball.main_positionX = 200;
 
     FireballController fireball_controller(fireball, "fireball", 15, &player);
     fireball.add_component(fireball_controller);
@@ -503,9 +530,11 @@ int main(int, char **){
                                           false, false);
     fireball.add_component(fireball_droping_audio);
 
+    // Define game object boss
     GameObject boss("boss",true,"boss");
-    boss.main_positionX = 600;
-    boss.main_positionY = 300;
+
+    boss.main_positionX = INITIAL_BOSS_COORDINATION_X;
+    boss.main_positionY = INITIAL_BOSS_COORDINATION_Y;
 
     Animation boss_idle(boss, "bossIdle", "assets/sprites/boss.png",
                         552/3, 244, 3);
@@ -521,9 +550,9 @@ int main(int, char **){
 
 
     AnimationControllerComponent boss_anim_ctrl(boss, "boss_controler");
-    boss_anim_ctrl.add_animation("boss_idle", boss_idle);
-    boss_anim_ctrl.add_animation("boss_dash", boss_dash);
-    boss_anim_ctrl.add_animation("boss_howl", boss_howl);
+    valid_add_animation(boss_anim_ctrl.add_animation("boss_idle", boss_idle));
+    valid_add_animation(boss_anim_ctrl.add_animation("boss_dash", boss_dash));
+    valid_add_animation(boss_anim_ctrl.add_animation("boss_howl", boss_howl));
 
 
     AudioComponent boss_dash_audio(boss, "boss_dash_audio",
@@ -542,14 +571,11 @@ int main(int, char **){
                  &player);
 
     boss.add_component(boss_ai);
-
     boss.add_component(boss_pos);
-
     boss.add_component(boss_dash_audio);
     boss.add_component(boss_in_rage_audio);
 
     // Player life
-
     GameObject heart1("heart1");
     ImageComponent heart1_img(heart1,"heart1_img", "assets/sprites/heart.png");
     Heart heart1_controller(heart1, "heart1_controller", &player_logic,1);
@@ -580,17 +606,17 @@ int main(int, char **){
     heart5.add_component(heart5_img);
     heart5.add_component(heart5_controller);
 
-    heart1.main_positionX = 1 * 40;
-    heart2.main_positionX = 2 * 40;
-    heart3.main_positionX = 3 * 40;
-    heart4.main_positionX = 4 * 40;
-    heart5.main_positionX = 5 * 40;
+    heart1.main_positionX = HEART_1_COORDINATION_X;
+    heart2.main_positionX = HEART_2_COORDINATION_X;
+    heart3.main_positionX = HEART_3_COORDINATION_X;
+    heart4.main_positionX = HEART_4_COORDINATION_X;
+    heart5.main_positionX = HEART_5_COORDINATION_X;
 
-    heart1.main_positionY = 55;
-    heart2.main_positionY = 55;
-    heart3.main_positionY = 55;
-    heart4.main_positionY = 55;
-    heart5.main_positionY = 55;
+    heart1.main_positionY = HEART_COORDINATION_Y;
+    heart2.main_positionY = HEART_COORDINATION_Y;
+    heart3.main_positionY = HEART_COORDINATION_Y;
+    heart4.main_positionY = HEART_COORDINATION_Y;
+    heart5.main_positionY = HEART_COORDINATION_Y;
 
     // Player life
 
@@ -639,8 +665,10 @@ int main(int, char **){
                               "assets/sprites/new_win.png");
     win_background.add_component(image_win);
 
+    // Add restart button to win screen.
     win_background.add_component(restart_button_win);
 
+    // Add win background to win scene.
     win.add_game_object(win_background);
 
     // ==================================== WIN SCREEN =============================================
@@ -648,7 +676,7 @@ int main(int, char **){
     Scene lose("Lose Scene");
     Game::instance.add_scene(lose);
 
-
+    // Add lose background to game object.
     GameObject lose_background("lose_background");
 
     //ImageComponent image_lose (lose_background, "image_lose", "assets/sprites/lose.jpg");
@@ -656,11 +684,13 @@ int main(int, char **){
                          "assets/sprites/LoseScreen.png", 4800/6, 600, 6);
     image_lose.setDelay(100);
 
+    // Create a restart button in lose background.
     Restart restart_button_lose(lose_background, "restart_button_lose");
 
     lose_background.add_component(image_lose);
     lose_background.add_component(restart_button_lose);
 
+    // Add lose background to lose scene.
     lose.add_game_object(lose_background);
 
 
@@ -681,10 +711,10 @@ int main(int, char **){
     AnimationControllerComponent story_anim_controller(story,
                                                        "stary_controller");
 
-    story_anim_controller.add_animation("story1", story_anim1);
-    story_anim_controller.add_animation("story2", story_anim2);
-    story_anim_controller.add_animation("story3", story_anim3);
-    story_anim_controller.add_animation("story4", story_anim4);
+    valid_add_animation(story_anim_controller.add_animation("story1", story_anim1));
+    valid_add_animation(story_anim_controller.add_animation("story2", story_anim2));
+    valid_add_animation(story_anim_controller.add_animation("story3", story_anim3));
+    valid_add_animation(story_anim_controller.add_animation("story4", story_anim4));
     story_anim2.setDelay(500);
     story_anim4.setDelay(500);
 
@@ -699,6 +729,7 @@ int main(int, char **){
                                   &story_anim_controller);
     story.add_component(story_controller);
 
+    // Add game story to initial story.
     initial_story.add_game_object(story);
 
     // ==================================== GAME LOOP ============================================
