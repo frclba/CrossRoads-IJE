@@ -10,9 +10,11 @@ const int SUCCESS = 1;
 const int LIMITED_EXCEEDED = -7;
 
 // This method is reponsable to log attempts of changing fireball attributes.
-void valid_portal_animations(int validation_code, std::string method_name)
-{
+void valid_portal_animations(int validation_code, std::string method_name){
 
+    /**
+        Print log accordding with validation code.
+    */
     if (validation_code == LIMITED_EXCEEDED){
 
         Log::instance.error("Could not change a portal attribute in method: '" 
@@ -128,6 +130,11 @@ void Portal::horizontal_starting_position() {
         /note This paragraph is responsible for assigning a horizontal position
             to the portal according to the monster number.
     */
+
+    /**
+        Assigning a minimum horizontal position for the portal, 
+        to the monster number iterator between 0 and 5.
+    */
     if( monster_number_iterator <= 5 && m_background->image_measures->x == 0 ) {
         m_portal_position->m_horizontal_starting_position = MINIMUM_HORIZONTAL_POSITION;
 
@@ -137,7 +144,10 @@ void Portal::horizontal_starting_position() {
 
         // Do nothing
     }
-
+    /**
+        Assigning a medium horizontal position for the portal, 
+        to the monster number iterator between 5 and 10.
+    */
     if( monster_number_iterator < 10 && monster_number_iterator > 5 ) {
         m_portal_position->m_horizontal_starting_position = MEDIUM_HORIZONTAL_POSITION;
 
@@ -148,6 +158,10 @@ void Portal::horizontal_starting_position() {
         // Do nothing
     }
 
+    /**
+        Assigning a maximum horizontal position for the portal, 
+        to the monster number iterator between 10 and 20.
+    */
     if( monster_number_iterator < 20 && monster_number_iterator > 10 ) {
         m_portal_position->m_horizontal_starting_position = MAXIMUM_HORIZONTAL_POSITION;
 
@@ -158,6 +172,9 @@ void Portal::horizontal_starting_position() {
         // Do nothing
     }
 
+    /**
+        Print log accordding for monster number iterator over 20.
+    */
     if( monsters_out_of_portal > 20 ) {
         _main_game_object->setState(GameObject::State::disabled);
 

@@ -20,6 +20,9 @@ const int SUCCESS = 1;
 // This method is reponsable to log attempts of changing Stage1Scene attributes.
 void valid_stage1_scene_animations(int validation_code, std::string method_name) {
 
+    /**
+        Print success log accordding with validation code.
+    */
     if (validation_code == SUCCESS) {
         Log::instance.info("Stage1 Scene attributes changed in method: ." 
         + method_name);
@@ -135,6 +138,9 @@ void Stage1Scene::game_logic() {
 */
 void Stage1Scene::bulletAttack() {
 
+    /**
+        Checks if state of bullet1 is disabled
+    */
     if( bullet1->state() == GameObject::State::disabled ) {
 
         bullet_direction_1 = player_controller->get_direction_boby_side();
@@ -160,7 +166,16 @@ void Stage1Scene::bulletAttack() {
     Moves the bullet in the direction selected
 */
 void Stage1Scene::increaseBulletPosition() {
+
+    /**
+        Checks if state of bullet1 is enabled
+    */
     if( bullet1->state() == GameObject::State::enabled ) {
+
+        /**
+            Checks if there is a bullet_direction_1 
+            to be increases.
+        */
         if( bullet_direction_1 ) {
 
             // This line increases the bullet position
@@ -184,6 +199,10 @@ void Stage1Scene::increaseBulletPosition() {
     Disable bullet attack
 */
 void Stage1Scene::disableBullet() {
+    /**
+        Checks if the bullet goes beyond the screen boundaries, 
+        then it is disabled. 
+    */
     if( bullet1->main_positionX > MAXIMUM_SCREEN_WIDTH || bullet1->main_positionX < 0 ) {
         bullet1->setState(GameObject::State::disabled);
 
