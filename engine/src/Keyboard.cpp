@@ -31,6 +31,10 @@ void Keyboard::setKeys( SDL_Event* event ) {
 
     assert(event != NULL);
 
+    /**
+        \note Check what key was pressed to take a decision based on the key
+        pressed.
+    */
     if( event -> type == SDL_KEYDOWN ) {
         keycodes_down.push_back( event -> key.keysym.sym );
     }
@@ -39,62 +43,95 @@ void Keyboard::setKeys( SDL_Event* event ) {
     }
     else if( event -> type == SDL_JOYBUTTONDOWN ) {
 
+        /**
+            \note Check what joystick button was pressed to take a decision
+            based on the joystick button pressed
+        */
         if( ( ( int ) event -> jbutton.button ) == SPACE_JBUTTON ) {
              keycodes_down.push_back( SDLK_SPACE );
-         } else if( ( ( int ) event -> jbutton.button ) == W_JBUTTON ) {
+        }
+        else if( ( ( int ) event -> jbutton.button ) == W_JBUTTON ) {
             keycodes_down.push_back( SDLK_w );
-        } else if( ( ( int ) event -> jbutton.button ) == F_JBUTTON ) {
+        }
+        else if( ( ( int ) event -> jbutton.button ) == F_JBUTTON ) {
             keycodes_down.push_back( SDLK_f );
-        } else if( ( ( int ) event -> jbutton.button ) == RETURN_JBUTTON ) {
+        }
+        else if( ( ( int ) event -> jbutton.button ) == RETURN_JBUTTON ) {
             keycodes_down.push_back( SDLK_RETURN );
-        } else {
+        }
+        else {
             Log::instance.error("Failed to identify joystick down action");
         }
 
     }
     else if( event -> type == SDL_JOYBUTTONUP ) {
 
+        /**
+            \note Check what joystick button was pressed to take a decision
+            based on the joystick button pressed
+        */ 
         if( ( ( int ) event -> jbutton.button ) == SPACE_JBUTTON ) {
             keycodes_up.push_back( SDLK_SPACE );
-        } else if( ( ( int ) event -> jbutton.button ) == W_JBUTTON ) {
+        }
+        else if( ( ( int ) event -> jbutton.button ) == W_JBUTTON ) {
             keycodes_up.push_back( SDLK_w );
-        } else if( ( ( int ) event -> jbutton.button ) == F_JBUTTON ) {
+        }
+        else if( ( ( int ) event -> jbutton.button ) == F_JBUTTON ) {
             keycodes_up.push_back( SDLK_f );
-        } else if( ( ( int ) event -> jbutton.button ) == RETURN_JBUTTON ) {
+        }
+        else if( ( ( int ) event -> jbutton.button ) == RETURN_JBUTTON ) {
             keycodes_up.push_back( SDLK_RETURN );
-        } else {
+        }
+        else {
             Log::instance.error("Failed to identify joystick up action");
         }
+
     }
     else if( event -> type == SDL_JOYAXISMOTION ) {
 
+        /**
+            \note Check what joystick button was pressed to take a decision
+            based on the joystick button pressed
+        */ 
         if( event -> jaxis.axis == HORIZONTAL_JAXIS ) {
 
+            /// \note Verify if direction of axis was to the right.
             if( event -> jaxis.value > POSITIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_d );
-            } else {
+            }
+            else {
                 keycodes_up.push_back( SDLK_d );
             }
 
+            /// \note Verify if direction of axis was to the left.
             if( event -> jaxis.value < NEGATIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_a );
-            } else {
+            }
+            else {
                 keycodes_up.push_back( SDLK_a );
             }
 
-        } else if( event -> jaxis.axis == VERTICAL_JAXIS ) {
+        }
+        else if( event -> jaxis.axis == VERTICAL_JAXIS ) {
+            
+            /// \note Verify if direction of axis was upward.
             if( event -> jaxis.value > POSITIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_s );
-            } else {
+            }
+            else {
                 keycodes_up.push_back( SDLK_s );
             }
 
+            /// \note Verify if direction of axis was downward.
             if( event -> jaxis.value < NEGATIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_w );
-            } else {
+            }
+            else {
                 keycodes_up.push_back( SDLK_w );
             }
-        } else {
+
+        }
+        else {
             Log::instance.error("Failed to identify joystick axis action");
         }
     }
@@ -105,21 +142,23 @@ void Keyboard::setKeys( SDL_Event* event ) {
 }
 
 /**
-    Verify key up
+    Verify key down
     \param key
     \parblock
-        This method verify if key pressed is up
+        This method verify if key pressed is down
     \endparblock
-    \return returns bool to key up or not
+    \return returns bool to key down or not
 */
 bool Keyboard::isKeyDown( std::string key ) {
 
+    /// \note Check if key down was pressed.
     if(m_button_code.count(key) != 0) {
-
         std::list<Uint8>::iterator m_key;
 
+        /// \note Iterate button down.
         for( m_key = keycodes_down.begin() ; m_key != keycodes_down.end() ; m_key++ ) {
 
+            /// \note Check if button down was mapped.
             if( *m_key == m_button_code[key] ) {
                 return true;
             }
@@ -128,9 +167,11 @@ bool Keyboard::isKeyDown( std::string key ) {
             }
 
         }
+
         return false;
 
-    } else {
+    }
+    else {
         Log::instance.error("The '" + key + "' was not mapped");
         return false;
     }
@@ -146,21 +187,27 @@ bool Keyboard::isKeyDown( std::string key ) {
 */
 bool Keyboard::isKeyUp( std::string key ) {
 
+    /// \note Check if key up was pressed.
     if(m_button_code.count(key) != 0) {
 
         std::list<Uint8>::iterator m_key;
 
+        /// \note Iterate button up. 
         for( m_key = keycodes_up.begin() ; m_key != keycodes_up.end() ; m_key++ ) {
+            
+            /// \note Check if button up was mapped.
             if( *m_key == m_button_code[key] ) {
                 return true;
             }
             else {
                 // Do nothing
             }
+
         }
 
         return false;
-    } else {
+    }
+    else {
         Log::instance.error("The '" + key + "' was not mapped");
         return false;
     }
