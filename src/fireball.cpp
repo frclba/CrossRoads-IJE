@@ -16,7 +16,10 @@ const int LIMITED_EXCEEDED = -7;
 
 // This method is reponsable to log attempts of changing fireball attributes.
 void valid_fireball_animations(int validation_code, std::string method_name){ 
- 
+
+    /**
+        Print log accordding with validation code.
+    */
     if(validation_code == NULL_OBJECT){ 
         Log::instance.error("Could not change a fireball attribute in method: '"
             + method_name + "', because an attribute was NULL"); 
@@ -54,15 +57,14 @@ void FireballController::update() {
 
     assert( _main_game_object != NULL );
 
+    /**
+        /note This paragraph checks if the player is in the fireball drop area
+    */
     if(ready_to_fall == true) {
         fall_process();
         initial_position_process();
         valid_fireball_animations(SUCCESS, "FireballController::update");
     }
-
-    /**
-        /note This paragraph checks if the player is in the fireball drop area
-    */
     else {
         last_position_player_x = m_player->main_positionX;
         _main_game_object->main_positionX = last_position_player_x;
@@ -92,6 +94,9 @@ void FireballController::fall_process() {
     */
     Log::instance.info("Adding fireball audio to AudioComponent.");
 
+    /**
+        Checks if fireball state is fall
+    */
     if( ready_to_fall ) {
 
         /**
@@ -117,6 +122,9 @@ void FireballController::initial_position_process() {
 
     assert( _main_game_object != NULL );
 
+    /**
+        Make ready_to_fall false if vertical position of fireball is larger than screen.
+    */
     if (_main_game_object->main_positionY >= MAXIMUM_COORDINATION_Y) {
         _main_game_object->main_positionY = INITIAL_POSITION;
         ready_to_fall = false;
