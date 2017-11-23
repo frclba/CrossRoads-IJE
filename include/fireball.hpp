@@ -37,22 +37,22 @@ public:
 private:
 
     bool init();
-    
+
     void fall_process();
     void initial_position_process();
 
     // Gravity applied to fireball
-    const int gravity = 1;
+    const int current_gravity = 1;
 
     // Variation of y positon of the object
     double variation_position_y = 0.0;
 
     // Player of current game
-    GameObject *m_player = NULL;
+    GameObject * m_player = NULL;
 
     // Last position of Player on the x axis
     int last_position_player_x = 0;
-    
+
     // Boolean to enable fall action
     bool ready_to_fall = false;
 };

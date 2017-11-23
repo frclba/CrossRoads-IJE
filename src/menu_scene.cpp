@@ -23,6 +23,19 @@ const int INICIAL_POSITION_X_LOAD_BUTTON = 300;
 // This line assigns the initial vertical position to load button.
 const int INICIAL_POSITION_Y_LOAD_BUTTON = 400;
 
+// Number defined in a standard format during all code
+const int SUCCESS = 1;
+
+// This method is reponsable to log attempts of changing menu scene attributes.
+void valid_menu_scene_animations(int validation_code, std::string method_name){ 
+ 
+    if(validation_code == SUCCESS){ 
+        Log::instance.info("Menu scene attributes changed in method: ."
+            + method_name); 
+    }
+ 
+}
+
 /**
     This method is responsible for the logic of the game in the scene menu,
     such as the control buttons and the position of the fire on the screen
@@ -39,11 +52,14 @@ void MenuScene::game_logic() {
     menu_fire->main_positionX = INICIAL_POSITION_X_MENU_FIRE;
     menu_fire->main_positionY = INICIAL_POSITION_Y_MENU_FIRE;
 
+    Log::instance.info("Adding menu fire position.");
+
     // Managing buttons on the scene
 
     detect_scene_pass();
     load_button_controller();
     new_game_button_controller();
+    valid_menu_scene_animations(SUCCESS, "MenuScene::game_logic");
 
 }
 
@@ -57,6 +73,7 @@ void MenuScene::detect_scene_pass() {
     */
     if( Game::instance.keyboard->isKeyDown("enter") ) {
         Game::instance.change_scene("initial_story");
+        valid_menu_scene_animations(SUCCESS, "MenuScene::detect_scene_pass");
     }
     else {
         // Do nothing
@@ -80,11 +97,15 @@ void MenuScene::new_game_button_controller() {
     new_game_button->main_positionX = INICIAL_POSITION_X_NEW_GAME_BUTTON;
     new_game_button->main_positionY = INICIAL_POSITION_Y_NEW_GAME_BUTTON;
 
+    Log::instance.info("Adding a new game button in menu.");
+
     // Animation to new game button.
     Animation *new_game_button_animation = (dynamic_cast<Animation*> (
                                 new_game_button->get_component("imageBNew")));
 
     assert(new_game_button_animation != NULL);
+
+    Log::instance.info("Adding new game button animation.");
 
     assert(Game::instance.mouse != NULL);
  
@@ -95,6 +116,7 @@ void MenuScene::new_game_button_controller() {
     if( Game::instance.mouse->is_over(new_game_button) ) {
         if( Game::instance.mouse->is_right_button() ) {
             Game::instance.change_scene("initial_story");
+            valid_menu_scene_animations(SUCCESS, "MenuScene::new_game_button_controller");
         }
         else {
             // Do nothing
@@ -104,8 +126,11 @@ void MenuScene::new_game_button_controller() {
 
         button_hover_in_Sound->play(0,-1);
 
+        Log::instance.info("Adding button sound.");
+
         // Sets 'normal' mode animation to new game button 
         new_game_button_animation->useAnimation("normal");
+        valid_menu_scene_animations(SUCCESS, "MenuScene::new_game_button_controller");
     }
     else {
         // Sets 'mouseON' mode animation to new game button
@@ -130,10 +155,14 @@ void MenuScene::load_button_controller() {
     load_button->main_positionX = INICIAL_POSITION_X_LOAD_BUTTON;
     load_button->main_positionY = INICIAL_POSITION_Y_LOAD_BUTTON;
 
+    Log::instance.info("Adding load button to menu.");
+
     Animation *load_button_animation = (dynamic_cast<Animation*> (
                                  load_button->get_component("imageBLoad")));
                                  
     assert(load_button_animation != NULL);
+
+    Log::instance.info("Adding load button animation.");
 
     button_hover_in_Sound = (dynamic_cast<AudioComponent*> (
                           load_button->get_component(
@@ -152,6 +181,9 @@ void MenuScene::load_button_controller() {
 
         assert(button_hover_in_Sound != NULL);
         button_hover_in_Sound->play(0,-1);
+
+        Log::instance.info("Adding button sound.");
+        valid_menu_scene_animations(SUCCESS, "MenuScene::new_game_button_controller");
     }
     else {
 

@@ -106,7 +106,7 @@ bool ImageComponent::shutdown() {
 */
 void ImageComponent::draw() {
 
-    /** 
+    /**
         Render image components.
     */
     SDL_Rect *render_quad = new SDL_Rect();
@@ -196,6 +196,7 @@ bool ImageComponent::valid_image_measures() {
         return true;
     }
     else {
+        Log::instance.error("image without measurements");
         return false;
     }
 
@@ -213,6 +214,7 @@ bool ImageComponent::valid_image_position(int displacement) {
         return true;
     }
     else {
+        Log::instance.error("image in wrong position");
         return false;
     }
 
