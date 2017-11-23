@@ -74,15 +74,14 @@ void FireballController::update() {
 
     assert( _main_game_object != NULL );
 
+    /**
+        /note This paragraph checks if the player is in the fireball drop area
+    */
     if(ready_to_fall == true) {
         fall_process();
         initial_position_process();
         valid_fireball_animations(SUCCESS, "FireballController::update");
     }
-
-    /**
-        /note This paragraph checks if the player is in the fireball drop area
-    */
     else {
         last_position_player_x = m_player->main_positionX;
         _main_game_object->main_positionX = last_position_player_x;
@@ -109,6 +108,9 @@ void FireballController::fall_process() {
     */
     Log::instance.info("Adding fireball audio to AudioComponent.");
 
+    /**
+        Checks if fireball state is fall
+    */
     if( ready_to_fall ) {
 
         /**

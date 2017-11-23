@@ -22,6 +22,10 @@ void CollisionManager::getCollisions( std::list <GameObject*> *objects ) {
 
     collision_list = objects;
 
+    /**
+         Checks if objects is recienving a NULL list,
+         then a log error message is set.
+    */
     if (objects == NULL) {
         Log::instance.error("The getCollisions method is recieving a NULL list of objects");
     }
@@ -35,6 +39,11 @@ void CollisionManager::getCollisions( std::list <GameObject*> *objects ) {
 
 GameObject* CollisionManager::checkCollision( GameObject* game_object,
                                               std::string type ) {
+
+    /**
+        Checks if collision list is NULL,
+        then a log error message is set.
+    */
     if (collision_list == NULL) {
         Log::instance.error("The list of objects to colide is NULL");
     }
@@ -46,6 +55,7 @@ GameObject* CollisionManager::checkCollision( GameObject* game_object,
 
     for (std::list<GameObject*>::iterator obj = collision_list->begin();
          obj != collision_list->end(); ++obj){
+
         if( ( *obj )->type == type && collide( game_object, *obj ) ) {
             return (*obj);
         }
@@ -65,6 +75,9 @@ GameObject* CollisionManager::checkCollision( GameObject* game_object,
 */
 bool CollisionManager::collide( GameObject* object_1, GameObject* object_2 ) {
 
+    /**
+        Checks if object_1 or object_2 are NULL.
+    */
     if (object_1 == NULL || object_2 == NULL) {
         Log::instance.error("One or both of the objects colliding are NULL");
         return false;
