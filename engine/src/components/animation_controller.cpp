@@ -14,9 +14,11 @@ const int SUCCESS = 1;
 
 void valid_change_animations(int code, std::string method){
 
+  // validades if the name of animation is empty to treat this exception.
   if(code == EMPTY_STRING){
       Log::instance.error("can not change animation, if next_animation is empty, method:" + method);
       exit(0);
+  // validades if change_animation returns 1 = success to treat with log
   }else if(code == SUCCESS){
       Log::instance.info("animation changed");
   }
@@ -58,12 +60,15 @@ bool AnimationControllerComponent::shutdown() {
 */
 void AnimationControllerComponent::update() {
 
+    // Verify if  current animation is a empty string to treat with warning.
     if( current_animation == NO_ANIMATION ) {
         Log::instance.warning("No animations to play!");
     }
     else {
         auto actual_animation = m_animations_map[current_animation];
 
+        // Verify if next animation is not a empty string and actual animation
+        // finished to change animation.
         if( next_animation != NO_ANIMATION && actual_animation->has_finished() ) {
 	        valid_change_animations(change_animations(), "AnimationControllerComponent::update");
         }
@@ -82,7 +87,9 @@ int AnimationControllerComponent::add_animation(std::string name,
     Animation *validates;
     validates = &animation;
 
+    // Validades if animation is NULL or name is empty, to point a int to treat properly
     if(name != "" && validates){
+      // Verifies the existence of animation on animations map through the name.
       if( m_animations_map.find(name) != m_animations_map.end() ) {
           Log::instance.warning("Animation " + name + " already exists!");
       }
@@ -92,6 +99,7 @@ int AnimationControllerComponent::add_animation(std::string name,
 
       m_animations_map[name] = &animation;
 
+      // Verifies the animations map size to set a current animation.
       if( m_animations_map.size() == HAVE_ANIMATION ) {
           current_animation = name;
       }
@@ -103,9 +111,11 @@ int AnimationControllerComponent::add_animation(std::string name,
       return SUCCESS;
 
     }
+    // return -3 to point that need a treatment for null object
     else if(!validates){
       return NULL_OBJECT;
     }
+    // return -2 to point that need a treatment for empty string
     else{
       return EMPTY_STRING;
     }
@@ -123,8 +133,9 @@ int AnimationControllerComponent::add_animation(std::string name,
     \endparblock
 */
 int AnimationControllerComponent::play_animation(std::string name,
-                                                  bool wait_to_finish) {
+                                                 bool wait_to_finish) {
 
+    // Validates if animations name is empty, to point a int to treat properly
     if( name != "" ){
       next_animation = name;
       m_animations_map[current_animation]->flipping(flip);
@@ -139,6 +150,7 @@ int AnimationControllerComponent::play_animation(std::string name,
       }
       return SUCCESS;
     }
+    // return -2 to point that need a treatment for empty string
     else{
       return EMPTY_STRING;
     }
@@ -150,6 +162,7 @@ int AnimationControllerComponent::play_animation(std::string name,
 */
 int AnimationControllerComponent::change_animations() {
 
+    // Validates if next animation name is empty, to point a int to treat properly
     if(next_animation != ""){
         auto animation = m_animations_map[current_animation];
         animation->disable();
@@ -162,6 +175,8 @@ int AnimationControllerComponent::change_animations() {
         animation->enable();
         animation->setup();
         return SUCCESS;
+        
+    // return -2 to point that need a treatment for empty string
     }else{
         return EMPTY_STRING;
     }
