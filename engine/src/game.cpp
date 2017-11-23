@@ -12,13 +12,119 @@ using namespace engine;
 
 Game Game::instance;
 
+/**
+  creates a new game instance
+*/
+
+bool Game::run() {
+
+    current_state = State::init;
+
+    if( start_sdl() && create_window() ) {
+        Log::instance.info("Iniciando o jogo");
+
+        current_state = State::main_loop;
+
+        unsigned int frame_time = 1000.0 / FRAME;
+
+        timer -> start();
+
+        if( current_scene != NULL ) {
+            current_state = State::main_loop_change_scene;
+        }
+        else {
+            Log::instance.warning("There is no current scene");
+        }
+
+        while( current_state != State::exit_loop ) {
+            if( handle_scene_changes() ) {
+                SDL_Event evt;
+
+                //get mouse position
+                mouse -> set_position();
+
+                while( SDL_PollEvent(&evt) != 0 ) {
+                    if( evt.type == SDL_QUIT ) {
+                        current_state = State::exit_loop;
+                    }
+                    else {
+                        // Do nothing
+                    }
+
+                    keyboard -> setKeys(&evt);
+
+                    if( evt.type == SDL_KEYDOWN ) {
+                        switch( evt.key.keysym.sym ) {
+                            case SDLK_SPACE:
+
+                            //Log::instance.debug("teste teclado");
+
+                            //Keyboard::isKeyDown(keycode::KEY_SPACE);
+
+                            break;
+                        }
+                    }
+                    else {
+                        // Do nothing
+                    }
+                }
+
+                //	current_scene->get_collide_objects();
+
+                collision_manager -> getCollisions(current_scene -> get_collide_objects());
+                current_scene -> update();
+                current_scene -> game_logic();
+
+                /// \note Clears the Canvas viewed by the user
+                SDL_RenderClear(main_canvas);
+
+                /// \note Draw in the secondary buffer
+                current_scene -> draw();
+
+                /// \note Displays the Secondary Canvas for the user
+                SDL_RenderPresent(main_canvas);
+
+                if( frame_time > timer-> get_elapseTime() ) {
+                    SDL_Delay(timer -> get_elapseTime());
+                }
+                else {
+                    // Do nothing
+                }
+
+                keyboard -> clearKeyboard();
+                current_scene -> clear_collide_objects();
+                timer -> set_TimeStep();
+            } else {
+                break;
+            }
+        }
+
+        Log::instance.info( "Cleaning scene..." );
+        if( current_scene ) {
+            current_scene -> shutdown();
+        }
+        else {
+            // Do nothing
+        }
+
+        Log::instance.info("Game shutdown");
+        current_state = State::shutdown;
+        destroy_window();
+        off_sdl();
+
+        return true;
+    } else {
+        Log::instance.error("Failied to run game instance");
+        return false;
+    }
+
+}
 
 /**
   Sets the name and window size of the game
   \param name set the name of the game
   \param window_size sets the size of the window
 */
-
 int Game::set_properties(std::string name, std::pair<int, int> window_size) {
 
     if(name != "") {
@@ -204,117 +310,6 @@ void Game::off_sdl() {
     SDL_Quit();
 
 }
-
-
-
-/**
-  creates a new game instance
-*/
-
-bool Game::run() {
-
-    current_state = State::init;
-
-    if( start_sdl() && create_window() ) {
-        Log::instance.info("Iniciando o jogo");
-
-        current_state = State::main_loop;
-
-        unsigned int frame_time = 1000.0 / FRAME;
-
-        timer -> start();
-
-        if( current_scene != NULL ) {
-            current_state = State::main_loop_change_scene;
-        }
-        else {
-            Log::instance.warning("There is no current scene");
-        }
-
-        while( current_state != State::exit_loop ) {
-            if( handle_scene_changes() ) {
-                SDL_Event evt;
-
-                //get mouse position
-                mouse -> set_position();
-
-                while( SDL_PollEvent(&evt) != 0 ) {
-                    if( evt.type == SDL_QUIT ) {
-                        current_state = State::exit_loop;
-                    }
-                    else {
-                        // Do nothing
-                    }
-
-                    keyboard -> setKeys(&evt);
-
-                    if( evt.type == SDL_KEYDOWN ) {
-                        switch( evt.key.keysym.sym ) {
-                            case SDLK_SPACE:
-
-                            //Log::instance.debug("teste teclado");
-
-                            //Keyboard::isKeyDown(keycode::KEY_SPACE);
-
-                            break;
-                        }
-                    }
-                    else {
-                        // Do nothing
-                    }
-                }
-
-                //	current_scene->get_collide_objects();
-
-                collision_manager -> getCollisions(current_scene -> get_collide_objects());
-                current_scene -> update();
-                current_scene -> game_logic();
-
-                /// \note Clears the Canvas viewed by the user
-                SDL_RenderClear(main_canvas);
-
-                /// \note Draw in the secondary buffer
-                current_scene -> draw();
-
-                /// \note Displays the Secondary Canvas for the user
-                SDL_RenderPresent(main_canvas);
-
-                if( frame_time > timer-> get_elapseTime() ) {
-                    SDL_Delay(timer -> get_elapseTime());
-                }
-                else {
-                    // Do nothing
-                }
-
-                keyboard -> clearKeyboard();
-                current_scene -> clear_collide_objects();
-                timer -> set_TimeStep();
-            } else {
-                break;
-            }
-        }
-
-        Log::instance.info( "Cleaning scene..." );
-        if( current_scene ) {
-            current_scene -> shutdown();
-        }
-        else {
-            // Do nothing
-        }
-
-        Log::instance.info("Game shutdown");
-        current_state = State::shutdown;
-        destroy_window();
-        off_sdl();
-
-        return true;
-    } else {
-        Log::instance.error("Failied to run game instance");
-        return false;
-    }
-
-}
-
 
 /**
   adds a scene for the current game
