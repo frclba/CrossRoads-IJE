@@ -24,18 +24,20 @@ bool GameObject::init() {
         Iterates over the main components by initializing them
     */
 
+    
+    // Initialize gameobject's components
     for( index_component_pair id_componentlist: main_components ) {
         for ( Component * component: id_componentlist.second ) {
             assert(component != NULL);
             if( component->init() == true ) {
                 // Do nothing
-            }
-            else {
+            } // If
+            else { 
 		Log::instance.error("The object with id: "+component->component_id+" has failed to initialize.");
                 exit(-1);
-            }
-        }
-    }
+            } // Else
+        } // Internal for 
+    } // External for -- After all of the components have been initialized
 
 
 
@@ -57,20 +59,23 @@ bool GameObject::shutdown() {
         Iterates over the main components by shut them down.
     */
 
+
+    // Shutdown gameobject's components
     for( index_component_pair id_componentList: main_components ) {
         for( Component * component:id_componentList.second ) {
             assert(component != NULL);
+            
             if( component->state() != Component::State::enabled ||
                 component->shutdown() == true ) {
                     // Do nothing
-            }
+            } // if
 
             else {
-		Log::instance.error("The component " +component->component_id + " has failed to shutting down.");
+	    	        Log::instance.error("The component " +component->component_id + " has failed to shutting down.");
                 return false;
-            }
-        }
-    }
+            } // else 
+        } // internal for
+    } // external for - after all of the gameobject's components have been shutdown
 
     return true;
 
@@ -88,7 +93,8 @@ void GameObject::draw_image_component() {
         Iterates over the main components by drawing their images
     */
 
-
+    
+    // draw main's components whose type are imageComponent
     for( Component * component:
          main_components[std::type_index(typeid(ImageComponent))]) {
 
@@ -99,6 +105,7 @@ void GameObject::draw_image_component() {
             component of the image and draws it on the screen.
             */
 
+           // Only draws if the component state is enabled
            if( component->state() == Component::State::enabled ) {
 
                (dynamic_cast<ImageComponent *>(component))->draw();
@@ -108,15 +115,15 @@ void GameObject::draw_image_component() {
 	         
            }
            else {
-	       Log::instance.warning(component->component_id + " has not been drawed");
+	            Log::instance.warning(component->component_id + " has not been drawed");
            }
 
-    }
-
-}
+    } // internal for
+} // external for - when all of the main's image components have been drawn
 
 void GameObject::draw_animation() {
 
+    // draw the animation of the image components  
     for( Component * component:
         main_components[std::type_index(typeid(Animation))]) {
             assert(component != NULL);
@@ -127,15 +134,14 @@ void GameObject::draw_animation() {
 
             if( component->state() == Component::State::enabled ) {
                 (dynamic_cast<Animation *>(component))->draw();
-		Log::instance.info(component->component_id+" had it animation been drawed");
+	              Log::instance.info(component->component_id+" had it animation been drawed");
 	    }
             else {
-		Log::instance.warning(component->component_id + " has not been drawed");
+		            Log::instance.warning(component->component_id + " has not been drawed");
             }
 
-    }
-
-}
+    } // internal for 
+} //  external for - reached when all of the main's image components have been drawn
 
 
 bool GameObject::draw() {
@@ -207,18 +213,19 @@ void GameObject::update() {
     /**
         Iterates over main components by updating their state.
     */
-
+  
+    // updates the state of the main components
     for( index_component_pair id_componentlist: main_components ) {
         for( Component * component: id_componentlist.second ) {
             assert(component != NULL);
-	        if( component->state() == Component::State::enabled) { // Only updates components whose state are enabled
+	          if( component->state() == Component::State::enabled) { // Only updates components whose state are enabled
                 component->update();
-	        }
+	          } // if
             else {
-		    Log::instance.warning(component->component_id + "has not been updated");
-            }
-        }
-    }
+		            Log::instance.warning(component->component_id + "has not been updated");
+            } // else
+        } // internal for
+    } // external for - after all of the main components have been updated
 
 }
 
@@ -239,7 +246,8 @@ Component* GameObject::get_component(std::string name) {
         Searches the main components for the component
         given its name.
     */
-
+    
+    // if the given string is not empty
     if( name != "" ) {
 
 	   // Do nothing
@@ -253,19 +261,19 @@ Component* GameObject::get_component(std::string name) {
 
     } 
 
-
+    // searche on the main's components for the component of the given name
     for( index_component_pair id_componentList: main_components ) {
         for( Component * component:id_componentList.second ) {
             if( component->component_id == name ) {
                 assert(component != NULL);
-		Log::instance.info("Component whose name is " + name + " has been found");
+		            Log::instance.info("Component whose name is " + name + " has been found");
                 return component;
-            }
+            } // if
             else {
                 // Do nothing
-            }
-        }
-    }
+            } // else  
+        } // internal for
+    } // external for - after been searched on all components
 
     /**
         Adds an entry to log telling you that the given component was not found
