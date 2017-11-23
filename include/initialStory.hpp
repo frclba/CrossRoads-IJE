@@ -24,7 +24,7 @@ using namespace engine;
 class InitialStory : public Component{
 
     public:
-        InitialStory( GameObject &main_game_object, std::string id, 
+        InitialStory( GameObject &main_game_object, std::string id,
                     AnimationControllerComponent* story ):
 
         Component(main_game_object, id),m_story(story){}
@@ -46,7 +46,7 @@ class InitialStory : public Component{
             Iterator used to choose an animation of the story
             according to the time step
         */
-        unsigned int iterator;
+        unsigned int story_iterator;
 
 };
 

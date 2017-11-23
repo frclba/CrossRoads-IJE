@@ -10,9 +10,11 @@ const int TIME_STEP_INCREASE = 500 * 6;
 const int SUCCESS = 1;
 
 // This method is reponsable to log attempts of changing initialStory attributes.
-void valid_initial_story_animations(int validation_code, std::string method_name)
-{
-
+void valid_initial_story_animations(int validation_code, std::string method_name){
+    
+    /**
+        Print log accordding with validation code.
+    */
     if (validation_code == SUCCESS)
     {
         Log::instance.info("Initial story attributes changed in method: ." + method_name);
@@ -25,9 +27,8 @@ InitialStory::~InitialStory(){}
     This method initiates the class InitialStory
     initiates que iteration in 0.
 */
-
 bool InitialStory::init() {
-    iterator = 0;
+    story_iterator = 0;
 
     return true;
 }
@@ -35,9 +36,12 @@ bool InitialStory::init() {
 /**
     This method is responsible for switching between storys
 */
-void switchStories(int iterator, AnimationControllerComponent *m_story) {
+void switchStories(int story_iterator, AnimationControllerComponent *m_story) {
 
-    switch ( iterator ) {
+    /**
+        /note This paragraph takes care of the transition between the stages
+    */
+    switch ( story_iterator ) {
         case 1: {
             m_story->play_animation( "story1" );
             break;
@@ -67,6 +71,11 @@ void switchStories(int iterator, AnimationControllerComponent *m_story) {
     This method is responsible for starting the game by pressing the enter key
 */
 void startByEnter() {
+
+    /**
+        /note This paragraph verify if the enter key is pressed and
+        star the game
+    */
     if( Game::instance.keyboard->isKeyDown( "enter" ) ) {
         Game::instance.change_scene("Fase 1");
 
@@ -84,8 +93,15 @@ void InitialStory::update() {
 
   m_story->flipping( false );
 
+  /**
+      /note This paragraph is responsible for counting the time in the stage
+  */
   if( time_step < Game::instance.timer->getTicks() ) {
-      iterator = iterator + 1;
+      story_iterator = story_iterator + 1;
+      /**
+          /note This line use function getTicks() to count time step and use
+          the variable TIME_STEP_INCREASE to make the time pass
+      */
       time_step = Game::instance.timer->getTicks() + TIME_STEP_INCREASE;
 
       valid_initial_story_animations(SUCCESS, "InitialStory::update");
@@ -96,6 +112,6 @@ void InitialStory::update() {
 
   startByEnter();
 
-  switchStories(iterator, m_story);
+  switchStories(story_iterator, m_story);
 
 }
