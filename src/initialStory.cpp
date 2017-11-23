@@ -9,19 +9,16 @@ const int TIME_STEP_INCREASE = 500 * 6;
 // Number defined in a standard format during all code
 const int SUCCESS = 1;
 
+InitialStory::~InitialStory(){}
+
 // This method is reponsable to log attempts of changing initialStory attributes.
-void valid_initial_story_animations(int validation_code, std::string method_name){
-    
-    /**
-        Print log accordding with validation code.
-    */
+void valid_initial_story_animations(int validation_code, std::string method_name) {
+
     if (validation_code == SUCCESS)
     {
         Log::instance.info("Initial story attributes changed in method: ." + method_name);
     }
 }
-
-InitialStory::~InitialStory(){}
 
 /**
     This method initiates the class InitialStory
@@ -68,25 +65,6 @@ void switchStories(int story_iterator, AnimationControllerComponent *m_story) {
 }
 
 /**
-    This method is responsible for starting the game by pressing the enter key
-*/
-void startByEnter() {
-
-    /**
-        /note This paragraph verify if the enter key is pressed and
-        star the game
-    */
-    if( Game::instance.keyboard->isKeyDown( "enter" ) ) {
-        Game::instance.change_scene("Fase 1");
-
-        valid_initial_story_animations(SUCCESS, "startByEnter");
-    }
-    else {
-        // Do nothing
-    }
-}
-
-/**
     This method is responsible for updating in the game for stories initial
 */
 void InitialStory::update() {
@@ -114,4 +92,23 @@ void InitialStory::update() {
 
   switchStories(story_iterator, m_story);
 
+}
+
+/**
+    This method is responsible for starting the game by pressing the enter key
+*/
+void InitialStory::startByEnter() {
+
+    /**
+        /note This paragraph verify if the enter key is pressed and
+        star the game
+    */
+    if( Game::instance.keyboard->isKeyDown( "enter" ) ) {
+        Game::instance.change_scene("Fase 1");
+
+        valid_initial_story_animations(SUCCESS, "startByEnter");
+    }
+    else {
+        // Do nothing
+    }
 }

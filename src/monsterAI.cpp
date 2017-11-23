@@ -19,12 +19,111 @@ const int MAX_SCREEN_WIDTH = 800;
 const int PLAYER_DISTANCE_ITERATOR = 100;
 const int TIME_STEP_ITERATOR = 1000;
 
-int MonsterAI::getLifePoints() {
-    return life_points;
+/**
+    This method initiates the Class MonsterAI in the game
+    \return return a true value that make the MonsterAI active
+*/
+bool MonsterAI::init() {
+
+    /**
+        Initializes the monster position, movement speed and life points.
+    */
+
+    _main_game_object->main_positionY = GROUND - _main_game_object->main_height; // Gets the current monster's y position.
+    _main_game_object->main_positionX = 400; // Monster is initialized at the right side of the scene.
+    horizontal_motion_units = ( rand() % 3 ) + 1; // Monster movement units varies from 1 to 3.
+    setLifePoints(2);
+
+    return true;
 }
 
-void MonsterAI::setLifePoints(int lifePoints) {
-    life_points = lifePoints;
+/**
+    This method is responsible for updating the monster in walk and attack que monster in the game.
+*/
+void MonsterAI::update() {
+
+    assert(_main_game_object != NULL);
+
+    m_monster_controler->play_animation("monster_walk", true);
+
+    apply_gravity();
+
+    /**
+        Updates the state and behavior of the monster object.
+    */
+
+    move_monster();
+    receive_damage();
+    process_position();
+    jump_monster();
+
+    /**
+        Sets the state of the monster object to disable if it isn't
+        on valid area.
+    */
+
+    if( _main_game_object->main_positionX < 0 || // If a monster is outter screen, its state is seted to disabled.
+        _main_game_object->main_positionX +
+        _main_game_object->main_width > MAX_SCREEN_WIDTH ) {
+        _main_game_object->setState(GameObject::State::disabled);
+    }
+
+    /**
+        Checks if monster is within player's range, and executes an
+        attack.
+    */
+
+    if( Game::instance.collision_manager->checkCollision(
+        _main_game_object, "player") ) {
+        m_monster_controler->play_animation("monster_attack");
+    }
+}
+
+/**
+This method is responsible for move monster in direction the player in the game
+
+*/
+void MonsterAI::move_monster() {
+
+    bool seeing_player = sees_player();
+
+    assert(m_player != NULL);
+
+    /**
+        Moves the monster based on his relative position to the player.
+    */
+
+    if( seeing_player && !has_damage &&
+        m_player->main_positionX > _main_game_object->main_positionX ) {
+            m_monster_controler->flipping(true);
+            _main_game_object->main_positionX += horizontal_motion_units;
+    }
+
+    if( seeing_player && !has_damage &&
+        m_player->main_positionX < _main_game_object->main_positionX ) {
+            m_monster_controler->flipping(false);
+            _main_game_object->main_positionX -= horizontal_motion_units;
+    }
+}
+
+/**
+    This method is responsible for possibility the monster jump in the game
+*/
+void MonsterAI::jump_monster() {
+
+    assert(Game::instance.collision_manager != NULL);
+
+    bool on_ground = Game::instance.collision_manager->checkCollision(m_player,
+                      "ground");
+
+    /**
+        Executes a monster's jump if the player is not on the ground.
+    */
+
+    if( sees_player() && on_ground &&
+        _main_game_object->main_positionY > m_player->main_positionY ) {
+        vertical_position -= JUMP_SIZE; // JUMP_SIZE decreases vertical_position cause vertical_position decreases upwards.
+    }
 }
 
 /**
@@ -111,54 +210,6 @@ void MonsterAI::receive_damage() {
 }
 
 /**
-This method is responsible for move monster in direction the player in the game
-
-*/
-void MonsterAI::move_monster() {
-
-    bool seeing_player = sees_player();
-
-    assert(m_player != NULL);
-
-    /**
-        Moves the monster based on his relative position to the player.
-    */
-
-    if( seeing_player && !has_damage &&
-        m_player->main_positionX > _main_game_object->main_positionX ) {
-            m_monster_controler->flipping(true);
-            _main_game_object->main_positionX += horizontal_motion_units;
-    }
-
-    if( seeing_player && !has_damage &&
-        m_player->main_positionX < _main_game_object->main_positionX ) {
-            m_monster_controler->flipping(false);
-            _main_game_object->main_positionX -= horizontal_motion_units;
-    }
-}
-
-/**
-    This method is responsible for possibility the monster jump in the game
-*/
-
-void MonsterAI::jump_monster() {
-
-    assert(Game::instance.collision_manager != NULL);
-
-    bool on_ground = Game::instance.collision_manager->checkCollision(m_player,
-                      "ground");
-
-    /**
-        Executes a monster's jump if the player is not on the ground.
-    */
-
-    if( sees_player() && on_ground &&
-        _main_game_object->main_positionY > m_player->main_positionY ) {
-        vertical_position -= JUMP_SIZE; // JUMP_SIZE decreases vertical_position cause vertical_position decreases upwards.
-    }
-}
-
-/**
     This method is responsible for possibility the monster to see player in the game
     \return return true for prayer see and false see not player
 */
@@ -207,67 +258,12 @@ bool MonsterAI::has_ground() {
     return false;
 }
 
-
-/**
-    This method initiates the Class MonsterAI in the game
-    \return return a true value that make the MonsterAI active
-*/
-
-bool MonsterAI::init() {
-
-    /**
-        Initializes the monster position, movement speed and life points.
-    */
-
-    _main_game_object->main_positionY = GROUND - _main_game_object->main_height; // Gets the current monster's y position.
-    _main_game_object->main_positionX = 400; // Monster is initialized at the right side of the scene.
-    horizontal_motion_units = ( rand() % 3 ) + 1; // Monster movement units varies from 1 to 3.
-    setLifePoints(2);
-
-    return true;
+int MonsterAI::getLifePoints() {
+    return life_points;
 }
 
-/**
-    This method is responsible for updating the monster in walk and attack que monster in the game.
-*/
-
-void MonsterAI::update() {
-
-    assert(_main_game_object != NULL);
-
-    m_monster_controler->play_animation("monster_walk", true);
-
-    apply_gravity();
-
-    /**
-        Updates the state and behavior of the monster object.
-    */
-
-    move_monster();
-    receive_damage();
-    process_position();
-    jump_monster();
-
-    /**
-        Sets the state of the monster object to disable if it isn't
-        on valid area.
-    */
-
-    if( _main_game_object->main_positionX < 0 || // If a monster is outter screen, its state is seted to disabled.
-        _main_game_object->main_positionX +
-        _main_game_object->main_width > MAX_SCREEN_WIDTH ) {
-        _main_game_object->setState(GameObject::State::disabled);
-    }
-
-    /**
-        Checks if monster is within player's range, and executes an
-        attack.
-    */
-
-    if( Game::instance.collision_manager->checkCollision(
-        _main_game_object, "player") ) {
-        m_monster_controler->play_animation("monster_attack");
-    }
+void MonsterAI::setLifePoints(int lifePoints) {
+    life_points = lifePoints;
 }
 
 MonsterAI::~MonsterAI() {}
