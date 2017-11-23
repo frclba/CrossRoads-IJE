@@ -12,16 +12,8 @@ const int SUCCESS = 1;
 InitialStory::~InitialStory(){}
 
 // This method is reponsable to log attempts of changing initialStory attributes.
-<<<<<<< HEAD
 void valid_initial_story_animations(int validation_code, std::string method_name) {
 
-=======
-void valid_initial_story_animations(int validation_code, std::string method_name){
-    
-    /**
-        Print log accordding with validation code.
-    */
->>>>>>> 01a3dae5972a953fcfbd359c74d1cb735faa3d37
     if (validation_code == SUCCESS)
     {
         Log::instance.info("Initial story attributes changed in method: ." + method_name);
