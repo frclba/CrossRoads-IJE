@@ -10,9 +10,11 @@ const int TIME_STEP_INCREASE = 500 * 6;
 const int SUCCESS = 1;
 
 // This method is reponsable to log attempts of changing initialStory attributes.
-void valid_initial_story_animations(int validation_code, std::string method_name)
-{
-
+void valid_initial_story_animations(int validation_code, std::string method_name){
+    
+    /**
+        Print log accordding with validation code.
+    */
     if (validation_code == SUCCESS)
     {
         Log::instance.info("Initial story attributes changed in method: ." + method_name);
