@@ -12,18 +12,7 @@ const int EMPTY_STRING = -2;
 const int NULL_OBJECT = -3;
 const int SUCCESS = 1;
 
-void valid_change_animations(int code, std::string method){
-
-  // validades if the name of animation is empty to treat this exception.
-  if(code == EMPTY_STRING){
-      Log::instance.error("can not change animation, if next_animation is empty, method:" + method);
-      exit(0);
-  // validades if change_animation returns 1 = success to treat with log
-  }else if(code == SUCCESS){
-      Log::instance.info("animation changed");
-  }
-
-}
+void valid_change_animations(int code, std::string method);
 
 
 /**
@@ -40,16 +29,6 @@ bool AnimationControllerComponent::init() {
             id_animation.second->enable();
         }
     }
-
-    return true;
-
-}
-
-/**
-    This method closes the AnimationControllerComponent in the game
-    \return true value to disabled the component
-*/
-bool AnimationControllerComponent::shutdown() {
 
     return true;
 
@@ -175,7 +154,7 @@ int AnimationControllerComponent::change_animations() {
         animation->enable();
         animation->setup();
         return SUCCESS;
-        
+
     // return -2 to point that need a treatment for empty string
     }else{
         return EMPTY_STRING;
@@ -194,5 +173,28 @@ int AnimationControllerComponent::change_animations() {
 void AnimationControllerComponent::flipping(bool is_flip) {
 
     flip = is_flip;
+
+}
+
+/**
+    This method closes the AnimationControllerComponent in the game
+    \return true value to disabled the component
+*/
+bool AnimationControllerComponent::shutdown() {
+
+    return true;
+
+}
+
+void valid_change_animations(int code, std::string method){
+
+  // validades if the name of animation is empty to treat this exception.
+  if(code == EMPTY_STRING){
+      Log::instance.error("can not change animation, if next_animation is empty, method:" + method);
+      exit(0);
+  // validades if change_animation returns 1 = success to treat with log
+  }else if(code == SUCCESS){
+      Log::instance.info("animation changed");
+  }
 
 }

@@ -18,21 +18,7 @@ const int BACKGROUND_IMAGE_MAXIMUM = 2190;
 const int SUCCESS = 1;
 
 // This method is reponsable to log attempts of changing Stage1Scene attributes.
-void valid_stage1_scene_animations(int validation_code, std::string method_name) {
-
-    if (validation_code == SUCCESS) {
-        Log::instance.info("Stage1 Scene attributes changed in method: ." 
-        + method_name);
-    }
-}
-
-void Stage1Scene::setTimeStep(unsigned int timeStep) {
-    timestep = timeStep;
-}
-
-unsigned int Stage1Scene::getTimeStep() {
-    return timestep;
-}
+void valid_stage1_scene_animations(int validation_code, std::string method_name);
 
 /**
     Initializes the scene of the first stage and assigns behavior in his
@@ -112,12 +98,12 @@ void Stage1Scene::game_logic() {
         is_inside(monster2) ||
         is_inside(monster3) ||
         is_inside(monster4) ) {
-        
-        // This line disable the background image camera. 
+
+        // This line disable the background image camera.
         background_image->enable_camera = false;
         go_arrow->setState(GameObject::State::disabled);
 
-        valid_stage1_scene_animations(SUCCESS, "Stage1Scene::game_logic");        
+        valid_stage1_scene_animations(SUCCESS, "Stage1Scene::game_logic");
     }
     else {
 
@@ -131,6 +117,34 @@ void Stage1Scene::game_logic() {
 }
 
 /**
+    Check if a object is inside the scene
+    \param object
+    \parblock
+        Is a input parameter that represents an object of the game(!=NULL)
+    \endparblock
+    \return true is inside
+    \return false isn't inside
+*/
+bool Stage1Scene::is_inside( GameObject* object ) {
+
+    assert(object != NULL);
+
+    /**
+        \note in the condition of this line the object is tested beyond the limits of the screen
+    */
+    if( object->state() == GameObject::State::enabled &&
+      ( object->main_positionX > 0 || object->main_positionX +
+                                      object->main_width < MAXIMUM_SCREEN_WIDTH ) ) {
+
+        return true;
+
+    }
+    else {
+        return false;
+    }
+}
+
+/**
     Is responsible for starting the bullet attack
 */
 void Stage1Scene::bulletAttack() {
@@ -138,7 +152,7 @@ void Stage1Scene::bulletAttack() {
     if( bullet1->state() == GameObject::State::disabled ) {
 
         bullet_direction_1 = player_controller->get_direction_boby_side();
-        
+
         // This line assigns horizontal position to bullet.
         bullet1->main_positionX = player->main_positionX +
                                   player->main_width;
@@ -228,32 +242,20 @@ void Stage1Scene::bullet() {
 
 }
 
-/**
-    Check if a object is inside the scene
-    \param object
-    \parblock
-        Is a input parameter that represents an object of the game(!=NULL)
-    \endparblock
-    \return true is inside
-    \return false isn't inside
-*/
-bool Stage1Scene::is_inside( GameObject* object ) {
+void valid_stage1_scene_animations(int validation_code, std::string method_name) {
 
-    assert(object != NULL);
-
-    /**
-        \note in the condition of this line the object is tested beyond the limits of the screen
-    */
-    if( object->state() == GameObject::State::enabled &&
-      ( object->main_positionX > 0 || object->main_positionX +
-                                      object->main_width < MAXIMUM_SCREEN_WIDTH ) ) {
-
-        return true;
-
+    if (validation_code == SUCCESS) {
+        Log::instance.info("Stage1 Scene attributes changed in method: ."
+        + method_name);
     }
-    else {
-        return false;
-    }
+}
+
+void Stage1Scene::setTimeStep(unsigned int timeStep) {
+    timestep = timeStep;
+}
+
+unsigned int Stage1Scene::getTimeStep() {
+    return timestep;
 }
 
 Stage1Scene::~Stage1Scene(){
