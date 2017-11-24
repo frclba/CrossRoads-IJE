@@ -8,6 +8,7 @@
 
 #include <string>
 #include <utility>
+#include <assert.h>
 
 #include "sdl2core.hpp"
 #include "components/component.hpp"
