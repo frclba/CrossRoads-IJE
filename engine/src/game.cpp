@@ -127,6 +127,8 @@ bool Game::run() {
 */
 int Game::set_properties(std::string name, std::pair<int, int> window_size) {
 
+    assert(name != "");
+
     /**
         Check if name is valid
     */
@@ -392,6 +394,8 @@ bool Game::add_scene(Scene &scene) {
 */
 
 bool Game::change_scene(const std::string &id) {
+
+    assert(id != "");
 
     /**
         Check if id is valid.

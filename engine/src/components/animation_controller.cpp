@@ -84,6 +84,8 @@ void AnimationControllerComponent::update() {
 int AnimationControllerComponent::add_animation(std::string name,
                                                  Animation & animation) {
 
+    assert(name != "");
+
     Animation *validates;
     validates = &animation;
 
@@ -134,6 +136,8 @@ int AnimationControllerComponent::add_animation(std::string name,
 */
 int AnimationControllerComponent::play_animation(std::string name,
                                                  bool wait_to_finish) {
+
+    assert(name != "");
 
     // Validates if animations name is empty, to point a int to treat properly
     if( name != "" ){

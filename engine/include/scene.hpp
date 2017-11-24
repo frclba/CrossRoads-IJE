@@ -8,6 +8,8 @@
 #include <string>
 #include <unordered_map>
 #include <list>
+#include <assert.h>
+
 #include "sdl2core.hpp"
 #include "gameobject.hpp"
 
