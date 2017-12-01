@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include <utility>
 #include <list>
+#include <assert.h>
 
 #include "sdl2core.hpp"
 

@@ -35,6 +35,7 @@ class InitialStory : public Component{
 
     private:
         bool init();
+        void startByEnter();
 
         //  Story that will start an animation
         AnimationControllerComponent *m_story;

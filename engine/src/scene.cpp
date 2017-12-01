@@ -51,6 +51,8 @@ bool Scene::add_game_object(GameObject &object) {
 */
 GameObject &Scene::get_game_object(const std::string &id) {
 
+    assert(id != "");
+
     Log::instance.info("Get GameObject '" + id + "' in Scene.");
     // checks if the given string is not empty
     if( id != "" ) {
@@ -76,6 +78,8 @@ GameObject &Scene::get_game_object(const std::string &id) {
     \return false if game object is does not exists
 */
 bool Scene::remove_game_object(const std::string &id) {
+
+    assert(id != "");
 
     Log::instance.info("Removendo GameObject '" + id + "' da Scene.");
     // checks if the given string was not empty

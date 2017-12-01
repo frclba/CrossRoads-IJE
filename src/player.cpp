@@ -236,6 +236,9 @@ void Player::apply_attack_ranged() {
     assert(animation_controller != NULL);
     assert(_main_game_object != NULL);
 
+    /**
+        \note Check the attack is in range to play animation and sound
+    */
     if( get_is_attacking_ranged() ) {
 
       valid_play_animation(animation_controller->play_animation("player_attack"), "Player::apply_attack_ranged");
@@ -264,6 +267,10 @@ void Player::detect_boby_side() {
     assert(_main_game_object != NULL);
     assert(attack_box_dimensions != NULL);
 
+    /**
+        \note Verify if the body is in the right direction to direct the attack
+        \note box in the right direction
+    */
     if( direction_boby_side == RIGHT ) {
         attack_box_dimensions->main_positionX = _main_game_object->main_positionX +
                                                 _main_game_object->main_width;
@@ -347,6 +354,9 @@ void Player::apply_move_right() {
     assert(_main_game_object != NULL);
     assert(animation_controller != NULL);
 
+    /**
+        \note Check the if the character has hitted the right corner
+    */
     if( is_walking_right && ( _main_game_object->main_positionX +
                    _main_game_object->main_width) < MAXIMUM_COORDINATION_X ) {
 
@@ -403,7 +413,11 @@ void Player::apply_move_left() {
     assert(_main_game_object != NULL);
     assert(animation_controller != NULL);
 
-    if( is_walking_left
+
+    /**
+        \note Check the if the character has hitted the left corner
+    */
+    if( is_walking_left 
         && ( _main_game_object->main_positionX ) >= MINIMUM_COORDINATION_X ) {
 
        /**
