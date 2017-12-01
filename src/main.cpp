@@ -41,18 +41,7 @@ const int EMPTY_STRING = -2;
 const int NULL_OBJECT = -3;
 const int SUCCESS = 1;
 
-void valid_add_animation(int code){
-    if(code == EMPTY_STRING){
-        Log::instance.error("Fail to add a animation, param ""name"" is empty");
-        exit(0);
-    }else if(code == NULL_OBJECT){
-        Log::instance.error("Fail to add a animation, param ""animation"" is NULL");
-        exit(0);
-    }else if(code == SUCCESS){
-        Log::instance.info("Success to add a animation");
-    }
-}
-
+void valid_add_animation(int code);
 
 int main(int, char **){
 
@@ -73,7 +62,7 @@ int main(int, char **){
                                "assets/sprites/menu_title.png");
     title.add_component(image_title);
 
-    /** 
+    /**
         Sign in two types of animation, one of normal button that catch an
         image of 0 to 0 and a mouseON that catch an image of 1 to 1.
     */
@@ -184,9 +173,9 @@ int main(int, char **){
                                     "assets/sprites/backgroundFloresta.png");
     backgroundForest.set_back_rect(800, 600);
 
-    /** 
+    /**
         This line set forest background in Game Object. All stages an boss
-        level are with forest background. 
+        level are with forest background.
     */
     background_stage1.set_layer(GameObject::Layer::background);
 
@@ -738,4 +727,16 @@ int main(int, char **){
     Game::instance.run();
 
     return 0;
+}
+
+void valid_add_animation(int code){
+    if(code == EMPTY_STRING){
+        Log::instance.error("Fail to add a animation, param ""name"" is empty");
+        exit(0);
+    }else if(code == NULL_OBJECT){
+        Log::instance.error("Fail to add a animation, param ""animation"" is NULL");
+        exit(0);
+    }else if(code == SUCCESS){
+        Log::instance.info("Success to add a animation");
+    }
 }

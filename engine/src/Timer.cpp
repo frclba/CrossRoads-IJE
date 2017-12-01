@@ -17,10 +17,6 @@ Timer::Timer() {
 
 }
 
-Timer::~Timer() {
-
-}
-
 /**
     This method is responsable
     for start clock action
@@ -206,5 +202,9 @@ Uint32 Timer::get_elapseTime() {
     Uint32 elapse_time = getTicks() - timeStep;
 
     return elapse_time;
+
+}
+
+Timer::~Timer() {
 
 }

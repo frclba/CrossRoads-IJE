@@ -36,16 +36,7 @@ const int EXCEED_LIMIT_MAP = -7;
 const int EMPTY_STRING = -2;
 const int SUCCESS = 1;
 
-void valid_play_animation(int code, std::string method) {
-
-  if(code == EMPTY_STRING){
-      Log::instance.error("Fail to play animation ... parameter ""name"" is empty , method:" + method);
-      return;
-  }else if(code == SUCCESS){
-      Log::instance.info("Success in play animation");
-  }
-
-}
+void valid_play_animation(int code, std::string method);
 
 /**
     Initializes the player, defining their main attributes with inicial
@@ -69,21 +60,6 @@ bool Player::init() {
 
 }
 
-int Player::get_life_points() {
-
-    return life_points;
-
-}
-
-void Player::valid_life_points(){
-
-  if(get_life_points() < 0){
-      Log::instance.error("Player's life point is negative");
-      exit(0);
-  }
-
-}
-
 /**
     Call methods that update player characteristics, changing values of their
     attributes, thats make the player can move, jump, take damage, fall etc
@@ -92,9 +68,8 @@ void Player::update() {
 
     assert(animation_controller != NULL);
 
-    valid_play_animation(animation_controller->
-                                   play_animation("player_idle"),
-                                   "Player::update");
+    valid_play_animation(animation_controller->play_animation("player_idle"),
+                                                              "Player::update");
 
     apply_gravity();
     detect_jump();
@@ -225,9 +200,7 @@ void Player::apply_attack_meele() {
     assert(attack_box_dimensions != NULL);
 
     if( is_attacking_meele ) {
-        valid_play_animation(animation_controller->
-                                       play_animation("player_attack"),
-                                       "Player::apply_attack_meele");
+        valid_play_animation(animation_controller->play_animation("player_attack"), "Player::apply_attack_meele");
 
         /**
           Audio when the player is attacking melee
@@ -268,9 +241,7 @@ void Player::apply_attack_ranged() {
     */
     if( get_is_attacking_ranged() ) {
 
-      valid_play_animation(animation_controller->
-                                     play_animation("player_attack"),
-                                     "Player::apply_attack_ranged");
+      valid_play_animation(animation_controller->play_animation("player_attack"), "Player::apply_attack_ranged");
 
       /**
           Audio when the player is attacking renged
@@ -281,9 +252,7 @@ void Player::apply_attack_ranged() {
                       "player_arrow_sound")));
       assert(player_arrow_sound != NULL);
 
-      valid_play_animation(animation_controller->
-                                     play_animation("player_ranged"),
-                                     "Player::apply_attack_ranged");
+      valid_play_animation(animation_controller->play_animation("player_ranged"), "Player::apply_attack_ranged");
 
       player_arrow_sound->play(0, -1);
     }
@@ -327,8 +296,6 @@ void Player::detect_boby_side() {
 void Player::detect_move_right() {
 
     assert(Game::instance.keyboard != NULL);
-
-    // Detect move right
 
     /**
         \note check if the button is up and down is necessary to change the
@@ -404,9 +371,7 @@ void Player::apply_move_right() {
 
         is_walking_right = true;
 
-        valid_play_animation(animation_controller->
-                                       play_animation("player_running"),
-                                       "Player::apply_move_right");
+        valid_play_animation(animation_controller->play_animation("player_running"), "Player::apply_move_right");
         player_running_audio->play(0, -1);
 
         direction_boby_side = RIGHT;
@@ -448,10 +413,12 @@ void Player::apply_move_left() {
     assert(_main_game_object != NULL);
     assert(animation_controller != NULL);
 
+
     /**
         \note Check the if the character has hitted the left corner
     */
-    if( is_walking_left && ( _main_game_object->main_positionX ) >= MINIMUM_COORDINATION_X ) {
+    if( is_walking_left 
+        && ( _main_game_object->main_positionX ) >= MINIMUM_COORDINATION_X ) {
 
        /**
            Audio when the player is running left
@@ -464,9 +431,7 @@ void Player::apply_move_left() {
 
        is_walking_left = true;
 
-       valid_play_animation(animation_controller->
-                                      play_animation("player_running"),
-                                      "Player::apply_move_left");
+       valid_play_animation(animation_controller->play_animation("player_running"), "Player::apply_move_left");
 
        player_running_audio2->play(0, -1);
 
@@ -498,11 +463,13 @@ void Player::detect_jump() {
                                         "player_jump_audio")));
     assert(player_jump_audio != NULL);
 
-    if( Game::instance.keyboard->isKeyDown("w") && ( vertical_position == MINIMUM_COORDINATION_Y ) ) {
+    if( Game::instance.keyboard->isKeyDown("w")
+        && ( vertical_position == MINIMUM_COORDINATION_Y ) ) {
         player_jump_audio->play(0, -1);
 
         /**
-            \note jump size decreases vertical_position due to the fact that y coordinate increases up to down
+            \note jump size decreases vertical_position due to the fact that
+            |note y coordinate increases up to down
         */
         vertical_position -= JUMP_SIZE;
     }
@@ -512,13 +479,12 @@ void Player::detect_jump() {
 
 }
 
-
-
 int Player::process_position() {
 
     assert(_main_game_object != NULL);
 
-    if(get_vertical_position() >= -JUMP_SIZE && vertical_position <= MAXIMUM_COORDINATION_Y){
+    if(get_vertical_position() >= -JUMP_SIZE
+       && vertical_position <= MAXIMUM_COORDINATION_Y){
 
         /**
             \note get the sum of the player's movement relative to the jump and
@@ -547,7 +513,8 @@ void Player::apply_gravity() {
     if( !has_ground() ) { // If the player is not on the platform
 
       /**
-          \note gravity increases vertical_position due to the fact that y coordinate increases up to down
+          \note gravity increases vertical_position due to the fact that
+          |note y coordinate increases up to down
       */
       vertical_position += GRAVITY;
     }
@@ -571,8 +538,9 @@ bool Player::has_ground() {
     /**
         Object instance that helps to check if have terrain where the player is
     */
-    GameObject* get_ground_collision = Game::instance.collision_manager->checkCollision(_main_game_object,
-                                                              "ground");
+    GameObject* get_ground_collision = Game::instance.collision_manager->
+                                       checkCollision(_main_game_object,
+                                                      "ground");
 
     /**
         \note Verify if player and monsters are in the ground or if they
@@ -581,7 +549,8 @@ bool Player::has_ground() {
     if( get_ground_collision && vertical_position >= MINIMUM_COORDINATION_Y ) {
 
         if( vertical_position > 5 ) {
-            _main_game_object->main_positionY = get_ground_collision->main_positionY -
+            _main_game_object->main_positionY = get_ground_collision->
+                                                main_positionY -
                                                 _main_game_object->main_height;
         }
         else {
@@ -612,8 +581,8 @@ void Player::apply_damage() {
         assert(life_points >= 1);
         life_points--;
         /**
-            \note this line damage_time sum the delay damage plus the current time
-            \note to avoid incorrect applied damage
+            \note this line damage_time sum the delay damage plus the current
+            \note time to avoid incorrect applied damage
         */
         damage_time = Game::instance.timer->getTicks() + DAMAGE_DELAY;
     }
@@ -705,6 +674,33 @@ void Player::is_dead() {
     else {
         // Do nothing
     }
+
+}
+
+void valid_play_animation(int code, std::string method) {
+
+  if(code == EMPTY_STRING){
+      Log::instance.error("Fail to play animation ... parameter ""name"" is empty , method:" + method);
+      return;
+  }else if(code == SUCCESS){
+      Log::instance.info("Success in play animation");
+  }
+
+}
+
+void Player::valid_life_points(){
+
+  if(get_life_points() < 0){
+      Log::instance.error("Player's life point is negative");
+      life_points = EMPTY_LIFE;
+      return;
+  }
+
+}
+
+int Player::get_life_points() {
+
+    return life_points;
 
 }
 

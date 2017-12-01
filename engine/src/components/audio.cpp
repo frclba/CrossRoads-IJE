@@ -50,18 +50,6 @@ bool AudioComponent::init() {
 }
 
 /**
-    This method closes the AudioComponent in the game
-    \return true
-*/
-bool AudioComponent::shutdown() {
-
-    Log::instance.info("Shutdown audio component");
-
-    return true;
-
-}
-
-/**
     Play music if it has not already been started
 */
 void AudioComponent::update() {
@@ -78,6 +66,60 @@ void AudioComponent::update() {
 
     }
 
+}
+
+void AudioComponent::play_music(int loops) {
+
+    assert(loops >= -1);
+
+    // Checks if audio state is stopped to play the music.
+    if( m_audio_state == AudioState::stopped ) {
+        Mix_PlayMusic(m_music, loops);
+    }
+    // Checks if audio state is paused to resume the music.
+    else if( m_audio_state == AudioState::paused ) {
+        Mix_ResumeMusic();
+    }
+    else {
+        // Do nothing
+    }
+
+    m_audio_state = AudioState::playing;
+    Log::instance.info("music was started");
+}
+
+
+int AudioComponent::play_sound(int loops, int channel) {
+
+    // Checks if loops anf chennel are infinite or larger than 0, points to error
+    // for less then one negative.
+    if(loops >= -1 || channel >= -1){
+        return LESS_THAN_ONE_NEGAVITE;
+    }else{
+        // Checks if audio state is stopped to get error and point.
+        if( m_audio_state == AudioState::stopped ) {
+            std::string error = Mix_GetError();
+
+            // Checks if playchennel return -1 to treat a error.
+            if(Mix_PlayChannel(channel, m_sound, loops) == -1){
+                Log::instance.error("Mix_PlayChannel:" + error);
+            }
+        }
+        // Checks if audio state is paused to resume.
+        else if( m_audio_state == AudioState::paused ) {
+            Mix_Resume(channel);
+        }
+        else {
+            // Do nothing
+        }
+
+        return SUCCESS;
+    }
+
+
+
+    m_audio_state = AudioState::playing;
+    Log::instance.info("sound was started");
 }
 
 /**
@@ -159,17 +201,15 @@ void AudioComponent::pause(int channel) {
 
 }
 
-bool AudioComponent::valid_music() {
+/**
+    This method closes the AudioComponent in the game
+    \return true
+*/
+bool AudioComponent::shutdown() {
 
-    // Checks if attribute that stores the music isan't null, points to success.
-    if( m_music != NULL ) {
-        return true;
-    }
-    // if attribute that stores the music is null, points to error.
-    else {
-        Log::instance.error("Music not found!");
-        return false;
-    }
+    Log::instance.info("Shutdown audio component");
+
+    return true;
 
 }
 
@@ -187,56 +227,16 @@ bool AudioComponent::valid_sound() {
 
 }
 
-void AudioComponent::play_music(int loops) {
+bool AudioComponent::valid_music() {
 
-    assert(loops >= -1);
-
-    // Checks if audio state is stopped to play the music.
-    if( m_audio_state == AudioState::stopped ) {
-        Mix_PlayMusic(m_music, loops);
+    // Checks if attribute that stores the music isan't null, points to success.
+    if( m_music != NULL ) {
+        return true;
     }
-    // Checks if audio state is paused to resume the music.
-    else if( m_audio_state == AudioState::paused ) {
-        Mix_ResumeMusic();
-    }
+    // if attribute that stores the music is null, points to error.
     else {
-        // Do nothing
+        Log::instance.error("Music not found!");
+        return false;
     }
 
-    m_audio_state = AudioState::playing;
-    Log::instance.info("music was started");
-}
-
-
-int AudioComponent::play_sound(int loops, int channel) {
-
-    // Checks if loops anf chennel are infinite or larger than 0, points to error
-    // for less then one negative.
-    if(loops >= -1 || channel >= -1){
-        return LESS_THAN_ONE_NEGAVITE;
-    }else{
-        // Checks if audio state is stopped to get error and point.
-        if( m_audio_state == AudioState::stopped ) {
-            std::string error = Mix_GetError();
-
-            // Checks if playchennel return -1 to treat a error.
-            if(Mix_PlayChannel(channel, m_sound, loops) == -1){
-                Log::instance.error("Mix_PlayChannel:" + error);
-            }
-        }
-        // Checks if audio state is paused to resume.
-        else if( m_audio_state == AudioState::paused ) {
-            Mix_Resume(channel);
-        }
-        else {
-            // Do nothing
-        }
-
-        return SUCCESS;
-    }
-
-
-
-    m_audio_state = AudioState::playing;
-    Log::instance.info("sound was started");
 }
