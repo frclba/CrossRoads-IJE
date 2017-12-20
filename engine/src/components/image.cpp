@@ -56,6 +56,9 @@ bool ImageComponent::init() {
 */
 void ImageComponent::set_back_rect(int image_width, int image_height) {
 
+    assert(image_width >= 0);
+    assert(image_height >= 0);
+
     image_measures = new SDL_Rect();
 
     /*
@@ -73,6 +76,8 @@ void ImageComponent::set_back_rect(int image_width, int image_height) {
     /param[int] image_value image displacement - in px
 */
 void ImageComponent::move_img_rect(int displacement) {
+
+    assert(displacement >= 0);
 
     if( valid_image_position(displacement) && enable_camera ) {
         image_measures->x = image_measures->x + displacement;
@@ -106,7 +111,7 @@ bool ImageComponent::shutdown() {
 */
 void ImageComponent::draw() {
 
-    /** 
+    /**
         Render image components.
     */
     SDL_Rect *render_quad = new SDL_Rect();
@@ -160,6 +165,8 @@ bool ImageComponent::valid_main_path() {
 */
 bool ImageComponent::valid_image(SDL_Surface *image) {
 
+    assert(image != NULL);
+
     if( image != NULL ) {
         return true;
     }
@@ -196,6 +203,7 @@ bool ImageComponent::valid_image_measures() {
         return true;
     }
     else {
+        Log::instance.error("image without measurements");
         return false;
     }
 
@@ -207,12 +215,15 @@ bool ImageComponent::valid_image_measures() {
 */
 bool ImageComponent::valid_image_position(int displacement) {
 
+    assert(displacement >= 0);
+
     if ( image_measures->x + image_measures->w + displacement <
          _main_game_object->main_width && image_measures->x +
          displacement > INITIAL_SCREEN_POSITION ) {
         return true;
     }
     else {
+        Log::instance.error("image in wrong position");
         return false;
     }
 

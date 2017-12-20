@@ -17,10 +17,6 @@ Timer::Timer() {
 
 }
 
-Timer::~Timer() {
-
-}
-
 /**
     This method is responsable
     for start clock action
@@ -69,9 +65,12 @@ void Timer::stop() {
 */
 void Timer::pause() {
 
-    // If the timer is running and isn't already paused
-
-    if( mStarted && !mPaused ) {
+    /**
+         \note This paragraph is responsible for checking if the timer is
+            running and isn't already paused, then pause the timer
+            and calculate the paused ticks
+    */
+    if( mStarted == true && mPaused == false) {
 
         // Pause the timer
 
@@ -91,9 +90,12 @@ void Timer::pause() {
 */
 void Timer::unpause() {
 
-    // If the timer is running and paused
-
-    if( mStarted && mPaused ) {
+    /**
+         \note This paragraph is responsible for checking if the timer
+            is running and paused, then reset the starting ticks
+            and reset the paused ticks.
+    */
+    if( mStarted == true && mPaused == true) {
 
         // Unpause the timer
 
@@ -118,13 +120,17 @@ Uint32 Timer::getTicks() {
 
     Uint32 time = 0;
 
-    // If the timer is running
-
-    if( mStarted ) {
+    /**
+         \note This paragraph is responsible for checking if the timer
+            is running, then if the timer is paused, return the number
+            of ticks when the timer was paused, if isn't, return
+            the current time minus the start time.
+    */
+    if( mStarted == true ) {
 
         // If the timer is paused
 
-        if( mPaused ) {
+        if( mPaused == true ) {
 
             // Return the number of ticks when the timer was paused
 
@@ -137,6 +143,9 @@ Uint32 Timer::getTicks() {
             time = SDL_GetTicks() - mStartTicks;
         }
     }
+    else {
+      // Do nothing
+    }
 
     return time;
 
@@ -147,11 +156,16 @@ Uint32 Timer::getTicks() {
     for checks the status of the timer
     \return mStarted true
 */
-bool Timer::isStarted() {
+bool Timer::is_started() {
 
     // Timer is running and paused or unpaused
 
-    return mStarted;
+    if( mStarted == true ){
+      return true;
+    }
+    else{
+      return false;
+    }
 
 }
 
@@ -160,11 +174,16 @@ bool Timer::isStarted() {
     for checks the status of the timer
     \return mPaused and mStarted true
 */
-bool Timer::isPaused() {
+bool Timer::is_paused() {
 
     // Timer is running and paused
 
-    return mPaused && mStarted;
+    if( mPaused == true && mStarted == true){
+      return true;
+    }
+    else{
+      return false;
+    }
 
 }
 
@@ -180,6 +199,12 @@ void Timer::set_TimeStep() {
 
 Uint32 Timer::get_elapseTime() {
 
-    return getTicks() - timeStep;
+    Uint32 elapse_time = getTicks() - timeStep;
+
+    return elapse_time;
+
+}
+
+Timer::~Timer() {
 
 }

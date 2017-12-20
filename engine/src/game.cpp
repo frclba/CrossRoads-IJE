@@ -12,18 +12,133 @@ using namespace engine;
 
 Game Game::instance;
 
+/**
+  creates a new game instance
+*/
+
+bool Game::run() {
+
+    current_state = State::init;
+
+    if( start_sdl() && create_window() ) {
+        Log::instance.info("Iniciando o jogo");
+
+        current_state = State::main_loop;
+
+        unsigned int frame_time = 1000.0 / FRAME;
+
+        timer -> start();
+
+        if( current_scene != NULL ) {
+            current_state = State::main_loop_change_scene;
+        }
+        else {
+            Log::instance.warning("There is no current scene");
+        }
+
+        while( current_state != State::exit_loop ) {
+            if( handle_scene_changes() ) {
+                SDL_Event evt;
+
+                //get mouse position
+                mouse -> set_position();
+
+                while( SDL_PollEvent(&evt) != 0 ) {
+                    if( evt.type == SDL_QUIT ) {
+                        current_state = State::exit_loop;
+                    }
+                    else {
+                        // Do nothing
+                    }
+
+                    keyboard -> setKeys(&evt);
+
+                    if( evt.type == SDL_KEYDOWN ) {
+                        switch( evt.key.keysym.sym ) {
+                            case SDLK_SPACE:
+
+                            //Log::instance.debug("teste teclado");
+
+                            //Keyboard::isKeyDown(keycode::KEY_SPACE);
+
+                            break;
+                        }
+                    }
+                    else {
+                        // Do nothing
+                    }
+                }
+
+                //	current_scene->get_collide_objects();
+
+                collision_manager -> getCollisions(current_scene -> get_collide_objects());
+                current_scene -> update();
+                current_scene -> game_logic();
+
+                /// \note Clears the Canvas viewed by the user
+                SDL_RenderClear(main_canvas);
+
+                /// \note Draw in the secondary buffer
+                current_scene -> draw();
+
+                /// \note Displays the Secondary Canvas for the user
+                SDL_RenderPresent(main_canvas);
+
+                if( frame_time > timer-> get_elapseTime() ) {
+                    SDL_Delay(timer -> get_elapseTime());
+                }
+                else {
+                    // Do nothing
+                }
+
+                keyboard -> clearKeyboard();
+                current_scene -> clear_collide_objects();
+                timer -> set_TimeStep();
+            } else {
+                break;
+            }
+        }
+
+        Log::instance.info( "Cleaning scene..." );
+        if( current_scene ) {
+            current_scene -> shutdown();
+        }
+        else {
+            // Do nothing
+        }
+
+        Log::instance.info("Game shutdown");
+        current_state = State::shutdown;
+        destroy_window();
+        off_sdl();
+
+        return true;
+    } else {
+        Log::instance.error("Failied to run game instance");
+        return false;
+    }
+
+}
 
 /**
   Sets the name and window size of the game
   \param name set the name of the game
   \param window_size sets the size of the window
 */
+int Game::set_properties(std::string name, std::pair<int, int> window_size) {
 
-void Game::set_properties(std::string name, std::pair<int, int> window_size) {
+    assert(name != "");
 
-    main_name = name;
-    main_window_size = window_size;
-
+    /**
+        Check if name is valid
+    */
+    if(name != "") {
+      main_name = name;
+      main_window_size = window_size;
+      return 1;
+    } else {
+      return -2;
+    }
 }
 
 
@@ -39,6 +154,9 @@ bool Game::initialize_sdl_components() {
 
     Log::instance.info("Inicializando componentes SDL");
 
+    /**
+        Verify that the SDL library is successfully initialized.
+    */
     if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) == 0 ) {
         return true;
     }
@@ -55,6 +173,9 @@ bool Game::initialize_imgs() {
 
     int img_flags = IMG_INIT_PNG;
 
+    /**
+        Make sure image sdl initializes support for png files.
+    */
     if( (IMG_Init( img_flags ) & img_flags) ) {
         return true;
     }
@@ -70,6 +191,9 @@ bool Game::initialize_mixer() {
 
     Log::instance.info("Iniciando Mixer");
 
+    /**
+        Check Mix_OpenAudio function return
+    */
     if( Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) != -1 ) {
         return true;
     }
@@ -82,13 +206,17 @@ bool Game::initialize_mixer() {
 
 bool Game::start_sdl() {
 
+    /**
+        Verifies that all components, images, and audios have been initialized.
+    */
     if( initialize_sdl_components() &&
         initialize_imgs() &&
         initialize_mixer() ) {
             // Do nothing
     }
     else {
-            return false;
+      Log::instance.error("Failed to initialize SDL elements");
+      return false;
     }
 
 
@@ -97,13 +225,17 @@ bool Game::start_sdl() {
     keyboard = new Keyboard();
     collision_manager = new CollisionManager();
 
+    /**
+        Check if the player is using a joysticker as a control.
+    */
     if( SDL_NumJoysticks() > 0 ) {
         //Load joystick
 
         g_game_controller = SDL_JoystickOpen( 0 );
 
         if( g_game_controller == NULL ) {
-            //printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
+            std::string sdl_error = SDL_GetError();
+            Log::instance.warning("Unable to open game controller! SDL Error: " + sdl_error );
         }
         else {
             // Do nothing
@@ -111,7 +243,7 @@ bool Game::start_sdl() {
     }
 
     else {
-        //printf( "Warning: No joysticks connected!\n" );
+        Log::instance.warning("No joysticks connected");
     }
 
     return true;
@@ -138,6 +270,9 @@ bool Game::create_window() {
         SDL_WINDOW_SHOWN            //Window flags
     );
 
+    /**
+        Checks if main_windown has been initialized.
+    */
     if( main_window == NULL ) {
         Log::instance.error("Falha ao criar janela");
         return false;
@@ -152,6 +287,9 @@ bool Game::create_window() {
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
 
+    /**
+        Checks if main_canvas has been initialized.
+    */
     if( main_canvas == NULL ) {
         Log::instance.error("Falha ao criar renderizador");
         return false;
@@ -199,117 +337,6 @@ void Game::off_sdl() {
 
 }
 
-
-
-/**
-  creates a new game instance
-*/
-
-void Game::run() {
-
-    current_state = State::init;
-
-    if( start_sdl() && create_window() ) {
-        Log::instance.info("Iniciando o jogo");
-
-        current_state = State::main_loop;
-
-        unsigned int frame_time = 1000.0 / FRAME;
-
-        timer -> start();
-
-        if( current_scene != NULL ) {
-            current_state = State::main_loop_change_scene;
-        }
-        else {
-            // Do nothing
-        }
-
-        while( current_state != State::exit_loop ) {
-            if( handle_scene_changes() == false ) {
-                break;
-            }
-            else {
-                // Do nothing
-            }
-
-            SDL_Event evt;
-
-            //get mouse position
-            mouse -> set_position();
-
-            while( SDL_PollEvent(&evt) != 0 ) {
-                if( evt.type == SDL_QUIT ) {
-                    current_state = State::exit_loop;
-                }
-                else {
-                    // Do nothing
-                }
-
-                keyboard -> setKeys(&evt);
-
-                if( evt.type == SDL_KEYDOWN ) {
-                    switch( evt.key.keysym.sym ) {
-                        case SDLK_SPACE:
-
-                        //Log::instance.debug("teste teclado");
-
-                        //Keyboard::isKeyDown(keycode::KEY_SPACE);
-
-                        break;
-                    }
-                }
-                else {
-                    // Do nothing
-                }
-            }
-
-            //	current_scene->get_collide_objects();
-
-            collision_manager -> getCollisions(current_scene -> get_collide_objects());
-            current_scene -> update();
-            current_scene -> game_logic();
-
-            //Limpa o Canvas visualizado pelo  usuário
-
-            SDL_RenderClear(main_canvas);
-
-            //Desenha no buffer secundário.
-
-            current_scene -> draw();
-
-            //Exibe o Canvas secundário para o usuário
-
-            SDL_RenderPresent(main_canvas);
-
-            if( frame_time > timer-> get_elapseTime() ) {
-                SDL_Delay(timer -> get_elapseTime());
-            }
-            else {
-                // Do nothing
-            }
-
-            keyboard -> clearKeyboard();
-            current_scene -> clear_collide_objects();
-            timer -> set_TimeStep();
-        }
-
-        Log::instance.info( "Cleaning scene..." );
-        if( !current_scene ) {
-            // Do nothing
-        }
-        else {
-            current_scene -> shutdown();
-        }
-    }
-
-    Log::instance.info("Desligando tudo");
-    current_state = State::shutdown;
-    destroy_window();
-    off_sdl();
-}
-
-
 /**
   adds a scene for the current game
   \param scene the scene object that will be added
@@ -319,11 +346,22 @@ void Game::run() {
 
 bool Game::add_scene(Scene &scene) {
 
-    //Isso faz o id ser o name.
+    /// \note Use the name as id
     auto id = scene.name();
-    Log::instance.info("Adding Scene: '" + id + "' to Scenes List.");
 
-    //A scene desejada sempre tem que ser a ultima. Se não for, vai ser adicionada novamente.
+    /**
+        Check if id is valid.
+    */
+    if(id != "") {
+      Log::instance.info("Adding Scene: '" + id + "' to Scenes List.");
+    } else {
+      Log::instance.info("Invalid id to scene");
+      return false;
+    }
+
+    /**
+        \note The desired scene always has to be the last. If it is not, it will be added again.
+    */
     if( scenes_list.find(id) != scenes_list.end() ) {
       Log::instance.warning("The scene '"+ id +"' is already loaded!");
       return false;
@@ -334,6 +372,9 @@ bool Game::add_scene(Scene &scene) {
 
     scenes_list[id] = &scene;
 
+    /**
+        Change scene if there aren't current scene.
+    */
     if( current_scene == NULL ) {
         change_scene(id);
     }
@@ -354,22 +395,40 @@ bool Game::add_scene(Scene &scene) {
 
 bool Game::change_scene(const std::string &id) {
 
-    if( scenes_list.find(id) != scenes_list.end() ) {
-        // Do nothing
+    assert(id != "");
+
+    /**
+        Check if id is valid.
+    */
+    if(id == "") {
+        Log::instance.error("Invalid id in change scene");
+    } else {
+      // Do nothing
+    }
+
+    /**
+        The execute function fails if there is no ID in the scene list.
+    */
+    if( scenes_list.find(id) == scenes_list.end() ) {
+        Log::instance.warning(id + "scene not found");
+        return false;
     }
     else {
-        return false;
+        // Do nothing
     }
 
     last_current_scene = current_scene;
 
-    // current_scene = scenes_list[id];
+    /**
+        Switch to the next scene. If there is no next scene,
+        switch to the scene with the given id.
+    */
     if(next_scene != NULL){
-        printf("Pŕoxima cena que foi setada\n");
+        Log::instance.info("Pŕoxima cena que foi setada");
         next_scene = scenes_list[id];
     }
     else {
-        //Quando for rodado a primeira vez.
+        /// \note For the first time the code is executed
         current_scene = scenes_list[id];
     }
 
@@ -385,22 +444,37 @@ bool Game::change_scene(const std::string &id) {
 */
 bool Game::handle_scene_changes() {
 
+    /**
+        Checks if scene switching is enabled.
+    */
     if(current_state == State::main_loop_change_scene) {
+
+        /**
+            Checks if there is current scene
+        */
         if(current_scene == NULL) {
+            Log::instance.info("Current scene not set");
             return false;
         }
         else {
             Log::instance.info("Changing scene: '" + current_scene->name() + "'");
 
+            /**
+                Update next scene
+            */
             if(next_scene != NULL){
                 current_scene = next_scene;
             }
             else {
-                //Somente na primeira vez.
+              /// \note For the first time the code is executed
               next_scene = current_scene;
             }
 
+        /**
+            Shutdown current scene if the player orders to leave the game.
+        */
         if(last_current_scene) {
+            Log::instance.info("Last scene: '" + current_scene->name() + "'");
             last_current_scene->shutdown();
         }
         else {

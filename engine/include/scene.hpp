@@ -8,6 +8,8 @@
 #include <string>
 #include <unordered_map>
 #include <list>
+#include <assert.h>
+
 #include "sdl2core.hpp"
 #include "gameobject.hpp"
 
@@ -45,7 +47,7 @@ namespace engine {
 
             // Add and check if it already exists. If success, return true
 
-            virtual bool add_game_object( GameObject &obj );
+            virtual bool add_game_object( GameObject &object );
 
             // Search for a specific GameObject by ID
 

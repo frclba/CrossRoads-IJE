@@ -57,11 +57,11 @@ private:
     GameObject* fire_ball = NULL;
     GameObject *go_arrow = NULL;
 
-    ImageComponent* back_img = NULL;
+    ImageComponent* background_image = NULL;
 
     Player *player_controller = NULL;
 
-    bool bulletDir1 = false;
+    bool bullet_direction_1 = false;
     unsigned int timestep = 0;
 
     bool is_inside( GameObject* object );

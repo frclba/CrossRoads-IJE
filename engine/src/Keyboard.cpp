@@ -20,154 +20,161 @@ Keyboard::~Keyboard() {
 
 /**
     Set keys
-    \param evt
+    \param event
     \parblock
-        This method evaluate what button was pressed with the variable evt
-        and then take decisions based on evt
+        This method evaluate what button was pressed with the variable event
+        and then take decisions based on event
     \endparblock
     \return anything because the method is void
 */
-void Keyboard::setKeys( SDL_Event* evt ) {
+void Keyboard::setKeys( SDL_Event* event ) {
 
-    assert(evt != NULL);
+    assert(event != NULL);
 
-    if( evt -> type == SDL_KEYDOWN ) {
-        keycodes_down.push_back( evt -> key.keysym.sym );
+    /**
+        \note Check what key was pressed to take a decision based on the key
+        pressed.
+    */
+    if( event -> type == SDL_KEYDOWN ) {
+        keycodes_down.push_back( event -> key.keysym.sym );
     }
-    else if( evt -> type == SDL_KEYUP ) {
-        keycodes_up.push_back( evt -> key.keysym.sym );
+    else if( event -> type == SDL_KEYUP ) {
+        keycodes_up.push_back( event -> key.keysym.sym );
     }
-    else if( evt -> type == SDL_JOYBUTTONDOWN ) {
+    else if( event -> type == SDL_JOYBUTTONDOWN ) {
 
-       if( ( ( int ) evt -> jbutton.button ) == SPACE_JBUTTON ) {
-            keycodes_down.push_back( SDLK_SPACE );
+        /**
+            \note Check what joystick button was pressed to take a decision
+            based on the joystick button pressed
+        */
+        if( ( ( int ) event -> jbutton.button ) == SPACE_JBUTTON ) {
+             keycodes_down.push_back( SDLK_SPACE );
         }
-        else {
-            // Do nothing
-       }
-
-        if( ( ( int ) evt -> jbutton.button ) == W_JBUTTON ) {
+        else if( ( ( int ) event -> jbutton.button ) == W_JBUTTON ) {
             keycodes_down.push_back( SDLK_w );
         }
-        else {
-            // Do nothing
-        }
-
-        if( ( ( int ) evt -> jbutton.button ) == F_JBUTTON ) {
+        else if( ( ( int ) event -> jbutton.button ) == F_JBUTTON ) {
             keycodes_down.push_back( SDLK_f );
         }
-        else {
-            // Do nothing
-        }
-
-        if( ( ( int ) evt -> jbutton.button ) == RETURN_JBUTTON ) {
+        else if( ( ( int ) event -> jbutton.button ) == RETURN_JBUTTON ) {
             keycodes_down.push_back( SDLK_RETURN );
         }
         else {
-            // Do nothing
+            Log::instance.error("Failed to identify joystick down action");
         }
 
     }
-    else if( evt -> type == SDL_JOYBUTTONUP ) {
+    else if( event -> type == SDL_JOYBUTTONUP ) {
 
-        if( ( ( int ) evt -> jbutton.button ) == SPACE_JBUTTON ) {
+        /**
+            \note Check what joystick button was pressed to take a decision
+            based on the joystick button pressed
+        */ 
+        if( ( ( int ) event -> jbutton.button ) == SPACE_JBUTTON ) {
             keycodes_up.push_back( SDLK_SPACE );
         }
-        else {
-            // Do nothing
-        }
-
-        if( ( ( int ) evt -> jbutton.button ) == W_JBUTTON ) {
+        else if( ( ( int ) event -> jbutton.button ) == W_JBUTTON ) {
             keycodes_up.push_back( SDLK_w );
         }
-        else {
-            // Do nothing
-        }
-
-        if( ( ( int ) evt -> jbutton.button ) == F_JBUTTON ) {
+        else if( ( ( int ) event -> jbutton.button ) == F_JBUTTON ) {
             keycodes_up.push_back( SDLK_f );
         }
-        else {
-            // Do nothing
-        }
-
-        if( ( ( int ) evt -> jbutton.button ) == RETURN_JBUTTON ) {
+        else if( ( ( int ) event -> jbutton.button ) == RETURN_JBUTTON ) {
             keycodes_up.push_back( SDLK_RETURN );
         }
         else {
-            // Do nothing
+            Log::instance.error("Failed to identify joystick up action");
         }
+
     }
-    else if( evt -> type == SDL_JOYAXISMOTION ) {
+    else if( event -> type == SDL_JOYAXISMOTION ) {
 
-        if( evt -> jaxis.axis == HORIZONTAL_JAXIS ) {
+        /**
+            \note Check what joystick button was pressed to take a decision
+            based on the joystick button pressed
+        */ 
+        if( event -> jaxis.axis == HORIZONTAL_JAXIS ) {
 
-            if( evt -> jaxis.value > POSITIVE_JAXIS ) {
+            /// \note Verify if direction of axis was to the right.
+            if( event -> jaxis.value > POSITIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_d );
             }
             else {
                 keycodes_up.push_back( SDLK_d );
             }
 
-            if( evt -> jaxis.value < NEGATIVE_JAXIS ) {
+            /// \note Verify if direction of axis was to the left.
+            if( event -> jaxis.value < NEGATIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_a );
             }
             else {
                 keycodes_up.push_back( SDLK_a );
             }
-        }
-        else {
-            // Do nothing
-        }
 
-        if( evt -> jaxis.axis == VERTICAL_JAXIS ) {
-            if( evt -> jaxis.value > POSITIVE_JAXIS ) {
+        }
+        else if( event -> jaxis.axis == VERTICAL_JAXIS ) {
+            
+            /// \note Verify if direction of axis was upward.
+            if( event -> jaxis.value > POSITIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_s );
             }
             else {
                 keycodes_up.push_back( SDLK_s );
             }
 
-            if( evt -> jaxis.value < NEGATIVE_JAXIS ) {
+            /// \note Verify if direction of axis was downward.
+            if( event -> jaxis.value < NEGATIVE_JAXIS ) {
                 keycodes_down.push_back( SDLK_w );
             }
             else {
                 keycodes_up.push_back( SDLK_w );
             }
+
         }
         else {
-            // Do nothing
+            Log::instance.error("Failed to identify joystick axis action");
         }
     }
     else {
-        // Do nothing
+        Log::instance.error("Failed to identify control actions");
     }
 
 }
 
 /**
-    Verify key up
+    Verify key down
     \param key
     \parblock
-        This method verify if key pressed is up
+        This method verify if key pressed is down
     \endparblock
-    \return returns bool to key up or not
+    \return returns bool to key down or not
 */
 bool Keyboard::isKeyDown( std::string key ) {
 
-    assert(m_button_code.count(key) != 0);
+    /// \note Check if key down was pressed.
+    if(m_button_code.count(key) != 0) {
+        std::list<Uint8>::iterator m_key;
 
-    for( auto m_key : keycodes_down ) {
-        if( m_key == m_button_code[key] ) {
-            return true;
+        /// \note Iterate button down.
+        for( m_key = keycodes_down.begin() ; m_key != keycodes_down.end() ; m_key++ ) {
+
+            /// \note Check if button down was mapped.
+            if( *m_key == m_button_code[key] ) {
+                return true;
+            }
+            else {
+                // Do nothing
+            }
+
         }
-        else {
-            // Do nothing
-        }
+
+        return false;
+
     }
-
-    return false;
-
+    else {
+        Log::instance.error("The '" + key + "' was not mapped");
+        return false;
+    }
 }
 
 /**
@@ -180,19 +187,30 @@ bool Keyboard::isKeyDown( std::string key ) {
 */
 bool Keyboard::isKeyUp( std::string key ) {
 
-    assert(m_button_code.count(key) != 0);
+    /// \note Check if key up was pressed.
+    if(m_button_code.count(key) != 0) {
 
-    for( auto m_key : keycodes_up ) {
-        if( m_key == m_button_code[key] ) {
-            return true;
+        std::list<Uint8>::iterator m_key;
+
+        /// \note Iterate button up. 
+        for( m_key = keycodes_up.begin() ; m_key != keycodes_up.end() ; m_key++ ) {
+            
+            /// \note Check if button up was mapped.
+            if( *m_key == m_button_code[key] ) {
+                return true;
+            }
+            else {
+                // Do nothing
+            }
+
         }
-        else {
-            // Do nothing
-        }
+
+        return false;
     }
-
-    return false;
-
+    else {
+        Log::instance.error("The '" + key + "' was not mapped");
+        return false;
+    }
 }
 
 /**
@@ -206,7 +224,7 @@ void Keyboard::clearKeyboard() {
 }
 
 /**
-   This method map all enable and not enable buttons that can be used in game 
+   This method map all enable and not enable buttons that can be used in game
 */
 void Keyboard::create_keyboard_mapping() {
 
